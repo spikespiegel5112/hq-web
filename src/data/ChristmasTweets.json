@@ -1,0 +1,17 @@
+{
+  "nodes": [
+    { "text": "christmas", "count": 39095, "lang": "en", "id": "christmas", "type": "noun" },
+    { "text": "merry", "count": 4741, "lang": "en", "id": "merry", "type": "adj" },
+    { "text": "gift", "count": 2688, "lang": "en", "id": "gift", "type": "noun" },
+    { "text": "christmaseve", "count": 2676, "lang": "en", "id": "christmaseve", "type": "noun" },
+    { "text": "santa", "count": 2315, "lang": "en", "id": "santa", "type": "noun" }
+  ],
+  "edges": [
+    { "source": "christmas", "target": "make" },
+    { "source": "christmas", "target": "possible" },
+    { "source": "christmas", "target": "conjunctivitis" },
+    { "source": "christmas", "target": "great" },
+    { "source": "christmas", "target": "weekend" },
+    { "source": "christmas", "target": "honor" }
+  ]
+}

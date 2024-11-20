@@ -3,6 +3,8 @@
 
 # Log file
 *.log
+.DS_Store
+.vite
 
 # BlueJ files
 *.ctxt
