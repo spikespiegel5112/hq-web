@@ -1,76 +1,11 @@
 <template>
-  <div
-    class="layout_container"
-    ref="layoutRef"
-  >
-    <!-- <div class="debuggingtools">
-      <div class="currenttime"></div>
-      <a-space>
-        <a-button>上一天</a-button>
-        <a-button>下一天</a-button>
-      </a-space>
-    </div> -->
-
-    <div
-      class="content"
-      ref="contentRef"
-    >
+  <div class="layout_container" ref="layoutRef">
+    <div class="content" ref="contentRef">
       <Header
         :bannerInfo="state.bannerInfo"
         :stuffDutyList="state.stuffDutyList"
       ></Header>
-      <div class="main">
-        <Left :bannerInfo="state.bannerInfo"></Left>
-        <Middle class="middle"></Middle>
-        <Right class="right"></Right>
-        <div class="map">
-          <!-- <iframe class="content" src="https://www.baidu.com" frameborder="0"></iframe> -->
-          <iframe
-            v-if="global.$store.state.app.envMode.MODE === 'test'"
-            class="content"
-            src="http://10.141.10.13/#/?shareLogin&GNKh3QOOIeEbZ0goH7xWu1D67svaWIorQYwwk4JuYztmRG+8m7sEEyMsJA4bFzkExcYMlFSFsrcuMNZKkzQfR+IjYT+kX+va4/E/tuepspA="
-            frameborder="0"
-          ></iframe>
-        </div>
-      </div>
     </div>
-    <a-modal
-      :style="{
-        width: '12rem',
-      }"
-      v-model:open="global.$store.state.app.pdfViewerVisible"
-      :footer="null"
-      @change="
-        (visible:boolean) => {
-          global.$store.commit('app/updatePdfViewerVisible', visible);
-        }
-      "
-      @onError="handleOnPdfViewerError"
-    >
-      <PDFViewer
-        v-if="global.$store.state.app.pdfViewerVisible"
-        :filePath="global.$store.state.app.pdfViewerFilePath"
-      />
-    </a-modal>
-
-    <a-modal
-      :style="{
-        width: '12rem',
-      }"
-      v-model:open="global.$store.state.app.videoPlayerVisible"
-      :footer="null"
-      @change="
-        (visible:boolean) => {
-          global.$store.commit('app/updateVideoPlayerVisible', visible);
-        }
-      "
-      @onError="handleOnVideoPlayerError"
-    >
-      <VideoPlayer
-        v-if="global.$store.state.app.videoPlayerVisible"
-        :filePath="global.$store.state.app.videoPlayerFilePath"
-      />
-    </a-modal>
   </div>
 </template>
 
@@ -85,15 +20,11 @@ import {
   ComponentInternalInstance,
   ref,
   nextTick,
-} from 'vue';
+} from "vue";
 
-import Header from '@/components/Header.vue';
-import Left from './left/Left.vue';
-import Middle from './middle/Middle.vue';
-import Right from './right/Right.vue';
-import { screenBannerInfoRequest } from '@/api/screen';
-import PDFViewer from '@/components/PDFViewer.vue';
-import VideoPlayer from '@/components/VideoPlayer.vue';
+import Header from "@/components/Header.vue";
+import { screenBannerInfoRequest } from "@/api/screen";
+import VideoPlayer from "@/components/VideoPlayer.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -124,13 +55,13 @@ const getBannerInfo = () => {
     ...global.$store.state.app.currentQueryDateParams,
   })
     .then((response: any) => {
-      console.log('=====screenBannerInfoRequest=====');
+      console.log("=====screenBannerInfoRequest=====");
       console.log(response);
 
       response = response.data;
       state.bannerInfo = response;
       state.stuffDutyList = response.staffDutyList;
-      global.$store.commit('app/updateBannerInfo', state.bannerInfo);
+      global.$store.commit("app/updateBannerInfo", state.bannerInfo);
     })
     .catch((error: any) => {
       console.log(error);
@@ -139,19 +70,13 @@ const getBannerInfo = () => {
 
 const initTimer = () => {
   setTimeout(() => {
-    global.$store.dispatch('app/refreshCurrentQueryDate');
-  }, 1000);
-};
-
-const handleOnPdfViewerError = (visible: boolean) => {
-  setTimeout(() => {
-    global.$store.commit('app/updatePdfViewerVisible', false);
+    global.$store.dispatch("app/refreshCurrentQueryDate");
   }, 1000);
 };
 
 const handleOnVideoPlayerError = (visible: boolean) => {
   setTimeout(() => {
-    global.$store.commit('app/updateVideoPlayerVisible', false);
+    global.$store.commit("app/updateVideoPlayerVisible", false);
   }, 1000);
 };
 
@@ -190,7 +115,7 @@ onBeforeUnmount(() => {});
   background-color: #040c1f;
 
   &:before {
-    content: '';
+    content: "";
     display: inline-block;
     width: 0;
     height: 100%;
