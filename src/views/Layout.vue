@@ -1,11 +1,13 @@
 <template>
   <div class="layout_container" ref="layoutRef">
-    <div class="content" ref="contentRef">
-      <Header
-        :bannerInfo="state.bannerInfo"
-        :stuffDutyList="state.stuffDutyList"
-      ></Header>
-    </div>
+    <a-layout>
+      <a-layout-header>Header</a-layout-header>
+      <a-layout>
+        <a-layout-sider>Sider</a-layout-sider>
+        <a-layout-content>Content</a-layout-content>
+      </a-layout>
+      <a-layout-footer>Footer</a-layout-footer>
+    </a-layout>
   </div>
 </template>
 
@@ -24,74 +26,24 @@ import {
 
 import Header from "@/components/Header.vue";
 import { screenBannerInfoRequest } from "@/api/screen";
-import VideoPlayer from "@/components/VideoPlayer.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
 const layoutRef = ref(HTMLDivElement);
-const contentRef = ref(HTMLDivElement);
-const chatListRef = ref(HTMLDivElement);
-
-console.log(chatListRef);
 
 const state = reactive({
   stuffDutyList: [] as any[],
   bannerInfo: {},
 });
 
-watch(
-  () => global.$store.state.app.pdfViewerVisible,
-  (newValue: any, oldValue: any) => {}
-);
-
-watch(
-  () => global.$store.state.app.videoPlayerVisible,
-  (newValue: any, oldValue: any) => {}
-);
-
-const getBannerInfo = () => {
-  screenBannerInfoRequest({
-    ...global.$store.state.app.currentQueryDateParams,
-  })
-    .then((response: any) => {
-      console.log("=====screenBannerInfoRequest=====");
-      console.log(response);
-
-      response = response.data;
-      state.bannerInfo = response;
-      state.stuffDutyList = response.staffDutyList;
-      global.$store.commit("app/updateBannerInfo", state.bannerInfo);
-    })
-    .catch((error: any) => {
-      console.log(error);
-    });
-};
-
-const initTimer = () => {
-  setTimeout(() => {
-    global.$store.dispatch("app/refreshCurrentQueryDate");
-  }, 1000);
-};
-
-const handleOnVideoPlayerError = (visible: boolean) => {
-  setTimeout(() => {
-    global.$store.commit("app/updateVideoPlayerVisible", false);
-  }, 1000);
+const init = () => {
+  const lineScaleEl: HTMLElement = document.getElementById("line-scale");
+  lineScaleEl.style.display = "none";
 };
 
 onMounted(async () => {
-  console.log(global.$store.state.app.envMode);
-  initTimer();
-  getBannerInfo();
-
-  // 临时滚动到右边
-  // 123
-  setTimeout(function () {
-    var x = document.body.scrollWidth; // 获取页面最大宽度
-    var y = document.body.scrollHeight; // 获取页面最大宽度
-    window.scrollTo(700, 500); // 设置滚动条最左方位置
-  }, 100);
+  init();
 });
 
 onBeforeUnmount(() => {});
@@ -99,27 +51,19 @@ onBeforeUnmount(() => {});
 
 <style scoped lang="scss">
 .layout_container {
-  display: flex;
-
-  width: 7680px;
-  height: 2160px;
-  // width: 5120px;
-  // height: 1440px;
+  width: 100%;
+  height: 100vh;
   min-height: 100vh;
-  // min-height: 100vh;
-  align-items: center;
-  justify-content: center;
-  flex-direction: inherit;
-  color: #303030;
-  overscroll-behavior: none;
-  background-color: #040c1f;
-
-  &:before {
-    content: "";
-    display: inline-block;
-    width: 0;
+  .ant-layout {
     height: 100%;
   }
+
+  // &:before {
+  //   content: "";
+  //   display: inline-block;
+  //   width: 0;
+  //   height: 100%;
+  // }
 
   .content {
     display: flex;
