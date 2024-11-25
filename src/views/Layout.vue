@@ -8,7 +8,9 @@
         </div>
       </a-layout-header>
       <a-layout>
-        <a-layout-sider>Sider</a-layout-sider>
+        <a-layout-sider>
+          <Menu />
+        </a-layout-sider>
         <a-layout-content>Content</a-layout-content>
       </a-layout>
       <a-layout-footer>Footer</a-layout-footer>
@@ -30,6 +32,8 @@ import {
 } from "vue";
 
 import Header from "@/components/Header.vue";
+import Menu from "@/components/Menu.vue";
+
 import { screenBannerInfoRequest } from "@/api/screen";
 import dayjs from "dayjs";
 
