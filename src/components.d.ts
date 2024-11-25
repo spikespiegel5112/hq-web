@@ -24,6 +24,7 @@ declare module 'vue' {
     DigitFlipper: typeof import('./components/DigitFlipper.vue')['default']
     Header: typeof import('./components/Header.vue')['default']
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']
+    Menu: typeof import('./components/Menu.vue')['default']
     Number: typeof import('./components/Number.vue')['default']
     PDFViewer: typeof import('./components/PDFViewer.vue')['default']
     ResponseModal: typeof import('./components/ResponseModal.vue')['default']

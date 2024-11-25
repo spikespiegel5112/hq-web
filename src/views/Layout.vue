@@ -1,7 +1,12 @@
 <template>
   <div class="layout_container" ref="layoutRef">
     <a-layout>
-      <a-layout-header>Header</a-layout-header>
+      <a-layout-header class="header">
+        <div class="title">虹桥枢纽运行管理一体化平台</div>
+        <div class="right">
+          {{ dayjs().format("YYYY-MM-DD hh:mm:ss") }}
+        </div>
+      </a-layout-header>
       <a-layout>
         <a-layout-sider>Sider</a-layout-sider>
         <a-layout-content>Content</a-layout-content>
@@ -26,6 +31,7 @@ import {
 
 import Header from "@/components/Header.vue";
 import { screenBannerInfoRequest } from "@/api/screen";
+import dayjs from "dayjs";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -57,62 +63,24 @@ onBeforeUnmount(() => {});
   .ant-layout {
     height: 100%;
   }
-
-  // &:before {
-  //   content: "";
-  //   display: inline-block;
-  //   width: 0;
-  //   height: 100%;
-  // }
-
-  .content {
+  .header {
     display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 50px 50px 100px 10px rgba(0, 0, 0, 0.1);
-    z-index: 1;
-    pointer-events: visible;
-
-    .main {
-      display: flex;
-      padding: 1.45rem 0 0 0;
-      width: 100%;
-      justify-content: space-between;
-      position: relative;
-
-      .middle {
-        margin: 1rem 0 0 0;
-        height: 4.5rem;
-        z-index: 2;
-      }
-
-      .right {
-        z-index: 1;
-        // margin: 0 0.6rem 0 0;
-      }
+    padding: 0 0.2rem;
+    height: 1rem;
+    background-color: transparent;
+    background-image: url("@/assets/header_bg.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    .title {
+      width: 6rem;
+      font-size: 0.35rem;
+      text-align: left;
+      font-weight: bold;
     }
-  }
-
-  .map {
-    width: 100%;
-    min-height: 100vh;
-    position: absolute;
-    left: 0;
-    top: 0;
-
-    .content {
-      margin: 0 auto;
-      // width: 55rem;
-      width: 48rem;
-      height: 27rem;
-      position: relative;
-      // left: 4rem;
+    .right {
+      flex: 1;
+      text-align: right;
     }
-
-    // z-index: -1;
   }
 }
 .debuggingtools {
