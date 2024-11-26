@@ -1,10 +1,12 @@
 <template>
-  <div class="common_menu_wrapper" :class="[side, blockSize, cornor]">
-    <div v-if="title !== ''" class="header">
-      <div class="title">{{ title }}</div>
-    </div>
-    <slot></slot>
-    <div class="cornor"></div>
+  <div class="common_menu_wrapper">
+    <a-menu
+      v-model:openKeys="openKeys"
+      v-model:selectedKeys="selectedKeys"
+      mode="inline"
+      :theme="theme"
+      :items="items"
+    />
   </div>
 </template>
 
@@ -21,50 +23,82 @@ import {
   nextTick,
 } from "vue";
 
-const props = defineProps({
-  side: {
-    type: String,
-    default: "left",
-    required: true,
-  },
-  text: {
-    type: String,
-    default: "",
-    required: false,
-  },
-  width: {
-    type: String,
-    default: "narrow",
-    required: false,
-  },
-  height: {
-    type: String,
-    default: "short",
-    required: false,
-  },
-  cornor: {
-    type: Boolean,
-    default: true,
-    required: false,
-  },
-  title: {
-    type: String,
-    default: "",
-    required: false,
-  },
-});
+import {
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  PieChartOutlined,
+  MailOutlined,
+  DesktopOutlined,
+  InboxOutlined,
+  AppstoreOutlined,
+} from "@ant-design/icons-vue";
+import type { MenuTheme } from "ant-design-vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
-const blockSize = computed(() => {
-  return props.width + "-" + props.height;
-}) as any;
+const props = defineProps({});
+const theme = ref<MenuTheme>("dark");
+const selectedKeys = ref(["1"]);
+const openKeys = ref(["sub1"]);
+const menuList = [
+  {
+    label: "首页",
+    title: "首页",
+    icon: () => h(PieChartOutlined),
+  },
+  {
+    label: "区域小时客流",
+    title: "区域小时客流",
+    icon: () => h(PieChartOutlined),
+  },
+  {
+    label: "区域实时客流",
+    title: "区域实时客流",
+    icon: () => h(PieChartOutlined),
+  },
+  {
+    label: "事件管理",
+    title: "事件管理",
+    icon: () => h(PieChartOutlined),
+  },
+  {
+    label: "信息管理",
+    title: "信息管理",
+    icon: () => h(PieChartOutlined),
+  },
+  {
+    label: "运行管理",
+    title: "运行管理",
+    icon: () => h(PieChartOutlined),
+  },
+  {
+    label: "报表管理",
+    title: "报表管理",
+    icon: () => h(PieChartOutlined),
+  },
+  {
+    label: "系统管理",
+    title: "系统管理",
+    icon: () => h(PieChartOutlined),
+  },
+];
+const items = ref([]);
+
+const initMenu = () => {
+  menuList.forEach((item: any, index: number) => {
+    item.key = index;
+  });
+  items.value = menuList;
+};
+
+onMounted(() => {
+  initMenu();
+});
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .common_menu_wrapper {
-  
 }
 </style>
