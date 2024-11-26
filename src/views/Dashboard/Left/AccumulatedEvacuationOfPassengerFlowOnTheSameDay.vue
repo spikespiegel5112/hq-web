@@ -1,5 +1,5 @@
 <template>
-  <Block side="left" width="narrow" height="medium" title="当日累计疏散客流">
+  <Block title="当日累计疏散客流">
     <div class="accumulatedevacuationofpassengerflowonthesameday">
       <div id="accumulatedevacuationofpassengerflowonthesameday"></div>
     </div>

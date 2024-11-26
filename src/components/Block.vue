@@ -22,7 +22,6 @@ import {
 
 const props = defineProps({
   title: { type: String, default: "", required: false },
-  side: { type: String, default: "left", required: true },
 });
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;

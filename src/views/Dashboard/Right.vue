@@ -1,9 +1,6 @@
 <template>
-  <div class="dashboard">
-    <div class="left">
-        
-
-    </div>
+  <div class="right">
+    <div class="left"></div>
     <div class="middle"></div>
     <div class="right"></div>
   </div>

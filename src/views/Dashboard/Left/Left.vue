@@ -12,7 +12,7 @@
         </div>
       </div>
     </div>
-    <div class="middle">
+    <div class="middle common_block_wrapper">
       <a-row>
         <a-col :span="12" class="evacuationofpassengerflow">
           <EvacuationOfPassengerFlow />
@@ -27,6 +27,16 @@
           class="accumulatedevacuationofpassengerflowonthesameday"
         >
           <AccumulatedEvacuationOfPassengerFlowOnTheSameDay />
+        </a-col>
+      </a-row>
+    </div>
+    <div class="bottom common_block_wrapper">
+      <a-row>
+        <a-col
+          :span="24"
+          class="accumulatedevacuationofpassengerflowonthesameday"
+        >
+          <Taxi />
         </a-col>
       </a-row>
     </div>
@@ -46,11 +56,10 @@ import {
   nextTick,
 } from "vue";
 
-import Header from "@/components/Header.vue";
-import Menu from "@/components/Menu.vue";
-import EvacuationOfPassengerFlow from "./chart/EvacuationOfPassengerFlow.vue";
-import HourlyPassengerFlow from "./chart/HourlyPassengerFlow.vue";
-import AccumulatedEvacuationOfPassengerFlowOnTheSameDay from "./chart/AccumulatedEvacuationOfPassengerFlowOnTheSameDay.vue";
+import EvacuationOfPassengerFlow from "./EvacuationOfPassengerFlow.vue";
+import HourlyPassengerFlow from "./HourlyPassengerFlow.vue";
+import AccumulatedEvacuationOfPassengerFlowOnTheSameDay from "./AccumulatedEvacuationOfPassengerFlowOnTheSameDay.vue";
+import Taxi from "./Taxi.vue";
 
 import { screenBannerInfoRequest } from "@/api/screen";
 import dayjs from "dayjs";
@@ -125,6 +134,7 @@ onBeforeUnmount(() => {});
     }
   }
   .middle {
+    margin: 0 0 0.25rem 0;
     align-items: start;
     .evacuationofpassengerflow {
       display: inline-block;
