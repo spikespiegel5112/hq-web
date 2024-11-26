@@ -1,6 +1,6 @@
 @font-face {
-  font-family: 'ZhenyanGB-Regular';
-  src: url('@/assets/font/ZhenyanGB-Regular.ttf');
+  font-family: "ZhenyanGB-Regular";
+  src: url("@/assets/font/ZhenyanGB-Regular.ttf");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -80,13 +80,13 @@ h5 {
 //   background: #555; /* 设置滚动条悬停时的颜色 */
 // }
 
-input[type='number'] {
+input[type="number"] {
   -moz-appearance: textfield;
   -webkit-appearance: none;
 }
 
-input[type='number']::-webkit-inner-spin-button,
-input[type='number']::-webkit-outer-spin-button {
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
@@ -149,9 +149,17 @@ input:focus {
   top: 0;
   left: 0;
   z-index: 0;
-  background: radial-gradient(circle at 100% 0, #efe8eb 0, rgba(239, 232, 235, 0) 33%),
+  background: radial-gradient(
+      circle at 100% 0,
+      #efe8eb 0,
+      rgba(239, 232, 235, 0) 33%
+    ),
     radial-gradient(circle at 100% 25%, #e8ebea 0, hsla(160, 7%, 92%, 0) 39%),
-    radial-gradient(circle at 100% 36%, hsla(160, 7%, 92%, 0.6) 0, hsla(160, 7%, 92%, 0) 38%),
+    radial-gradient(
+      circle at 100% 36%,
+      hsla(160, 7%, 92%, 0.6) 0,
+      hsla(160, 7%, 92%, 0) 38%
+    ),
     linear-gradient(180deg, #efeaef, #dcdcf5 99%);
 }
 
@@ -178,10 +186,20 @@ input:focus {
     ::v-deep.ant-table-wrapper {
       ::v-deep.ant-table-tbody {
         ::v-deep > tr {
-          background-color: linear-gradient(to right, red 0%, green 50%, blue 100%);
+          background-color: linear-gradient(
+            to right,
+            red 0%,
+            green 50%,
+            blue 100%
+          );
 
           &:hover {
-            background-color: linear-gradient(to right, red 0%, green 50%, blue 100%);
+            background-color: linear-gradient(
+              to right,
+              red 0%,
+              green 50%,
+              blue 100%
+            );
           }
 
           ::v-deep.ant-table-cell {

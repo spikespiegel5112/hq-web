@@ -1,8 +1,11 @@
 <template>
   <div class="dashboard">
-    <Left class="left"></Left>
-    <Middle></Middle>
-    <Right></Right>
+    <div class="left">
+        
+
+    </div>
+    <div class="middle"></div>
+    <div class="right"></div>
   </div>
 </template>
 
@@ -19,11 +22,11 @@ import {
   nextTick,
 } from "vue";
 
-import Left from "./Left.vue";
-import Middle from "./Middle.vue";
-import Right from "./Right.vue";
+import Header from "@/components/Header.vue";
+import Menu from "@/components/Menu.vue";
 
 import { screenBannerInfoRequest } from "@/api/screen";
+import dayjs from "dayjs";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -49,12 +52,8 @@ onBeforeUnmount(() => {});
 
 <style scoped lang="scss">
 .dashboard {
-  padding: 0.2rem;
   width: 100%;
   height: 100vh;
   min-height: 100vh;
-  .left {
-    width: 7rem;
-  }
 }
 </style>

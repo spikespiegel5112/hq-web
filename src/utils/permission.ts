@@ -7,7 +7,6 @@ import router from "@/router";
 // const global = currentInstance.appContext.config.globalProperties;
 
 router.beforeEach((to: any, from: any, next: any) => {
-  console.log("+++++++++++++++++++++++++++++");
   next();
 });
 

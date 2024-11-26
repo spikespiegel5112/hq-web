@@ -94,5 +94,27 @@ onMounted(() => {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .common_menu_wrapper {
+  height: 100%;
+  background-color: #020f26;
+  ul {
+    height: 100%;
+  }
+  :deep(
+      .ant-menu-root .ant-menu-item > .ant-menu-title-content,
+      .ant-menu-root .ant-menu-submenu-title > .ant-menu-title-content
+    ) {
+    text-align: left;
+    color: #fff;
+  }
+  :deep(.ant-menu-dark) {
+    background: #020f26;
+  }
+  .ant-menu {
+    .ant-menu-item {
+      .ant-menu-title-content {
+        text-align: left;
+      }
+    }
+  }
 }
 </style>
