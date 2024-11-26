@@ -9,9 +9,11 @@
       </a-layout-header>
       <a-layout>
         <a-layout-sider>
-          <Menu />
+          <Menu></Menu>
         </a-layout-sider>
-        <a-layout-content>Content</a-layout-content>
+        <a-layout-content>
+          <router-view></router-view>
+        </a-layout-content>
       </a-layout>
       <a-layout-footer>Footer</a-layout-footer>
     </a-layout>

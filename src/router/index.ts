@@ -5,18 +5,15 @@ import {
   RouteRecordRaw,
 } from "vue-router";
 
+import routeDictionary from "./routeDictionary";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    name: "chatList",
+    name: "layout",
+    redirect: "/dashboard",
     component: () =>
-      import(/* webpackChunkName: "ChatList" */ "../views/Layout.vue"),
-  },
-  {
-    path: "/chat",
-    name: "chat",
-    component: () =>
-      import(/* webpackChunkName: "Chat" */ "../views/Layout.vue"),
+      import(/* webpackChunkName: "Layout" */ "../views/Layout.vue"),
+    children: routeDictionary,
   },
 ];
 

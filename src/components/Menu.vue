@@ -1,11 +1,11 @@
 <template>
   <div class="common_menu_wrapper">
     <a-menu
-      v-model:openKeys="openKeys"
-      v-model:selectedKeys="selectedKeys"
+      v-model:selectedKeys="state.currentSelectKeys"
       mode="inline"
       :theme="theme"
-      :items="items"
+      :items="menuList"
+      @click="handleClickMenu"
     />
   </div>
 </template>
@@ -34,62 +34,56 @@ import {
 } from "@ant-design/icons-vue";
 import type { MenuTheme } from "ant-design-vue";
 
+import routeDictionary from "@/router/routeDictionary";
+
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
 const props = defineProps({});
 const theme = ref<MenuTheme>("dark");
 const selectedKeys = ref(["1"]);
-const openKeys = ref(["sub1"]);
-const menuList = [
-  {
-    label: "首页",
-    title: "首页",
-    icon: () => h(PieChartOutlined),
-  },
-  {
-    label: "区域小时客流",
-    title: "区域小时客流",
-    icon: () => h(PieChartOutlined),
-  },
-  {
-    label: "区域实时客流",
-    title: "区域实时客流",
-    icon: () => h(PieChartOutlined),
-  },
-  {
-    label: "事件管理",
-    title: "事件管理",
-    icon: () => h(PieChartOutlined),
-  },
-  {
-    label: "信息管理",
-    title: "信息管理",
-    icon: () => h(PieChartOutlined),
-  },
-  {
-    label: "运行管理",
-    title: "运行管理",
-    icon: () => h(PieChartOutlined),
-  },
-  {
-    label: "报表管理",
-    title: "报表管理",
-    icon: () => h(PieChartOutlined),
-  },
-  {
-    label: "系统管理",
-    title: "系统管理",
-    icon: () => h(PieChartOutlined),
-  },
-];
+const menuList = computed(() => {
+  return routeDictionary.map((item, index: number) => {
+    return {
+      ...item,
+      key: index,
+      component: undefined,
+    };
+  });
+});
+
 const items = ref([]);
 
+const state = reactive({
+  currentSelectKeys: [] as any[],
+});
+
+const currentRoute = computed(() => {
+  return global.$route;
+}) as any;
+
+const currentOpenKeys = computed(() => {
+  const result = menuList.value
+    .filter((item) => item.name === global.$route.name)
+    .map((item) => item.key);
+
+  return result;
+}) as any;
+
 const initMenu = () => {
-  menuList.forEach((item: any, index: number) => {
-    item.key = index;
+  const currentSelectKeys = menuList.value
+    .filter((item) => item.name === global.$route.name)
+    .map((item) => item.key);
+
+  state.currentSelectKeys = currentSelectKeys;
+};
+
+const handleClickMenu = (menuData) => {
+  const item = menuData.item;
+  global.$router.push({
+    name: item.name,
   });
-  items.value = menuList;
+  // debugger;
 };
 
 onMounted(() => {
