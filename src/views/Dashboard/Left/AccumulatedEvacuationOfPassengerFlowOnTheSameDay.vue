@@ -1,8 +1,9 @@
 <template>
-  <Block title="当日累计疏散客流">
-    <div class="accumulatedevacuationofpassengerflowonthesameday">
-      <div id="accumulatedevacuationofpassengerflowonthesameday"></div>
-    </div>
+  <Block
+    title="当日累计疏散客流"
+    class="accumulatedevacuationofpassengerflowonthesameday"
+  >
+    <div id="accumulatedevacuationofpassengerflowonthesameday"></div>
   </Block>
 </template>
 
@@ -26,7 +27,7 @@ const global = currentInstance.appContext.config.globalProperties;
 type EChartsOption = global.$echarts.EChartsOption;
 
 let xAxis = [] as string[];
-const dataDictionary = [];
+const dataDictionary = [] as any[];
 for (let index = 0; index < 22; index++) {
   dataDictionary.push({
     title: index,
@@ -147,10 +148,13 @@ onMounted(() => {
 <style scoped lang="scss">
 .accumulatedevacuationofpassengerflowonthesameday {
   width: 100%;
-  height: 2rem;
+  height: calc(100% - 1.5rem);
+  min-height: 1rem;
+  max-height: 3rem;
+  position: relative;
   > div {
     width: 100%;
-    height: 100%;
+    height: calc(100% - 1rem);
   }
 }
 </style>

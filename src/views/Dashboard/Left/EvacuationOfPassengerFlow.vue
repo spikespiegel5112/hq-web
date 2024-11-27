@@ -130,6 +130,8 @@ onMounted(() => {
 .evacuationofpassengerflow {
   width: 100%;
   height: 2rem;
+  min-height: 1rem;
+  max-height: 2rem;
   > div {
     width: 100%;
     height: 100%;

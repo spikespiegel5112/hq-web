@@ -39,10 +39,7 @@
           </ul>
         </div>
       </div>
-      <div class="queuetime">
-        <div class="title">排队时间</div>
-        <QueueTime />
-      </div>
+      <QueueTime />
     </div>
   </Block>
 </template>
@@ -102,8 +99,10 @@ onMounted(() => {
 <style scoped lang="scss">
 .taxi {
   width: 100%;
-  height: 4.2rem;
+  height: 100%;
+  max-height: 5rem;
   .top {
+    height: 100%;
     .direction {
       display: flex;
       width: 100%;
@@ -121,11 +120,12 @@ onMounted(() => {
         background-image: url("@/assets/taxi_south.png");
       }
       .north {
-        background-image: url("@/assets/taxi_south.png");
+        background-image: url("@/assets/taxi_north.png");
       }
     }
     .main {
       display: flex;
+      margin: 0 0 0.1rem 0;
       justify-content: space-between;
       width: 100%;
       height: 1.6rem;

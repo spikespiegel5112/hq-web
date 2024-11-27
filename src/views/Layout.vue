@@ -75,7 +75,7 @@ onBeforeUnmount(() => {});
     height: 1rem;
     background-color: transparent;
     background-image: url("@/assets/header_bg.png");
-    background-size: contain;
+    background-size: 26rem 1rem;
     background-repeat: no-repeat;
     .title {
       width: 6rem;

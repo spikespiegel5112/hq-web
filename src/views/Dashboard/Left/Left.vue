@@ -12,33 +12,21 @@
         </div>
       </div>
     </div>
-    <div class="middle common_block_wrapper">
-      <a-row>
-        <a-col :span="12" class="evacuationofpassengerflow">
-          <EvacuationOfPassengerFlow />
-        </a-col>
-        <a-col :span="12" class="hourlypassengerflow">
-          <HourlyPassengerFlow />
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col
-          :span="24"
-          class="accumulatedevacuationofpassengerflowonthesameday"
-        >
-          <AccumulatedEvacuationOfPassengerFlowOnTheSameDay />
-        </a-col>
-      </a-row>
-    </div>
-    <div class="bottom common_block_wrapper">
-      <a-row>
-        <a-col
-          :span="24"
-          class="accumulatedevacuationofpassengerflowonthesameday"
-        >
-          <Taxi />
-        </a-col>
-      </a-row>
+    <div class="main">
+      <div class="middle common_block_wrapper">
+        <a-row>
+          <a-col :span="12" class="evacuationofpassengerflow">
+            <EvacuationOfPassengerFlow />
+          </a-col>
+          <a-col :span="12" class="hourlypassengerflow">
+            <HourlyPassengerFlow />
+          </a-col>
+        </a-row>
+        <AccumulatedEvacuationOfPassengerFlowOnTheSameDay />
+      </div>
+      <div class="bottom common_block_wrapper">
+        <Taxi />
+      </div>
     </div>
   </div>
 </template>
@@ -88,9 +76,13 @@ onBeforeUnmount(() => {});
 
 <style scoped lang="scss">
 .dashboardleft {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 1.1rem);
   // color: #fff;
   .top {
     width: 100%;
+    height: 1rem;
     .currentpassengerflowquantity {
       display: flex;
       align-items: center;
@@ -133,20 +125,25 @@ onBeforeUnmount(() => {});
       }
     }
   }
-  .middle {
-    margin: 0 0 0.15rem 0;
-    align-items: start;
-    .evacuationofpassengerflow {
-      display: inline-block;
-      width: 50%;
+  .main {
+    height: calc(100% - 1.1rem);
+    overflow: auto;
+    .middle {
+      margin: 0 0 0.15rem 0;
+      align-items: start;
+      height: 49%;
+      .evacuationofpassengerflow {
+        display: inline-block;
+        width: 50%;
+      }
+      .hourlypassengerflow {
+        display: inline-block;
+        width: 50%;
+      }
     }
-    .hourlypassengerflow {
-      display: inline-block;
-      width: 50%;
-    }
-    .accumulatedevacuationofpassengerflowonthesameday {
-      display: inline-block;
-      width: 100%;
+    .bottom {
+      height: 49%;
+      position: relative;
     }
   }
 }
