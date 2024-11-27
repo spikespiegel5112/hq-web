@@ -1,9 +1,7 @@
 <template>
   <Block title="" class="queuetime">
-    <div>
-      <div class="title">排队时间</div>
-      <div class="chart" id="queuetime"></div>
-    </div>
+    <div class="title">排队时间</div>
+    <div class="chart" id="queuetime"></div>
   </Block>
 </template>
 
@@ -128,13 +126,9 @@ onMounted(() => {
   max-height: 3rem;
   color: #fcb501;
 
-  > div {
+  .chart {
     width: 100%;
-    height: 100%;
-    .chart{
-      width: 100%;
-      height: calc(100% - 0.5rem);
-    }
+    height: calc(100% - 0.35rem);
   }
 }
 </style>

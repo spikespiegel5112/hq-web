@@ -70,8 +70,8 @@
 //     --el-mask-color: rgba(0, 0, 0, 0.8);
 //     --el-mask-color-extra-light: rgba(0, 0, 0, 0.3);
 // }
-// html.dark .el-button {
-//     --el-button-disabled-text-color: rgba(255, 255, 255, 0.5);
+// html.dark .a-button {
+//     --a-button-disabled-text-color: rgba(255, 255, 255, 0.5);
 // }
 // html.dark .el-card {
 //     --el-card-bg-color: var(--el-bg-color-overlay);
@@ -163,8 +163,8 @@ html.dark {
   --el-mask-color: rgba(0, 0, 0, 0.8);
   --el-mask-color-extra-light: rgba(0, 0, 0, 0.3);
 }
-html.dark .el-button {
-  --el-button-disabled-text-color: rgba(255, 255, 255, 0.5);
+html.dark .a-button {
+  --a-button-disabled-text-color: rgba(255, 255, 255, 0.5);
 }
 html.dark .el-card {
   --el-card-bg-color: var(--el-bg-color-overlay);

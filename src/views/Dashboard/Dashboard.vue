@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard">
     <Left class="left"></Left>
-    <Middle></Middle>
+    <Middle class="middle"></Middle>
     <Right></Right>
   </div>
 </template>
@@ -20,7 +20,7 @@ import {
 } from "vue";
 
 import Left from "./Left/Left.vue";
-import Middle from "./Middle.vue";
+import Middle from "./Middle/Middle.vue";
 import Right from "./Right.vue";
 
 import { screenBannerInfoRequest } from "@/api/screen";
@@ -49,11 +49,19 @@ onBeforeUnmount(() => {});
 
 <style scoped lang="scss">
 .dashboard {
+  display: flex;
   padding: 0.1rem;
   width: 100%;
   height: 100%;
   min-height: 100%;
+  align-items: start;
   .left {
+    display: inline-block;
+    width: 7rem;
+  }
+  .middle {
+    display: inline-block;
+    margin: 0 0 0 0.2rem;
     width: 7rem;
   }
 }
