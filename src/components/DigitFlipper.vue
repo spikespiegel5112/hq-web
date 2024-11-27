@@ -113,7 +113,7 @@ const setNumberTransform = () => {
   // 经排查，发现是 numberItems字段里面获取的 html元素顺序不对，所以重新给他排好序
   // 注意：numberItems字段里面获取的 html元素顺序不对 是偶尔发生的现象，但是为了安全起见，还是处理下
 
-  const numberArr = state.orderNum.filter((item) => !isNaN(item));
+  const numberArr = state.orderNum.filter((item:any) => !isNaN(item));
   // 结合CSS 对数字字符进行滚动,显示订单数量
   for (let index = 0; index < numberItems.value.length; index++) {
     const elem: VueElement = numberItems.value[index];

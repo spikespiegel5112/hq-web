@@ -43,13 +43,47 @@ const props = defineProps({});
 const theme = ref<MenuTheme>("dark");
 const selectedKeys = ref(["1"]);
 const menuList = computed(() => {
-  return routeDictionary.map((item, index: number) => {
-    return {
-      ...item,
-      key: index,
-      component: undefined,
-    };
-  });
+  let result = [] as any[];
+  const looper = (chidren: any[], parentKey: number | string | null) => {
+    const _result = [] as any[];
+    chidren.forEach((item: any, index: number) => {
+      let key;
+
+      if (!parentKey) {
+        key = index + "";
+      } else {
+        key = parentKey + "-" + index;
+      }
+      item.key = key;
+
+      if (item.children instanceof Array && item.children.length > 0) {
+        _result.push({
+          ...item,
+          component: undefined,
+          children: looper(item.children, item.key),
+        });
+      } else {
+        _result.push({
+          ...item,
+          component: undefined,
+        });
+      }
+    });
+    return _result;
+  };
+  result = looper(routeDictionary, null);
+
+  console.log(result);
+
+  return result;
+
+  // return routeDictionary.map((item: any, index: number) => {
+  //   return {
+  //     ...item,
+  //     key: index,
+  //     component: undefined,
+  //   };
+  // });
 });
 
 const items = ref([]);
@@ -64,21 +98,21 @@ const currentRoute = computed(() => {
 
 const currentOpenKeys = computed(() => {
   const result = menuList.value
-    .filter((item) => item.name === global.$route.name)
-    .map((item) => item.key);
+    .filter((item: any) => item.name === global.$route.name)
+    .map((item: any) => item.key);
 
   return result;
 }) as any;
 
 const initMenu = () => {
   const currentSelectKeys = menuList.value
-    .filter((item) => item.name === global.$route.name)
-    .map((item) => item.key);
+    .filter((item: any) => item.name === global.$route.name)
+    .map((item: any) => item.key);
 
   state.currentSelectKeys = currentSelectKeys;
 };
 
-const handleClickMenu = (menuData) => {
+const handleClickMenu = (menuData: any) => {
   const item = menuData.item;
   global.$router.push({
     name: item.name,

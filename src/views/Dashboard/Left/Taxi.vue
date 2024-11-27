@@ -39,6 +39,10 @@
           </ul>
         </div>
       </div>
+      <div class="queuetime">
+        <div class="title">排队时间</div>
+        <QueueTime />
+      </div>
     </div>
   </Block>
 </template>
@@ -55,6 +59,7 @@ import {
   ref,
   nextTick,
 } from "vue";
+import QueueTime from "./QueueTime.vue";
 
 import { screenTimeDistFlowRequest } from "@/api/screen.ts";
 
@@ -123,9 +128,9 @@ onMounted(() => {
       display: flex;
       justify-content: space-between;
       width: 100%;
-      height: 3rem;
+      height: 1.6rem;
       background-image: url("@/assets/taxi_bg.png");
-      background-size: contain;
+      background-size: 100%;
       background-repeat: no-repeat;
       background-position: 0 -0.1rem;
       > div {

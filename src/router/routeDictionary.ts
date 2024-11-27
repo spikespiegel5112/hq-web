@@ -17,7 +17,7 @@ const routerDictionary = [
     icon: () => h(PieChartOutlined),
     component: () =>
       import(
-        /* webpackChunkName: "Dashboard" */ "../views/Dashboard/Dashboard.vue"
+        /* webpackChunkName: "Dashboard" */ "@/views/Dashboard/Dashboard.vue"
       ),
   },
   {
@@ -28,7 +28,7 @@ const routerDictionary = [
     icon: () => h(PieChartOutlined),
     component: () =>
       import(
-        /* webpackChunkName: "Dashboard" */ "../views/Dashboard/Dashboard.vue"
+        /* webpackChunkName: "Dashboard" */ "@/views/Dashboard/Dashboard.vue"
       ),
   },
   {
@@ -39,7 +39,7 @@ const routerDictionary = [
     icon: () => h(PieChartOutlined),
     component: () =>
       import(
-        /* webpackChunkName: "Dashboard" */ "../views/Dashboard/Dashboard.vue"
+        /* webpackChunkName: "Dashboard" */ "@/views/Dashboard/Dashboard.vue"
       ),
   },
   {
@@ -50,7 +50,7 @@ const routerDictionary = [
     icon: () => h(PieChartOutlined),
     component: () =>
       import(
-        /* webpackChunkName: "Dashboard" */ "../views/Dashboard/Dashboard.vue"
+        /* webpackChunkName: "Dashboard" */ "@/views/Dashboard/Dashboard.vue"
       ),
   },
   {
@@ -61,7 +61,7 @@ const routerDictionary = [
     icon: () => h(PieChartOutlined),
     component: () =>
       import(
-        /* webpackChunkName: "Dashboard" */ "../views/Dashboard/Dashboard.vue"
+        /* webpackChunkName: "Dashboard" */ "@/views/Dashboard/Dashboard.vue"
       ),
   },
   {
@@ -72,19 +72,84 @@ const routerDictionary = [
     icon: () => h(PieChartOutlined),
     component: () =>
       import(
-        /* webpackChunkName: "Dashboard" */ "../views/Dashboard/Dashboard.vue"
+        /* webpackChunkName: "Dashboard" */ "@/views/Dashboard/Dashboard.vue"
       ),
   },
   {
     label: "报表管理",
     title: "报表管理",
-    path: "ReportManagement",
-    name: "ReportManagement",
+    path: "SheetManagement",
+    name: "SheetManagement",
     icon: () => h(PieChartOutlined),
     component: () =>
       import(
-        /* webpackChunkName: "Dashboard" */ "../views/Dashboard/Dashboard.vue"
+        /* webpackChunkName: "Dashboard" */ "@/views/Dashboard/Dashboard.vue"
       ),
+    children: [
+      {
+        label: "事件报表",
+        title: "事件报表",
+        path: "EventSheet",
+        name: "EventSheet",
+        icon: () => h(PieChartOutlined),
+        component: () =>
+          import(/* webpackChunkName: "Layout" */ "@/views/Layout.vue"),
+      },
+      {
+        label: "事件报表",
+        title: "事件报表",
+        path: "EventSheet",
+        name: "EventSheet",
+        icon: () => h(PieChartOutlined),
+        component: () =>
+          import(/* webpackChunkName: "Layout" */ "@/views/Layout.vue"),
+      },
+      {
+        label: "事件报表",
+        title: "事件报表",
+        path: "EventSheet",
+        name: "EventSheet",
+        icon: () => h(PieChartOutlined),
+        component: () =>
+          import(/* webpackChunkName: "Layout" */ "@/views/Layout.vue"),
+      },
+      {
+        label: "投诉报表",
+        title: "投诉报表",
+        path: "ComplaintSheet",
+        name: "ComplaintSheet",
+        icon: () => h(PieChartOutlined),
+        component: () =>
+          import(/* webpackChunkName: "Layout" */ "@/views/Layout.vue"),
+      },
+      {
+        label: "舆情报表",
+        title: "舆情报表",
+        path: "PublicOpinionSheet",
+        name: "PublicOpinionSheet",
+        icon: () => h(PieChartOutlined),
+        component: () =>
+          import(/* webpackChunkName: "Layout" */ "@/views/Layout.vue"),
+      },
+      {
+        label: "地铁月报表",
+        title: "地铁月报表",
+        path: "SubwaySheetByMonth",
+        name: "SubwaySheetByMonth",
+        icon: () => h(PieChartOutlined),
+        component: () =>
+          import(/* webpackChunkName: "Layout" */ "@/views/Layout.vue"),
+      },
+      {
+        label: "客流月报表",
+        title: "客流月报表",
+        path: "PassengerFlowSheetByMonth",
+        name: "PassengerFlowSheetByMonth",
+        icon: () => h(PieChartOutlined),
+        component: () =>
+          import(/* webpackChunkName: "Layout" */ "@/views/Layout.vue"),
+      },
+    ],
   },
   {
     label: "系统管理",
@@ -94,7 +159,7 @@ const routerDictionary = [
     icon: () => h(PieChartOutlined),
     component: () =>
       import(
-        /* webpackChunkName: "Dashboard" */ "../views/Dashboard/Dashboard.vue"
+        /* webpackChunkName: "Dashboard" */ "@/views/Dashboard/Dashboard.vue"
       ),
   },
 ] as any[];
