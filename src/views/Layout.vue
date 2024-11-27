@@ -15,7 +15,6 @@
           <router-view></router-view>
         </a-layout-content>
       </a-layout>
-      <a-layout-footer>Footer</a-layout-footer>
     </a-layout>
   </div>
 </template>

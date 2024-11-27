@@ -1,9 +1,6 @@
 <template>
   <div class="middle">
-    <div class="left">
-        
-
-    </div>
+    <div class="left"></div>
     <div class="middle"></div>
     <div class="right"></div>
   </div>
@@ -50,10 +47,4 @@ onMounted(async () => {
 onBeforeUnmount(() => {});
 </script>
 
-<style scoped lang="scss">
-.dashboard {
-  width: 100%;
-  height: 100vh;
-  min-height: 100vh;
-}
-</style>
+<style scoped lang="scss"></style>

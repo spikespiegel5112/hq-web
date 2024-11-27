@@ -134,7 +134,7 @@ onBeforeUnmount(() => {});
     }
   }
   .middle {
-    margin: 0 0 0.25rem 0;
+    margin: 0 0 0.15rem 0;
     align-items: start;
     .evacuationofpassengerflow {
       display: inline-block;

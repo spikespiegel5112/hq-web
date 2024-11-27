@@ -9,20 +9,35 @@
         <div class="left">
           <ul>
             <li>
-              <span class="label">蓄车场数:</span>
+              <span class="label">蓄车场数：</span>
               <span class="value">11111</span>
             </li>
             <li>
-              <span class="label">入库速度:</span>
+              <span class="label">入库速度：</span>
               <span class="value">11111</span>
             </li>
             <li>
-              <span class="label">出库速度:</span>
+              <span class="label">出库速度：</span>
               <span class="value">11111</span>
             </li>
           </ul>
         </div>
-        <div class="right"></div>
+        <div class="right">
+          <ul>
+            <li>
+              <span class="label">蓄车场数：</span>
+              <span class="value">11111</span>
+            </li>
+            <li>
+              <span class="label">入库速度：</span>
+              <span class="value">11111</span>
+            </li>
+            <li>
+              <span class="label">出库速度：</span>
+              <span class="value">11111</span>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </Block>
@@ -82,17 +97,18 @@ onMounted(() => {
 <style scoped lang="scss">
 .taxi {
   width: 100%;
-  height: 4rem;
+  height: 4.2rem;
   .top {
     .direction {
       display: flex;
       width: 100%;
-      height: 0.5rem;
+      height: 0.7rem;
       justify-content: space-between;
       span {
         display: inline-block;
-        width: 1rem;
-        height: 1rem;
+        margin: 0.2rem 0.1rem 0 0.1rem;
+        width: 0.5rem;
+        height: 0.5rem;
         background-repeat: no-repeat;
         background-size: contain;
       }
@@ -104,17 +120,46 @@ onMounted(() => {
       }
     }
     .main {
+      display: flex;
+      justify-content: space-between;
       width: 100%;
       height: 3rem;
       background-image: url("@/assets/taxi_bg.png");
       background-size: contain;
       background-repeat: no-repeat;
-      .left{
-        padding: 0.5rem 0 0 0;
-        ul{
-          li{
-
-            margin: 0.2rem 0 0 0;
+      background-position: 0 -0.1rem;
+      > div {
+        display: inline-block;
+        width: 2.35rem;
+        ul {
+          padding: 0.2rem 0 0 0.2rem;
+          li {
+            padding: 0.2rem 0 0 0;
+            font-size: 0.15rem;
+          }
+        }
+      }
+      .left {
+        ul {
+          li {
+            .label {
+              color: #00b1a6;
+            }
+            .value {
+              color: #00ffbd;
+            }
+          }
+        }
+      }
+      .right {
+        ul {
+          li {
+            .label {
+              color: #1d8b9b;
+            }
+            .value {
+              color: #30e5ff;
+            }
           }
         }
       }

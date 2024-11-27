@@ -47,10 +47,4 @@ onMounted(async () => {
 onBeforeUnmount(() => {});
 </script>
 
-<style scoped lang="scss">
-.dashboard {
-  width: 100%;
-  height: 100vh;
-  min-height: 100vh;
-}
-</style>
+<style scoped lang="scss"></style>
