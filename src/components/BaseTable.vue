@@ -1,6 +1,11 @@
 <template>
   <div class="common_basetable_wrapper">
-    <a-table :dataSource="actualTableData">
+    <a-table
+      :dataSource="actualTableData"
+      :rowClassName="
+        (_record, index) => (index % 2 === 0 ? 'table-striped' : null)
+      "
+    >
       <a-table-column
         v-for="(item, index) in innerDataModel.filter(
           (item:any) => !!item.tableVisible
@@ -212,6 +217,37 @@ const handleAction = (action: any, scope: any) => {
       rgba(68, 121, 255, 1),
       rgba(68, 121, 255, 0)
     );
+  }
+  :deep(.ant-table) {
+    .ant-table-container {
+      .ant-table-content {
+        .ant-table-tbody {
+          .ant-table-row {
+            &.table-striped,
+            &:hover {
+              transition: all 0.3s;
+              background-image: linear-gradient(
+                to right,
+                rgba(0, 67, 144, 0) 0%,
+                rgba(0, 67, 144, 1) 10%,
+                rgba(0, 67, 144, 1) 90%,
+                rgba(0, 67, 144, 0) 100%
+              );
+              > td {
+                background-color: transparent;
+              }
+            }
+            &:hover {
+              background-image: linear-gradient(
+                to right,
+                rgb(15, 83, 231) 0%,
+                rgba(15, 83, 231, 1) 100%
+              );
+            }
+          }
+        }
+      }
+    }
   }
 }
 </style>

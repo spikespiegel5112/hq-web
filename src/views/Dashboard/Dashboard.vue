@@ -2,7 +2,7 @@
   <div class="dashboard">
     <Left class="left"></Left>
     <Middle class="middle"></Middle>
-    <Right></Right>
+    <Right class="right"></Right>
   </div>
 </template>
 
@@ -21,7 +21,7 @@ import {
 
 import Left from "./Left/Left.vue";
 import Middle from "./Middle/Middle.vue";
-import Right from "./Right.vue";
+import Right from "./Right/Right.vue";
 
 import { screenBannerInfoRequest } from "@/api/screen";
 
@@ -63,6 +63,11 @@ onBeforeUnmount(() => {});
     display: inline-block;
     margin: 0 0 0 0.2rem;
     width: 7rem;
+  }
+  .right {
+    display: inline-block;
+    margin: 0 0 0 0.2rem;
+    flex: 1;
   }
 }
 </style>

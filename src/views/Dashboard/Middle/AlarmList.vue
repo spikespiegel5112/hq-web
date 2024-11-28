@@ -2,7 +2,7 @@
   <Block title="报警列表" class="alarmlist">
     <div class="choosedate">
       <ul>
-        <li>
+        <li class="active">
           <a href="javascript:;"> 今日 </a>
         </li>
         <li>
@@ -142,13 +142,66 @@ onBeforeUnmount(() => {});
   flex-direction: column;
   height: calc(100vh - 1.68rem);
   .choosedate {
+    position: absolute;
+    top: 0;
+    right: 0;
     ul {
       li {
-        
+        display: inline-block;
+        margin: 0 0 0 0.2rem;
+        border: 1px solid #004390;
+        background-color: #00284d;
+        position: relative;
+        &:before {
+          content: "";
+          display: inline-block;
+          width: 0;
+          height: 0;
+          border-style: solid;
+          border-color: transparent;
+          border-width: 0.05rem;
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
         a {
           display: inline-block;
+          padding: 0.04rem 0.15rem;
           width: 100%;
           height: 100%;
+          color: #fff;
+        }
+        &.active {
+          color: #fff;
+          border: 1px solid #23dbfc;
+          &:before {
+            border-color: #23dbfc transparent transparent #23dbfc;
+          }
+        }
+      }
+    }
+  }
+  .common_basetable_wrapper {
+    margin: 0.3rem 0 0 0;
+    :deep(.ant-table) {
+      .ant-table-container {
+        .ant-table-content {
+          .ant-table-thead {
+            tr {
+              .ant-table-cell {
+                padding: 0.05rem;
+                background-color: #0023a6;
+              }
+            }
+          }
+          .ant-table-tbody {
+            .ant-table-row {
+              .ant-table-cell {
+                padding: 0.05rem;
+                // background-color: #0023a6;
+              }
+            }
+          }
         }
       }
     }

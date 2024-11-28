@@ -1,8 +1,17 @@
 <template>
-  <div class="middle">
-    <div class="left"></div>
-    <div class="middle"></div>
-    <div class="right"></div>
+  <div class="dashboardright common_block_wrapper">
+    <div class="header">
+      <a-form>
+        <a-row>
+          <a-col :span="12"> </a-col>
+          <a-col :span="12">
+            <a-form-item label="区域">
+              <a-select></a-select>
+            </a-form-item>
+          </a-col>
+        </a-row>
+      </a-form>
+    </div>
   </div>
 </template>
 
@@ -43,4 +52,12 @@ onMounted(async () => {
 onBeforeUnmount(() => {});
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.dashboardright {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 1.17rem);
+  position: relative;
+  // color: #fff;
+}
+</style>
