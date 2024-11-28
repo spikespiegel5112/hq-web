@@ -5,16 +5,16 @@
         v-for="(item, index) in innerDataModel.filter(
           (item:any) => !!item.tableVisible
         )"
-        :key="index"
-        :label="item.label"
-        :prop="item.name"
+        :key="item.name"
+        :title="item.title"
+        :data-index="item.name"
         :width="item.width"
         :fixed="item.fixed"
         align="center"
       >
         <template #default="scope">
           <div v-if="item.name === 'index'">
-            {{ scope.$index + 1 }}
+            {{ scope.index + 1 }}
           </div>
           <div v-if="item.name === 'operationColumn'">
             <a-button
@@ -23,7 +23,7 @@
               :class="
                 state.actionDictionary.find((item2:any) => item2.name === action).color
               "
-              type="text"
+              type="link"
               @click.stop="handleAction(action, scope)"
             >
               {{
@@ -32,7 +32,7 @@
             </a-button>
           </div>
           <div v-else>
-            {{ scope.row[item.name] }}
+            {{ scope.record[item.name] }}
           </div>
         </template>
       </a-table-column>
@@ -54,7 +54,7 @@ import {
 } from "vue";
 
 const props = defineProps({
-  tableData: { type: Array, required: true, default: null },
+  tableData: { type: Array, required: true, default: () => [] },
   dataModel: { type: Array, required: true, default: () => [] },
   sortable: { type: Boolean, default: false },
   showLastColumn: { type: Boolean, default: false },
@@ -104,15 +104,29 @@ const state = reactive({
 });
 
 const innerDataModel = computed(() => {
-  return props.dataModel.length > 0
-    ? props.dataModel.map((item: any) => {
+  const dataModel = props.dataModel.map((item: any) => {
+    return {
+      ...item,
+      title: item.label,
+      dataIndex: item.name,
+      key: item.name,
+    };
+  });
+
+  return dataModel.length > 0
+    ? dataModel.map((item: any) => {
         let modifiedItem = {} as any;
         switch (item.name) {
           case "index":
             modifiedItem.width = 60;
             break;
           case "operationColumn":
-            modifiedItem.width = 160;
+            modifiedItem.width = item.actions.reduce(
+              (sum: number, cur: number) => {
+                return sum + 75;
+              },
+              0
+            );
             break;
         }
         item = {
@@ -135,6 +149,20 @@ const actualTableData = computed(() => {
     : state.originalTableData;
 }) as any;
 
+watch(
+  () => props.tableData,
+  (newValue: any, oldValue: any) => {
+    if (newValue instanceof Array) {
+      state.originalTableData = [];
+      setTimeout(() => {
+        state.originalTableData = JSON.parse(JSON.stringify(newValue));
+      }, 200);
+    } else {
+      state.originalTableData = [];
+    }
+  }
+);
+
 const handleAction = (action: any, scope: any) => {
   const row = scope.row;
   if (action === "download") {
@@ -150,7 +178,7 @@ const handleAction = (action: any, scope: any) => {
     // this.$emit("onView", row);
   }
   if (action === "edit") {
-    // this.$emit("onEdit", action, this.originalTableData[scope.$index]);
+    // this.$emit("onEdit", action, state.originalTableData[scope.$index]);
   }
   if (action === "delete") {
     // this.$confirm("确认删除？", "提示", {

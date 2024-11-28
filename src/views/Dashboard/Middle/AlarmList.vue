@@ -46,7 +46,7 @@ const pageModel = ref([
     exportVisible: false,
   },
   {
-    label: "公路编码",
+    label: "报警类型",
     name: "higywayCode",
     required: true,
     tableVisible: true,
@@ -54,7 +54,7 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "路名",
+    label: "报警内容",
     name: "highwayName",
     required: true,
     tableVisible: true,
@@ -62,7 +62,7 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "桥梁代码",
+    label: "报警时间",
     name: "bridgeCode",
     required: true,
     tableVisible: true,
@@ -70,7 +70,7 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "桥梁名称",
+    label: "报警地点",
     name: "bridgeName",
     required: true,
     tableVisible: true,
@@ -78,30 +78,11 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "地点及桩号",
-    name: "locationPileName",
-    required: true,
-    dataType: "number",
+    label: "查看",
+    name: "operationColumn",
     tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
-    label: "跨越河流及障碍物",
-    name: "crossRiversObstacles",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
-    label: "桥长（m）",
-    name: "bridgeLength",
-    required: true,
-    dataType: "number",
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
+    exportVisible: false,
+    actions: ["view"],
   },
 ]);
 
@@ -111,9 +92,32 @@ const state = reactive({
 });
 
 const init = () => {};
+const getData = () => {
+  state.tableData = [
+    {
+      higywayCode: "aaa",
+      highwayName: "aaa",
+      bridgeCode: "aaa",
+      bridgeName: "aaa",
+    },
+    {
+      higywayCode: "aaa",
+      highwayName: "aaa",
+      bridgeCode: "aaa",
+      bridgeName: "aaa",
+    },
+    {
+      higywayCode: "aaa",
+      highwayName: "aaa",
+      bridgeCode: "aaa",
+      bridgeName: "aaa",
+    },
+  ];
+};
 
 onMounted(async () => {
   init();
+  getData();
 });
 
 onBeforeUnmount(() => {});
