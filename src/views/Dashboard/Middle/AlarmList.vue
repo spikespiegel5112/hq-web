@@ -1,5 +1,18 @@
 <template>
   <Block title="报警列表" class="alarmlist">
+    <div class="choosedate">
+      <ul>
+        <li>
+          <a href="javascript:;"> 今日 </a>
+        </li>
+        <li>
+          <a href="javascript:;"> 本周 </a>
+        </li>
+        <li>
+          <a href="javascript:;"> 当月 </a>
+        </li>
+      </ul>
+    </div>
     <BaseTable
       :tableData="state.tableData"
       :dataModel="pageModel"
@@ -128,5 +141,17 @@ onBeforeUnmount(() => {});
   display: flex;
   flex-direction: column;
   height: calc(100vh - 1.68rem);
+  .choosedate {
+    ul {
+      li {
+        
+        a {
+          display: inline-block;
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
 }
 </style>

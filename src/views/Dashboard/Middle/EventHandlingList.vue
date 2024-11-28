@@ -42,6 +42,30 @@
             </div>
           </div>
         </li>
+        <li>
+          <div class="title">
+            <span class="caution">
+              <span class="triangle"></span>
+              <ExclamationOutlined />
+            </span>
+            高铁到达客流预计36万
+          </div>
+          <div class="content">
+            <div class="left">
+              <div class="type">
+                <label>上报类别：</label>
+                <span>大客流应急保障</span>
+              </div>
+              <div class="date">2024-07-20 12:23</div>
+            </div>
+            <div class="right">
+              <div class="status">
+                <label>状态：</label>
+                <span>处置中</span>
+              </div>
+            </div>
+          </div>
+        </li>
       </ul>
     </div>
   </Block>
@@ -128,33 +152,11 @@ const pageModel = ref([
 ]);
 
 const state = reactive({
-  tableData: [] as any[],
   dataModel: [] as any[],
 });
 
 const init = () => {};
-const getData = () => {
-  state.tableData = [
-    {
-      higywayCode: "aaa",
-      highwayName: "aaa",
-      bridgeCode: "aaa",
-      bridgeName: "aaa",
-    },
-    {
-      higywayCode: "aaa",
-      highwayName: "aaa",
-      bridgeCode: "aaa",
-      bridgeName: "aaa",
-    },
-    {
-      higywayCode: "aaa",
-      highwayName: "aaa",
-      bridgeCode: "aaa",
-      bridgeName: "aaa",
-    },
-  ];
-};
+const getData = () => {};
 
 onMounted(async () => {
   init();
@@ -230,7 +232,6 @@ onBeforeUnmount(() => {});
           width: 0.1rem;
           height: 0.1rem;
           background-color: aqua;
-          box-shadow: #fff 0rem 0 0.1rem;
           border-radius: 50%;
           position: absolute;
           top: -0.014rem;
@@ -242,9 +243,16 @@ onBeforeUnmount(() => {});
   .main {
     ul {
       li {
+        margin: 0 0 0.1rem 0;
         padding: 0 0.2rem;
         width: 100%;
         background-color: #001a3f;
+        transition: all 0.3s;
+        &:hover {
+          background-color: #002d6a;
+          box-shadow: 0 0 0.15rem 0 #1d50f5 inset;
+  
+        }
         .title {
           display: flex;
           align-items: center;
