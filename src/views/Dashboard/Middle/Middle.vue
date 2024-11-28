@@ -3,7 +3,9 @@
     <div class="top common_block_wrapper">
       <AlarmList />
     </div>
-    <div class="bottom"></div>
+    <div class="bottom common_block_wrapper">
+      <EventHandlingList />
+    </div>
   </div>
 </template>
 
@@ -21,9 +23,9 @@ import {
 } from "vue";
 
 import AlarmList from "./AlarmList.vue";
+import EventHandlingList from "./EventHandlingList.vue";
 
 import { screenBannerInfoRequest } from "@/api/screen";
-import dayjs from "dayjs";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -48,14 +50,16 @@ onBeforeUnmount(() => {});
 </script>
 
 <style scoped lang="scss">
-.dashboardleft {
+.dashboardmiddle {
   display: flex;
   flex-direction: column;
   height: calc(100vh - 1.1rem);
+  position: relative;
   // color: #fff;
   .top {
+    margin: 0 0 0.15rem 0;
     width: 100%;
-    height: 1rem;
+    height: 53%;
     .currentpassengerflowquantity {
       display: flex;
       align-items: center;
@@ -98,26 +102,10 @@ onBeforeUnmount(() => {});
       }
     }
   }
-  .main {
-    height: calc(100% - 1.1rem);
-    overflow: auto;
-    .middle {
-      margin: 0 0 0.15rem 0;
-      align-items: start;
-      height: 49%;
-      .evacuationofpassengerflow {
-        display: inline-block;
-        width: 50%;
-      }
-      .hourlypassengerflow {
-        display: inline-block;
-        width: 50%;
-      }
-    }
-    .bottom {
-      height: 49%;
-      position: relative;
-    }
+
+  .bottom {
+    height: 45%;
+    position: relative;
   }
 }
 </style>

@@ -1,11 +1,11 @@
 <template>
-  <div class="alarmlist">
+  <Block title="报警列表" class="alarmlist">
     <BaseTable
       :tableData="state.tableData"
       :dataModel="pageModel"
       height="calc(100vh - 7rem)"
     />
-  </div>
+  </Block>
 </template>
 
 <script lang="tsx" setup>
