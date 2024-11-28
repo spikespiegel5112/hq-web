@@ -173,18 +173,6 @@ input:focus {
   text-align: center;
 }
 
-.common_block_item {
-  display: inline-block;
-
-  // .medium {
-  //   background-image: url('@/assets/组2644@2x.png');
-  // }
-
-  // .long {
-
-  //   background-image: url('@/assets/组2654@2x.png');
-  // }
-}
 ::v-deep.common_table_wrapper {
   ::v-deep.ant-table {
     height: calc(100% - 4rem);

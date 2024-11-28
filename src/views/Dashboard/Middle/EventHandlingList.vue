@@ -2,8 +2,11 @@
   <Block title="事件处置列表" class="eventhandlinglist">
     <div class="header">
       <div class="title">
-        <span class="left">当日已处理数量</span>
-        <span class="right">4/12</span>
+        <span class="left">
+          <span></span>
+          当日已处理数量</span
+        >
+        <span class="right"><i>4</i>/12</span>
       </div>
       <div class="progressbar">
         <span
@@ -175,16 +178,32 @@ onBeforeUnmount(() => {});
       width: 100%;
 
       .left {
-        display: inline-block;
+        display: inline-flex;
         flex: 1;
         font-size: 0.2rem;
         color: #dffeff;
+        align-items: center;
+        span {
+          display: inline-block;
+          margin: 0 0.1rem 0 0;
+          border-style: solid;
+          border-width: 0.07rem 0 0.07rem 0.05rem;
+          border-color: transparent transparent transparent aqua;
+        }
       }
       .right {
         display: inline-block;
         width: 2rem;
         font-size: 0.2rem;
         text-align: right;
+        color: #778687;
+        i {
+          display: inline-block;
+          padding: 0 0.1rem;
+          color: #fff;
+          font-size: 0.3rem;
+          font-style: normal;
+        }
       }
     }
     .progressbar {
@@ -192,13 +211,31 @@ onBeforeUnmount(() => {});
       width: 100%;
       height: 5px;
       position: relative;
+      background-color: #19325d;
       span {
         display: block;
         height: 100%;
-        background-color: red;
+        background-image: linear-gradient(
+          to right,
+          rgba(0, 247, 255, 0),
+          rgba(0, 247, 255, 1)
+        );
+        border-radius: 0.1rem;
         position: absolute;
         top: 0;
         left: 0;
+        &:after {
+          content: "";
+          display: inline-block;
+          width: 0.1rem;
+          height: 0.1rem;
+          background-color: aqua;
+          box-shadow: #fff 0rem 0 0.1rem;
+          border-radius: 50%;
+          position: absolute;
+          top: -0.014rem;
+          right: 0;
+        }
       }
     }
   }
