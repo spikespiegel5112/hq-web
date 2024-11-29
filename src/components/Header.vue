@@ -22,7 +22,7 @@
           <span class="avatar"> </span>
           <span class="name">Admin</span>
           <span class="logout">
-            <PoweroffOutlined />
+            <PoweroffOutlined @click="hadleLogout" />
           </span>
         </div>
       </div>
@@ -91,6 +91,12 @@ const initClock = () => {
   setInterval(() => {
     state.currentTime = global.$dayjs().format("YYYY-MM-DD HH:mm:ss");
   }, 1000);
+};
+
+const hadleLogout = () => {
+  global.$router.push({
+    name: "Login",
+  });
 };
 
 onMounted(() => {});

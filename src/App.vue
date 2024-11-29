@@ -23,8 +23,8 @@ import {
   getCurrentInstance,
   ComponentInternalInstance,
   nextTick,
-} from 'vue';
-import { theme } from 'ant-design-vue';
+} from "vue";
+import { theme } from "ant-design-vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -52,7 +52,7 @@ const initRemResizing = () => {
     fontSize: fontSize,
     threshold: 640,
   });
-  console.log('=====initRemResizing=====');
+  console.log("=====initRemResizing=====");
   console.log(fontSize);
 };
 
@@ -74,6 +74,4 @@ nav {
     }
   }
 }
-
-
 </style>

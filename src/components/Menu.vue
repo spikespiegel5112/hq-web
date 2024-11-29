@@ -43,6 +43,9 @@ const props = defineProps({});
 const theme = ref<MenuTheme>("dark");
 const selectedKeys = ref(["1"]);
 const menuList = computed(() => {
+  const _routeDictionary = routeDictionary.find(
+    (item: any) => item.name === "layout"
+  ).children;
   let result = [] as any[];
   const looper = (chidren: any[], parentKey: number | string | null) => {
     const _result = [] as any[];
@@ -71,7 +74,7 @@ const menuList = computed(() => {
     });
     return _result;
   };
-  result = looper(routeDictionary, null);
+  result = looper(_routeDictionary, null);
 
   console.log(result);
 
