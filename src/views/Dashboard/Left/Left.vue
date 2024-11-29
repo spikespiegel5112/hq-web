@@ -57,7 +57,6 @@ const global = currentInstance.appContext.config.globalProperties;
 const layoutRef = ref(HTMLDivElement);
 
 const state = reactive({
-  
   bannerInfo: {},
 });
 
@@ -86,8 +85,12 @@ onBeforeUnmount(() => {});
       align-items: center;
       .icon {
         display: inline-block;
+        margin: 0 0.2rem 0 0;
         width: 1rem;
         height: 1rem;
+        background-image: url("@/assets/dashboard_passager.png");
+        background-size: contain;
+        background-repeat: no-repeat;
       }
       .detail {
         display: flex;

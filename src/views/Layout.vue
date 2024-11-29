@@ -40,7 +40,6 @@ const global = currentInstance.appContext.config.globalProperties;
 const layoutRef = ref(HTMLDivElement);
 
 const state = reactive({
-  
   bannerInfo: {},
 });
 
@@ -65,6 +64,7 @@ onBeforeUnmount(() => {});
   .ant-layout {
     height: 100%;
     .ant-layout-header {
+      height: auto;
       padding: 0;
     }
   }

@@ -111,8 +111,8 @@ onMounted(() => {
       span {
         display: inline-block;
         margin: 0.2rem 0.1rem 0 0.1rem;
-        width: 0.5rem;
-        height: 0.5rem;
+        width: 0.55rem;
+        height: 0.55rem;
         background-repeat: no-repeat;
         background-size: contain;
       }
