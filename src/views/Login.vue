@@ -34,7 +34,12 @@
               </template>
             </a-input>
           </a-form-item>
-          <a-button class="submitbutton" type="primary" size="large">
+          <a-button
+            class="submitbutton"
+            type="primary"
+            size="large"
+            @click="handleLogin"
+          >
             登录
           </a-button>
         </a-form>
@@ -102,6 +107,12 @@ const init = () => {
 };
 
 const onFinish = () => {};
+
+const handleLogin = () => {
+  global.$router.push({
+    name: "Dashboard",
+  });
+};
 
 onMounted(async () => {
   init();
