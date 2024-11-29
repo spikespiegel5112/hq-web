@@ -36,7 +36,7 @@ const global = currentInstance.appContext.config.globalProperties;
 const layoutRef = ref(HTMLDivElement);
 
 const state = reactive({
-  stuffDutyList: [] as any[],
+  
   bannerInfo: {},
 });
 

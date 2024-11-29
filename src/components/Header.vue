@@ -55,13 +55,9 @@ const props = defineProps({
   bannerInfo: {
     type: Object,
     default: {},
-    required: true,
+    required: false,
   },
-  stuffDutyList: {
-    type: Array,
-    default: [],
-    required: true,
-  },
+
   title: {
     type: String,
     default: "",

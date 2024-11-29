@@ -3,8 +3,11 @@
     <a-table
       :dataSource="actualTableData"
       :rowClassName="
-        (_record, index) => (index % 2 === 0 ? 'table-striped' : null)
+        (_record, index) => (index % 2 === 0 ? 'table-striped' : undefined)
       "
+      :scroll="{
+        y: props.height,
+      }"
     >
       <a-table-column
         v-for="(item, index) in innerDataModel.filter(
@@ -64,7 +67,7 @@ const props = defineProps({
   sortable: { type: Boolean, default: false },
   showLastColumn: { type: Boolean, default: false },
   pageObj: { type: Object, default: () => null },
-  height: { type: String, default: "auto" },
+  height: { type: String, default: "" },
   processedTableData: { type: Array, default: null },
 });
 
@@ -202,12 +205,15 @@ const handleAction = (action: any, scope: any) => {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .common_basetable_wrapper {
+  height: 100%;
   background-size: 100%;
   background-repeat: no-repeat;
   background-position: 0 0.1rem;
   overflow: hidden;
   text-align: left;
   position: relative;
+  background-color: transparent;
+
   .header {
     padding: 0.05rem 0.1rem;
     width: 100%;
@@ -217,37 +223,6 @@ const handleAction = (action: any, scope: any) => {
       rgba(68, 121, 255, 1),
       rgba(68, 121, 255, 0)
     );
-  }
-  :deep(.ant-table) {
-    .ant-table-container {
-      .ant-table-content {
-        .ant-table-tbody {
-          .ant-table-row {
-            &.table-striped,
-            &:hover {
-              transition: all 0.3s;
-              background-image: linear-gradient(
-                to right,
-                rgba(0, 67, 144, 0) 0%,
-                rgba(0, 67, 144, 1) 10%,
-                rgba(0, 67, 144, 1) 90%,
-                rgba(0, 67, 144, 0) 100%
-              );
-              > td {
-                background-color: transparent;
-              }
-            }
-            &:hover {
-              background-image: linear-gradient(
-                to right,
-                rgb(15, 83, 231) 0%,
-                rgba(15, 83, 231, 1) 100%
-              );
-            }
-          }
-        }
-      }
-    }
   }
 }
 </style>

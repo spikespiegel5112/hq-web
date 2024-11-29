@@ -32,8 +32,6 @@ declare module 'vue' {
     CommonTitle: typeof import('./components/CommonTitle.vue')['default']
     copy: typeof import('./components/Block copy.vue')['default']
     DigitFlipper: typeof import('./components/DigitFlipper.vue')['default']
-    ElCol: typeof import('element-plus/es')['ElCol']
-    ElRow: typeof import('element-plus/es')['ElRow']
     Header: typeof import('./components/Header.vue')['default']
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']
     Menu: typeof import('./components/Menu.vue')['default']

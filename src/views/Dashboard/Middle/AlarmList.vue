@@ -13,11 +13,18 @@
         </li>
       </ul>
     </div>
-    <BaseTable
-      :tableData="state.tableData"
-      :dataModel="pageModel"
-      height="calc(100vh - 7rem)"
-    />
+    <div
+      :style="{
+        height: 'calc(100% - 0.1rem)',
+        position: 'relative',
+      }"
+    >
+      <BaseTable
+        :tableData="state.tableData"
+        :dataModel="pageModel"
+        height="100%"
+      />
+    </div>
   </Block>
 </template>
 
@@ -140,7 +147,7 @@ onBeforeUnmount(() => {});
 .alarmlist {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 1.68rem);
+  height: 100%;
   .choosedate {
     position: absolute;
     top: 0;
@@ -183,23 +190,57 @@ onBeforeUnmount(() => {});
   }
   .common_basetable_wrapper {
     margin: 0.3rem 0 0 0;
-    :deep(.ant-table) {
+    height: 100%;
+    :deep(.ant-table-wrapper) {
+      height: 100%;
+      background-color: transparent;
+      .ant-table-wrapper,
+      .ant-spin-nested-loading,
+      .ant-spin-container,
+      .ant-table {
+        height: 100%;
+      }
+      .ant-table {
+        height: calc(100% - 0.8rem);
+        background-color: transparent;
+      }
+      .ant-pagination{
+        margin: 0.1rem 0 0 0;
+      }
       .ant-table-container {
-        .ant-table-content {
-          .ant-table-thead {
-            tr {
-              .ant-table-cell {
-                padding: 0.05rem;
-                background-color: #0023a6;
+        .ant-table-tbody {
+          .ant-table-row {
+            &.table-striped,
+            &:hover {
+              transition: all 0.3s;
+              background-image: linear-gradient(
+                to right,
+                rgba(0, 67, 144, 0) 0%,
+                rgba(0, 67, 144, 1) 40%,
+                rgba(0, 67, 144, 1) 70%,
+                rgba(0, 67, 144, 0) 100%
+              );
+              > td {
+                background-color: transparent;
               }
             }
+            &:hover {
+              background-image: linear-gradient(
+                to right,
+                rgb(15, 83, 231) 0%,
+                rgba(15, 83, 231, 1) 100%
+              );
+            }
+            .ant-table-cell {
+              padding: 0.05rem;
+            }
           }
-          .ant-table-tbody {
-            .ant-table-row {
-              .ant-table-cell {
-                padding: 0.05rem;
-                // background-color: #0023a6;
-              }
+        }
+        .ant-table-thead {
+          tr {
+            .ant-table-cell {
+              padding: 0.05rem;
+              background-color: #0023a6;
             }
           }
         }
