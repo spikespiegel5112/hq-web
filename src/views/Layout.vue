@@ -1,11 +1,8 @@
 <template>
   <div class="layout_container" ref="layoutRef">
     <a-layout>
-      <a-layout-header class="header">
-        <div class="title">虹桥枢纽运行管理一体化平台</div>
-        <div class="right">
-          {{ dayjs().format("YYYY-MM-DD hh:mm:ss") }}
-        </div>
+      <a-layout-header>
+        <Header></Header>
       </a-layout-header>
       <a-layout>
         <a-layout-sider>
@@ -36,7 +33,6 @@ import Header from "@/components/Header.vue";
 import Menu from "@/components/Menu.vue";
 
 import { screenBannerInfoRequest } from "@/api/screen";
-import dayjs from "dayjs";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -68,31 +64,9 @@ onBeforeUnmount(() => {});
   background-color: #05061c;
   .ant-layout {
     height: 100%;
-  }
-  .header {
-    display: flex;
-    padding: 0 0.2rem;
-    height: 1rem;
-    background-color: transparent;
-    background-image: url("@/assets/header_bg.png");
-    background-size: 26rem 1rem;
-    background-repeat: no-repeat;
-    .title {
-      width: 6rem;
-      font-size: 0.35rem;
-      text-align: left;
-      font-weight: bold;
-    }
-    .right {
-      flex: 1;
-      text-align: right;
+    .ant-layout-header {
+      padding: 0;
     }
   }
-}
-.debuggingtools {
-  position: fixed;
-  right: 1rem;
-  top: 0.5rem;
-  z-index: 2;
 }
 </style>

@@ -1,43 +1,44 @@
 <template>
   <div class="common_jeader_wrapper">
-    <a-col class="left">
-      <span class="currenttime"> {{ state.currentTime }}</span>
-      <span>
-        {{ global.$store.state.dictionary.weekday.find((item: any) => item.value
-        === global.$dayjs().weekday()).title
-        }}</span
-      >
-      <span> {{ props.bannerInfo.peakDayTypeName }}</span>
-
-      <span>
-        <img
-          :src="global.$getImageUrl('../assets/weather/' + global.$store.state.dictionary.weather.find((item: any) => item.value === props.bannerInfo.weatherIcon)?.fileName)"
-          alt=""
-        />
-      </span>
-      <span> {{ props.bannerInfo.weatherCondition }}</span>
-    </a-col>
-    <h1>虹桥枢纽运行管理一体化平台</h1>
+    <div class="title">虹桥枢纽运行管理一体化平台</div>
     <div class="right">
-      <ul v-if="stuffDutyList.length > 0">
-        <li>
-          <span class="title">总值班：</span>
-          <span class="name">{{ stuffDutyList[0].staffName }}</span>
-        </li>
-        <li>
-          <span class="title">值班人员：</span>
-          <span class="name">{{ stuffDutyList[0].hocStaffName }}</span>
-        </li>
-        <li>
-          <span class="title">电话：</span>
-          <span class="name">{{ stuffDutyList[0].staffPhone }}</span>
-        </li>
-      </ul>
+      <div>
+        <div class="date">
+          <span>
+            {{ global.$dayjs().format("YYYY-MM-DD") }}
+          </span>
+          <span>
+            {{ global.$dayjs().format("hh:mm:ss") }}
+          </span>
+          <span>
+            {{ global.$dayjs().format("dddd") }}
+          </span>
+        </div>
+        <div class="user">
+          <span class="avatar">
+            <MenuFoldOutlined />
+          </span>
+          <span class="name">Admin</span>
+          <span class="logout">
+            <PoweroffOutlined />
+          </span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="tsx" setup>
+import {
+  MenuFoldOutlined,
+  PoweroffOutlined,
+  PieChartOutlined,
+  MailOutlined,
+  DesktopOutlined,
+  InboxOutlined,
+  AppstoreOutlined,
+} from "@ant-design/icons-vue";
+
 import {
   reactive,
   watch,
@@ -48,7 +49,7 @@ import {
   ComponentInternalInstance,
   ref,
   nextTick,
-} from 'vue';
+} from "vue";
 
 const props = defineProps({
   bannerInfo: {
@@ -63,7 +64,7 @@ const props = defineProps({
   },
   title: {
     type: String,
-    default: '',
+    default: "",
     required: false,
   },
 });
@@ -72,13 +73,13 @@ const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
 const state = reactive({
-  currentTime: '',
+  currentTime: "",
   clientWidth: 0,
   bannerInfo: {} as any,
 });
 
 const blockSize = computed(() => {
-  return props.width + '-' + props.height;
+  return props.width + "-" + props.height;
 }) as any;
 
 watch(
@@ -90,7 +91,7 @@ watch(
 
 const initClock = () => {
   setInterval(() => {
-    state.currentTime = global.$dayjs().format('YYYY-MM-DD HH:mm:ss');
+    state.currentTime = global.$dayjs().format("YYYY-MM-DD HH:mm:ss");
   }, 1000);
 };
 
@@ -101,58 +102,59 @@ onMounted(() => {});
 <style scoped lang="scss">
 .common_jeader_wrapper {
   display: flex;
-  width: 100%;
-  min-height: 1.8rem;
-  background: url('@/assets/tip@2x.png');
+  padding: 0 0.2rem;
+  height: 1rem;
+  background-color: transparent;
+  background-image: url("@/assets/header_bg.png");
+  background-size: 26rem 1rem;
   background-repeat: no-repeat;
-  background-size: 100%;
-  align-items: start;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 2;
-
-  h1 {
-    margin: 0 auto 0;
-    width: 15rem;
-    line-height: 2rem;
-    font-size: 1rem;
-    color: #fff;
+  .title {
+    width: 6rem;
+    font-size: 0.35rem;
+    text-align: left;
     font-weight: bold;
+    text-shadow: 0.01rem 0.01rem 0.1rem #0040d1;
   }
-
-  .left {
-    flex: 1;
-    margin: 0.25rem 0 0 1.5rem;
-    color: #c6ddff;
-    font-size: 0.5rem;
-    text-align: left;
-
-    .currenttime {
-      display: inline-block;
-      width: 5.5rem;
-    }
-
-    span {
-      margin: 0 0 0 0.4rem;
-    }
-  }
-
   .right {
+    display: flex;
     flex: 1;
-    margin: 0.25rem 2rem 0 1.5rem;
-    text-align: left;
-    font-size: 0.5rem;
     text-align: right;
-    color: #c6ddff;
+    align-items: center;
+    justify-content: end;
+    > div {
+      display: inline-flex;
+      position: relative;
+      align-items: center;
 
-    ul {
-      li {
-        display: inline-block;
-        margin: 0 0 0 0.4rem;
-
-        .title {
-          margin: 0 0 0 0.4rem;
+      .date {
+        display: inline-flex;
+        span {
+          display: inline-block;
+          margin: 0 0.2rem 0 0;
+        }
+      }
+      .user {
+        display: inline-flex;
+        height: 100%;
+        line-height: 0.4rem;
+        align-items: center;
+        .avatar {
+          display: inline-block;
+          margin: 0 0.2rem 0 0.1rem;
+          width: 0.4rem;
+          height: 0.4rem;
+          span {
+            font-size: 0.4rem;
+          }
+        }
+        .logout {
+          display: inline-block;
+          margin: 0 0.1rem;
+          width: 0.4rem;
+          height: 0.4rem;
+          span {
+            font-size: 0.2rem;
+          }
         }
       }
     }
