@@ -1,13 +1,18 @@
 <template>
   <div class="common_main_container">
     <FilterTool></FilterTool>
-    <div>
-      <BaseTable
-        :tableData="state.tableData"
-        :dataModel="pageModel"
-        height="calc(100vh - 3.5rem)"
-      />
+    <div class="common_tableoperation_wrapper">
+      <a-space size="middle" wrap>
+        <a-button class="import">导入</a-button>
+        <a-button class="export">导出</a-button>
+        <a-button class="add">新增</a-button>
+      </a-space>
     </div>
+    <BaseTable
+      :tableData="state.tableData"
+      :dataModel="pageModel"
+      height="calc(100vh - 3.5rem)"
+    />
   </div>
 </template>
 

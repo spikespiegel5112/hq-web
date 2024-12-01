@@ -20,6 +20,7 @@ declare module 'vue' {
     AMenu: typeof import('ant-design-vue/es')['Menu']
     ARow: typeof import('ant-design-vue/es')['Row']
     ASelect: typeof import('ant-design-vue/es')['Select']
+    ASpace: typeof import('ant-design-vue/es')['Space']
     ATable: typeof import('ant-design-vue/es')['Table']
     ATableColumn: typeof import('ant-design-vue/es')['TableColumn']
     ATimeRangePicker: typeof import('ant-design-vue/es')['TimeRangePicker']

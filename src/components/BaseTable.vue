@@ -6,13 +6,14 @@
         (_record, index) => (index % 2 === 1 ? 'table-striped' : undefined)
       "
       :pagination="{
-        current: 1,
+        current: pagination.current,
         total: actualTableData.length,
-        pageSize: 50,
+        pageSize: pagination.pageSize,
       }"
       :scroll="{
         y: props.height,
       }"
+      @change="hangleChangePage"
     >
       <a-table-column
         v-for="(item, index) in innerDataModel.filter(
@@ -29,7 +30,7 @@
           <div v-if="item.name === 'index'">
             {{ scope.index + 1 }}
           </div>
-          <div v-if="item.name === 'operationColumn'">
+          <div v-if="item.name === 'operationColumn'" class="operation">
             <a-button
               v-for="action in item.actions"
               :key="action + scope.$index"
@@ -78,6 +79,12 @@ const props = defineProps({
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
+
+const pagination = reactive({
+  current: 1,
+  total: null,
+  pageSize: 30,
+});
 
 const state = reactive({
   originalTableData: [],
@@ -176,6 +183,10 @@ watch(
   }
 );
 
+const hangleChangePage = (pagin: any, bbb, ccc) => {
+  pagination.current = pagin.current;
+};
+
 const handleAction = (action: any, scope: any) => {
   const row = scope.row;
   if (action === "download") {
@@ -239,6 +250,15 @@ const handleAction = (action: any, scope: any) => {
     .ant-table-container {
       .ant-table-tbody {
         .ant-table-row {
+          .ant-table-cell {
+            padding: 0.05rem;
+            .operation {
+              .ant-btn {
+                color: #0096FF;
+              }
+            }
+          }
+
           &.table-striped,
           &:hover {
             transition: all 0.3s;
@@ -255,6 +275,8 @@ const handleAction = (action: any, scope: any) => {
           }
           .ant-table-cell {
             padding: 0.05rem;
+            .operation {
+            }
           }
         }
       }

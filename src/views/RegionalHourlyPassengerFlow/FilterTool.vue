@@ -3,41 +3,42 @@
     <a-form :model="state.formData" autocomplete="off">
       <a-row>
         <a-col :span="20">
-          <a-row :gutter="20">
-            <a-col :span="5">
-              <a-form-item prop="userName" label="时段：">
-                <a-input
-                  v-model="state.formData.userName"
-                  placeholder="请输入帐号"
-                >
-                  <template #prefix>
-                    <span class="username"></span>
-                  </template>
-                </a-input>
-              </a-form-item>
-            </a-col>
-            <a-col :span="5">
-              <a-form-item prop="password" label="查询时间：">
-                <a-input
-                  v-model="state.formData.password"
-                  placeholder="请输入密码"
-                >
-                  <template #prefix>
-                    <span class="password"></span>
-                  </template>
-                </a-input>
-              </a-form-item>
-            </a-col>
-          </a-row>
+          <a-space
+            :size="20"
+            :style="{
+              width: '100%',
+            }"
+          >
+            <a-form-item prop="userName" label="时段">
+              <a-input
+                v-model="state.formData.userName"
+                placeholder="请输入帐号"
+              >
+                <template #prefix>
+                  <span class="username"></span>
+                </template>
+              </a-input>
+            </a-form-item>
+            <a-form-item prop="password" label="查询时间">
+              <a-input
+                v-model="state.formData.password"
+                placeholder="请输入密码"
+              >
+                <template #prefix>
+                  <span class="password"></span>
+                </template>
+              </a-input>
+            </a-form-item>
+          </a-space>
         </a-col>
-        <a-col :span="4">
+        <a-col :span="4" class="operation">
           <a-button
             class="submitbutton"
             type="primary"
             size="large"
             @click="handleSubmit"
           >
-            登录
+            查询
           </a-button>
         </a-col>
       </a-row>
@@ -90,7 +91,16 @@ onBeforeUnmount(() => {});
 .common_filtertool_wrapper {
   display: flex;
   width: 100%;
-  height: 1rem;
+  height: 0.6rem;
   align-items: center;
+  .ant-form {
+    width: 100%;
+    .ant-form-item {
+      margin: 0;
+    }
+    .operation {
+      text-align: right;
+    }
+  }
 }
 </style>
