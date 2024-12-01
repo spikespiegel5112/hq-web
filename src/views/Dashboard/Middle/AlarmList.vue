@@ -191,6 +191,16 @@ onBeforeUnmount(() => {});
   .common_basetable_wrapper {
     margin: 0.3rem 0 0 0;
     height: 100%;
+    .header {
+      padding: 0.05rem 0.1rem;
+      width: 100%;
+      height: 0.3rem;
+      background-image: linear-gradient(
+        to right,
+        rgba(68, 121, 255, 1),
+        rgba(68, 121, 255, 0)
+      );
+    }
     :deep(.ant-table-wrapper) {
       height: 100%;
       background-color: transparent;
@@ -204,7 +214,7 @@ onBeforeUnmount(() => {});
         height: calc(100% - 0.8rem);
         background-color: transparent;
       }
-      .ant-pagination{
+      .ant-pagination {
         margin: 0.1rem 0 0 0;
       }
       .ant-table-container {

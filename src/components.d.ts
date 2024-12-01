@@ -22,6 +22,7 @@ declare module 'vue' {
     ASelect: typeof import('ant-design-vue/es')['Select']
     ATable: typeof import('ant-design-vue/es')['Table']
     ATableColumn: typeof import('ant-design-vue/es')['TableColumn']
+    ATimeRangePicker: typeof import('ant-design-vue/es')['TimeRangePicker']
     BaseTable: typeof import('./components/BaseTable.vue')['default']
     Block: typeof import('./components/Block.vue')['default']
     CommonTitle: typeof import('./components/CommonTitle.vue')['default']

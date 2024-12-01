@@ -66,6 +66,8 @@ onBeforeUnmount(() => {});
     .ant-layout-header {
       height: auto;
       padding: 0;
+      background-image: linear-gradient(to bottom, #001529, transparent);
+      background-color: transparent;
     }
   }
 }

@@ -4,12 +4,7 @@
     <div class="main">
       <div class="content">
         <label for="">欢迎登录</label>
-        <a-form
-          :model="state.formData"
-          autocomplete="off"
-          :rules="rules"
-          @finish="onFinish"
-        >
+        <a-form :model="state.formData" autocomplete="off" :rules="rules">
           <a-form-item prop="userName" label="">
             <a-input v-model="state.formData.userName" placeholder="请输入帐号">
               <template #prefix>
@@ -105,8 +100,6 @@ const init = () => {
   const lineScaleEl: HTMLElement = document.getElementById("line-scale");
   lineScaleEl.style.display = "none";
 };
-
-const onFinish = () => {};
 
 const handleLogin = () => {
   global.$router.push({

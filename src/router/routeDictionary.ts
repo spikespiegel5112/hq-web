@@ -44,18 +44,18 @@ const routerDictionary = [
         icon: () => h(PieChartOutlined),
         component: () =>
           import(
-            /* webpackChunkName: "Dashboard" */ "@/views/Dashboard/Dashboard.vue"
+            /* webpackChunkName: "RegionalHourlyPassengerFlow" */ "@/views/RegionalHourlyPassengerFlow/RegionalHourlyPassengerFlow.vue"
           ),
       },
       {
         label: "区域实时客流",
         title: "区域实时客流",
-        path: "RegionalHourlyPassengerFlow",
-        name: "RegionalHourlyPassengerFlow",
+        path: "RegionalReakTimePassengerFlow",
+        name: "RegionalReakTimePassengerFlow",
         icon: () => h(PieChartOutlined),
         component: () =>
           import(
-            /* webpackChunkName: "Dashboard" */ "@/views/Dashboard/Dashboard.vue"
+           /* webpackChunkName: "RegionalHourlyPassengerFlow" */ "@/views/RegionalHourlyPassengerFlow/RegionalHourlyPassengerFlow.vue"
           ),
       },
       {
@@ -66,7 +66,7 @@ const routerDictionary = [
         icon: () => h(PieChartOutlined),
         component: () =>
           import(
-            /* webpackChunkName: "Dashboard" */ "@/views/Dashboard/Dashboard.vue"
+           /* webpackChunkName: "RegionalHourlyPassengerFlow" */ "@/views/RegionalHourlyPassengerFlow/RegionalHourlyPassengerFlow.vue"
           ),
       },
       {
@@ -77,7 +77,7 @@ const routerDictionary = [
         icon: () => h(PieChartOutlined),
         component: () =>
           import(
-            /* webpackChunkName: "Dashboard" */ "@/views/Dashboard/Dashboard.vue"
+           /* webpackChunkName: "RegionalHourlyPassengerFlow" */ "@/views/RegionalHourlyPassengerFlow/RegionalHourlyPassengerFlow.vue"
           ),
       },
       {
@@ -88,7 +88,7 @@ const routerDictionary = [
         icon: () => h(PieChartOutlined),
         component: () =>
           import(
-            /* webpackChunkName: "Dashboard" */ "@/views/Dashboard/Dashboard.vue"
+           /* webpackChunkName: "RegionalHourlyPassengerFlow" */ "@/views/RegionalHourlyPassengerFlow/RegionalHourlyPassengerFlow.vue"
           ),
       },
       {
@@ -99,7 +99,7 @@ const routerDictionary = [
         icon: () => h(PieChartOutlined),
         component: () =>
           import(
-            /* webpackChunkName: "Dashboard" */ "@/views/Dashboard/Dashboard.vue"
+           /* webpackChunkName: "RegionalHourlyPassengerFlow" */ "@/views/RegionalHourlyPassengerFlow/RegionalHourlyPassengerFlow.vue"
           ),
         children: [
           {
@@ -175,7 +175,7 @@ const routerDictionary = [
         icon: () => h(PieChartOutlined),
         component: () =>
           import(
-            /* webpackChunkName: "Dashboard" */ "@/views/Dashboard/Dashboard.vue"
+           /* webpackChunkName: "RegionalHourlyPassengerFlow" */ "@/views/RegionalHourlyPassengerFlow/RegionalHourlyPassengerFlow.vue"
           ),
       },
     ],

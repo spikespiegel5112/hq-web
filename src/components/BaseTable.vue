@@ -3,8 +3,13 @@
     <a-table
       :dataSource="actualTableData"
       :rowClassName="
-        (_record, index) => (index % 2 === 0 ? 'table-striped' : undefined)
+        (_record, index) => (index % 2 === 1 ? 'table-striped' : undefined)
       "
+      :pagination="{
+        current: 1,
+        total: actualTableData.length,
+        pageSize: 50,
+      }"
       :scroll="{
         y: props.height,
       }"
@@ -214,15 +219,54 @@ const handleAction = (action: any, scope: any) => {
   position: relative;
   background-color: transparent;
 
-  .header {
-    padding: 0.05rem 0.1rem;
-    width: 100%;
-    height: 0.3rem;
-    background-image: linear-gradient(
-      to right,
-      rgba(68, 121, 255, 1),
-      rgba(68, 121, 255, 0)
-    );
+  :deep(.ant-table-wrapper) {
+    height: 100%;
+    background-color: transparent;
+
+    .ant-table-wrapper,
+    .ant-spin-nested-loading,
+    .ant-spin-container,
+    .ant-table {
+      height: 100%;
+    }
+    .ant-table {
+      height: calc(100vh - 3.1rem);
+      background-color: transparent;
+    }
+    .ant-pagination {
+      margin: 0.1rem 0 0 0;
+    }
+    .ant-table-container {
+      .ant-table-tbody {
+        .ant-table-row {
+          &.table-striped,
+          &:hover {
+            transition: all 0.3s;
+            > td {
+              background-color: #0b234b;
+            }
+          }
+          &:hover {
+            > td {
+              background-color: #1a4378;
+            }
+          }
+          &.table-striped {
+          }
+          .ant-table-cell {
+            padding: 0.05rem;
+          }
+        }
+      }
+      .ant-table-thead {
+        tr {
+          .ant-table-cell {
+            padding: 0.05rem;
+            background-color: #1a4378;
+          }
+        }
+      }
+    }
   }
 }
 </style>
