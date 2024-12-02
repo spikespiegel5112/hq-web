@@ -6,7 +6,9 @@
         :class="item.active ? 'active' : ''"
         v-for="item in state.accessLogList"
       >
-        <a class="title" href="javascript:;">{{ item.meta.title }}</a>
+        <a class="title" href="javascript:;" @click="handleNavigate(item)">{{
+          item.meta.title
+        }}</a>
         <a class="close" href="javascript:;">
           <div class="idle">
             <CloseOutlined />
@@ -78,6 +80,12 @@ const recordRoute = (newValue: any) => {
   console.log(newRoute);
 };
 
+const handleNavigate = (routeData: any) => {
+  global.$router.push({
+    name: routeData.name,
+  });
+};
+
 onMounted(async () => {});
 
 onBeforeUnmount(() => {});
@@ -105,6 +113,9 @@ onBeforeUnmount(() => {});
     transition: 0.3s all;
     &.active {
       background-color: #0062ff;
+      .title {
+        color: #fff;
+      }
     }
     &:hover {
       border: 1px solid #666;
