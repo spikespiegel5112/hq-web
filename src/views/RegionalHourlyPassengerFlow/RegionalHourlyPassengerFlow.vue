@@ -12,7 +12,13 @@
       :tableData="state.tableData"
       :dataModel="pageModel"
       height="calc(100vh - 3.5rem)"
+      @onEdit="handleEdit"
     />
+    <EditDialog
+      :visible="state.dialogVisible"
+      :mode="state.dialogVisible"
+    ></EditDialog>
+  
   </div>
 </template>
 
@@ -31,6 +37,7 @@ import {
 
 import { screenBannerInfoRequest } from "@/api/screen";
 import FilterTool from "./FilterTool.vue";
+import EditDialog from "./EditDialog.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -91,13 +98,15 @@ const pageModel = ref([
     name: "operationColumn",
     tableVisible: true,
     exportVisible: false,
-    actions: ["view"],
+    actions: ["edit"],
   },
 ]);
 
 const state = reactive({
   tableData: [] as any[],
   dataModel: [] as any[],
+  dialogVisible: false,
+  dialogMode: "",
 });
 
 const getData = () => {
@@ -130,6 +139,10 @@ const getData = () => {
     });
   }
   state.tableData = result;
+};
+
+const handleEdit = (type: string, tableData: any) => {
+  state.dialogVisible = true;
 };
 
 onMounted(async () => {

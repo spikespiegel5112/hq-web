@@ -120,7 +120,6 @@ const handleClickMenu = (menuData: any) => {
   global.$router.push({
     name: item.name,
   });
-  // debugger;
 };
 
 onMounted(() => {

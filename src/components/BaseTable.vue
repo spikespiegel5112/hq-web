@@ -67,6 +67,10 @@ import {
   nextTick,
 } from "vue";
 
+const emit = defineEmits<{
+  (e: "onEdit", action: string, tableData: any): void;
+}>();
+
 const props = defineProps({
   tableData: { type: Array, required: true, default: () => [] },
   dataModel: { type: Array, required: true, default: () => [] },
@@ -202,7 +206,7 @@ const handleAction = (action: any, scope: any) => {
     // this.$emit("onView", row);
   }
   if (action === "edit") {
-    // this.$emit("onEdit", action, state.originalTableData[scope.$index]);
+    emit("onEdit", action, state.originalTableData[scope.$index]);
   }
   if (action === "delete") {
     // this.$confirm("确认删除？", "提示", {
@@ -254,7 +258,7 @@ const handleAction = (action: any, scope: any) => {
             padding: 0.05rem;
             .operation {
               .ant-btn {
-                color: #0096FF;
+                color: #0096ff;
               }
             }
           }
