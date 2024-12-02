@@ -100,8 +100,7 @@ onBeforeUnmount(() => {});
     }
   }
   .route {
-    padding: 0.1rem;
-    color: #fff;
+    padding: 0 0.1rem 0 0;
     border: 1px solid #333;
     transition: 0.3s all;
     &.active {
@@ -109,18 +108,23 @@ onBeforeUnmount(() => {});
     }
     &:hover {
       border: 1px solid #666;
+      .title {
+        color: #fff;
+      }
     }
     .title {
-      color: #fff;
+      display: inline-block;
+      padding: 0.1rem;
+      color: #ccc;
     }
     .close {
       display: inline-block;
-      margin: 0 0 0 0.1rem;
       padding: 0.03rem;
       color: #fff;
       border-radius: 50%;
+      font-size: 0.15rem;
       &:hover {
-        background-color: #fff;
+        background-color: #ccc;
         color: #333;
         &.idle {
           display: none;
