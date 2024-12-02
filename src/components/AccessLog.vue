@@ -6,10 +6,10 @@
         :class="item.active ? 'active' : ''"
         v-for="item in state.accessLogList"
       >
-        <a class="title" href="javascript:;" @click="handleNavigate(item)">{{
-          item.meta.title
-        }}</a>
-        <a class="close" href="javascript:;">
+        <a class="title" href="javascript:;" @click="handleNavigate(item)">
+          {{ item.meta.title }}
+        </a>
+        <a class="close" href="javascript:;" @click="handleClose(item)">
           <div class="idle">
             <CloseOutlined />
           </div>
@@ -35,6 +35,8 @@ import {
   nextTick,
 } from "vue";
 import { CloseOutlined, CloseCircleFilled } from "@ant-design/icons-vue";
+import { number } from "echarts";
+import { debug } from "console";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -44,13 +46,6 @@ const layoutRef = ref(HTMLDivElement);
 const state = reactive({
   accessLogList: [] as any[],
 });
-
-const isActive = (routeData: any) => {
-  const result = state.accessLogList.find((item: any) => {
-    return routeData.name === item.name;
-  });
-  return !!result;
-};
 
 watch(
   () => global.$route,
@@ -86,7 +81,23 @@ const handleNavigate = (routeData: any) => {
   });
 };
 
-onMounted(async () => {});
+const handleClose = (routeData: any) => {
+  let indexToDelete: number = 0;
+  state.accessLogList.forEach((item: any, index: number) => {
+    if (item.name === routeData.name) {
+      indexToDelete = index;
+    }
+  });
+  state.accessLogList.splice(indexToDelete, 1);
+};
+
+const init = () => {
+  recordRoute(global.$route);
+};
+
+onMounted(async () => {
+  init();
+});
 
 onBeforeUnmount(() => {});
 </script>

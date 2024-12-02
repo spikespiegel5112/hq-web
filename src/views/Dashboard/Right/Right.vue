@@ -57,11 +57,11 @@ onBeforeUnmount(() => {});
 .dashboardright {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 1.17rem);
+  height: calc(100vh - 1.63rem);
   position: relative;
   // color: #fff;
   .content {
-    height: calc(100vh - 2rem);
+    height: calc(100vh - 3rem);
     overflow: auto;
     text-align: center;
     :deep(.ant-space) {

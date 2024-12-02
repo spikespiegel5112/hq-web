@@ -33,7 +33,6 @@ const global = currentInstance.appContext.config.globalProperties;
 const layoutRef = ref(HTMLDivElement);
 
 const state = reactive({
-  
   bannerInfo: {},
 });
 
@@ -53,13 +52,13 @@ onBeforeUnmount(() => {});
 .dashboardmiddle {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 1.1rem);
+  height: calc(100vh - 1.78rem);
   position: relative;
   // color: #fff;
   .top {
     margin: 0 0 0.15rem 0;
     width: 100%;
-    height: 53%;
+    height: 50%;
     .currentpassengerflowquantity {
       display: flex;
       align-items: center;
@@ -104,7 +103,7 @@ onBeforeUnmount(() => {});
   }
 
   .bottom {
-    height: 45%;
+    height: 50%;
     position: relative;
   }
 }

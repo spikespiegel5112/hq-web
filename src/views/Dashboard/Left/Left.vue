@@ -76,8 +76,9 @@ onBeforeUnmount(() => {});
 .dashboardleft {
   display: flex;
   flex-direction: column;
-  height: 53%;
+  height: 100%;
   // color: #fff;
+
   .top {
     width: 100%;
     .currentpassengerflowquantity {
@@ -126,10 +127,14 @@ onBeforeUnmount(() => {});
       }
     }
   }
+  .middle,
+  .bottom {
+    height: calc(100% - 5.73rem);
+    position: relative;
+  }
   .middle {
     margin: 0 0 0.15rem 0;
     align-items: start;
-    height: calc(100% - 0.95rem);
     .evacuationofpassengerflow {
       display: inline-block;
       width: 50%;
@@ -140,8 +145,6 @@ onBeforeUnmount(() => {});
     }
   }
   .bottom {
-    height: 86%;
-    position: relative;
   }
 }
 </style>
