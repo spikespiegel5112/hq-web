@@ -66,7 +66,7 @@ const routerDictionary = [
             icon: () => h(PieChartOutlined),
             component: () =>
               import(
-                /* webpackChunkName: "Taxi" */ "@/views/RegionalHourlyPassengerFlow/HighSpeedRailArrivesWithinHours/HighSpeedRailArrivesWithinHours.vue"
+                /* webpackChunkName: "HighSpeedRailArrivesWithinHours" */ "@/views/RegionalHourlyPassengerFlow/HighSpeedRailArrivesWithinHours/HighSpeedRailArrivesWithinHours.vue"
               ),
             meta: {
               title: "出租车",
@@ -79,7 +79,7 @@ const routerDictionary = [
             icon: () => h(PieChartOutlined),
             component: () =>
               import(
-                /* webpackChunkName: "Subway" */ "@/views/RegionalHourlyPassengerFlow/HighSpeedRailArrivesWithinHours/HighSpeedRailArrivesWithinHours.vue"
+                /* webpackChunkName: "HighSpeedRailArrivesWithinHours" */ "@/views/RegionalHourlyPassengerFlow/HighSpeedRailArrivesWithinHours/HighSpeedRailArrivesWithinHours.vue"
               ),
             meta: {
               title: "地铁",
@@ -92,7 +92,7 @@ const routerDictionary = [
             icon: () => h(PieChartOutlined),
             component: () =>
               import(
-                /* webpackChunkName: "GarageTrafficInformation" */ "@/views/RegionalHourlyPassengerFlow/HighSpeedRailArrivesWithinHours/HighSpeedRailArrivesWithinHours.vue"
+                /* webpackChunkName: "HighSpeedRailArrivesWithinHours" */ "@/views/RegionalHourlyPassengerFlow/HighSpeedRailArrivesWithinHours/HighSpeedRailArrivesWithinHours.vue"
               ),
             meta: {
               title: "车库流量信息",
@@ -115,7 +115,7 @@ const routerDictionary = [
             icon: () => h(PieChartOutlined),
             component: () =>
               import(
-                /* webpackChunkName: "Taxi" */ "@/views/RegionalHourlyPassengerFlow/HighSpeedRailArrivesWithinHours/HighSpeedRailArrivesWithinHours.vue"
+                /* webpackChunkName: "HighSpeedRailArrivesWithinHours" */ "@/views/RegionalHourlyPassengerFlow/HighSpeedRailArrivesWithinHours/HighSpeedRailArrivesWithinHours.vue"
               ),
             meta: {
               title: "出租车",
@@ -128,7 +128,7 @@ const routerDictionary = [
             icon: () => h(PieChartOutlined),
             component: () =>
               import(
-                /* webpackChunkName: "ParkingGarage" */ "@/views/RegionalHourlyPassengerFlow/HighSpeedRailArrivesWithinHours/HighSpeedRailArrivesWithinHours.vue"
+                /* webpackChunkName: "HighSpeedRailArrivesWithinHours" */ "@/views/RegionalHourlyPassengerFlow/HighSpeedRailArrivesWithinHours/HighSpeedRailArrivesWithinHours.vue"
               ),
             meta: {
               title: "停车库",
@@ -142,9 +142,35 @@ const routerDictionary = [
         name: "EventManagement",
         icon: () => h(PieChartOutlined),
         component: () =>
-          import(
-            /* webpackChunkName: "RegionalHourlyPassengerFlow" */ "@/views/RegionalHourlyPassengerFlow/HighSpeedRailArrivesWithinHours/HighSpeedRailArrivesWithinHours.vue"
-          ),
+          import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
+        children: [
+          {
+            title: "事件告警",
+            path: "EventAlert",
+            name: "EventAlert",
+            icon: () => h(PieChartOutlined),
+            component: () =>
+              import(
+                /* webpackChunkName: "EventAlert" */ "@/views/EventManagement/EventAlert/EventAlert.vue"
+              ),
+            meta: {
+              title: "事件告警",
+            },
+          },
+          {
+            title: "事件处置",
+            path: "EventHandling",
+            name: "EventHandling",
+            icon: () => h(PieChartOutlined),
+            component: () =>
+              import(
+                /* webpackChunkName: "EventHandling" */ "@/views/EventManagement/EventHandling/EventHandling.vue"
+              ),
+            meta: {
+              title: "事件处置",
+            },
+          },
+        ],
       },
       {
         title: "信息管理",
@@ -152,9 +178,61 @@ const routerDictionary = [
         name: "InformationManagement",
         icon: () => h(PieChartOutlined),
         component: () =>
-          import(
-            /* webpackChunkName: "RegionalHourlyPassengerFlow" */ "@/views/RegionalHourlyPassengerFlow/HighSpeedRailArrivesWithinHours/HighSpeedRailArrivesWithinHours.vue"
-          ),
+          import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
+        children: [
+          {
+            title: "信息来源",
+            path: "InformationSources",
+            name: "InformationSources",
+            icon: () => h(PieChartOutlined),
+            component: () =>
+              import(
+                /* webpackChunkName: "InformationSources" */ "@/views/InformationManagement/InformationSources/InformationSources.vue"
+              ),
+            meta: {
+              title: "信息来源",
+            },
+          },
+          {
+            title: "信息上报",
+            path: "InformationReporting",
+            name: "InformationReporting",
+            icon: () => h(PieChartOutlined),
+            component: () =>
+              import(
+                /* webpackChunkName: "InformationReporting" */ "@/views/InformationManagement/InformationReporting/InformationReporting.vue"
+              ),
+            meta: {
+              title: "信息上报",
+            },
+          },
+          {
+            title: "舆情信息",
+            path: "PublicOpinionInformation",
+            name: "PublicOpinionInformation",
+            icon: () => h(PieChartOutlined),
+            component: () =>
+              import(
+                /* webpackChunkName: "PublicOpinionInformation" */ "@/views/InformationManagement/PublicOpinionInformation/PublicOpinionInformation.vue"
+              ),
+            meta: {
+              title: "舆情信息",
+            },
+          },
+          {
+            title: "外部投诉",
+            path: "ExternalComplaints",
+            name: "ExternalComplaints",
+            icon: () => h(PieChartOutlined),
+            component: () =>
+              import(
+                /* webpackChunkName: "ExternalComplaints" */ "@/views/InformationManagement/ExternalComplaints/ExternalComplaints.vue"
+              ),
+            meta: {
+              title: "外部投诉",
+            },
+          },
+        ],
       },
       {
         title: "运行管理",
@@ -162,9 +240,35 @@ const routerDictionary = [
         name: "OperationManagement",
         icon: () => h(PieChartOutlined),
         component: () =>
-          import(
-            /* webpackChunkName: "RegionalHourlyPassengerFlow" */ "@/views/RegionalHourlyPassengerFlow/HighSpeedRailArrivesWithinHours/HighSpeedRailArrivesWithinHours.vue"
-          ),
+          import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
+        children: [
+          {
+            title: "值班人员管理",
+            path: "DutyPersonnelManagement",
+            name: "DutyPersonnelManagement",
+            icon: () => h(PieChartOutlined),
+            component: () =>
+              import(
+                /* webpackChunkName: "DutyPersonnelManagement" */ "@/views/OperationManagement/DutyPersonnelManagement/DutyPersonnelManagement.vue"
+              ),
+            meta: {
+              title: "值班人员管理",
+            },
+          },
+          {
+            title: "指示灯",
+            path: "IndicatorLights",
+            name: "IndicatorLights",
+            icon: () => h(PieChartOutlined),
+            component: () =>
+              import(
+                /* webpackChunkName: "IndicatorLights" */ "@/views/OperationManagement/IndicatorLights/IndicatorLights.vue"
+              ),
+            meta: {
+              title: "指示灯",
+            },
+          },
+        ],
       },
       {
         title: "报表管理",
@@ -187,28 +291,7 @@ const routerDictionary = [
               title: "事件报表",
             },
           },
-          {
-            title: "事件报表",
-            path: "EventSheet",
-            name: "EventSheet",
-            icon: () => h(PieChartOutlined),
-            component: () =>
-              import(/* webpackChunkName: "Layout" */ "@/views/Layout.vue"),
-            meta: {
-              title: "事件报表",
-            },
-          },
-          {
-            title: "事件报表",
-            path: "EventSheet",
-            name: "EventSheet",
-            icon: () => h(PieChartOutlined),
-            component: () =>
-              import(/* webpackChunkName: "Layout" */ "@/views/Layout.vue"),
-            meta: {
-              title: "事件报表",
-            },
-          },
+
           {
             title: "投诉报表",
             path: "ComplaintSheet",

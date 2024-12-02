@@ -109,58 +109,55 @@ onBeforeUnmount(() => {});
   width: 100%;
   height: 0.6rem;
   align-items: center;
-  .ant-form {
+  .ant-space {
     width: 100%;
-    .ant-form-item {
-      margin: 0;
-    }
-    .operation {
-      text-align: right;
-    }
-  }
-  .route {
-    padding: 0 0.1rem 0 0;
-    border: 1px solid #333;
-    transition: 0.3s all;
-    &.active {
-      background-color: #0062ff;
-      .title {
-        color: #fff;
+    overflow-x: auto;
+    white-space: nowrap;
+    .route {
+      padding: 0 0.1rem 0 0;
+      border: 1px solid #333;
+      transition: 0.3s all;
+
+      &.active {
+        background-color: #0062ff;
+        .title {
+          color: #fff;
+        }
       }
-    }
-    &:hover {
-      border: 1px solid #666;
-      .title {
-        color: #fff;
-      }
-    }
-    .title {
-      display: inline-block;
-      padding: 0.1rem;
-      color: #ccc;
-    }
-    .close {
-      display: inline-block;
-      padding: 0.03rem;
-      color: #fff;
-      border-radius: 50%;
-      font-size: 0.15rem;
       &:hover {
-        background-color: #ccc;
-        color: #333;
-        &.idle {
-          display: none;
-        }
-        &.hover {
-          display: inline-block;
+        border: 1px solid #666;
+        .title {
+          color: #fff;
         }
       }
-    }
-    .idle {
-      display: inline-block;
-    }
-    .hover {
-      display: none;
+      .title {
+        display: inline-block;
+        padding: 0.1rem;
+        color: #ccc;
+      }
+      .close {
+        display: inline-block;
+        padding: 0.03rem;
+        color: #fff;
+        border-radius: 50%;
+        font-size: 0.15rem;
+        &:hover {
+          background-color: #ccc;
+          color: #333;
+          &.idle {
+            display: none;
+          }
+          &.hover {
+            display: inline-block;
+          }
+        }
+      }
+      .idle {
+        display: inline-block;
+      }
+      .hover {
+        display: none;
+      }
     }
   }
 }

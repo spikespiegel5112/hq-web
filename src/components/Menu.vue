@@ -1,7 +1,8 @@
 <template>
   <div class="common_menu_wrapper">
     <a-menu
-      v-model:selectedKeys="state.currentSelectKeys"
+      v-model:openKeys="currentOpenKeys"
+      v-model:selectedKeys="currentSelectKeys"
       mode="inline"
       :theme="theme"
       :items="menuList"
@@ -43,9 +44,8 @@ const props = defineProps({});
 const theme = ref<MenuTheme>("dark");
 const selectedKeys = ref(["1"]);
 
-const state = reactive({
-  currentSelectKeys: [] as any[],
-});
+const currentSelectKeys = ref<string[]>(["1"]);
+const currentOpenKeys = ref<string[]>(["sub1"]);
 
 const currentRoute = computed(() => {
   return global.$route;
@@ -66,6 +66,7 @@ const menuList = computed(() => {
         key = parentKey + "-" + index;
       }
       item.key = key;
+      item.parentKey = parentKey;
       item.label = item.title;
 
       if (item.children instanceof Array && item.children.length > 0) {
@@ -97,13 +98,6 @@ const menuList = computed(() => {
   //   };
   // });
 });
-const currentOpenKeys = computed(() => {
-  const result = menuList.value
-    .filter((item: any) => item.name === global.$route.name)
-    .map((item: any) => item.key);
-
-  return result;
-}) as any;
 
 const initMenu = () => {
   let result: any;
@@ -118,11 +112,11 @@ const initMenu = () => {
       }
     });
   };
+  looper(menuList.value);
 
   if (result) {
-    const currentSelectKeys = result.key;
-    state.currentSelectKeys = currentSelectKeys;
-    debugger;
+    currentSelectKeys.value = [result.key];
+    currentOpenKeys.value = [result.parentKey];
   }
 };
 
