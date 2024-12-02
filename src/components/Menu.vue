@@ -151,25 +151,21 @@ onMounted(() => {
     .ant-menu-item {
       padding: 0;
       border-radius: 0;
+      border-style: solid;
+      border-width: 0 0 0 5px;
+      border-color: transparent;
+      transition: all 0.3s;
       .ant-menu-title-content {
         text-align: left;
       }
       &.ant-menu-item-selected {
-        padding-left: 0 !important;
+        border-color: rgb(0, 186, 255);
         background-color: transparent;
         background-image: linear-gradient(
           to right,
           rgba(0, 186, 255, 0.5) 0%,
           rgba(0, 186, 255, 0) 70%
         );
-        &:before {
-          content: "";
-          display: inline-block;
-          margin: 0 20px 0 0;
-          width: 5px;
-          height: 100%;
-          background-color: rgb(0, 186, 255);
-        }
       }
     }
     .ant-menu-submenu {
