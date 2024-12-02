@@ -1,9 +1,21 @@
 <template>
   <div class="common_accesslog_wrapper">
     <a-space>
-      <a-button v-for="item in state.accessLogList">
-        {{ item.meta.title }}
-      </a-button>
+      <div
+        class="route"
+        :class="item.active ? 'active' : ''"
+        v-for="item in state.accessLogList"
+      >
+        <a class="title" href="javascript:;">{{ item.meta.title }}</a>
+        <a class="close" href="javascript:;">
+          <div class="idle">
+            <CloseOutlined />
+          </div>
+          <div class="hover">
+            <CloseCircleFilled />
+          </div>
+        </a>
+      </div>
     </a-space>
   </div>
 </template>
@@ -20,8 +32,7 @@ import {
   ref,
   nextTick,
 } from "vue";
-
-import { screenBannerInfoRequest } from "@/api/screen";
+import { CloseOutlined, CloseCircleFilled } from "@ant-design/icons-vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -31,6 +42,13 @@ const layoutRef = ref(HTMLDivElement);
 const state = reactive({
   accessLogList: [] as any[],
 });
+
+const isActive = (routeData: any) => {
+  const result = state.accessLogList.find((item: any) => {
+    return routeData.name === item.name;
+  });
+  return !!result;
+};
 
 watch(
   () => global.$route,
@@ -53,6 +71,9 @@ const recordRoute = (newValue: any) => {
       state.accessLogList.push(lastOne);
     }
   }
+  state.accessLogList.forEach((item: any) => {
+    item.active = newValue.name === item.name;
+  });
   console.log("newRoute");
   console.log(newRoute);
 };
@@ -76,6 +97,44 @@ onBeforeUnmount(() => {});
     }
     .operation {
       text-align: right;
+    }
+  }
+  .route {
+    padding: 0.1rem;
+    color: #fff;
+    border: 1px solid #333;
+    transition: 0.3s all;
+    &.active {
+      background-color: #0062ff;
+    }
+    &:hover {
+      border: 1px solid #666;
+    }
+    .title {
+      color: #fff;
+    }
+    .close {
+      display: inline-block;
+      margin: 0 0 0 0.1rem;
+      padding: 0.03rem;
+      color: #fff;
+      border-radius: 50%;
+      &:hover {
+        background-color: #fff;
+        color: #333;
+        &.idle {
+          display: none;
+        }
+        &.hover {
+          display: inline-block;
+        }
+      }
+    }
+    .idle {
+      display: inline-block;
+    }
+    .hover {
+      display: none;
     }
   }
 }
