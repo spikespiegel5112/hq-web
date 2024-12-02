@@ -245,7 +245,7 @@ const handleAction = (action: any, scope: any) => {
       height: 100%;
     }
     .ant-table {
-      height: calc(100vh - 3.1rem);
+      height: calc(100vh - 3.5rem);
       background-color: transparent;
     }
     .ant-pagination {

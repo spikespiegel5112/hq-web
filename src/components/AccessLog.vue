@@ -1,7 +1,9 @@
 <template>
   <div class="common_accesslog_wrapper">
     <a-space>
-      <a-button v-for="item in state.accessLogList"></a-button>
+      <a-button v-for="item in state.accessLogList">
+        {{ item.meta.title }}
+      </a-button>
     </a-space>
   </div>
 </template>
@@ -38,7 +40,21 @@ watch(
 );
 
 const recordRoute = (newValue: any) => {
-  debugger;
+  const matchedRouteList = newValue.matched;
+  const newRoute = matchedRouteList.filter((item1: any) => {
+    return (
+      !state.accessLogList.find((item2: any) => item2.name === item1.name) &&
+      item1.name !== "layout"
+    );
+  });
+  if (newRoute.length > 0) {
+    const lastOne = newRoute[newRoute.length - 1];
+    if (lastOne.meta.title) {
+      state.accessLogList.push(lastOne);
+    }
+  }
+  console.log("newRoute");
+  console.log(newRoute);
 };
 
 onMounted(async () => {});
@@ -49,6 +65,7 @@ onBeforeUnmount(() => {});
 <style scoped lang="scss">
 .common_accesslog_wrapper {
   display: flex;
+  padding: 0 0.2rem;
   width: 100%;
   height: 0.6rem;
   align-items: center;

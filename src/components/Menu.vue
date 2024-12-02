@@ -58,6 +58,7 @@ const menuList = computed(() => {
         key = parentKey + "-" + index;
       }
       item.key = key;
+      item.label = item.title;
 
       if (item.children instanceof Array && item.children.length > 0) {
         _result.push({
