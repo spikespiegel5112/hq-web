@@ -175,6 +175,14 @@ onMounted(() => {
           color: #fff;
         }
       }
+      &.ant-menu-submenu-selected {
+        .ant-menu-submenu-title {
+          color: #00baff;
+          .ant-menu-title-content {
+            color: #00baff;
+          }
+        }
+      }
     }
   }
 }
