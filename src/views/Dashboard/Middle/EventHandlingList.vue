@@ -66,6 +66,30 @@
             </div>
           </div>
         </li>
+        <li>
+          <div class="title">
+            <span class="caution">
+              <span class="triangle"></span>
+              <ExclamationOutlined />
+            </span>
+            高铁到达客流预计36万
+          </div>
+          <div class="content">
+            <div class="left">
+              <div class="type">
+                <label>上报类别：</label>
+                <span>大客流应急保障</span>
+              </div>
+              <div class="date">2024-07-20 12:23</div>
+            </div>
+            <div class="right">
+              <div class="status">
+                <label>状态：</label>
+                <span>处置中</span>
+              </div>
+            </div>
+          </div>
+        </li>
       </ul>
     </div>
   </Block>
@@ -170,6 +194,7 @@ onBeforeUnmount(() => {});
 .eventhandlinglist {
   display: flex;
   flex-direction: column;
+  height: 100%;
   .header {
     margin: 0.3rem auto;
     width: 5rem;
@@ -241,7 +266,10 @@ onBeforeUnmount(() => {});
     }
   }
   .main {
+    height: calc(100% - 1rem);
     ul {
+      height: 100%;
+      overflow: auto;
       li {
         margin: 0 0 0.1rem 0;
         padding: 0 0.2rem;
@@ -251,7 +279,6 @@ onBeforeUnmount(() => {});
         &:hover {
           background-color: #002d6a;
           box-shadow: 0 0 0.15rem 0 #1d50f5 inset;
-  
         }
         .title {
           display: flex;

@@ -98,19 +98,6 @@ const routerDictionary = [
               title: "车库流量信息",
             },
           },
-          {
-            title: "高铁小时到达",
-            path: "HighSpeedRailArrivesWithinHours",
-            name: "HighSpeedRailArrivesWithinHours",
-            icon: () => h(PieChartOutlined),
-            component: () =>
-              import(
-                /* webpackChunkName: "HighSpeedRailArrivesWithinHours" */ "@/views/RegionalHourlyPassengerFlow/HighSpeedRailArrivesWithinHours/HighSpeedRailArrivesWithinHours.vue"
-              ),
-            meta: {
-              title: "高铁小时到达",
-            },
-          },
         ],
       },
       {
@@ -119,9 +106,35 @@ const routerDictionary = [
         name: "RegionalReakTimePassengerFlow",
         icon: () => h(PieChartOutlined),
         component: () =>
-          import(
-            /* webpackChunkName: "RegionalHourlyPassengerFlow" */ "@/views/RegionalHourlyPassengerFlow/HighSpeedRailArrivesWithinHours/HighSpeedRailArrivesWithinHours.vue"
-          ),
+          import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
+        children: [
+          {
+            title: "出租车",
+            path: "HighSpeedRailArrivesWithinHoursTaxi",
+            name: "HighSpeedRailArrivesWithinHoursTaxi",
+            icon: () => h(PieChartOutlined),
+            component: () =>
+              import(
+                /* webpackChunkName: "Taxi" */ "@/views/RegionalHourlyPassengerFlow/HighSpeedRailArrivesWithinHours/HighSpeedRailArrivesWithinHours.vue"
+              ),
+            meta: {
+              title: "出租车",
+            },
+          },
+          {
+            title: "停车库",
+            path: "ParkingGarage",
+            name: "ParkingGarage",
+            icon: () => h(PieChartOutlined),
+            component: () =>
+              import(
+                /* webpackChunkName: "ParkingGarage" */ "@/views/RegionalHourlyPassengerFlow/HighSpeedRailArrivesWithinHours/HighSpeedRailArrivesWithinHours.vue"
+              ),
+            meta: {
+              title: "停车库",
+            },
+          },
+        ],
       },
       {
         title: "事件管理",

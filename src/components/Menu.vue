@@ -42,6 +42,14 @@ const global = currentInstance.appContext.config.globalProperties;
 const props = defineProps({});
 const theme = ref<MenuTheme>("dark");
 const selectedKeys = ref(["1"]);
+
+const state = reactive({
+  currentSelectKeys: [] as any[],
+});
+
+const currentRoute = computed(() => {
+  return global.$route;
+});
 const menuList = computed(() => {
   const _routeDictionary = routeDictionary.find(
     (item: any) => item.name === "layout"
@@ -89,17 +97,6 @@ const menuList = computed(() => {
   //   };
   // });
 });
-
-const items = ref([]);
-
-const state = reactive({
-  currentSelectKeys: [] as any[],
-});
-
-const currentRoute = computed(() => {
-  return global.$route;
-}) as any;
-
 const currentOpenKeys = computed(() => {
   const result = menuList.value
     .filter((item: any) => item.name === global.$route.name)
@@ -109,11 +106,24 @@ const currentOpenKeys = computed(() => {
 }) as any;
 
 const initMenu = () => {
-  const currentSelectKeys = menuList.value
-    .filter((item: any) => item.name === global.$route.name)
-    .map((item: any) => item.key);
+  let result: any;
+  const looper = (children: any[]) => {
+    children.forEach((item: any) => {
+      if (!!item.children && item.children instanceof Array) {
+        looper(item.children);
+      } else {
+        if (item.name === global.$route.name) {
+          result = item;
+        }
+      }
+    });
+  };
 
-  state.currentSelectKeys = currentSelectKeys;
+  if (result) {
+    const currentSelectKeys = result.key;
+    state.currentSelectKeys = currentSelectKeys;
+    debugger;
+  }
 };
 
 const handleClickMenu = (menuData: any) => {
@@ -152,7 +162,7 @@ onMounted(() => {
       padding: 0;
       border-radius: 0;
       border-style: solid;
-      border-width: 0 0 0 5px;
+      border-width: 0;
       border-color: transparent;
       transition: all 0.3s;
       .ant-menu-title-content {

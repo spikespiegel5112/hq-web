@@ -58,7 +58,7 @@ onBeforeUnmount(() => {});
   .top {
     margin: 0 0 0.15rem 0;
     width: 100%;
-    height: 50%;
+    height: 55%;
     .currentpassengerflowquantity {
       display: flex;
       align-items: center;
@@ -103,7 +103,7 @@ onBeforeUnmount(() => {});
   }
 
   .bottom {
-    height: 50%;
+    height: 45%;
     position: relative;
   }
 }

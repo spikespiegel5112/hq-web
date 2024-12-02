@@ -129,11 +129,12 @@ onBeforeUnmount(() => {});
   }
   .middle,
   .bottom {
-    height: calc(100% - 5.73rem);
     position: relative;
   }
   .middle {
     margin: 0 0 0.15rem 0;
+    height: calc(100% - 5.73rem);
+    min-height: 42%;
     align-items: start;
     .evacuationofpassengerflow {
       display: inline-block;
@@ -145,6 +146,8 @@ onBeforeUnmount(() => {});
     }
   }
   .bottom {
+    height: calc(100% - 5.73rem);
+    min-height: 44.5%;
   }
 }
 </style>
