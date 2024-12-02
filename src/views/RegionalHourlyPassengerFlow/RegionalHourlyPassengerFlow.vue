@@ -5,7 +5,7 @@
       <a-space size="middle" wrap>
         <a-button class="import">导入</a-button>
         <a-button class="export">导出</a-button>
-        <a-button class="add">新增</a-button>
+        <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
     <BaseTable
@@ -16,9 +16,9 @@
     />
     <EditDialog
       :visible="state.dialogVisible"
-      :mode="state.dialogVisible"
+      :mode="state.dialogMode"
+      @onClose="handleClose"
     ></EditDialog>
-  
   </div>
 </template>
 
@@ -141,8 +141,18 @@ const getData = () => {
   state.tableData = result;
 };
 
-const handleEdit = (type: string, tableData: any) => {
+const handleEdit = () => {
   state.dialogVisible = true;
+  state.dialogMode = "edit";
+};
+
+const handleAdd = () => {
+  state.dialogVisible = true;
+  state.dialogMode = "add";
+};
+
+const handleClose = (event: any) => {
+  state.dialogVisible = false;
 };
 
 onMounted(async () => {

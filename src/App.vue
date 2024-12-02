@@ -1,6 +1,7 @@
 <template>
   <router-view v-slot="{ Component }">
     <a-config-provider
+      :locale="locale"
       :theme="{
         algorithm: theme.darkAlgorithm,
       }"
@@ -25,10 +26,13 @@ import {
   nextTick,
 } from "vue";
 import { theme } from "ant-design-vue";
+import zhCN from "ant-design-vue/es/locale/zh_CN";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 const state = reactive({});
+
+const locale = ref(zhCN);
 
 const currentMobileMode = computed(() => {
   return global.$store.state.app.currentMobileMode;

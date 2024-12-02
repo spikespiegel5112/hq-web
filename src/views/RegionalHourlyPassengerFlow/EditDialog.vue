@@ -1,129 +1,56 @@
 <template>
-  <a-modal v-model:open="props.visible">
+  <a-modal
+    v-model:open="props.visible"
+    :title="props.mode === 'edit' ? '编辑' : '新增'"
+    @cancel="handleClose"
+    width="8rem"
+  >
     <a-form :model="state.formData" autocomplete="off">
       <a-row>
-        <a-col :span="20">
-          <a-space
-            :size="20"
-            :style="{
-              width: '100%',
-            }"
-          >
-            <a-form-item prop="userName" label="时段">
-              <a-input
-                v-model="state.formData.userName"
-                placeholder="请输入帐号"
-              >
-                <template #prefix>
-                  <span class="username"></span>
-                </template>
-              </a-input>
-            </a-form-item>
-            <a-form-item prop="password" label="查询时间">
-              <a-input
-                v-model="state.formData.password"
-                placeholder="请输入密码"
-              >
-                <template #prefix>
-                  <span class="password"></span>
-                </template>
-              </a-input>
-            </a-form-item>
-          </a-space>
-        </a-col>
+        <a-space
+          :size="20"
+          :style="{
+            width: '100%',
+          }"
+        >
+          <a-form-item prop="userName" label="报警类型">
+            <a-input v-model="state.formData.userName" placeholder="请输入">
+              <template #prefix>
+                <span class="username"></span>
+              </template>
+            </a-input>
+          </a-form-item>
+          <a-form-item prop="password" label="报警内容">
+            <a-input v-model="state.formData.password" placeholder="请输入">
+              <template #prefix>
+                <span class="password"></span>
+              </template>
+            </a-input>
+          </a-form-item>
+        </a-space>
       </a-row>
       <a-row>
-        <a-col :span="20">
-          <a-space
-            :size="20"
-            :style="{
-              width: '100%',
-            }"
-          >
-            <a-form-item prop="userName" label="时段">
-              <a-input
-                v-model="state.formData.userName"
-                placeholder="请输入帐号"
-              >
-                <template #prefix>
-                  <span class="username"></span>
-                </template>
-              </a-input>
-            </a-form-item>
-            <a-form-item prop="password" label="查询时间">
-              <a-input
-                v-model="state.formData.password"
-                placeholder="请输入密码"
-              >
-                <template #prefix>
-                  <span class="password"></span>
-                </template>
-              </a-input>
-            </a-form-item>
-          </a-space>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="20">
-          <a-space
-            :size="20"
-            :style="{
-              width: '100%',
-            }"
-          >
-            <a-form-item prop="userName" label="时段">
-              <a-input
-                v-model="state.formData.userName"
-                placeholder="请输入帐号"
-              >
-                <template #prefix>
-                  <span class="username"></span>
-                </template>
-              </a-input>
-            </a-form-item>
-            <a-form-item prop="password" label="查询时间">
-              <a-input
-                v-model="state.formData.password"
-                placeholder="请输入密码"
-              >
-                <template #prefix>
-                  <span class="password"></span>
-                </template>
-              </a-input>
-            </a-form-item>
-          </a-space>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="20">
-          <a-space
-            :size="20"
-            :style="{
-              width: '100%',
-            }"
-          >
-            <a-form-item prop="userName" label="时段">
-              <a-input
-                v-model="state.formData.userName"
-                placeholder="请输入帐号"
-              >
-                <template #prefix>
-                  <span class="username"></span>
-                </template>
-              </a-input>
-            </a-form-item>
-            <a-form-item prop="password" label="查询时间">
-              <a-input
-                v-model="state.formData.password"
-                placeholder="请输入密码"
-              >
-                <template #prefix>
-                  <span class="password"></span>
-                </template>
-              </a-input>
-            </a-form-item>
-          </a-space>
-        </a-col>
+        <a-space
+          :size="20"
+          :style="{
+            width: '100%',
+          }"
+        >
+          <a-form-item prop="userName" label="报警类型">
+            <a-input v-model="state.formData.userName" placeholder="请输入">
+              <template #prefix>
+                <span class="username"></span>
+              </template>
+            </a-input>
+          </a-form-item>
+          <a-form-item prop="password" label="报警内容">
+            <a-input v-model="state.formData.password" placeholder="请输入">
+              <template #prefix>
+                <span class="password"></span>
+              </template>
+            </a-input>
+          </a-form-item>
+        </a-space>
       </a-row>
     </a-form>
   </a-modal>
@@ -149,8 +76,13 @@ const global = currentInstance.appContext.config.globalProperties;
 
 const layoutRef = ref(HTMLDivElement);
 
+const emit = defineEmits<{
+  (e: "onClose", event: any): void;
+}>();
+
 const props = defineProps({
   visible: { type: Boolean, required: true, default: false },
+  mode: { type: String, required: true, default: "" },
 });
 
 const state = reactive({
@@ -163,6 +95,10 @@ const state = reactive({
 const init = () => {
   const lineScaleEl: HTMLElement = document.getElementById("line-scale");
   lineScaleEl.style.display = "none";
+};
+
+const handleClose = (event: any) => {
+  emit("onClose", event);
 };
 
 const handleSubmit = () => {};
