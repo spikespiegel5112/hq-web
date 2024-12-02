@@ -37,7 +37,9 @@ watch(
   }
 );
 
-const recordRoute = (newValue) => {};
+const recordRoute = (newValue: any) => {
+  debugger;
+};
 
 onMounted(async () => {});
 

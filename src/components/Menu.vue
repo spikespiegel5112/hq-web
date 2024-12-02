@@ -171,6 +171,14 @@ onMounted(() => {
         }
       }
     }
+    .ant-menu-submenu {
+      .ant-menu-submenu-title {
+        .ant-menu-title-content {
+          text-align: left;
+          color: #fff;
+        }
+      }
+    }
   }
 }
 </style>

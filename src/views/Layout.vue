@@ -9,6 +9,7 @@
           <Menu></Menu>
         </a-layout-sider>
         <a-layout-content>
+          <AccessLog />
           <router-view></router-view>
         </a-layout-content>
       </a-layout>
@@ -31,6 +32,7 @@ import {
 
 import Header from "@/components/Header.vue";
 import Menu from "@/components/Menu.vue";
+import AccessLog from "@/components/AccessLog.vue";
 
 import { screenBannerInfoRequest } from "@/api/screen";
 
