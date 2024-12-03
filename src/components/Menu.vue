@@ -164,6 +164,7 @@ onMounted(() => {
       }
       &.ant-menu-item-selected {
         border-color: rgb(0, 186, 255);
+        border-width: 0 0 0 5px;
         background-color: transparent;
         background-image: linear-gradient(
           to right,

@@ -1398,9 +1398,9 @@ acorn@^8.14.0, acorn@^8.8.2:
   resolved "https://registry.npmmirror.com/acorn/-/acorn-8.14.0.tgz#063e2c70cac5fb4f6467f0b11152e04c682795b0"
   integrity sha512-cl669nCJTZBsL97OF4kUQm5g5hC2uihk0NxY3WENAC0TYdILVkAyHymAntgxGkl7K+t0cXIrH5siy5S4XkFycA==
 
-ant-design-vue@^4.2.3:
+ant-design-vue@^4.2.6:
   version "4.2.6"
-  resolved "https://registry.npmmirror.com/ant-design-vue/-/ant-design-vue-4.2.6.tgz#e4ce6944457cd1cd61d8b3fe52793ab58b94e337"
+  resolved "https://registry.yarnpkg.com/ant-design-vue/-/ant-design-vue-4.2.6.tgz#e4ce6944457cd1cd61d8b3fe52793ab58b94e337"
   integrity sha512-t7eX13Yj3i9+i5g9lqFyYneoIb3OzTvQjq9Tts1i+eiOd3Eva/6GagxBSXM1fOCjqemIu0FYVE1ByZ/38epR3Q==
   dependencies:
     "@ant-design/colors" "^6.0.0"
@@ -2593,6 +2593,11 @@ vue@^3.5.3:
     "@vue/runtime-dom" "3.5.13"
     "@vue/server-renderer" "3.5.13"
     "@vue/shared" "3.5.13"
+
+vuescroll@^4.18.1:
+  version "4.18.1"
+  resolved "https://registry.yarnpkg.com/vuescroll/-/vuescroll-4.18.1.tgz#df10f92c3c6f3336199bc4f033e45e843b653917"
+  integrity sha512-UlPE5Bg7RQAAUun2c85wCU1gGxS77pveRCYm2Eg6ss2U3t6YBkI3m1cuySoRF44sPYca81F79pFG94WCJt7/lw==
 
 vuex@^4.0.2:
   version "4.1.0"

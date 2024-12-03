@@ -109,6 +109,8 @@ onMounted(() => {});
   margin: 0 0 0.1rem 0;
   padding: 0 0.2rem 0 0.2rem;
   height: 0.8rem;
+  position: relative;
+  z-index: 1;
   .background {
     position: absolute;
     left: 0;

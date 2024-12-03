@@ -5,6 +5,10 @@
   font-style: normal;
   font-display: swap;
 }
+
+body {
+
+}
 .ant-input-affix-wrapper {
   background-color: #041030;
   border-color: #0096ff;
@@ -13,6 +17,21 @@
     &::placeholder {
       color: #999;
     }
+  }
+}
+
+.ant-table-body {
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 1px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: #1a4378;
+  }
+  &::-webkit-scrollbar-track {
+    border-radius: 5px;
+    background-color: rgba(26, 67, 120, 0.1);
   }
 }
 
@@ -35,14 +54,6 @@
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
-}
-
-body {
-  min-width: 100vw;
-  overscroll-behavior: none;
-  ::-webkit-scrollbar {
-    // display: none;
-  }
 }
 
 #app {
@@ -68,27 +79,6 @@ ul {
 h5 {
   margin: 0;
 }
-
-// /* 针对全局的滚动条 */
-// ::-webkit-scrollbar {
-//   width: 12px; /* 设置滚动条的宽度 */
-//   height: 12px; /* 设置滚动条的高度 */
-// }
-
-// /* 滚动条轨道 */
-// ::-webkit-scrollbar-track {
-//   background: #f1f1f1; /* 设置轨道的背景颜色 */
-// }
-
-// /* 滚动条的设置 */
-// ::-webkit-scrollbar-thumb {
-//   background: #888; /* 设置滚动条的颜色 */
-// }
-
-// /* 当鼠标悬停在滚动条上时 */
-// ::-webkit-scrollbar-thumb:hover {
-//   background: #555; /* 设置滚动条悬停时的颜色 */
-// }
 
 input[type="number"] {
   -moz-appearance: textfield;

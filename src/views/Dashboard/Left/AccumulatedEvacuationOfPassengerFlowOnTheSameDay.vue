@@ -154,7 +154,7 @@ onMounted(() => {
   position: relative;
   > div {
     width: 100%;
-    height: calc(100% - 1rem);
+    height: calc(100% - 1.2rem);
   }
 }
 </style>
