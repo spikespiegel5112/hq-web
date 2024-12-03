@@ -5,6 +5,7 @@ import utils from "@/utils/utils";
 import service from "@/utils/service";
 import Antd from "ant-design-vue";
 import "ant-design-vue/dist/reset.css";
+import vuescroll from "vuescroll";
 const app = createApp(App);
 
 import { store, key } from "@/store";
@@ -91,4 +92,21 @@ app.config.globalProperties.$router = router;
 app.config.globalProperties.$http = service;
 
 app.use(Antd).use(router).use(store, key).use(utils);
+app.use(vuescroll, {
+  ops: {
+    bar: {
+      showDelay: 500,
+      onlyShowBarOnScroll: true,
+      keepShow: false,
+      background: "#666",
+      opacity: 1,
+      hoverStyle: false,
+      specifyBorderRadius: false,
+      minSize: 0,
+      size: "6px",
+      disable: false,
+    },
+  },
+});
+
 export default app;

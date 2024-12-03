@@ -4,8 +4,8 @@
       <div class="title">
         <span class="left">
           <span></span>
-          当日已处理数量</span
-        >
+          当日已处理数量
+        </span>
         <span class="right"><i>4</i>/12</span>
       </div>
       <div class="progressbar">
@@ -17,80 +17,82 @@
       </div>
     </div>
     <div class="main">
-      <ul>
-        <li>
-          <div class="title">
-            <span class="caution">
-              <span class="triangle"></span>
-              <ExclamationOutlined />
-            </span>
-            高铁到达客流预计36万
-          </div>
-          <div class="content">
-            <div class="left">
-              <div class="type">
-                <label>上报类别：</label>
-                <span>大客流应急保障</span>
-              </div>
-              <div class="date">2024-07-20 12:23</div>
+      <vue-scroll>
+        <ul>
+          <li>
+            <div class="title">
+              <span class="caution">
+                <span class="triangle"></span>
+                <ExclamationOutlined />
+              </span>
+              高铁到达客流预计36万
             </div>
-            <div class="right">
-              <div class="status">
-                <label>状态：</label>
-                <span>处置中</span>
+            <div class="content">
+              <div class="left">
+                <div class="type">
+                  <label>上报类别：</label>
+                  <span>大客流应急保障</span>
+                </div>
+                <div class="date">2024-07-20 12:23</div>
               </div>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="title">
-            <span class="caution">
-              <span class="triangle"></span>
-              <ExclamationOutlined />
-            </span>
-            高铁到达客流预计36万
-          </div>
-          <div class="content">
-            <div class="left">
-              <div class="type">
-                <label>上报类别：</label>
-                <span>大客流应急保障</span>
-              </div>
-              <div class="date">2024-07-20 12:23</div>
-            </div>
-            <div class="right">
-              <div class="status">
-                <label>状态：</label>
-                <span>处置中</span>
+              <div class="right">
+                <div class="status">
+                  <label>状态：</label>
+                  <span>处置中</span>
+                </div>
               </div>
             </div>
-          </div>
-        </li>
-        <li>
-          <div class="title">
-            <span class="caution">
-              <span class="triangle"></span>
-              <ExclamationOutlined />
-            </span>
-            高铁到达客流预计36万
-          </div>
-          <div class="content">
-            <div class="left">
-              <div class="type">
-                <label>上报类别：</label>
-                <span>大客流应急保障</span>
-              </div>
-              <div class="date">2024-07-20 12:23</div>
+          </li>
+          <li>
+            <div class="title">
+              <span class="caution">
+                <span class="triangle"></span>
+                <ExclamationOutlined />
+              </span>
+              高铁到达客流预计36万
             </div>
-            <div class="right">
-              <div class="status">
-                <label>状态：</label>
-                <span>处置中</span>
+            <div class="content">
+              <div class="left">
+                <div class="type">
+                  <label>上报类别：</label>
+                  <span>大客流应急保障</span>
+                </div>
+                <div class="date">2024-07-20 12:23</div>
+              </div>
+              <div class="right">
+                <div class="status">
+                  <label>状态：</label>
+                  <span>处置中</span>
+                </div>
               </div>
             </div>
-          </div>
-        </li>
-      </ul>
+          </li>
+          <li>
+            <div class="title">
+              <span class="caution">
+                <span class="triangle"></span>
+                <ExclamationOutlined />
+              </span>
+              高铁到达客流预计36万
+            </div>
+            <div class="content">
+              <div class="left">
+                <div class="type">
+                  <label>上报类别：</label>
+                  <span>大客流应急保障</span>
+                </div>
+                <div class="date">2024-07-20 12:23</div>
+              </div>
+              <div class="right">
+                <div class="status">
+                  <label>状态：</label>
+                  <span>处置中</span>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </vue-scroll>
     </div>
   </Block>
 </template>

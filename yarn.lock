@@ -2594,10 +2594,10 @@ vue@^3.5.3:
     "@vue/server-renderer" "3.5.13"
     "@vue/shared" "3.5.13"
 
-vuescroll@^4.18.1:
-  version "4.18.1"
-  resolved "https://registry.yarnpkg.com/vuescroll/-/vuescroll-4.18.1.tgz#df10f92c3c6f3336199bc4f033e45e843b653917"
-  integrity sha512-UlPE5Bg7RQAAUun2c85wCU1gGxS77pveRCYm2Eg6ss2U3t6YBkI3m1cuySoRF44sPYca81F79pFG94WCJt7/lw==
+vuescroll@5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/vuescroll/-/vuescroll-5.0.1.tgz#3fb679da16b154eda1849a856f4f88f3183dc5ab"
+  integrity sha512-w8FBwkZE9gqLpWUtcL3K4PVsda9ut+Cip1jBnu5g83cq+KS0FvQi3vOJaskMxp/X1tJXjkHTIu2ybfLlMUTJHw==
 
 vuex@^4.0.2:
   version "4.1.0"
