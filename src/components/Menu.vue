@@ -86,17 +86,7 @@ const menuList = computed(() => {
   };
   result = looper(_routeDictionary, null);
 
-  console.log(result);
-
   return result;
-
-  // return routeDictionary.map((item: any, index: number) => {
-  //   return {
-  //     ...item,
-  //     key: index,
-  //     component: undefined,
-  //   };
-  // });
 });
 
 const initMenu = () => {

@@ -111,19 +111,5 @@ onBeforeUnmount(() => {});
 </script>
 
 <style scoped lang="scss">
-.common_filtertool_wrapper {
-  display: flex;
-  width: 100%;
-  height: 0.6rem;
-  align-items: center;
-  .ant-form {
-    width: 100%;
-    .ant-form-item {
-      margin: 0;
-    }
-    .operation {
-      text-align: right;
-    }
-  }
-}
+
 </style>

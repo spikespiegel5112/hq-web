@@ -11,7 +11,7 @@
     <BaseTable
       :tableData="state.tableData"
       :dataModel="pageModel"
-      height="calc(100vh - 4.5rem)"
+      tabTable
       @onEdit="handleEdit"
     />
     <EditDialog
@@ -110,26 +110,7 @@ const state = reactive({
 });
 
 const getData = () => {
-  const result = [
-    {
-      higywayCode: "aaa",
-      highwayName: "aaa",
-      bridgeCode: "aaa",
-      bridgeName: "aaa",
-    },
-    {
-      higywayCode: "aaa",
-      highwayName: "aaa",
-      bridgeCode: "aaa",
-      bridgeName: "aaa",
-    },
-    {
-      higywayCode: "aaa",
-      highwayName: "aaa",
-      bridgeCode: "aaa",
-      bridgeName: "aaa",
-    },
-  ] as any[];
+    const result = [] as any[];
   for (let index = 0; index < 30; index++) {
     result.push({
       higywayCode: "aaa",
@@ -163,11 +144,5 @@ onBeforeUnmount(() => {});
 </script>
 
 <style scoped lang="scss">
-:deep(.common_basetable_wrapper) {
-  .ant-table-wrapper {
-    .ant-table {
-      height: calc(100% - 5rem);
-    }
-  }
-}
+
 </style>

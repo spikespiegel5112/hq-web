@@ -110,26 +110,7 @@ const state = reactive({
 });
 
 const getData = () => {
-  const result = [
-    {
-      higywayCode: "aaa",
-      highwayName: "aaa",
-      bridgeCode: "aaa",
-      bridgeName: "aaa",
-    },
-    {
-      higywayCode: "aaa",
-      highwayName: "aaa",
-      bridgeCode: "aaa",
-      bridgeName: "aaa",
-    },
-    {
-      higywayCode: "aaa",
-      highwayName: "aaa",
-      bridgeCode: "aaa",
-      bridgeName: "aaa",
-    },
-  ] as any[];
+  const result = [] as any[];
   for (let index = 0; index < 30; index++) {
     result.push({
       higywayCode: "aaa",

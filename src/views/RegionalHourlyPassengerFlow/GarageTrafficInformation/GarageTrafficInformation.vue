@@ -1,6 +1,6 @@
 <template>
   <div class="common_tab_container">
-    <a-tabs v-model:activeKey="activeKey">
+    <a-tabs v-model:activeKey="state.activeKey">
       <a-tab-pane key="GarageTrafficInformationP9P10" tab="P9 P10">
         <GarageTrafficInformationP9P10 />
       </a-tab-pane>

@@ -34,21 +34,7 @@ const state = reactive({});
 
 const locale = ref(zhCN);
 
-const currentMobileMode = computed(() => {
-  return global.$store.state.app.currentMobileMode;
-}) as any;
-
-watch(
-  () => currentMobileMode.value,
-  (newValue: any, oldValue: any) => {
-    initRemResizing();
-  }
-);
-
 const initRemResizing = () => {
-  // 5120宽度下的rem
-  // let fontSize = 26.6;
-  // 7680宽度下的rem
   let fontSize = 40;
 
   global.$remResizing({

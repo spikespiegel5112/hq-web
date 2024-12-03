@@ -66,7 +66,7 @@ const routerDictionary = [
             icon: () => h(PieChartOutlined),
             component: () =>
               import(
-                /* webpackChunkName: "HighSpeedRailArrivesWithinHours" */ "@/views/RegionalHourlyPassengerFlow/HighSpeedRailArrivesWithinHours/HighSpeedRailArrivesWithinHours.vue"
+                /* webpackChunkName: "Taxi" */ "@/views/RegionalHourlyPassengerFlow/Taxi/Taxi.vue"
               ),
             meta: {
               title: "出租车",
@@ -102,20 +102,20 @@ const routerDictionary = [
       },
       {
         title: "区域实时客流",
-        path: "RegionalReakTimePassengerFlow",
-        name: "RegionalReakTimePassengerFlow",
+        path: "RegionalRealTimePassengerFlow",
+        name: "RegionalRealTimePassengerFlow",
         icon: () => h(PieChartOutlined),
         component: () =>
           import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
         children: [
           {
             title: "出租车",
-            path: "HighSpeedRailArrivesWithinHoursTaxi",
-            name: "HighSpeedRailArrivesWithinHoursTaxi",
+            path: "Taxi",
+            name: "Taxi",
             icon: () => h(PieChartOutlined),
             component: () =>
               import(
-                /* webpackChunkName: "HighSpeedRailArrivesWithinHours" */ "@/views/RegionalHourlyPassengerFlow/HighSpeedRailArrivesWithinHours/HighSpeedRailArrivesWithinHours.vue"
+                /* webpackChunkName: "Texi" */ "@/views/RegionalHourlyPassengerFlow/Taxi/Taxi.vue"
               ),
             meta: {
               title: "出租车",

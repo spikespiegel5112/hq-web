@@ -6,12 +6,12 @@
           <a-row :gutter="20">
             <a-col :span="8">
               <a-form-item prop="userName" label="时段">
-                <a-time-picker v-model:value="state.formData.aaaaa" />
+                <a-time-picker v-model:value="state.formData.ccccc" />
               </a-form-item>
             </a-col>
             <a-col :span="8">
               <a-form-item prop="password" label="查询时间">
-                <a-time-range-picker v-model:value="state.formData.bbbbb" />
+                <a-time-range-picker v-model:value="state.formData.ddddd" />
               </a-form-item>
             </a-col>
           </a-row>
@@ -48,8 +48,8 @@ const layoutRef = ref(HTMLDivElement);
 
 const state = reactive({
   formData: {
-    aaaaa: "",
-    bbbbb: "",
+    ccccc: '',
+    ddddd: [],
   },
 });
 
@@ -68,19 +68,5 @@ onBeforeUnmount(() => {});
 </script>
 
 <style scoped lang="scss">
-.common_filtertool_wrapper {
-  display: flex;
-  width: 100%;
-  height: 0.6rem;
-  align-items: center;
-  .ant-form {
-    width: 100%;
-    .ant-form-item {
-      margin: 0;
-    }
-    .operation {
-      text-align: right;
-    }
-  }
-}
+
 </style>

@@ -11,7 +11,7 @@
         pageSize: pagination.pageSize,
       }"
       :scroll="{
-        y: props.height,
+        y: tableHeight,
       }"
       @change="hangleChangePage"
     >
@@ -79,6 +79,7 @@ const props = defineProps({
   pageObj: { type: Object, default: () => null },
   height: { type: String, default: "" },
   processedTableData: { type: Array, default: null },
+  tabTable: { type: Boolean, default: false },
 });
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
@@ -125,6 +126,14 @@ const state = reactive({
       color: "font-color-red",
     },
   ] as any[],
+});
+
+const tableHeight = computed(() => {
+  if (props.tabTable) {
+    return "calc(100vh - 4.5rem)";
+  } else {
+    return "calc(100vh - 4rem)";
+  }
 });
 
 const innerDataModel = computed(() => {
@@ -238,14 +247,8 @@ const handleAction = (action: any, scope: any) => {
     height: 100%;
     background-color: transparent;
 
-    .ant-table-wrapper,
-    .ant-spin-nested-loading,
-    .ant-spin-container,
     .ant-table {
       height: 100%;
-    }
-    .ant-table {
-      height: calc(100vh - 3.5rem);
       background-color: transparent;
     }
     .ant-pagination {

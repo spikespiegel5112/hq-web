@@ -11,7 +11,7 @@
     <BaseTable
       :tableData="state.tableData"
       :dataModel="pageModel"
-      height="calc(100vh - 3.5rem)"
+      tabTable
       @onEdit="handleEdit"
     />
     <EditDialog
@@ -110,26 +110,7 @@ const state = reactive({
 });
 
 const getData = () => {
-  const result = [
-    {
-      higywayCode: "aaa",
-      highwayName: "aaa",
-      bridgeCode: "aaa",
-      bridgeName: "aaa",
-    },
-    {
-      higywayCode: "aaa",
-      highwayName: "aaa",
-      bridgeCode: "aaa",
-      bridgeName: "aaa",
-    },
-    {
-      higywayCode: "aaa",
-      highwayName: "aaa",
-      bridgeCode: "aaa",
-      bridgeName: "aaa",
-    },
-  ] as any[];
+  const result = [] as any[];
   for (let index = 0; index < 30; index++) {
     result.push({
       higywayCode: "aaa",
@@ -162,4 +143,6 @@ onMounted(async () => {
 onBeforeUnmount(() => {});
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+
+</style>
