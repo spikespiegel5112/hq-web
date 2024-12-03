@@ -13,14 +13,14 @@
             width: '100%',
           }"
         >
-          <a-form-item prop="userName" label="报警类型">
+          <a-form-item name="userName" label="报警类型">
             <a-input v-model="state.formData.userName" placeholder="请输入">
               <template #prefix>
                 <span class="username"></span>
               </template>
             </a-input>
           </a-form-item>
-          <a-form-item prop="password" label="报警内容">
+          <a-form-item name="password" label="报警内容">
             <a-input v-model="state.formData.password" placeholder="请输入">
               <template #prefix>
                 <span class="password"></span>
@@ -36,14 +36,14 @@
             width: '100%',
           }"
         >
-          <a-form-item prop="userName" label="报警类型">
+          <a-form-item name="userName" label="报警类型">
             <a-input v-model="state.formData.userName" placeholder="请输入">
               <template #prefix>
                 <span class="username"></span>
               </template>
             </a-input>
           </a-form-item>
-          <a-form-item prop="password" label="报警内容">
+          <a-form-item name="password" label="报警内容">
             <a-input v-model="state.formData.password" placeholder="请输入">
               <template #prefix>
                 <span class="password"></span>

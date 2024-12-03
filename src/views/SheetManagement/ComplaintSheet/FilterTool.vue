@@ -5,7 +5,7 @@
         <a-col :span="20">
           <a-row :gutter="20">
             <a-col :span="6">
-              <a-form-item prop="userName" label="区域：">
+              <a-form-item name="userName" label="区域：">
                 <a-input
                   v-model="state.formData.userName"
                   placeholder="请输入帐号"
@@ -18,7 +18,7 @@
             </a-col>
 
             <a-col :span="6">
-              <a-form-item prop="password" label="事件性质：">
+              <a-form-item name="password" label="事件性质：">
                 <a-input
                   v-model="state.formData.password"
                   placeholder="请输入密码"
@@ -30,7 +30,7 @@
               </a-form-item>
             </a-col>
             <a-col :span="6">
-              <a-form-item prop="password" label="日期：">
+              <a-form-item name="password" label="日期：">
                 <a-input
                   v-model="state.formData.password"
                   placeholder="请输入密码"

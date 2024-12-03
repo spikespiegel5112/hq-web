@@ -5,21 +5,21 @@
       <div class="content">
         <label for="">欢迎登录</label>
         <a-form :model="state.formData" autocomplete="off" :rules="rules">
-          <a-form-item prop="userName" label="">
+          <a-form-item name="userName" label="">
             <a-input v-model="state.formData.userName" placeholder="请输入帐号">
               <template #prefix>
                 <span class="username"></span>
               </template>
             </a-input>
           </a-form-item>
-          <a-form-item prop="password" label="">
+          <a-form-item name="password" label="">
             <a-input v-model="state.formData.password" placeholder="请输入密码">
               <template #prefix>
                 <span class="password"></span>
               </template>
             </a-input>
           </a-form-item>
-          <a-form-item prop="verifycode" label="">
+          <a-form-item name="verifycode" label="">
             <a-input
               v-model="state.formData.password"
               placeholder="请输入验证码"

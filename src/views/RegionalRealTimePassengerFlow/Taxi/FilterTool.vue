@@ -5,7 +5,7 @@
         <a-col :span="20">
           <a-row :gutter="20">
             <a-col :span="8">
-              <a-form-item prop="userName" label="上客点">
+              <a-form-item name="userName" label="上客点">
                 <a-select v-model="state.formData">
                   <a-select-option value="全部">全部</a-select-option>
                 </a-select>

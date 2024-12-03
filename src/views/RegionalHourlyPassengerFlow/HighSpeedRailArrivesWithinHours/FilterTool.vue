@@ -5,12 +5,12 @@
         <a-col :span="20">
           <a-row :gutter="20">
             <a-col :span="8">
-              <a-form-item prop="userName" label="时段">
+              <a-form-item name="userName" label="时段">
                 <a-time-picker v-model:value="state.formData.ccccc" />
               </a-form-item>
             </a-col>
             <a-col :span="8">
-              <a-form-item prop="password" label="查询时间">
+              <a-form-item name="password" label="查询时间">
                 <a-time-range-picker v-model:value="state.formData.ddddd" />
               </a-form-item>
             </a-col>
