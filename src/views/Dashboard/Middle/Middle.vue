@@ -52,7 +52,7 @@ onBeforeUnmount(() => {});
 .dashboardmiddle {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 1.78rem);
+  height: calc(100vh - 1.9rem);
   position: relative;
   // color: #fff;
   .top {

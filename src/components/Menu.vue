@@ -1,13 +1,15 @@
 <template>
   <div class="common_menu_wrapper">
-    <a-menu
-      v-model:openKeys="currentOpenKeys"
-      v-model:selectedKeys="currentSelectKeys"
-      mode="inline"
-      :theme="theme"
-      :items="menuList"
-      @click="handleClickMenu"
-    />
+    <vue-scroll>
+      <a-menu
+        v-model:openKeys="currentOpenKeys"
+        v-model:selectedKeys="currentSelectKeys"
+        mode="inline"
+        :theme="theme"
+        :items="menuList"
+        @click="handleClickMenu"
+      />
+    </vue-scroll>
   </div>
 </template>
 
@@ -129,6 +131,7 @@ onMounted(() => {
   background-color: #020f26;
   ul {
     height: 100%;
+    overflow: auto;
   }
   :deep(
       .ant-menu-root .ant-menu-item > .ant-menu-title-content,

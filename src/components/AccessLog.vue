@@ -1,24 +1,26 @@
 <template>
   <div class="common_accesslog_wrapper">
-    <a-space>
-      <div
-        class="route"
-        :class="item.active ? 'active' : ''"
-        v-for="item in state.accessLogList"
-      >
-        <a class="title" href="javascript:;" @click="handleNavigate(item)">
-          {{ item.meta.title }}
-        </a>
-        <a class="close" href="javascript:;" @click="handleClose(item)">
-          <div class="idle">
-            <CloseOutlined />
-          </div>
-          <div class="hover">
-            <CloseCircleFilled />
-          </div>
-        </a>
-      </div>
-    </a-space>
+    <vue-scroll>
+      <a-space>
+        <div
+          class="route"
+          :class="item.active ? 'active' : ''"
+          v-for="item in state.accessLogList"
+        >
+          <a class="title" href="javascript:;" @click="handleNavigate(item)">
+            {{ item.meta.title }}
+          </a>
+          <a class="close" href="javascript:;" @click="handleClose(item)">
+            <div class="idle">
+              <CloseOutlined />
+            </div>
+            <div class="hover">
+              <CloseCircleFilled />
+            </div>
+          </a>
+        </div>
+      </a-space>
+    </vue-scroll>
   </div>
 </template>
 
@@ -97,6 +99,16 @@ const init = () => {
 
 onMounted(async () => {
   init();
+  // for (let index = 0; index < 100; index++) {
+  //   state.accessLogList.push({
+  //     title: "客流月报表",
+  //     path: "MonthlyPassengerFlowSheet",
+  //     name: "MonthlyPassengerFlowSheet",
+  //     meta: {
+  //       title: "客流月报表",
+  //     },
+  //   });
+  // }
 });
 
 onBeforeUnmount(() => {});
@@ -105,9 +117,10 @@ onBeforeUnmount(() => {});
 <style scoped lang="scss">
 .common_accesslog_wrapper {
   display: flex;
+  margin: 0.15rem 0 0 0;
   padding: 0 0.2rem;
   width: 100%;
-  height: 0.6rem;
+  height: 0.5rem;
   align-items: center;
   .ant-space {
     width: 100%;

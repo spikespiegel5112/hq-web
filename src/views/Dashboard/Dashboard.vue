@@ -51,7 +51,7 @@ onBeforeUnmount(() => {});
   display: flex;
   padding: 0.1rem;
   width: 100%;
-  height: calc(100vh - 1.5rem);
+  height: calc(100vh - 1.7rem);
   // min-height: 100%;
   align-items: start;
   .left {
