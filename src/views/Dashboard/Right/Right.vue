@@ -6,22 +6,26 @@
           <a-col :span="12"> </a-col>
           <a-col :span="12">
             <a-form-item label="区域">
-              <a-select></a-select>
+              <a-select>
+                <a-select-option value="全部">全部</a-select-option>
+              </a-select>
             </a-form-item>
           </a-col>
         </a-row>
       </a-form>
     </div>
     <div class="content">
-      <a-space wrap>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </a-space>
+      <vue-scroll>
+        <a-space wrap>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </a-space>
+      </vue-scroll>
     </div>
   </div>
 </template>
@@ -68,6 +72,7 @@ onBeforeUnmount(() => {});
       width: 100%;
       .ant-space-item {
         border: 1px solid #ccc;
+
         > div {
           width: 3rem;
           height: 3rem;
