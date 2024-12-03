@@ -61,7 +61,7 @@ const pageModel = ref([
     exportVisible: false,
   },
   {
-    label: "区域",
+    label: "人员姓名",
     name: "higywayCode",
     required: true,
     tableVisible: true,
@@ -69,7 +69,7 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "类型",
+    label: "性别",
     name: "highwayName",
     required: true,
     tableVisible: true,
@@ -77,7 +77,15 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "内容",
+    label: "手机号",
+    name: "bridgeCode",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "职称",
     name: "bridgeName",
     required: true,
     tableVisible: true,
@@ -85,7 +93,7 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "投诉日期",
+    label: "单位",
     name: "bridgeName",
     required: true,
     tableVisible: true,

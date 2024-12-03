@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="common_table_wrapper">
     <FilterTool></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
@@ -94,7 +94,7 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "查看",
+    label: "操作",
     name: "operationColumn",
     tableVisible: true,
     exportVisible: false,

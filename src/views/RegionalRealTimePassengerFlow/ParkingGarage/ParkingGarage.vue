@@ -1,5 +1,5 @@
 <template>
-  <div class="common_main_container">
+  <div class="common_table_wrapper">
     <FilterTool></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
@@ -11,7 +11,6 @@
     <BaseTable
       :tableData="state.tableData"
       :dataModel="pageModel"
-      height="calc(100vh - 3.5rem)"
       @onEdit="handleEdit"
     />
     <EditDialog
@@ -94,7 +93,7 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "查看",
+    label: "操作",
     name: "operationColumn",
     tableVisible: true,
     exportVisible: false,
@@ -110,7 +109,7 @@ const state = reactive({
 });
 
 const getData = () => {
-    const result = [] as any[];
+  const result = [] as any[];
   for (let index = 0; index < 30; index++) {
     result.push({
       higywayCode: "aaa",

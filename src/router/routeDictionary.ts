@@ -115,7 +115,7 @@ const routerDictionary = [
             icon: () => h(PieChartOutlined),
             component: () =>
               import(
-                /* webpackChunkName: "Texi" */ "@/views/RegionalHourlyPassengerFlow/Taxi/Taxi.vue"
+                /* webpackChunkName: "Texi" */ "@/views/RegionalRealTimePassengerFlow/Taxi/Taxi.vue"
               ),
             meta: {
               title: "出租车",
@@ -128,7 +128,7 @@ const routerDictionary = [
             icon: () => h(PieChartOutlined),
             component: () =>
               import(
-                /* webpackChunkName: "HighSpeedRailArrivesWithinHours" */ "@/views/RegionalHourlyPassengerFlow/HighSpeedRailArrivesWithinHours/HighSpeedRailArrivesWithinHours.vue"
+                /* webpackChunkName: "ParkingGarage" */ "@/views/RegionalRealTimePassengerFlow/ParkingGarage/ParkingGarage.vue"
               ),
             meta: {
               title: "停车库",
@@ -244,12 +244,12 @@ const routerDictionary = [
         children: [
           {
             title: "值班人员管理",
-            path: "DutyPersonnelManagement",
-            name: "DutyPersonnelManagement",
+            path: "PersonOnDutyManagement",
+            name: "PersonOnDutyManagement",
             icon: () => h(PieChartOutlined),
             component: () =>
               import(
-                /* webpackChunkName: "DutyPersonnelManagement" */ "@/views/OperationManagement/DutyPersonnelManagement/DutyPersonnelManagement.vue"
+                /* webpackChunkName: "PersonOnDutyManagement" */ "@/views/OperationManagement/PersonOnDutyManagement/PersonOnDutyManagement.vue"
               ),
             meta: {
               title: "值班人员管理",
@@ -276,9 +276,7 @@ const routerDictionary = [
         name: "SheetManagement",
         icon: () => h(PieChartOutlined),
         component: () =>
-          import(
-            /* webpackChunkName: "RegionalHourlyPassengerFlow" */ "@/views/RegionalHourlyPassengerFlow/HighSpeedRailArrivesWithinHours/HighSpeedRailArrivesWithinHours.vue"
-          ),
+          import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
         children: [
           {
             title: "事件报表",
@@ -286,7 +284,9 @@ const routerDictionary = [
             name: "EventSheet",
             icon: () => h(PieChartOutlined),
             component: () =>
-              import(/* webpackChunkName: "Layout" */ "@/views/Layout.vue"),
+              import(
+                /* webpackChunkName: "EventSheet" */ "@/views/SheetManagement/EventSheet/EventSheet.vue"
+              ),
             meta: {
               title: "事件报表",
             },
@@ -298,7 +298,9 @@ const routerDictionary = [
             name: "ComplaintSheet",
             icon: () => h(PieChartOutlined),
             component: () =>
-              import(/* webpackChunkName: "Layout" */ "@/views/Layout.vue"),
+              import(
+                /* webpackChunkName: "ComplaintSheet" */ "@/views/SheetManagement/ComplaintSheet/ComplaintSheet.vue"
+              ),
             meta: {
               title: "投诉报表",
             },
@@ -309,29 +311,35 @@ const routerDictionary = [
             name: "PublicOpinionSheet",
             icon: () => h(PieChartOutlined),
             component: () =>
-              import(/* webpackChunkName: "Layout" */ "@/views/Layout.vue"),
+              import(
+                /* webpackChunkName: "PublicOpinionSheet" */ "@/views/SheetManagement/PublicOpinionSheet/PublicOpinionSheet.vue"
+              ),
             meta: {
               title: "舆情报表",
             },
           },
           {
             title: "地铁月报表",
-            path: "SubwaySheetByMonth",
-            name: "SubwaySheetByMonth",
+            path: "MonthlySubwaySheet",
+            name: "MonthlySubwaySheet",
             icon: () => h(PieChartOutlined),
             component: () =>
-              import(/* webpackChunkName: "Layout" */ "@/views/Layout.vue"),
+              import(
+                /* webpackChunkName: "MonthlySubwaySheet" */ "@/views/SheetManagement/MonthlySubwaySheet/MonthlySubwaySheet.vue"
+              ),
             meta: {
               title: "地铁月报表",
             },
           },
           {
             title: "客流月报表",
-            path: "PassengerFlowSheetByMonth",
-            name: "PassengerFlowSheetByMonth",
+            path: "MonthlyPassengerFlowSheet",
+            name: "MonthlyPassengerFlowSheet",
             icon: () => h(PieChartOutlined),
             component: () =>
-              import(/* webpackChunkName: "Layout" */ "@/views/Layout.vue"),
+              import(
+                /* webpackChunkName: "MonthlyPassengerFlowSheet" */ "@/views/SheetManagement/MonthlyPassengerFlowSheet/MonthlyPassengerFlowSheet.vue"
+              ),
             meta: {
               title: "客流月报表",
             },
@@ -340,13 +348,65 @@ const routerDictionary = [
       },
       {
         title: "系统管理",
-        path: "InformationManagement",
+        path: "SystemManagement",
         name: "SystemManagement",
         icon: () => h(PieChartOutlined),
         component: () =>
-          import(
-            /* webpackChunkName: "RegionalHourlyPassengerFlow" */ "@/views/RegionalHourlyPassengerFlow/HighSpeedRailArrivesWithinHours/HighSpeedRailArrivesWithinHours.vue"
-          ),
+          import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
+        children: [
+          {
+            title: "用户管理",
+            path: "UserManagement",
+            name: "UserManagement",
+            icon: () => h(PieChartOutlined),
+            component: () =>
+              import(
+                /* webpackChunkName: "UserManagement" */ "@/views/SystemManagement/UserManagement/UserManagement.vue"
+              ),
+            meta: {
+              title: "用户管理",
+            },
+          },
+          {
+            title: "角色管理",
+            path: "RoleManagement",
+            name: "RoleManagement",
+            icon: () => h(PieChartOutlined),
+            component: () =>
+              import(
+                /* webpackChunkName: "RoleManagement" */ "@/views/SystemManagement/RoleManagement/RoleManagement.vue"
+              ),
+            meta: {
+              title: "角色管理",
+            },
+          },
+          {
+            title: "权限管理",
+            path: "UserManagement",
+            name: "UserManagement",
+            icon: () => h(PieChartOutlined),
+            component: () =>
+              import(
+                /* webpackChunkName: "PermissionManagement" */ "@/views/SystemManagement/PermissionManagement/PermissionManagement.vue"
+              ),
+            meta: {
+              title: "权限管理",
+            },
+          },
+          {
+            title: "字典参数管理",
+            path: "DictionaryManagement",
+            name: "DictionaryManagement",
+            icon: () => h(PieChartOutlined),
+            component: () =>
+              import(
+                /* webpackChunkName: "DictionaryManagement" */ "@/views/SystemManagement/DictionaryManagement/DictionaryManagement.vue"
+              ),
+            meta: {
+              title: "字典参数管理",
+            },
+          },
+        ],
       },
     ],
   },

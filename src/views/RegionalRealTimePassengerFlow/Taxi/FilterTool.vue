@@ -3,33 +3,15 @@
     <a-form :model="state.formData" autocomplete="off">
       <a-row>
         <a-col :span="20">
-          <a-space
-            :size="20"
-            :style="{
-              width: '100%',
-            }"
-          >
-            <a-form-item prop="userName" label="时段">
-              <a-input
-                v-model="state.formData.userName"
-                placeholder="请输入帐号"
-              >
-                <template #prefix>
-                  <span class="username"></span>
-                </template>
-              </a-input>
-            </a-form-item>
-            <a-form-item prop="password" label="查询时间">
-              <a-input
-                v-model="state.formData.password"
-                placeholder="请输入密码"
-              >
-                <template #prefix>
-                  <span class="password"></span>
-                </template>
-              </a-input>
-            </a-form-item>
-          </a-space>
+          <a-row :gutter="20">
+            <a-col :span="8">
+              <a-form-item prop="userName" label="上客点">
+                <a-select v-model="state.formData">
+                  <a-select-option value="全部">全部</a-select-option>
+                </a-select>
+              </a-form-item>
+            </a-col>
+          </a-row>
         </a-col>
         <a-col :span="4" class="operation">
           <a-button class="submitbutton" type="primary" @click="handleSubmit">
@@ -82,6 +64,4 @@ onMounted(async () => {
 onBeforeUnmount(() => {});
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

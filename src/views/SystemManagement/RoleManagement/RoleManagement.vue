@@ -1,5 +1,5 @@
 <template>
-  <div class="common_main_container">
+  <div class="common_table_wrapper">
     <FilterTool></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
@@ -11,7 +11,6 @@
     <BaseTable
       :tableData="state.tableData"
       :dataModel="pageModel"
-      height="calc(100vh - 3.5rem)"
       @onEdit="handleEdit"
     />
     <EditDialog
@@ -62,7 +61,7 @@ const pageModel = ref([
     exportVisible: false,
   },
   {
-    label: "报警类型",
+    label: "来源种类",
     name: "higywayCode",
     required: true,
     tableVisible: true,
@@ -70,7 +69,7 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "报警内容",
+    label: "事件级别",
     name: "highwayName",
     required: true,
     tableVisible: true,
@@ -78,7 +77,7 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "报警时间",
+    label: "事件状态",
     name: "bridgeCode",
     required: true,
     tableVisible: true,
@@ -86,7 +85,7 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "报警地点",
+    label: "日期",
     name: "bridgeName",
     required: true,
     tableVisible: true,
@@ -94,7 +93,15 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "查看",
+    label: "内容",
+    name: "bridgeName",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "操作",
     name: "operationColumn",
     tableVisible: true,
     exportVisible: false,
@@ -110,7 +117,7 @@ const state = reactive({
 });
 
 const getData = () => {
-    const result = [] as any[];
+  const result = [] as any[];
   for (let index = 0; index < 30; index++) {
     result.push({
       higywayCode: "aaa",

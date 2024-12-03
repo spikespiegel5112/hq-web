@@ -94,7 +94,7 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "查看",
+    label: "操作",
     name: "operationColumn",
     tableVisible: true,
     exportVisible: false,
