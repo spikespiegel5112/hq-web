@@ -249,7 +249,7 @@ const handleAction = (action: any, scope: any) => {
       background-color: transparent;
     }
     .ant-pagination {
-      margin: 0.1rem 0 0 0;
+      margin: 0.15rem 0;
     }
     .ant-table-container {
       .ant-table-tbody {

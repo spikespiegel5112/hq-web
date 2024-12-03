@@ -1,5 +1,5 @@
 <template>
-  <div class="common_main_container">
+  <div>
     <FilterTool></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
@@ -11,7 +11,7 @@
     <BaseTable
       :tableData="state.tableData"
       :dataModel="pageModel"
-      height="calc(100vh - 3.5rem)"
+      height="calc(100vh - 4.5rem)"
       @onEdit="handleEdit"
     />
     <EditDialog
@@ -162,4 +162,12 @@ onMounted(async () => {
 onBeforeUnmount(() => {});
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+:deep(.common_basetable_wrapper) {
+  .ant-table-wrapper {
+    .ant-table {
+      height: calc(100% - 5rem);
+    }
+  }
+}
+</style>

@@ -6,17 +6,24 @@
   font-display: swap;
 }
 
-body {
-}
-.ant-input-affix-wrapper {
+.ant-input-affix-wrapper,
+.ant-picker {
+  width: 100%;
   background-color: #041030;
   border-color: #0096ff;
-  .ant-input {
+
+  .ant-input,
+  .ant-picker-input input {
     background-color: #041030;
     &::placeholder {
-      color: #999;
+      color: #ccc;
     }
   }
+}
+
+.ant-tabs > .ant-tabs-nav,
+.ant-tabs > div > .ant-tabs-nav {
+  margin: 0;
 }
 
 .ant-table-body {
@@ -375,23 +382,30 @@ input:focus {
   }
 }
 
-.common_main_container {
-  margin: 0rem 0.2rem;
-  padding: 0.1rem 0.3rem;
+.common_main_container,
+.common_tab_container {
+  margin: 0 0.2rem;
   background-color: #040c1f;
   border-radius: 0.1rem;
 }
+.common_main_container {
+  padding: 0.1rem 0.3rem;
+}
+.common_tab_container {
+  padding: 0 0.3rem;
+}
 
 .common_tableoperation_wrapper {
+  width: 100%;
+  padding: 0 0 0.1rem 0;
+  height: 0.6rem;
+  text-align: left;
   .ant-space {
     display: flex;
     align-items: center;
     width: 100%;
     height: 100%;
   }
-  width: 100%;
-  height: 0.6rem;
-  text-align: left;
   .a-button {
     .ant-btn-default {
       &:hover {

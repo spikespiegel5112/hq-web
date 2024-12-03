@@ -92,7 +92,7 @@ const routerDictionary = [
             icon: () => h(PieChartOutlined),
             component: () =>
               import(
-                /* webpackChunkName: "HighSpeedRailArrivesWithinHours" */ "@/views/RegionalHourlyPassengerFlow/HighSpeedRailArrivesWithinHours/HighSpeedRailArrivesWithinHours.vue"
+                /* webpackChunkName: "GarageTrafficInformation" */ "@/views/RegionalHourlyPassengerFlow/GarageTrafficInformation/GarageTrafficInformation.vue"
               ),
             meta: {
               title: "车库流量信息",

@@ -95,7 +95,7 @@ app.use(Antd).use(router).use(store, key).use(utils);
 app.use(vuescroll, {
   ops: {
     bar: {
-      showDelay: 500,
+      showDelay: 1500,
       onlyShowBarOnScroll: true,
       keepShow: false,
       background: "#666",
