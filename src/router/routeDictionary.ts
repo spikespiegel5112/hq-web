@@ -1,20 +1,8 @@
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  PieChartOutlined,
-  MailOutlined,
-  DesktopOutlined,
-  InboxOutlined,
-  AppstoreOutlined,
-} from "@ant-design/icons-vue";
-import { h, ref } from "vue";
-
 const routerDictionary = [
   {
     title: "登录",
     path: "/Login",
     name: "Login",
-    icon: "/src/assets/menu_systemmanagement.png",
     component: () =>
       import(/* webpackChunkName: "Login" */ "@/views/Login.vue"),
   },
@@ -29,7 +17,7 @@ const routerDictionary = [
         title: "首页",
         path: "Dashboard",
         name: "Dashboard",
-        icon: "/src/assets/menu_systemmanagement.png",
+        icon: "/src/assets/menu_dashboard.png",
         component: () =>
           import(
             /* webpackChunkName: "Dashboard" */ "@/views/Dashboard/Dashboard.vue"
@@ -42,7 +30,7 @@ const routerDictionary = [
         title: "区域小时客流",
         path: "RegionalHourlyPassengerFlow",
         name: "RegionalHourlyPassengerFlow",
-        icon: "/src/assets/menu_systemmanagement.png",
+        icon: "/src/assets/menu_regionalhourlypassengerflow.png",
         component: () =>
           import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
 
@@ -51,7 +39,7 @@ const routerDictionary = [
             title: "高铁小时到达",
             path: "HighSpeedRailArrivesWithinHours",
             name: "HighSpeedRailArrivesWithinHours",
-            icon: "/src/assets/menu_systemmanagement.png",
+            
             component: () =>
               import(
                 /* webpackChunkName: "HighSpeedRailArrivesWithinHours" */ "@/views/RegionalHourlyPassengerFlow/HighSpeedRailArrivesWithinHours/HighSpeedRailArrivesWithinHours.vue"
@@ -64,7 +52,7 @@ const routerDictionary = [
             title: "出租车",
             path: "Taxi",
             name: "Taxi",
-            icon: "/src/assets/menu_systemmanagement.png",
+            
             component: () =>
               import(
                 /* webpackChunkName: "Taxi" */ "@/views/RegionalHourlyPassengerFlow/Taxi/Taxi.vue"
@@ -77,7 +65,7 @@ const routerDictionary = [
             title: "地铁",
             path: "Subway",
             name: "Subway",
-            icon: "/src/assets/menu_systemmanagement.png",
+            
             component: () =>
               import(
                 /* webpackChunkName: "HighSpeedRailArrivesWithinHours" */ "@/views/RegionalHourlyPassengerFlow/HighSpeedRailArrivesWithinHours/HighSpeedRailArrivesWithinHours.vue"
@@ -90,7 +78,7 @@ const routerDictionary = [
             title: "车库流量信息",
             path: "GarageTrafficInformation",
             name: "GarageTrafficInformation",
-            icon: "/src/assets/menu_systemmanagement.png",
+            
             component: () =>
               import(
                 /* webpackChunkName: "GarageTrafficInformation" */ "@/views/RegionalHourlyPassengerFlow/GarageTrafficInformation/GarageTrafficInformation.vue"
@@ -105,7 +93,7 @@ const routerDictionary = [
         title: "区域实时客流",
         path: "RegionalRealTimePassengerFlow",
         name: "RegionalRealTimePassengerFlow",
-        icon: "/src/assets/menu_systemmanagement.png",
+        icon: "/src/assets/menu_regionalreatimepassengerflow.png",
         component: () =>
           import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
         children: [
@@ -113,7 +101,7 @@ const routerDictionary = [
             title: "出租车",
             path: "Taxi",
             name: "Taxi",
-            icon: "/src/assets/menu_systemmanagement.png",
+            
             component: () =>
               import(
                 /* webpackChunkName: "Texi" */ "@/views/RegionalRealTimePassengerFlow/Taxi/Taxi.vue"
@@ -126,7 +114,7 @@ const routerDictionary = [
             title: "停车库",
             path: "ParkingGarage",
             name: "ParkingGarage",
-            icon: "/src/assets/menu_systemmanagement.png",
+            
             component: () =>
               import(
                 /* webpackChunkName: "ParkingGarage" */ "@/views/RegionalRealTimePassengerFlow/ParkingGarage/ParkingGarage.vue"
@@ -141,7 +129,7 @@ const routerDictionary = [
         title: "事件管理",
         path: "EventManagement",
         name: "EventManagement",
-        icon: "/src/assets/menu_systemmanagement.png",
+        icon: "/src/assets/menu_eventmanagement.png",
         component: () =>
           import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
         children: [
@@ -149,7 +137,6 @@ const routerDictionary = [
             title: "事件告警",
             path: "EventAlert",
             name: "EventAlert",
-            icon: "/src/assets/menu_systemmanagement.png",
             component: () =>
               import(
                 /* webpackChunkName: "EventAlert" */ "@/views/EventManagement/EventAlert/EventAlert.vue"
@@ -162,7 +149,6 @@ const routerDictionary = [
             title: "事件处置",
             path: "EventHandling",
             name: "EventHandling",
-            icon: "/src/assets/menu_systemmanagement.png",
             component: () =>
               import(
                 /* webpackChunkName: "EventHandling" */ "@/views/EventManagement/EventHandling/EventHandling.vue"
@@ -177,7 +163,7 @@ const routerDictionary = [
         title: "信息管理",
         path: "InformationManagement",
         name: "InformationManagement",
-        icon: "/src/assets/menu_systemmanagement.png",
+        icon: "/src/assets/menu_informationmanagement.png",
         component: () =>
           import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
         children: [
@@ -185,7 +171,7 @@ const routerDictionary = [
             title: "信息来源",
             path: "InformationSources",
             name: "InformationSources",
-            icon: "/src/assets/menu_systemmanagement.png",
+            
             component: () =>
               import(
                 /* webpackChunkName: "InformationSources" */ "@/views/InformationManagement/InformationSources/InformationSources.vue"
@@ -198,7 +184,7 @@ const routerDictionary = [
             title: "信息上报",
             path: "InformationReporting",
             name: "InformationReporting",
-            icon: "/src/assets/menu_systemmanagement.png",
+            
             component: () =>
               import(
                 /* webpackChunkName: "InformationReporting" */ "@/views/InformationManagement/InformationReporting/InformationReporting.vue"
@@ -211,7 +197,7 @@ const routerDictionary = [
             title: "舆情信息",
             path: "PublicOpinionInformation",
             name: "PublicOpinionInformation",
-            icon: "/src/assets/menu_systemmanagement.png",
+            
             component: () =>
               import(
                 /* webpackChunkName: "PublicOpinionInformation" */ "@/views/InformationManagement/PublicOpinionInformation/PublicOpinionInformation.vue"
@@ -224,7 +210,7 @@ const routerDictionary = [
             title: "外部投诉",
             path: "ExternalComplaints",
             name: "ExternalComplaints",
-            icon: "/src/assets/menu_systemmanagement.png",
+            
             component: () =>
               import(
                 /* webpackChunkName: "ExternalComplaints" */ "@/views/InformationManagement/ExternalComplaints/ExternalComplaints.vue"
@@ -239,7 +225,7 @@ const routerDictionary = [
         title: "运行管理",
         path: "OperationManagement",
         name: "OperationManagement",
-        icon: "/src/assets/menu_systemmanagement.png",
+        icon: "/src/assets/menu_operationmanagement.png",
         component: () =>
           import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
         children: [
@@ -247,7 +233,7 @@ const routerDictionary = [
             title: "值班人员管理",
             path: "PersonOnDutyManagement",
             name: "PersonOnDutyManagement",
-            icon: "/src/assets/menu_systemmanagement.png",
+            
             component: () =>
               import(
                 /* webpackChunkName: "PersonOnDutyManagement" */ "@/views/OperationManagement/PersonOnDutyManagement/PersonOnDutyManagement.vue"
@@ -260,7 +246,7 @@ const routerDictionary = [
             title: "指示灯",
             path: "IndicatorLights",
             name: "IndicatorLights",
-            icon: "/src/assets/menu_systemmanagement.png",
+            
             component: () =>
               import(
                 /* webpackChunkName: "IndicatorLights" */ "@/views/OperationManagement/IndicatorLights/IndicatorLights.vue"
@@ -275,7 +261,7 @@ const routerDictionary = [
         title: "报表管理",
         path: "SheetManagement",
         name: "SheetManagement",
-        icon: "/src/assets/menu_systemmanagement.png",
+        icon: "/src/assets/menu_sheetmanagement.png",
         component: () =>
           import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
         children: [
@@ -283,7 +269,7 @@ const routerDictionary = [
             title: "事件报表",
             path: "EventSheet",
             name: "EventSheet",
-            icon: "/src/assets/menu_systemmanagement.png",
+            
             component: () =>
               import(
                 /* webpackChunkName: "EventSheet" */ "@/views/SheetManagement/EventSheet/EventSheet.vue"
@@ -297,7 +283,7 @@ const routerDictionary = [
             title: "投诉报表",
             path: "ComplaintSheet",
             name: "ComplaintSheet",
-            icon: "/src/assets/menu_systemmanagement.png",
+            
             component: () =>
               import(
                 /* webpackChunkName: "ComplaintSheet" */ "@/views/SheetManagement/ComplaintSheet/ComplaintSheet.vue"
@@ -310,7 +296,7 @@ const routerDictionary = [
             title: "舆情报表",
             path: "PublicOpinionSheet",
             name: "PublicOpinionSheet",
-            icon: "/src/assets/menu_systemmanagement.png",
+            
             component: () =>
               import(
                 /* webpackChunkName: "PublicOpinionSheet" */ "@/views/SheetManagement/PublicOpinionSheet/PublicOpinionSheet.vue"
@@ -323,7 +309,7 @@ const routerDictionary = [
             title: "地铁月报表",
             path: "MonthlySubwaySheet",
             name: "MonthlySubwaySheet",
-            icon: "/src/assets/menu_systemmanagement.png",
+            
             component: () =>
               import(
                 /* webpackChunkName: "MonthlySubwaySheet" */ "@/views/SheetManagement/MonthlySubwaySheet/MonthlySubwaySheet.vue"
@@ -336,7 +322,7 @@ const routerDictionary = [
             title: "客流月报表",
             path: "MonthlyPassengerFlowSheet",
             name: "MonthlyPassengerFlowSheet",
-            icon: "/src/assets/menu_systemmanagement.png",
+            
             component: () =>
               import(
                 /* webpackChunkName: "MonthlyPassengerFlowSheet" */ "@/views/SheetManagement/MonthlyPassengerFlowSheet/MonthlyPassengerFlowSheet.vue"
@@ -359,7 +345,7 @@ const routerDictionary = [
             title: "用户管理",
             path: "UserManagement",
             name: "UserManagement",
-            icon: "/src/assets/menu_systemmanagement.png",
+            
             component: () =>
               import(
                 /* webpackChunkName: "UserManagement" */ "@/views/SystemManagement/UserManagement/UserManagement.vue"
@@ -372,7 +358,7 @@ const routerDictionary = [
             title: "角色管理",
             path: "RoleManagement",
             name: "RoleManagement",
-            icon: "/src/assets/menu_systemmanagement.png",
+            
             component: () =>
               import(
                 /* webpackChunkName: "RoleManagement" */ "@/views/SystemManagement/RoleManagement/RoleManagement.vue"
@@ -385,7 +371,7 @@ const routerDictionary = [
             title: "权限管理",
             path: "PermissionManagement",
             name: "PermissionManagement",
-            icon: "/src/assets/menu_systemmanagement.png",
+            
             component: () =>
               import(
                 /* webpackChunkName: "PermissionManagement" */ "@/views/SystemManagement/PermissionManagement/PermissionManagement.vue"
@@ -398,7 +384,7 @@ const routerDictionary = [
             title: "字典参数管理",
             path: "DictionaryManagement",
             name: "DictionaryManagement",
-            icon: "/src/assets/menu_systemmanagement.png",
+            
             component: () =>
               import(
                 /* webpackChunkName: "DictionaryManagement" */ "@/views/SystemManagement/DictionaryManagement/DictionaryManagement.vue"
