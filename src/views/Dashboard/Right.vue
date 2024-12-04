@@ -22,7 +22,7 @@ import {
 import Header from "@/components/Header.vue";
 import Menu from "@/components/Menu.vue";
 
-import { screenBannerInfoRequest } from "@/api/screen";
+import { screenBannerInfoRequest } from "@/api/management";
 import dayjs from "dayjs";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;

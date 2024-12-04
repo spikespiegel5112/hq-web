@@ -65,7 +65,7 @@ import type { Rule } from "ant-design-vue/es/form";
 import Header from "@/components/Header.vue";
 import Menu from "@/components/Menu.vue";
 
-import { screenBannerInfoRequest } from "@/api/screen";
+import { screenBannerInfoRequest } from "@/api/management";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;

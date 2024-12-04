@@ -11,7 +11,9 @@
     <BaseTable
       :tableData="state.tableData"
       :dataModel="pageModel"
+      :pagination="pagination"
       @onEdit="handleEdit"
+      @onChangePage="handleChangePage"
     />
     <EditDialog
       :visible="state.dialogVisible"
@@ -34,9 +36,10 @@ import {
   nextTick,
 } from "vue";
 
-import { screenBannerInfoRequest } from "@/api/screen";
+import { dictionaryManageGetDictPagingRequest } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
+import { debug } from "console";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -60,33 +63,34 @@ const pageModel = ref([
     formVisible: true,
     exportVisible: false,
   },
+
   {
-    label: "进站数",
-    name: "higywayCode",
+    label: "字典名称",
+    name: "dicName",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "出站数",
-    name: "highwayName",
+    label: "标题",
+    name: "label",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "开始时间",
-    name: "bridgeCode",
+    label: "值",
+    name: "value",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "结束时间",
-    name: "bridgeName",
+    label: "备注",
+    name: "remark",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -108,17 +112,24 @@ const state = reactive({
   dialogMode: "",
 });
 
+const pagination = reactive({
+  page: 1,
+  pageSize: 30,
+  total: 0,
+});
+
 const getData = () => {
-  const result = [] as any[];
-  for (let index = 0; index < 30; index++) {
-    result.push({
-      higywayCode: "aaa",
-      highwayName: "aaa",
-      bridgeCode: "aaa",
-      bridgeName: "aaa",
+  dictionaryManageGetDictPagingRequest({
+    ...pagination,
+  })
+    .then((response: any) => {
+      response = response.data;
+      state.tableData = response.list;
+      pagination.total = response.total;
+    })
+    .catch((error: any) => {
+      console.log(error);
     });
-  }
-  state.tableData = result;
 };
 
 const handleEdit = () => {
@@ -133,6 +144,13 @@ const handleAdd = () => {
 
 const handleClose = (event: any) => {
   state.dialogVisible = false;
+};
+
+const handleChangePage = (pagingData: any) => {
+  pagination.page = pagingData.current;
+  pagination.pageSize = pagingData.pageSize;
+  pagination.total = pagingData.total;
+  getData()
 };
 
 onMounted(async () => {

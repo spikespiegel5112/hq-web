@@ -23,7 +23,7 @@ import Left from "./Left/Left.vue";
 import Middle from "./Middle/Middle.vue";
 import Right from "./Right/Right.vue";
 
-import { screenBannerInfoRequest } from "@/api/screen";
+import { screenBannerInfoRequest } from "@/api/management";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;

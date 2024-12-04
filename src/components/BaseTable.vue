@@ -2,12 +2,13 @@
   <div class="common_basetable_wrapper">
     <a-table
       :dataSource="actualTableData"
+      :loading="state.loading"
       :rowClassName="
         (_record, index) => (index % 2 === 1 ? 'table-striped' : undefined)
       "
       :pagination="{
-        current: pagination.current,
-        total: actualTableData.length,
+        current: pagination.page,
+        total: pagination.total,
         pageSize: pagination.pageSize,
       }"
       :scroll="{
@@ -69,6 +70,7 @@ import {
 
 const emit = defineEmits<{
   (e: "onEdit", action: string, tableData: any): void;
+  (e: "onChangePage", pagination: object): void;
 }>();
 
 const props = defineProps({
@@ -80,6 +82,14 @@ const props = defineProps({
   height: { type: String, default: "" },
   processedTableData: { type: Array, default: null },
   tabTable: { type: Boolean, default: false },
+  pagination: {
+    type: Object,
+    default: {
+      page: 1,
+      pageSize: 30,
+      total: 0,
+    },
+  },
 });
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
@@ -87,13 +97,13 @@ const global = currentInstance.appContext.config.globalProperties;
 
 const pagination = reactive({
   current: 1,
-  total: null,
+  total: 0,
   pageSize: 30,
 });
 
 const state = reactive({
   originalTableData: [],
-  loading: false,
+  loading: true,
   actionDictionary: [
     {
       label: "下载",
@@ -187,17 +197,20 @@ watch(
   (newValue: any, oldValue: any) => {
     if (newValue instanceof Array) {
       state.originalTableData = [];
-      setTimeout(() => {
-        state.originalTableData = JSON.parse(JSON.stringify(newValue));
-      }, 200);
+      state.originalTableData = JSON.parse(JSON.stringify(newValue));
+
     } else {
       state.originalTableData = [];
     }
+    initPagination();
+    state.loading = false;
   }
 );
 
-const hangleChangePage = (pagin: any, bbb, ccc) => {
+const hangleChangePage = (pagin: any) => {
+  state.loading = true;
   pagination.current = pagin.current;
+  emit("onChangePage", pagination);
 };
 
 const handleAction = (action: any, scope: any) => {
@@ -229,6 +242,13 @@ const handleAction = (action: any, scope: any) => {
     //   .catch(() => {});
   }
 };
+
+const initPagination = () => {
+  pagination.total = props.pagination.total;
+  pagination.pageSize = props.pagination.pageSize;
+};
+
+onMounted(() => {});
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -255,6 +275,9 @@ const handleAction = (action: any, scope: any) => {
       margin: 0.15rem 0;
     }
     .ant-table-container {
+      .ant-table-body {
+        height: calc(100vh - 4rem);
+      }
       .ant-table-tbody {
         .ant-table-row {
           .ant-table-cell {

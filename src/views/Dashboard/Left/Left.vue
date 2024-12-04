@@ -46,7 +46,7 @@ import HourlyPassengerFlow from "./HourlyPassengerFlow.vue";
 import AccumulatedEvacuationOfPassengerFlowOnTheSameDay from "./AccumulatedEvacuationOfPassengerFlowOnTheSameDay.vue";
 import Taxi from "./Taxi.vue";
 
-import { screenBannerInfoRequest } from "@/api/screen";
+import { screenBannerInfoRequest } from "@/api/management";
 import dayjs from "dayjs";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;

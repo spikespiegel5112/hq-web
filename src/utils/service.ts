@@ -1,9 +1,10 @@
-import axios from 'axios';
+import axios from "axios";
 
 const env = import.meta.env;
-console.log('service+++++', env);
+console.log("service+++++", env);
 
-const _baseURL: string = env.VITE_USER_NODE_ENV === 'production' ? env.VITE_BASE_URL : '/api';
+const _baseURL: string =
+  env.VITE_USER_NODE_ENV === "production" ? env.VITE_BASE_URL : "/api";
 
 console.log(_baseURL);
 
@@ -13,8 +14,8 @@ const service: any = axios.create({
   timeout: 10000,
   withCredentials: false,
   headers: {
-    'Content-Type': 'application/json',
-    Accept: 'application/json',
+    "Content-Type": "application/json",
+    Accept: "application/json",
   },
 });
 
@@ -33,14 +34,14 @@ service.interceptors.response.use(
     // console.log(res);
     if (res.status === 404) {
     }
-    if (res.baseURL === '') {
+    if (res.baseURL === "") {
     }
     // console.log("service.interceptors++++", res);
     const result = res.data;
     return result;
   },
   (error: any) => {
-    console.log('service.interceptors error++++', error);
+    console.log("service.interceptors error++++", error);
     return Promise.reject(error.response);
   }
 );

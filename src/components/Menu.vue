@@ -20,7 +20,25 @@
               <span> {{ item.title }}</span>
             </div>
           </a-menu-item>
-          <SubMenu v-else :item="item"></SubMenu>
+          <template v-else>
+            <a-sub-menu :key="item.key">
+              <template v-slot:icon>
+                <img :src="item.icon" alt="" />
+              </template>
+              <template v-slot:title>
+                {{ item.title }}
+              </template>
+              <template v-for="item2 in item.children">
+                <a-menu-item
+                  v-if="!item2.children"
+                  :key="item2.key"
+                  @click="handleClickMenu(item2)"
+                >
+                  <span>{{ item2.title }}</span>
+                </a-menu-item>
+              </template>
+            </a-sub-menu>
+          </template>
         </template>
       </a-menu>
     </vue-scroll>
@@ -44,37 +62,6 @@ import {
 import type { MenuTheme } from "ant-design-vue";
 import { Menu } from "ant-design-vue";
 import routeDictionary from "@/router/routeDictionary";
-
-const SubMenu = {
-  template: `
-      <a-sub-menu :key="item.key">
-        <template v-slot:icon>
-          <img :src="item.icon" alt="" />
-        </template>
-        <template v-slot:title>
-          {{ item.title }}
-        </template>
-        <template v-for="item2 in item.children">
-          <a-menu-item v-if="!item2.children" :key="item2.key">
-            <span>{{ item2.title }}</span>
-          </a-menu-item>
-          <SubMenu v-else :item="item2"></SubMenu>
-        </template>
-      </a-sub-menu>
-    `,
-  name: "SubMenu",
-  // must add isSubMenu: true 此项必须被定义
-  isSubMenu: true,
-  props: {
-    // 解构a-sub-menu的属性，也就是文章开头提到的为什么使用函数式组件
-    ...Menu.SubMenu.props,
-    // Cannot overlap with properties within Menu.SubMenu.props
-    item: {
-      type: Object,
-      default: () => ({}),
-    },
-  },
-};
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
