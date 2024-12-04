@@ -82,6 +82,7 @@ const props = defineProps({
   height: { type: String, default: "" },
   processedTableData: { type: Array, default: null },
   tabTable: { type: Boolean, default: false },
+  tableBodyHeight: { type: String || null, default: null },
   pagination: {
     type: Object,
     default: {
@@ -192,13 +193,20 @@ const actualTableData = computed(() => {
     : state.originalTableData;
 }) as any;
 
+const tableBodyHeight = computed(() => {
+  let result = tableHeight.value;
+  if (props.tableBodyHeight) {
+    result = props.tableBodyHeight;
+  }
+  return result;
+}) as any;
+
 watch(
   () => props.tableData,
   (newValue: any, oldValue: any) => {
     if (newValue instanceof Array) {
       state.originalTableData = [];
       state.originalTableData = JSON.parse(JSON.stringify(newValue));
-
     } else {
       state.originalTableData = [];
     }
@@ -275,8 +283,10 @@ onMounted(() => {});
       margin: 0.15rem 0;
     }
     .ant-table-container {
+      height: 100%;
       .ant-table-body {
-        height: calc(100vh - 4rem);
+        max-height: v-bind(tableBodyHeight) !important;
+        height: v-bind(tableBodyHeight) !important;
       }
       .ant-table-tbody {
         .ant-table-row {

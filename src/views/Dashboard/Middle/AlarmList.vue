@@ -23,6 +23,7 @@
         :tableData="state.tableData"
         :dataModel="pageModel"
         height="100%"
+        tableBodyHeight="calc(100% - 0.35rem)"
       />
     </div>
   </Block>
@@ -218,6 +219,7 @@ onBeforeUnmount(() => {});
         margin: 0.1rem 0 0 0;
       }
       .ant-table-container {
+        height: 100%;
         .ant-table-tbody {
           .ant-table-row {
             &.table-striped,
