@@ -9,10 +9,10 @@
       <div>
         <div class="date">
           <span>
-            {{ global.$dayjs().format("YYYY-MM-DD") }}
+            {{ state.currentDate }}
           </span>
           <span>
-            {{ global.$dayjs().format("hh:mm:ss") }}
+            {{ state.currentTime }}
           </span>
           <span>
             {{ global.$dayjs().format("dddd") }}
@@ -72,6 +72,7 @@ const global = currentInstance.appContext.config.globalProperties;
 
 const state = reactive({
   currentTime: "",
+  currentDate: "",
   clientWidth: 0,
   bannerInfo: {} as any,
 });
@@ -82,14 +83,13 @@ const blockSize = computed(() => {
 
 watch(
   () => props.bannerInfo,
-  (newValue: any, oldValue: any) => {
-    initClock();
-  }
+  (newValue: any, oldValue: any) => {}
 );
 
 const initClock = () => {
   setInterval(() => {
-    state.currentTime = global.$dayjs().format("YYYY-MM-DD HH:mm:ss");
+    state.currentTime = global.$dayjs().format("HH:mm:ss");
+    state.currentDate = global.$dayjs().format("YYYY-MM-DD");
   }, 1000);
 };
 
@@ -99,7 +99,9 @@ const hadleLogout = () => {
   });
 };
 
-onMounted(() => {});
+onMounted(() => {
+  initClock();
+});
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

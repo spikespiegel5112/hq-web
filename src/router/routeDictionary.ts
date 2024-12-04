@@ -7,6 +7,7 @@ import {
   InboxOutlined,
   AppstoreOutlined,
 } from "@ant-design/icons-vue";
+import { h, ref } from "vue";
 
 const routerDictionary = [
   {
@@ -350,7 +351,7 @@ const routerDictionary = [
         title: "系统管理",
         path: "SystemManagement",
         name: "SystemManagement",
-        icon: () => h(PieChartOutlined),
+        icon: "@/assets/menu_systemmanagement.png",
         component: () =>
           import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
         children: [
@@ -382,8 +383,8 @@ const routerDictionary = [
           },
           {
             title: "权限管理",
-            path: "UserManagement",
-            name: "UserManagement",
+            path: "PermissionManagement",
+            name: "PermissionManagement",
             icon: () => h(PieChartOutlined),
             component: () =>
               import(

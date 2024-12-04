@@ -6,9 +6,25 @@
         v-model:selectedKeys="currentSelectKeys"
         mode="inline"
         :theme="theme"
-        :items="menuList"
-        @click="handleClickMenu"
-      />
+      >
+        <template v-for="item in menuList" :key="item.key">
+          <a-menu-item
+            v-if="!item.children || item.children.length === 0"
+            :key="item.key"
+            @click="handleClickMenu(item)"
+          >
+            {{ item.title }}
+          </a-menu-item>
+
+          <a-sub-menu v-else :key="item.key" :title="item.title">
+            <template v-for="item2 in item.children" :key="item2.key">
+              <a-menu-item @click="handleClickMenu(item2)">
+                {{ item2.title }}
+              </a-menu-item>
+            </template>
+          </a-sub-menu>
+        </template>
+      </a-menu>
     </vue-scroll>
   </div>
 </template>
@@ -24,17 +40,9 @@ import {
   ComponentInternalInstance,
   ref,
   nextTick,
+  h,
 } from "vue";
 
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  PieChartOutlined,
-  MailOutlined,
-  DesktopOutlined,
-  InboxOutlined,
-  AppstoreOutlined,
-} from "@ant-design/icons-vue";
 import type { MenuTheme } from "ant-design-vue";
 
 import routeDictionary from "@/router/routeDictionary";
@@ -113,7 +121,7 @@ const initMenu = () => {
 };
 
 const handleClickMenu = (menuData: any) => {
-  const item = menuData.item;
+  const item = menuData;
   global.$router.push({
     name: item.name,
   });
