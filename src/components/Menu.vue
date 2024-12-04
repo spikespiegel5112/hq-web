@@ -7,22 +7,18 @@
         mode="inline"
         :theme="theme"
       >
-        <template v-for="item in menuList" :key="item.key">
+        <template v-for="(item, index) in menuList" :key="index">
           <a-menu-item
             v-if="!item.children || item.children.length === 0"
             :key="item.key"
             @click="handleClickMenu(item)"
           >
-            {{ item.title }}
+            <div>
+              <img :src="item.icon" alt="" />
+              <span> {{ item.title }}</span>
+            </div>
           </a-menu-item>
-
-          <a-sub-menu v-else :key="item.key" :title="item.title">
-            <template v-for="item2 in item.children" :key="item2.key">
-              <a-menu-item @click="handleClickMenu(item2)">
-                {{ item2.title }}
-              </a-menu-item>
-            </template>
-          </a-sub-menu>
+          <SubMenu v-else :item="item"></SubMenu>
         </template>
       </a-menu>
     </vue-scroll>
@@ -44,8 +40,36 @@ import {
 } from "vue";
 
 import type { MenuTheme } from "ant-design-vue";
-
+import { Menu } from "ant-design-vue";
 import routeDictionary from "@/router/routeDictionary";
+
+const SubMenu = {
+  template: `
+      <a-sub-menu :key="item.key" :title='item.title'>
+        // <span slot="title">
+        //   <span>{{ item.title }}</span>
+        // </span>
+        <template v-for="item2 in item.children">
+          <a-menu-item v-if="!item2.children" :key="item2.key">
+            <span>{{ item2.title }}</span>
+          </a-menu-item>
+          <SubMenu v-else :item="item2"></SubMenu>
+        </template>
+      </a-sub-menu>
+    `,
+  name: "SubMenu",
+  // must add isSubMenu: true 此项必须被定义
+  isSubMenu: true,
+  props: {
+    // 解构a-sub-menu的属性，也就是文章开头提到的为什么使用函数式组件
+    ...Menu.SubMenu.props,
+    // Cannot overlap with properties within Menu.SubMenu.props
+    item: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
+};
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -78,6 +102,7 @@ const menuList = computed(() => {
       item.key = key;
       item.parentKey = parentKey;
       item.label = item.title;
+      item.icon = new URL(item.icon, import.meta.url).href;
 
       if (item.children instanceof Array && item.children.length > 0) {
         _result.push({
@@ -162,6 +187,11 @@ onMounted(() => {
       transition: all 0.3s;
       .ant-menu-title-content {
         text-align: left;
+        img {
+          display: inline-block;
+          margin: 0 0.1rem 0 0;
+          width: 0.15rem;
+        }
       }
       &.ant-menu-item-selected {
         border-color: rgb(0, 186, 255);
