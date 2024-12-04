@@ -13,8 +13,10 @@
             :key="item.key"
             @click="handleClickMenu(item)"
           >
-            <div>
+            <template v-slot:icon>
               <img :src="item.icon" alt="" />
+            </template>
+            <div>
               <span> {{ item.title }}</span>
             </div>
           </a-menu-item>
@@ -45,10 +47,13 @@ import routeDictionary from "@/router/routeDictionary";
 
 const SubMenu = {
   template: `
-      <a-sub-menu :key="item.key" :title='item.title'>
-        // <span slot="title">
-        //   <span>{{ item.title }}</span>
-        // </span>
+      <a-sub-menu :key="item.key">
+        <template v-slot:icon>
+          <img :src="item.icon" alt="" />
+        </template>
+        <template v-slot:title>
+          {{ item.title }}
+        </template>
         <template v-for="item2 in item.children">
           <a-menu-item v-if="!item2.children" :key="item2.key">
             <span>{{ item2.title }}</span>
@@ -178,6 +183,11 @@ onMounted(() => {
   }
 
   :deep(.ant-menu) {
+    .ant-menu-item-icon {
+      display: inline-block;
+      margin: 0 0.1rem 0 0;
+      width: 0.15rem;
+    }
     .ant-menu-item {
       padding: 0;
       border-radius: 0;
@@ -185,13 +195,9 @@ onMounted(() => {
       border-width: 0;
       border-color: transparent;
       transition: all 0.3s;
+
       .ant-menu-title-content {
         text-align: left;
-        img {
-          display: inline-block;
-          margin: 0 0.1rem 0 0;
-          width: 0.15rem;
-        }
       }
       &.ant-menu-item-selected {
         border-color: rgb(0, 186, 255);
