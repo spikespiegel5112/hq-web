@@ -18,6 +18,60 @@ export const authLoginRequest = (params: any) => {
   });
 };
 
+// 后台管理-首页-报警列表
+export const backendIndexPageEmergencyRequest = (params: any) => {
+  return service({
+    url: prefix + "/backend/indexPage/emergency",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 后台管理-首页-报警列表
+export const backendIndexPageEmergencyResultRequest = (params: any) => {
+  return service({
+    url: prefix + "/backend/indexPage/emergency/result",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 后台管理-客流疏散
+export const backendIndexPageFlowDistRequest = (params: any) => {
+  return service({
+    url: prefix + "/backend/indexPage/flow/dist",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 后台管理-小时客流
+export const backendIndexPageFlowHourlyRequest = (params: any) => {
+  return service({
+    url: prefix + "/backend/indexPage/flow/hourly",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 后台管理-首页-出租车车辆监测数据
+export const backendIndexPageTaxiVehicleMonitorRequest = (params: any) => {
+  return service({
+    url: prefix + "/backend/indexPage/taxi/vehicle/monitor",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 后台管理-当日累计疏散客流
+export const backendIndexPageTodayFlowAcceleratedRequest = (params: any) => {
+  return service({
+    url: prefix + "/backend/indexPage/today/flow/accelerated",
+    method: "POST",
+    data: params,
+  });
+};
+
 // 获取系统数据字典项列表(新)
 export const dictionaryManageGetDictListRequest = (params: any) => {
   return service({

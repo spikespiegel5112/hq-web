@@ -128,8 +128,7 @@ const handleLogin = () => {
     .then((valid: boolean) => {
       submitLogin();
     })
-    .catch((error) => {
-    });
+    .catch((error) => {});
 };
 
 const submitLogin = () => {

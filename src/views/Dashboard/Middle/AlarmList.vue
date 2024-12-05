@@ -2,14 +2,14 @@
   <Block title="报警列表" class="alarmlist">
     <div class="choosedate">
       <ul>
-        <li class="active">
-          <a href="javascript:;"> 今日 </a>
-        </li>
-        <li>
-          <a href="javascript:;"> 本周 </a>
-        </li>
-        <li>
-          <a href="javascript:;"> 当月 </a>
+        <li
+          :class="{ active: state.timeType === item.value }"
+          v-for="item in timeTypeList"
+          :key="item.value"
+        >
+          <a href="javascript:;" @click="handleChooseAlarmTimeType(item.value)">
+            {{ item.label }}
+          </a>
         </li>
       </ul>
     </div>
@@ -42,12 +42,27 @@ import {
   nextTick,
 } from "vue";
 
-import { screenBannerInfoRequest } from "@/api/management";
+import { backendIndexPageEmergencyRequest } from "@/api/management";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
 const layoutRef = ref(HTMLDivElement);
+
+const timeTypeList = [
+  {
+    label: "今日",
+    value: 1,
+  },
+  {
+    label: "本周",
+    value: 2,
+  },
+  {
+    label: "当月",
+    value: 3,
+  },
+];
 
 const pageModel = ref([
   {
@@ -68,7 +83,7 @@ const pageModel = ref([
   },
   {
     label: "报警类型",
-    name: "higywayCode",
+    name: "infoType",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -76,7 +91,7 @@ const pageModel = ref([
   },
   {
     label: "报警内容",
-    name: "highwayName",
+    name: "content",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -84,7 +99,7 @@ const pageModel = ref([
   },
   {
     label: "报警时间",
-    name: "bridgeCode",
+    name: "warnDate",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -92,7 +107,7 @@ const pageModel = ref([
   },
   {
     label: "报警地点",
-    name: "bridgeName",
+    name: "source",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -110,35 +125,34 @@ const pageModel = ref([
 const state = reactive({
   tableData: [] as any[],
   dataModel: [] as any[],
+  timeType: 1,
 });
 
 const init = () => {};
+
+const handleChooseAlarmTimeType = (timeType: number) => {
+  state.timeType = timeType;
+  getData();
+};
+
 const getData = () => {
-  state.tableData = [
-    {
-      higywayCode: "aaa",
-      highwayName: "aaa",
-      bridgeCode: "aaa",
-      bridgeName: "aaa",
-    },
-    {
-      higywayCode: "aaa",
-      highwayName: "aaa",
-      bridgeCode: "aaa",
-      bridgeName: "aaa",
-    },
-    {
-      higywayCode: "aaa",
-      highwayName: "aaa",
-      bridgeCode: "aaa",
-      bridgeName: "aaa",
-    },
-  ];
+  backendIndexPageEmergencyRequest({
+    hour: 1,
+    // queryDate: global.$dayjs().format("YYYY-MM-DD"),
+    queryDate: "2024-09-11",
+    timeType: state.timeType,
+  })
+    .then((response: any) => {
+      state.tableData = response.data;
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
 };
 
 onMounted(async () => {
   init();
-  getData();
+  getData(1);
 });
 
 onBeforeUnmount(() => {});
