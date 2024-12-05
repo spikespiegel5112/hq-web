@@ -6,21 +6,6 @@
   font-display: swap;
 }
 
-.ant-input-affix-wrapper,
-.ant-picker {
-  width: 100%;
-  background-color: #041030;
-  border-color: #0096ff;
-
-  .ant-input,
-  .ant-picker-input input {
-    background-color: #041030;
-    &::placeholder {
-      color: #ccc;
-    }
-  }
-}
-
 .ant-tabs > .ant-tabs-nav,
 .ant-tabs > div > .ant-tabs-nav {
   margin: 0;
@@ -361,6 +346,20 @@ input:focus {
     width: 100%;
     .ant-form-item {
       margin: 0;
+      .ant-input-affix-wrapper,
+      .ant-picker {
+        width: 100%;
+        background-color: #041030;
+        border-color: #0096ff;
+
+        .ant-input,
+        .ant-picker-input input {
+          background-color: #041030;
+          &::placeholder {
+            color: #ccc;
+          }
+        }
+      }
     }
     .operation {
       text-align: right;
@@ -379,7 +378,7 @@ input:focus {
 }
 .common_tab_container {
   padding: 0 0.3rem;
-  .common_table_wrapper{
+  .common_table_wrapper {
     margin: 0;
   }
 }

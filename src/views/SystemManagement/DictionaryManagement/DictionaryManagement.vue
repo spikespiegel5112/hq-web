@@ -64,7 +64,7 @@ const pageModel = ref([
   },
 
   {
-    label: "字典名称",
+    label: "字典项名称",
     name: "dicName",
     required: true,
     tableVisible: true,
@@ -72,7 +72,7 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "标题",
+    label: "字典标签",
     name: "label",
     required: true,
     tableVisible: true,
@@ -80,7 +80,7 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "值",
+    label: "字典值",
     name: "value",
     required: true,
     tableVisible: true,
@@ -88,7 +88,7 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "备注",
+    label: "字典详细信息",
     name: "remark",
     required: true,
     tableVisible: true,

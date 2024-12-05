@@ -30,6 +30,7 @@ declare module 'vue' {
     ATableColumn: typeof import('ant-design-vue/es')['TableColumn']
     ATabPane: typeof import('ant-design-vue/es')['TabPane']
     ATabs: typeof import('ant-design-vue/es')['Tabs']
+    ATextarea: typeof import('ant-design-vue/es')['Textarea']
     ATimePicker: typeof import('ant-design-vue/es')['TimePicker']
     ATimeRangePicker: typeof import('ant-design-vue/es')['TimeRangePicker']
     BaseTable: typeof import('./components/BaseTable.vue')['default']

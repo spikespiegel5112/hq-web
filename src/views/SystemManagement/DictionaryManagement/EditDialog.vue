@@ -3,54 +3,50 @@
     v-model:open="props.visible"
     :title="props.mode === 'edit' ? '编辑' : '新增'"
     @cancel="handleClose"
+    @ok="handleSubmit"
     width="8rem"
   >
-    <a-form :model="state.formData" autocomplete="off">
-      <a-row>
-        <a-space
-          :size="20"
-          :style="{
-            width: '100%',
-          }"
-        >
-          <a-form-item name="userName" label="报警类型">
-            <a-input v-model="state.formData.userName" placeholder="请输入">
-              <template #prefix>
-                <span class="username"></span>
-              </template>
+    <a-form
+      ref="formRef"
+      :model="formDataState"
+      :rules="rules"
+      autocomplete="off"
+      :label-col="{
+        style: { width: '100px' },
+      }"
+    >
+      <a-row :gutter="20">
+        <a-col :span="12">
+          <a-form-item name="dicName" label="字典项名称">
+            <a-input v-model:value="formDataState.dicName" placeholder="请输入">
             </a-input>
           </a-form-item>
-          <a-form-item name="password" label="报警内容">
-            <a-input v-model="state.formData.password" placeholder="请输入">
-              <template #prefix>
-                <span class="password"></span>
-              </template>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item name="label" label="字典标签">
+            <a-input v-model:value="formDataState.label" placeholder="请输入">
             </a-input>
           </a-form-item>
-        </a-space>
+        </a-col>
       </a-row>
-      <a-row>
-        <a-space
-          :size="20"
-          :style="{
-            width: '100%',
-          }"
-        >
-          <a-form-item name="userName" label="报警类型">
-            <a-input v-model="state.formData.userName" placeholder="请输入">
-              <template #prefix>
-                <span class="username"></span>
-              </template>
+      <a-row :gutter="20">
+        <a-col :span="12">
+          <a-form-item name="value" label="字典值">
+            <a-input v-model:value="formDataState.value" placeholder="请输入">
             </a-input>
           </a-form-item>
-          <a-form-item name="password" label="报警内容">
-            <a-input v-model="state.formData.password" placeholder="请输入">
-              <template #prefix>
-                <span class="password"></span>
-              </template>
-            </a-input>
+        </a-col>
+      </a-row>
+      <a-row :gutter="20">
+        <a-col :span="24">
+          <a-form-item name="remark" label="字典详细信息">
+            <a-textarea
+              v-model:value="formDataState.remark"
+              placeholder="请输入"
+              :rows="4"
+            />
           </a-form-item>
-        </a-space>
+        </a-col>
       </a-row>
     </a-form>
   </a-modal>
@@ -66,16 +62,18 @@ import {
   getCurrentInstance,
   ComponentInternalInstance,
   ref,
+  toRaw,
   nextTick,
 } from "vue";
+import type { UnwrapRef } from "vue";
+import type { Rule } from "ant-design-vue/es/form";
 
-import { screenBannerInfoRequest } from "@/api/management";
+import { dictionaryManageSaveDictRequest } from "@/api/management";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
-const layoutRef = ref(HTMLDivElement);
-
+const formRef = ref();
 const emit = defineEmits<{
   (e: "onClose", event: any): void;
 }>();
@@ -85,31 +83,40 @@ const props = defineProps({
   mode: { type: String, required: true, default: "" },
 });
 
-const state = reactive({
-  formData: {
-    userName: "",
-    password: "",
-  },
+const formDataState: UnwrapRef<any> = reactive({
+  code: "",
+  dicName: "",
+  id: null as number | null | undefined,
+  label: "",
+  remark: "",
+  value: "",
 });
 
-const init = () => {
-  const lineScaleEl: HTMLElement = document.getElementById("line-scale");
-  lineScaleEl.style.display = "none";
-};
+const rules: Record<string, Rule[]> = {};
 
 const handleClose = (event: any) => {
   emit("onClose", event);
 };
 
-const handleSubmit = () => {};
+const handleSubmit = () => {
+  if (props.mode === "add") {
+    // : UnwrapRef<FormState> .id = undefined;
+  }
+  const aaa = toRaw(formDataState);
+  console.log(aaa);
+  // debugger;
+  // dictionaryManageSaveDictRequest(: UnwrapRef<FormState> )
+  //   .then((response: any) => {
+  //     global.$message("adsadas");
+  //   })
+  //   .catch((error: any) => {
+  //     console.log(error);
+  //   });
+};
 
-onMounted(async () => {
-  init();
-});
+onMounted(async () => {});
 
 onBeforeUnmount(() => {});
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>
