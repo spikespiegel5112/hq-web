@@ -18,6 +18,7 @@
     <EditDialog
       :visible="state.dialogVisible"
       :mode="state.dialogMode"
+      :dataModel="pageModel"
       @onClose="handleClose"
     ></EditDialog>
   </div>
@@ -66,6 +67,14 @@ const pageModel = ref([
   {
     label: "字典项名称",
     name: "dicName",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "字典编码",
+    name: "code",
     required: true,
     tableVisible: true,
     formVisible: true,

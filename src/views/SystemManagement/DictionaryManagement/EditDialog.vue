@@ -7,7 +7,7 @@
     width="8rem"
   >
     <a-form
-      ref="formRef"
+      ref="formDataRef"
       :model="formDataState"
       :rules="rules"
       autocomplete="off"
@@ -23,13 +23,19 @@
           </a-form-item>
         </a-col>
         <a-col :span="12">
-          <a-form-item name="label" label="字典标签">
-            <a-input v-model:value="formDataState.label" placeholder="请输入">
+          <a-form-item name="code" label="字典编码">
+            <a-input v-model:value="formDataState.code" placeholder="请输入">
             </a-input>
           </a-form-item>
         </a-col>
       </a-row>
       <a-row :gutter="20">
+        <a-col :span="12">
+          <a-form-item name="label" label="字典标签">
+            <a-input v-model:value="formDataState.label" placeholder="请输入">
+            </a-input>
+          </a-form-item>
+        </a-col>
         <a-col :span="12">
           <a-form-item name="value" label="字典值">
             <a-input v-model:value="formDataState.value" placeholder="请输入">
@@ -66,14 +72,14 @@ import {
   nextTick,
 } from "vue";
 import type { UnwrapRef } from "vue";
-import type { Rule } from "ant-design-vue/es/form";
+import type { Rule, RuleObject } from "ant-design-vue/es/form";
 
 import { dictionaryManageSaveDictRequest } from "@/api/management";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
-const formRef = ref();
+const formDataRef = ref();
 const emit = defineEmits<{
   (e: "onClose", event: any): void;
 }>();
@@ -81,18 +87,48 @@ const emit = defineEmits<{
 const props = defineProps({
   visible: { type: Boolean, required: true, default: false },
   mode: { type: String, required: true, default: "" },
+  dataModel: { type: Array, required: true, default: () => [] as any },
 });
 
 const formDataState: UnwrapRef<any> = reactive({
+  id: null as number | null | undefined,
   code: "",
   dicName: "",
-  id: null as number | null | undefined,
   label: "",
   remark: "",
   value: "",
 });
 
-const rules: Record<string, Rule[]> = {};
+const rules: ComputedRef<RuleObject[]> = computed(() => {
+  const validateNumber = (rule: any, value: any, callback: any) => {
+    if (isNaN(Number(value))) {
+      callback(new Error("请输入数字值"));
+    } else {
+      callback();
+    }
+  };
+
+  const result: any = {};
+  Object.keys(toRaw(formDataState)).forEach((item) => {
+    const dataModelInfo = props.dataModel.find(
+      (item2: any) => item2.name === item
+    ) as any;
+    if (!!dataModelInfo) {
+      result[item] = [];
+      if (dataModelInfo.required) {
+        result[item].push({
+          required: true,
+          message: "请输入" + dataModelInfo.label,
+          trigger: "change",
+        });
+      }
+      if (dataModelInfo.dataType === "number") {
+        result[item].push({ validator: validateNumber, trigger: "change" });
+      }
+    }
+  });
+  return result;
+});
 
 const handleClose = (event: any) => {
   emit("onClose", event);
@@ -100,18 +136,24 @@ const handleClose = (event: any) => {
 
 const handleSubmit = () => {
   if (props.mode === "add") {
-    // : UnwrapRef<FormState> .id = undefined;
+    formDataState.id = undefined;
   }
-  const aaa = toRaw(formDataState);
-  console.log(aaa);
-  // debugger;
-  // dictionaryManageSaveDictRequest(: UnwrapRef<FormState> )
-  //   .then((response: any) => {
-  //     global.$message("adsadas");
-  //   })
-  //   .catch((error: any) => {
-  //     console.log(error);
-  //   });
+  const formDataStateRaw = toRaw(formDataState);
+  console.log(formDataStateRaw);
+  formDataRef.value
+    .validate()
+    .then(() => {
+      dictionaryManageSaveDictRequest(formDataStateRaw)
+        .then((response: any) => {
+          global.$message("adsadas");
+        })
+        .catch((error: any) => {
+          console.log(error);
+        });
+    })
+    .catch((error: any) => {
+      console.log("error", error);
+    });
 };
 
 onMounted(async () => {});
