@@ -4,16 +4,27 @@
     <div class="main">
       <div class="content">
         <label for="">欢迎登录</label>
-        <a-form :model="state.formData" autocomplete="off" :rules="rules">
-          <a-form-item name="userName" label="">
-            <a-input v-model="state.formData.userName" placeholder="请输入帐号">
+        <a-form
+          ref="formDataRef"
+          :model="formDataState"
+          autocomplete="off"
+          :rules="rules"
+        >
+          <a-form-item name="username" label="">
+            <a-input
+              v-model:value="formDataState.username"
+              placeholder="请输入帐号"
+            >
               <template #prefix>
                 <span class="username"></span>
               </template>
             </a-input>
           </a-form-item>
           <a-form-item name="password" label="">
-            <a-input v-model="state.formData.password" placeholder="请输入密码">
+            <a-input
+              v-model:value="formDataState.password"
+              placeholder="请输入密码"
+            >
               <template #prefix>
                 <span class="password"></span>
               </template>
@@ -21,7 +32,7 @@
           </a-form-item>
           <a-form-item name="verifycode" label="">
             <a-input
-              v-model="state.formData.password"
+              v-model:value="formDataState.seconds"
               placeholder="请输入验证码"
             >
               <template #suffix>
@@ -65,22 +76,22 @@ import type { Rule } from "ant-design-vue/es/form";
 import Header from "@/components/Header.vue";
 import Menu from "@/components/Menu.vue";
 
-import { screenBannerInfoRequest } from "@/api/management";
+import { authLoginRequest } from "@/api/management";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
 const layoutRef = ref(HTMLDivElement);
+const formDataRef = ref();
 
-const state = reactive({
-  formData: {
-    userName: "",
-    password: "",
-  },
+const formDataState = reactive({
+  username: "",
+  password: "",
+  seconds: "",
 });
 
 const rules: Record<string, Rule[]> = {
-  userName: [
+  username: [
     {
       required: true,
       message: "请输入用户名",
@@ -91,6 +102,13 @@ const rules: Record<string, Rule[]> = {
     {
       required: true,
       message: "请输入密码",
+      trigger: "change",
+    },
+  ],
+  seconds: [
+    {
+      required: true,
+      message: "请输入验证码",
       trigger: "change",
     },
   ],
@@ -105,6 +123,23 @@ const handleLogin = () => {
   global.$router.push({
     name: "Dashboard",
   });
+  formDataRef.value
+    .validate()
+    .then((valid: boolean) => {
+      submitLogin();
+    })
+    .catch((error) => {
+    });
+};
+
+const submitLogin = () => {
+  authLoginRequest(toRaw(formDataState))
+    .then((response: any) => {
+      debugger;
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
 };
 
 onMounted(async () => {

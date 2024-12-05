@@ -9,6 +9,15 @@ import { store } from "@/store";
 
 const prefix = "/manage";
 
+// 获取令牌
+export const authLoginRequest = (params: any) => {
+  return service({
+    url: prefix + "/sys/auth/login",
+    method: "POST",
+    data: params,
+  });
+};
+
 // 获取系统数据字典项列表(新)
 export const dictionaryManageGetDictListRequest = (params: any) => {
   return service({
@@ -49,6 +58,15 @@ export const dictionaryManageSaveDictRequest = (params: any) => {
 export const dictionaryManageTestDictRequest = (params: any) => {
   return service({
     url: prefix + "/sys/dictionary/manage/testDict",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 系统管理-用户管理-条件查询用户
+export const userManageQueryAllUserRequest = (params: any) => {
+  return service({
+    url: prefix + "/sys/user/manage/queryAllUser",
     method: "POST",
     data: params,
   });

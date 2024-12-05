@@ -11,11 +11,14 @@
     <BaseTable
       :tableData="state.tableData"
       :dataModel="pageModel"
+      :pagination="pagination"
       @onEdit="handleEdit"
+      @onChangePage="handleChangePage"
     />
     <EditDialog
       :visible="state.dialogVisible"
       :mode="state.dialogMode"
+      :dataModel="pageModel"
       @onClose="handleClose"
     ></EditDialog>
   </div>
@@ -34,7 +37,7 @@ import {
   nextTick,
 } from "vue";
 
-import { screenBannerInfoRequest } from "@/api/management";
+import { userManageQueryAllUserRequest } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
 
@@ -116,17 +119,25 @@ const state = reactive({
   dialogMode: "",
 });
 
+const pagination = reactive({
+  page: 1,
+  pageSize: 30,
+  total: 0 as number | undefined,
+});
+
 const getData = () => {
-  const result = [] as any[];
-  for (let index = 0; index < 30; index++) {
-    result.push({
-      higywayCode: "aaa",
-      highwayName: "aaa",
-      bridgeCode: "aaa",
-      bridgeName: "aaa",
+  pagination.total = undefined;
+  userManageQueryAllUserRequest({
+    ...pagination,
+  })
+    .then((response: any) => {
+      response = response.data;
+      state.tableData = response.list;
+      pagination.total = response.total;
+    })
+    .catch((error: any) => {
+      console.log(error);
     });
-  }
-  state.tableData = result;
 };
 
 const handleEdit = () => {
@@ -141,6 +152,13 @@ const handleAdd = () => {
 
 const handleClose = (event: any) => {
   state.dialogVisible = false;
+};
+
+const handleChangePage = (pagingData: any) => {
+  pagination.page = pagingData.current;
+  pagination.pageSize = pagingData.pageSize;
+  pagination.total = pagingData.total;
+  getData();
 };
 
 onMounted(async () => {
