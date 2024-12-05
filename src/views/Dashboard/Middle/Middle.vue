@@ -1,10 +1,26 @@
 <template>
   <div class="dashboardmiddle">
     <div class="top common_block_wrapper">
-      <AlarmList />
+      <div class="choosedate">
+        <ul>
+          <li
+            :class="{ active: state.timeType === item.value }"
+            v-for="item in timeTypeList"
+            :key="item.value"
+          >
+            <a
+              href="javascript:;"
+              @click="handleChooseAlarmTimeType(item.value)"
+            >
+              {{ item.label }}
+            </a>
+          </li>
+        </ul>
+      </div>
+      <AlarmList :timeType="state.timeType" />
     </div>
     <div class="bottom common_block_wrapper">
-      <EventHandlingList />
+      <EventHandlingList :timeType="state.timeType" />
     </div>
   </div>
 </template>
@@ -32,13 +48,32 @@ const global = currentInstance.appContext.config.globalProperties;
 
 const layoutRef = ref(HTMLDivElement);
 
+const timeTypeList = [
+  {
+    label: "今日",
+    value: 1,
+  },
+  {
+    label: "本周",
+    value: 2,
+  },
+  {
+    label: "当月",
+    value: 3,
+  },
+];
+
 const state = reactive({
-  bannerInfo: {},
+  timeType: 1,
 });
 
 const init = () => {
   const lineScaleEl: HTMLElement = document.getElementById("line-scale");
   lineScaleEl.style.display = "none";
+};
+
+const handleChooseAlarmTimeType = (timeType: number) => {
+  state.timeType = timeType;
 };
 
 onMounted(async () => {
@@ -105,6 +140,48 @@ onBeforeUnmount(() => {});
   .bottom {
     height: 45%;
     position: relative;
+  }
+
+  .choosedate {
+    position: absolute;
+    top: 0.1rem 0 0 0;
+    right: 0;
+    z-index: 1;
+    ul {
+      li {
+        display: inline-block;
+        margin: 0 0 0 0.2rem;
+        border: 1px solid #004390;
+        background-color: #00284d;
+        position: relative;
+        &:before {
+          content: "";
+          display: inline-block;
+          width: 0;
+          height: 0;
+          border-style: solid;
+          border-color: transparent;
+          border-width: 0.05rem;
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+        a {
+          display: inline-block;
+          padding: 0.04rem 0.15rem;
+          width: 100%;
+          height: 100%;
+          color: #fff;
+        }
+        &.active {
+          color: #fff;
+          border: 1px solid #23dbfc;
+          &:before {
+            border-color: #23dbfc transparent transparent #23dbfc;
+          }
+        }
+      }
+    }
   }
 }
 </style>

@@ -12,7 +12,7 @@
         pageSize: pagination.pageSize,
       }"
       :scroll="{
-        y: tableHeight,
+        y: tableBodyHeight,
       }"
       @change="hangleChangePage"
     >
@@ -284,10 +284,6 @@ onMounted(() => {});
     }
     .ant-table-container {
       height: 100%;
-      .ant-table-body {
-        max-height: v-bind(tableBodyHeight) !important;
-        height: v-bind(tableBodyHeight) !important;
-      }
       .ant-table-tbody {
         .ant-table-row {
           .ant-table-cell {

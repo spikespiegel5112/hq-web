@@ -1,21 +1,9 @@
 <template>
   <Block title="报警列表" class="alarmlist">
-    <div class="choosedate">
-      <ul>
-        <li
-          :class="{ active: state.timeType === item.value }"
-          v-for="item in timeTypeList"
-          :key="item.value"
-        >
-          <a href="javascript:;" @click="handleChooseAlarmTimeType(item.value)">
-            {{ item.label }}
-          </a>
-        </li>
-      </ul>
-    </div>
     <div
       :style="{
-        height: 'calc(100% - 0.1rem)',
+        margin: '0.3rem 0 0 0',
+        height: 'calc(100% - 0.6rem)',
         position: 'relative',
       }"
     >
@@ -23,7 +11,7 @@
         :tableData="state.tableData"
         :dataModel="pageModel"
         height="100%"
-        tableBodyHeight="calc(100% - 0.35rem)"
+        tableBodyHeight="calc(100% - 0.4rem)"
       />
     </div>
   </Block>
@@ -47,22 +35,11 @@ import { backendIndexPageEmergencyRequest } from "@/api/management";
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
-const layoutRef = ref(HTMLDivElement);
+const props = defineProps({
+  timeType: { type: Number, default: 1, required: true },
+});
 
-const timeTypeList = [
-  {
-    label: "今日",
-    value: 1,
-  },
-  {
-    label: "本周",
-    value: 2,
-  },
-  {
-    label: "当月",
-    value: 3,
-  },
-];
+const layoutRef = ref(HTMLDivElement);
 
 const pageModel = ref([
   {
@@ -128,12 +105,13 @@ const state = reactive({
   timeType: 1,
 });
 
-const init = () => {};
-
-const handleChooseAlarmTimeType = (timeType: number) => {
-  state.timeType = timeType;
-  getData();
-};
+watch(
+  () => props.timeType,
+  (newValue: any, oldValue: any) => {
+    state.timeType = newValue;
+    getData();
+  }
+);
 
 const getData = () => {
   backendIndexPageEmergencyRequest({
@@ -151,8 +129,7 @@ const getData = () => {
 };
 
 onMounted(async () => {
-  init();
-  getData(1);
+  getData();
 });
 
 onBeforeUnmount(() => {});
@@ -163,48 +140,8 @@ onBeforeUnmount(() => {});
   display: flex;
   flex-direction: column;
   height: 100%;
-  .choosedate {
-    position: absolute;
-    top: 0;
-    right: 0;
-    ul {
-      li {
-        display: inline-block;
-        margin: 0 0 0 0.2rem;
-        border: 1px solid #004390;
-        background-color: #00284d;
-        position: relative;
-        &:before {
-          content: "";
-          display: inline-block;
-          width: 0;
-          height: 0;
-          border-style: solid;
-          border-color: transparent;
-          border-width: 0.05rem;
-          position: absolute;
-          top: 0;
-          left: 0;
-        }
-        a {
-          display: inline-block;
-          padding: 0.04rem 0.15rem;
-          width: 100%;
-          height: 100%;
-          color: #fff;
-        }
-        &.active {
-          color: #fff;
-          border: 1px solid #23dbfc;
-          &:before {
-            border-color: #23dbfc transparent transparent #23dbfc;
-          }
-        }
-      }
-    }
-  }
+
   .common_basetable_wrapper {
-    margin: 0.3rem 0 0 0;
     height: 100%;
     .header {
       padding: 0.05rem 0.1rem;
@@ -221,12 +158,11 @@ onBeforeUnmount(() => {});
       background-color: transparent;
       .ant-table-wrapper,
       .ant-spin-nested-loading,
-      .ant-spin-container,
-      .ant-table {
+      .ant-spin-container {
         height: 100%;
       }
       .ant-table {
-        height: calc(100% - 0.8rem);
+        height: calc(100% - 0.6rem) !important;
         background-color: transparent;
       }
       .ant-pagination {

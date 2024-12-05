@@ -27,7 +27,7 @@ export const backendIndexPageEmergencyRequest = (params: any) => {
   });
 };
 
-// 后台管理-首页-报警列表
+// 后台管理-首页-事件处置列表
 export const backendIndexPageEmergencyResultRequest = (params: any) => {
   return service({
     url: prefix + "/backend/indexPage/emergency/result",

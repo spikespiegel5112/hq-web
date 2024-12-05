@@ -110,82 +110,45 @@ import {
   nextTick,
 } from "vue";
 
-import { screenBannerInfoRequest } from "@/api/management";
+import { backendIndexPageEmergencyResultRequest } from "@/api/management";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
 import { ExclamationOutlined } from "@ant-design/icons-vue";
 
-const layoutRef = ref(HTMLDivElement);
-
-const pageModel = ref([
-  {
-    label: "序号",
-    name: "index",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: false,
-  },
-  {
-    label: "id",
-    name: "id",
-    required: false,
-    tableVisible: false,
-    formVisible: true,
-    exportVisible: false,
-  },
-  {
-    label: "报警类型",
-    name: "higywayCode",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
-    label: "报警内容",
-    name: "highwayName",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
-    label: "报警时间",
-    name: "bridgeCode",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
-    label: "报警地点",
-    name: "bridgeName",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
-    label: "查看",
-    name: "operationColumn",
-    tableVisible: true,
-    exportVisible: false,
-    actions: ["view"],
-  },
-]);
+const props = defineProps({
+  timeType: { type: Number, default: 1, required: true },
+});
 
 const state = reactive({
   dataModel: [] as any[],
+  tableData: [] as any[],
+  timeType: 1,
 });
 
-const init = () => {};
-const getData = () => {};
+watch(
+  () => props.timeType,
+  (newValue: any, oldValue: any) => {
+    state.timeType = newValue;
+    getData();
+  }
+);
+
+const getData = () => {
+  backendIndexPageEmergencyResultRequest({
+    hour: 1,
+    // queryDate: global.$dayjs().format("YYYY-MM-DD"),
+    queryDate: "2024-09-11",
+    timeType: 1,
+  })
+    .then((response: any) => {})
+    .catch((error: any) => {
+      console.log(error);
+    });
+};
 
 onMounted(async () => {
-  init();
   getData();
 });
 
