@@ -19,74 +19,26 @@
     <div class="main">
       <vue-scroll>
         <ul>
-          <li>
+          <li v-for="item in state.eventList" :key="item.id">
             <div class="title">
               <span class="caution">
                 <span class="triangle"></span>
                 <ExclamationOutlined />
               </span>
-              高铁到达客流预计36万
+              {{ item.content }}
             </div>
             <div class="content">
               <div class="left">
                 <div class="type">
                   <label>上报类别：</label>
-                  <span>大客流应急保障</span>
+                  <span>{{ item.infoType }}</span>
                 </div>
-                <div class="date">2024-07-20 12:23</div>
+                <div class="date">{{ item.dataTime }}</div>
               </div>
               <div class="right">
                 <div class="status">
                   <label>状态：</label>
-                  <span>处置中</span>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="title">
-              <span class="caution">
-                <span class="triangle"></span>
-                <ExclamationOutlined />
-              </span>
-              高铁到达客流预计36万
-            </div>
-            <div class="content">
-              <div class="left">
-                <div class="type">
-                  <label>上报类别：</label>
-                  <span>大客流应急保障</span>
-                </div>
-                <div class="date">2024-07-20 12:23</div>
-              </div>
-              <div class="right">
-                <div class="status">
-                  <label>状态：</label>
-                  <span>处置中</span>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="title">
-              <span class="caution">
-                <span class="triangle"></span>
-                <ExclamationOutlined />
-              </span>
-              高铁到达客流预计36万
-            </div>
-            <div class="content">
-              <div class="left">
-                <div class="type">
-                  <label>上报类别：</label>
-                  <span>大客流应急保障</span>
-                </div>
-                <div class="date">2024-07-20 12:23</div>
-              </div>
-              <div class="right">
-                <div class="status">
-                  <label>状态：</label>
-                  <span>处置中</span>
+                  <span>{{ item.status }}</span>
                 </div>
               </div>
             </div>
@@ -125,6 +77,7 @@ const state = reactive({
   dataModel: [] as any[],
   tableData: [] as any[],
   timeType: 1,
+  eventList: [] as any[],
 });
 
 watch(
@@ -140,9 +93,11 @@ const getData = () => {
     hour: 1,
     // queryDate: global.$dayjs().format("YYYY-MM-DD"),
     queryDate: "2024-09-11",
-    timeType: 1,
+    timeType: state.timeType,
   })
-    .then((response: any) => {})
+    .then((response: any) => {
+      state.eventList = response.data;
+    })
     .catch((error: any) => {
       console.log(error);
     });
