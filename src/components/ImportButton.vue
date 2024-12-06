@@ -8,7 +8,7 @@
     :headers="headers"
     @change="handleChange"
   >
-    <a-button class="import">导入</a-button>
+    <a-button class="import" :loading="state.loading">导入</a-button>
   </a-upload>
 </template>
 
@@ -42,7 +42,9 @@ const global = currentInstance.appContext.config.globalProperties;
 const fileList = ref([]);
 const headers = ref({});
 
-const state = reactive({});
+const state = reactive({
+  loading: false,
+});
 
 watch(
   () => global.$route,
@@ -54,6 +56,7 @@ const handleChange = (info: UploadChangeParam) => {
   console.log(info);
   const file = info.file;
   if (file.status !== "uploading") {
+    state.loading = true;
     emit("onSuccess", true);
   }
   if (file.status === "done") {
@@ -65,10 +68,12 @@ const handleChange = (info: UploadChangeParam) => {
       emit("onError", file.response);
     }
     emit("onSuccess", false);
+    state.loading = false;
   } else if (file.status === "error") {
     global.$message.error("上传失败");
     emit("onError", file.response);
     emit("onSuccess", false);
+    state.loading = false;
   }
 };
 
