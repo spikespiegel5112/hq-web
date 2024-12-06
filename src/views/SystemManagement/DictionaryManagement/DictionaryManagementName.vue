@@ -11,12 +11,15 @@
     <BaseTable
       :tableData="state.tableData"
       :dataModel="pageModel"
+      :pagination="pagination"
       tabTable
       @onEdit="handleEdit"
+      @onChangePage="handleChangePage"
     />
     <EditDialog
       :visible="state.dialogVisible"
       :mode="state.dialogMode"
+      :dataModel="pageModel"
       @onClose="handleClose"
     ></EditDialog>
   </div>
@@ -35,7 +38,7 @@ import {
   nextTick,
 } from "vue";
 
-import { screenBannerInfoRequest } from "@/api/management";
+import { dictionaryManageGetDictPagingRequest } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
 
@@ -61,33 +64,42 @@ const pageModel = ref([
     formVisible: true,
     exportVisible: false,
   },
+
   {
-    label: "报警类型",
-    name: "higywayCode",
+    label: "字典项名称",
+    name: "dicName",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "报警内容",
-    name: "highwayName",
+    label: "字典编码",
+    name: "code",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "报警时间",
-    name: "bridgeCode",
+    label: "字典标签",
+    name: "label",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "报警地点",
-    name: "bridgeName",
+    label: "字典值",
+    name: "value",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "字典详细信息",
+    name: "remark",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -109,17 +121,24 @@ const state = reactive({
   dialogMode: "",
 });
 
+const pagination = reactive({
+  page: 1,
+  pageSize: 30,
+  total: 0,
+});
+
 const getData = () => {
-  const result = [] as any[];
-  for (let index = 0; index < 30; index++) {
-    result.push({
-      higywayCode: "aaa",
-      highwayName: "aaa",
-      bridgeCode: "aaa",
-      bridgeName: "aaa",
+  dictionaryManageGetDictPagingRequest({
+    ...pagination,
+  })
+    .then((response: any) => {
+      response = response.data;
+      state.tableData = response.list;
+      pagination.total = response.total;
+    })
+    .catch((error: any) => {
+      console.log(error);
     });
-  }
-  state.tableData = result;
 };
 
 const handleEdit = () => {
@@ -134,6 +153,13 @@ const handleAdd = () => {
 
 const handleClose = (event: any) => {
   state.dialogVisible = false;
+};
+
+const handleChangePage = (pagingData: any) => {
+  pagination.page = pagingData.current;
+  pagination.pageSize = pagingData.pageSize;
+  pagination.total = pagingData.total;
+  getData();
 };
 
 onMounted(async () => {
