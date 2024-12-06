@@ -5,6 +5,7 @@
       <a-space size="middle" wrap>
         <ImportButton
           :action="`/api/manage/backend/railwayArrive/importPic`"
+          @onSuccess="handleUploaded"
         />
         <a-button class="export">导出</a-button>
         <a-button class="add" @click="handleAdd">新增</a-button>
@@ -43,6 +44,7 @@ import {
 import { backendRailwayArriveGetRailwayArrivePagingRequest } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
+import { debug } from "console";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -157,6 +159,10 @@ const handleChangePage = (pagingData: any) => {
   pagination.pageSize = pagingData.pageSize;
   pagination.total = pagingData.total;
   getData();
+};
+
+const handleUploaded = (response: any) => {
+  debugger;
 };
 
 onMounted(async () => {
