@@ -158,11 +158,11 @@ const handleChangePage = (pagingData: any) => {
   pagination.page = pagingData.current;
   pagination.pageSize = pagingData.pageSize;
   pagination.total = pagingData.total;
-  getData();
+     getData();
 };
 
 const handleUploaded = (response: any) => {
-  debugger;
+  getData()
 };
 
 onMounted(async () => {
