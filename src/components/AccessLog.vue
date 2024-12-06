@@ -37,8 +37,8 @@ import {
   nextTick,
 } from "vue";
 import { CloseOutlined, CloseCircleFilled } from "@ant-design/icons-vue";
-import { number } from "echarts";
-import { debug } from "console";
+
+
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;

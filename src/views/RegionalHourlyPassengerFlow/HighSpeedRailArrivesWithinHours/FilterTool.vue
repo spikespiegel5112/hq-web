@@ -4,7 +4,7 @@
       <a-row>
         <a-col :span="20">
           <a-row :gutter="20">
-            <a-col :span="8">
+            <a-col :span="4">
               <a-form-item name="userName" label="时段">
                 <a-time-picker v-model:value="state.formData.ccccc" />
               </a-form-item>
@@ -48,7 +48,7 @@ const layoutRef = ref(HTMLDivElement);
 
 const state = reactive({
   formData: {
-    ccccc: '',
+    ccccc: "",
     ddddd: [],
   },
 });
@@ -67,6 +67,4 @@ onMounted(async () => {
 onBeforeUnmount(() => {});
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

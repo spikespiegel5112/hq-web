@@ -36,6 +36,55 @@ export const backendIndexPageEmergencyResultRequest = (params: any) => {
   });
 };
 
+// 后台管理-铁路到达-分页查询
+export const backendRailwayArriveGetRailwayArrivePagingRequest = (
+  params: any
+) => {
+  return service({
+    url: prefix + "/backend/railwayArrive/getRailwayArrivePaging",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 后台管理-铁路到达-图片导入
+export const backendRailwayArriveGetRailwayImportPicRequest = (params: any) => {
+  return service({
+    url: prefix + "/backend/railwayArrive/importPic",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 后台管理-铁路到达-报表导出
+export const backendRailwayArriveRailwayArriveExportRequest = (params: any) => {
+  return service({
+    url: prefix + "/backend/railwayArrive/railwayArriveExport",
+    method: "GET",
+    data: params,
+  });
+};
+
+// 后台管理-铁路到达-保存
+export const backendRailwayArriveSaveRailwayArriveRequest = (params: any) => {
+  return service({
+    url: prefix + "/backend/railwayArrive/saveRailwayArrive",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 后台管理-铁路到达-保存
+export const backendRailwayArriveSaveRailwayArriveBatchRequest = (
+  params: any
+) => {
+  return service({
+    url: prefix + "/backend/railwayArrive/saveRailwayArriveBatch",
+    method: "POST",
+    data: params,
+  });
+};
+
 // 后台管理-客流疏散
 export const backendIndexPageFlowDistRequest = (params: any) => {
   return service({
