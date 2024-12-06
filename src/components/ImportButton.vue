@@ -54,6 +54,7 @@ const handleChange = (info: UploadChangeParam) => {
   console.log(info);
   const file = info.file;
   if (file.status !== "uploading") {
+    emit("onSuccess", true);
   }
   if (file.status === "done") {
     if (file.response.code === 0) {
@@ -63,9 +64,11 @@ const handleChange = (info: UploadChangeParam) => {
       global.$message.error("上传失败");
       emit("onError", file.response);
     }
+    emit("onSuccess", false);
   } else if (file.status === "error") {
     global.$message.error("上传失败");
     emit("onError", file.response);
+    emit("onSuccess", false);
   }
 };
 
