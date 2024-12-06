@@ -55,7 +55,7 @@ const init = () => {};
 const handleChange = (info: UploadChangeParam) => {
   console.log(info);
   const file = info.file;
-  if (file.status !== "uploading") {
+  if (file.status === "uploading") {
     state.loading = true;
     emit("onSuccess", true);
   }
