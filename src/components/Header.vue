@@ -121,7 +121,7 @@ onMounted(() => {
     height: 1rem;
     background-color: transparent;
     background-image: url("@/assets/header_bg.png");
-    background-size: 100% auto;
+    background-size: 24rem 1rem;
     background-repeat: no-repeat;
   }
   .title {

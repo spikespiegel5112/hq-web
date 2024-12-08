@@ -24,6 +24,13 @@
           <div></div>
           <div></div>
           <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
         </a-space>
       </vue-scroll>
     </div>
@@ -68,14 +75,16 @@ onBeforeUnmount(() => {});
     height: calc(100vh - 2.8rem);
     overflow: auto;
     text-align: center;
+    position: relative;
     :deep(.ant-space) {
       width: 100%;
       .ant-space-item {
         border: 1px solid #ccc;
-
+        width: calc(50% - 5px);
+        padding-top: 50%;
         > div {
-          width: 3rem;
-          height: 3rem;
+          width: 100%;
+          height: 100%;
         }
       }
     }

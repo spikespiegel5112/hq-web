@@ -11,9 +11,9 @@ router.beforeEach((to: any, from: any, next: any) => {
 });
 
 router.afterEach((to: any, from: any) => {
-  console.log("finsh", to);
+  // console.log("finsh", to);
 });
 
 router.onError((error: any) => {
-  console.log("router.onError", error);
+  // console.log("router.onError", error);
 });
