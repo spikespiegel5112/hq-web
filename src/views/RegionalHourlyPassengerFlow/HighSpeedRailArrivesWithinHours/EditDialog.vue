@@ -2,8 +2,6 @@
   <a-modal
     v-model:open="state.visible"
     :title="props.mode === 'edit' ? '编辑' : '新增'"
-    @cancel="handleClose"
-    @ok="handleSubmit"
     width="8rem"
   >
     <a-form
@@ -11,15 +9,10 @@
       ref="formDataRef"
       autocomplete="off"
       :rules="rules"
-      :label-col="{ style: { width: '80px' } }"
+      :label-col="{ style: { width: '120px' } }"
     >
       <a-row>
-        <a-space
-          :size="20"
-          :style="{
-            width: '100%',
-          }"
-        >
+        <a-col :span="22">
           <a-form-item name="statisticalDate" label="日期">
             <a-input
               v-model:value="state.formData.statisticalDate"
@@ -27,35 +20,45 @@
             >
             </a-input>
           </a-form-item>
-          <a-form-item name="dispersedHourlyPassengerCount" label="小时疏散数">
-            <a-input
-              v-model:value="state.formData.dispersedHourlyPassengerCount"
-              placeholder="请输入"
-            >
-            </a-input>
-          </a-form-item>
-        </a-space>
+        </a-col>
       </a-row>
       <a-row>
-        <a-space
-          :size="20"
-          :style="{
-            width: '100%',
-          }"
-        >
+        <a-col :span="22">
+          <a-form-item name="dispersedHourlyPassengerCount" label="小时疏散数">
+            <a-input-number
+              v-model:value="state.formData.dispersedHourlyPassengerCount"
+              placeholder="请输入"
+              :min="0"
+            >
+            </a-input-number>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
           <a-form-item
             name="estimatedHourlyArrivePassengerCount"
             label="预测小时到达数"
           >
-            <a-input
+            <a-input-number
               v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
               placeholder="请输入"
             >
-            </a-input>
+            </a-input-number>
           </a-form-item>
-        </a-space>
+        </a-col>
       </a-row>
     </a-form>
+    <template #footer>
+      <a-row>
+        <a-col :span="22">
+          <a-button key="submit" type="primary" @click="handleSubmit">
+            确认
+          </a-button>
+          <a-button key="back" @click="handleClose">取消</a-button>
+        </a-col>
+      </a-row>
+    </template>
   </a-modal>
 </template>
 
@@ -82,6 +85,7 @@ const formDataRef = ref();
 
 const emit = defineEmits<{
   (e: "onClose", event: any): void;
+  (e: "onSubmit", formData: any): void;
 }>();
 
 const props = defineProps({
@@ -94,10 +98,9 @@ const props = defineProps({
 let state = reactive({
   visible: false,
   formData: {
-    dispersedHourlyPassengerCount: "",
-    estimatedHourlyArrivePassengerCount: "",
-    id: "",
-    statisticalBeginHour: "",
+    dispersedHourlyPassengerCount: null,
+    estimatedHourlyArrivePassengerCount: null,
+    id: null,
     statisticalDate: "",
   } as any,
 });
@@ -159,9 +162,11 @@ const handleClose = (event: any) => {
 const handleSubmit = (event: any) => {
   formDataRef.value
     .validate()
-    .then((formData: any) => {
-
-      
+    .then(() => {
+      if (props.mode === "add") {
+        state.formData.id = undefined;
+      }
+      emit("onSubmit", state.formData);
     })
     .catch((error: any) => {
       console.log(error);

@@ -1,14 +1,17 @@
 <template>
   <a-modal
-    v-model:open="props.visible"
+    v-model:open="state.visible"
     :title="props.mode === 'edit' ? '编辑' : '新增'"
     @cancel="handleClose"
+    @ok="handleSubmit"
     width="8rem"
   >
-    <a-form       :model="state.formData"
+    <a-form
+      :model="state.formData"
       ref="formDataRef"
       autocomplete="off"
-      :label-col="{ style: { width: '80px' } }"
+      :rules="rules"
+      :label-col="{ style: { width: '120px' } }"
     >
       <a-row>
         <a-space
@@ -17,13 +20,20 @@
             width: '100%',
           }"
         >
-          <a-form-item name="userName" label="报警类型">
-            <a-input v-model="formData.userName" placeholder="请输入">
+          <a-form-item name="statisticalDate" label="日期">
+            <a-input
+              v-model:value="state.formData.statisticalDate"
+              placeholder="请输入"
+            >
             </a-input>
           </a-form-item>
-          <a-form-item name="password" label="报警内容">
-            <a-input v-model="formData.password" placeholder="请输入">
-            </a-input>
+          <a-form-item name="dispersedHourlyPassengerCount" label="小时疏散数">
+            <a-input-number
+              v-model:value="state.formData.dispersedHourlyPassengerCount"
+              placeholder="请输入"
+              :min="0"
+            >
+            </a-input-number>
           </a-form-item>
         </a-space>
       </a-row>
@@ -34,13 +44,15 @@
             width: '100%',
           }"
         >
-          <a-form-item name="userName" label="报警类型">
-            <a-input v-model="formData.userName" placeholder="请输入">
-            </a-input>
-          </a-form-item>
-          <a-form-item name="password" label="报警内容">
-            <a-input v-model="formData.password" placeholder="请输入">
-            </a-input>
+          <a-form-item
+            name="estimatedHourlyArrivePassengerCount"
+            label="预测小时到达数"
+          >
+            <a-input-number
+              v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
+              placeholder="请输入"
+            >
+            </a-input-number>
           </a-form-item>
         </a-space>
       </a-row>
@@ -59,9 +71,10 @@ import {
   ComponentInternalInstance,
   ref,
   nextTick,
+  onUnmounted,
 } from "vue";
 
-import { screenBannerInfoRequest } from "@/api/management";
+import type { Rule, RuleObject } from "ant-design-vue/es/form";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -70,28 +83,92 @@ const formDataRef = ref();
 
 const emit = defineEmits<{
   (e: "onClose", event: any): void;
+  (e: "onSubmit", formData: any): void;
 }>();
 
 const props = defineProps({
   visible: { type: Boolean, required: true, default: false },
   mode: { type: String, required: true, default: "" },
-  formData: { type: Object, required: true, default: () => {} },
+  rowData: { type: Object, required: true, default: () => {} },
+  dataModel: { type: Array, required: true, default: () => [] },
 });
 
-let formData = reactive({
-  userName: "",
-  password: "",
+let state = reactive({
+  visible: false,
+  formData: {
+    dispersedHourlyPassengerCount: null,
+    estimatedHourlyArrivePassengerCount: null,
+    id: null,
+    statisticalDate: "",
+  } as any,
+});
+
+const rules: ComputedRef<RuleObject[]> = computed(() => {
+  const validateNumber = (rule: any, value: any, callback: any) => {
+    if (isNaN(Number(value))) {
+      callback(new Error("请输入数字值"));
+    } else {
+      callback();
+    }
+  };
+
+  const result: any = {};
+  Object.keys(state.formData).forEach((item) => {
+    const dataModelInfo = props.dataModel.find(
+      (item2: any) => item2.name === item
+    ) as any;
+    if (!!dataModelInfo) {
+      result[item] = [];
+      if (dataModelInfo.required) {
+        result[item].push({
+          required: true,
+          message: "请输入" + dataModelInfo.label,
+          trigger: "change",
+        });
+      }
+      if (dataModelInfo.dataType === "number") {
+        result[item].push({ validator: validateNumber, trigger: "change" });
+      }
+    }
+  });
+  return result;
 });
 
 watch(
-  () => props.formData.value,
-  (newValue: any, oldValue: any) => {
-    formData = newValue;
+  () => props.mode,
+  async (newValue: any) => {}
+);
+
+watch(
+  () => props.visible,
+  async (newValue: any) => {
+    state.visible = newValue;
+    if (!!newValue) {
+      await nextTick();
+      if (props.mode === "edit") {
+        state.formData = JSON.parse(JSON.stringify(props.rowData));
+      }
+    }
   }
 );
 
 const handleClose = (event: any) => {
+  formDataRef.value.resetFields();
   emit("onClose", event);
+};
+
+const handleSubmit = (event: any) => {
+  formDataRef.value
+    .validate()
+    .then(() => {
+      if (props.mode === "add") {
+        state.formData.id = undefined;
+      }
+      emit("onSubmit", state.formData);
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
 };
 
 onMounted(async () => {});

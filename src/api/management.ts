@@ -75,7 +75,7 @@ export const backendRailwayArriveSaveRailwayArriveRequest = (params: any) => {
   });
 };
 
-// 后台管理-铁路到达-保存
+// 后台管理-铁路到达-批量保存
 export const backendRailwayArriveSaveRailwayArriveBatchRequest = (
   params: any
 ) => {

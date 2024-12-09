@@ -24,6 +24,7 @@
       :dataModel="pageModel"
       :rowData="state.currentRowData"
       @onClose="handleClose"
+      @onSubmit="handleSubmit"
     ></EditDialog>
   </div>
 </template>
@@ -44,9 +45,11 @@ import {
 import {
   backendRailwayArriveGetRailwayArrivePagingRequest,
   backendRailwayArriveRailwayArriveExportRequest,
+  backendRailwayArriveSaveRailwayArriveRequest,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
+import { debug } from "console";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -165,6 +168,14 @@ const handleReset = (formData: object) => {
 
 const handleClose = () => {
   state.dialogVisible = false;
+};
+
+const handleSubmit = (formData: any) => {
+  backendRailwayArriveSaveRailwayArriveRequest(formData)
+    .then((response: any) => {})
+    .catch((error: any) => {
+      console.log(error);
+    });
 };
 
 const handleChangePage = (pagingData: any) => {

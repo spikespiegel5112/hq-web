@@ -58,11 +58,7 @@ const state = reactive({
   bannerInfo: {},
 });
 
-
-
-onMounted(async () => {
-  init();
-});
+onMounted(async () => {});
 
 onBeforeUnmount(() => {});
 </script>

@@ -67,15 +67,11 @@ const state = reactive({
   timeType: 1,
 });
 
-
-
 const handleChooseAlarmTimeType = (timeType: number) => {
   state.timeType = timeType;
 };
 
-onMounted(async () => {
-  init();
-});
+onMounted(async () => {});
 
 onBeforeUnmount(() => {});
 </script>

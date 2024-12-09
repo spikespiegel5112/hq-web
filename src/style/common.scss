@@ -10,6 +10,17 @@
 .ant-tabs > div > .ant-tabs-nav {
   margin: 0;
 }
+.ant-modal {
+  .ant-modal-content {
+    background-color: #001431;
+    .ant-modal-title {
+      background-color: #001431;
+    }
+  }
+}
+.ant-input-number {
+  width: 100%;
+}
 
 .ant-table-body {
   &::-webkit-scrollbar {
@@ -337,6 +348,37 @@ input:focus {
     text-align: right;
   }
 }
+
+.ant-form {
+  width: 100%;
+  .ant-form-item {
+    .ant-input,
+    .ant-input-number,
+    .ant-input-affix-wrapper,
+    .ant-select-selector,
+    .ant-picker {
+      width: 100%;
+      background-color: #041030;
+      border-color: #0096ff;
+      &::placeholder {
+        color: #ccc;
+      }
+      .ant-select-selection-placeholder {
+        color: #ccc;
+      }
+      .ant-form-item-control-input {
+        background-color: red;
+      }
+      .ant-select-selector,
+      .ant-picker-input input {
+        background-color: #041030;
+        &::placeholder {
+          color: #ccc;
+        }
+      }
+    }
+  }
+}
 .common_filtertool_wrapper {
   display: flex;
   width: 100%;
@@ -346,30 +388,6 @@ input:focus {
     width: 100%;
     .ant-form-item {
       margin: 0;
-      .ant-input,
-      .ant-input-affix-wrapper,
-      .ant-select-selector,
-      .ant-picker {
-        width: 100%;
-        background-color: #041030;
-        border-color: #0096ff;
-        &::placeholder {
-          color: #ccc;
-        }
-        .ant-select-selection-placeholder {
-          color: #ccc;
-        }
-        .ant-form-item-control-input {
-          background-color: red;
-        }
-        .ant-select-selector,
-        .ant-picker-input input {
-          background-color: #041030;
-          &::placeholder {
-            color: #ccc;
-          }
-        }
-      }
     }
     .operation {
       text-align: right;

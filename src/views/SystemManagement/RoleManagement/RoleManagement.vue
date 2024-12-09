@@ -16,7 +16,10 @@
     <EditDialog
       :visible="state.dialogVisible"
       :mode="state.dialogMode"
+      :dataModel="pageModel"
+      :rowData="state.currentRowData"
       @onClose="handleClose"
+      @onSubmit="handleSubmit"
     ></EditDialog>
   </div>
 </template>
@@ -162,6 +165,7 @@ const handleClose = (event: any) => {
   state.dialogVisible = false;
 };
 
+const handleSubmit = () => {};
 onMounted(async () => {
   getData();
 });

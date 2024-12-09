@@ -90,7 +90,8 @@ const routerDictionary = [
         name: "RegionalRealTimePassengerFlow",
         icon: "/src/assets/menu_regionalreatimepassengerflow.png",
         component: () =>
-          import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),        children: [
+          import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
+        children: [
           {
             title: "出租车",
             path: "Taxi",
@@ -123,7 +124,8 @@ const routerDictionary = [
         name: "EventManagement",
         icon: "/src/assets/menu_eventmanagement.png",
         component: () =>
-          import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),        children: [
+          import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
+        children: [
           {
             title: "事件告警",
             path: "EventAlert",
@@ -156,7 +158,8 @@ const routerDictionary = [
         name: "InformationManagement",
         icon: "/src/assets/menu_informationmanagement.png",
         component: () =>
-          import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),        children: [
+          import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
+        children: [
           {
             title: "信息来源",
             path: "InformationSources",
@@ -213,7 +216,8 @@ const routerDictionary = [
         name: "OperationManagement",
         icon: "/src/assets/menu_operationmanagement.png",
         component: () =>
-          import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),        children: [
+          import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
+        children: [
           {
             title: "值班人员管理",
             path: "PersonOnDutyManagement",
@@ -246,7 +250,8 @@ const routerDictionary = [
         name: "SheetManagement",
         icon: "/src/assets/menu_sheetmanagement.png",
         component: () =>
-          import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),        children: [
+          import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
+        children: [
           {
             title: "事件报表",
             path: "EventSheet",
@@ -316,7 +321,8 @@ const routerDictionary = [
         name: "SystemManagement",
         icon: "/src/assets/menu_systemmanagement.png",
         component: () =>
-          import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),        children: [
+          import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
+        children: [
           {
             title: "用户管理",
             path: "UserManagement",

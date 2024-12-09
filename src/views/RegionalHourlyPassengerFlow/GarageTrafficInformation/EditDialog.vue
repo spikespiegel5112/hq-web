@@ -18,12 +18,12 @@
           }"
         >
           <a-form-item name="userName" label="报警类型">
-            <a-input v-model="formData.userName" placeholder="请输入">
+            <a-input v-model="state.formData.userName" placeholder="请输入">
          
             </a-input>
           </a-form-item>
           <a-form-item name="password" label="报警内容">
-            <a-input v-model="formData.password" placeholder="请输入">
+            <a-input v-model="state.formData.password" placeholder="请输入">
               
             </a-input>
           </a-form-item>
@@ -37,12 +37,12 @@
           }"
         >
           <a-form-item name="userName" label="报警类型">
-            <a-input v-model="formData.userName" placeholder="请输入">
+            <a-input v-model="state.formData.userName" placeholder="请输入">
          
             </a-input>
           </a-form-item>
           <a-form-item name="password" label="报警内容">
-            <a-input v-model="formData.password" placeholder="请输入">
+            <a-input v-model="state.formData.password" placeholder="请输入">
               
             </a-input>
           </a-form-item>
@@ -74,6 +74,7 @@ const formDataRef = ref();
 
 const emit = defineEmits<{
   (e: "onClose", event: any): void;
+  (e: "onSubmit", formData: any): void;
 }>();
 
 const props = defineProps({   visible: { type: Boolean, required: true, default: false },   mode: { type: String, required: true, default: "" },   formData: { type: Object, required: true, default: () => {} }, });
