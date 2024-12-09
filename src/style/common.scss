@@ -18,9 +18,6 @@
     }
   }
 }
-.ant-input-number {
-  width: 100%;
-}
 
 .ant-table-body {
   &::-webkit-scrollbar {
@@ -172,6 +169,21 @@ input:focus {
 
 .aligncenter {
   text-align: center;
+}
+.common_dailog_wrapper {
+  .ant-modal-title {
+    display: flex;
+    align-items: center;
+    .square {
+      margin: 0 0.1rem 0 0;
+      width: 5px;
+      background-color: #008afa;
+    }
+    span {
+      display: inline-block;
+      height: 0.2rem;
+    }
+  }
 }
 
 .common_table_wrapper {
@@ -354,6 +366,7 @@ input:focus {
   .ant-form-item {
     .ant-input,
     .ant-input-number,
+    .ant-input-number-input,
     .ant-input-affix-wrapper,
     .ant-select-selector,
     .ant-picker {
@@ -361,10 +374,10 @@ input:focus {
       background-color: #041030;
       border-color: #0096ff;
       &::placeholder {
-        color: #ccc;
+        color: #999;
       }
       .ant-select-selection-placeholder {
-        color: #ccc;
+        color: #999;
       }
       .ant-form-item-control-input {
         background-color: red;
@@ -373,7 +386,7 @@ input:focus {
       .ant-picker-input input {
         background-color: #041030;
         &::placeholder {
-          color: #ccc;
+          color: #999;
         }
       }
     }

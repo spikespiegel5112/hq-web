@@ -3,6 +3,7 @@
     v-model:open="state.visible"
     :title="props.mode === 'edit' ? '编辑' : '新增'"
     width="8rem"
+    @cancel="handleClose"
   >
     <a-form
       :model="state.formData"
@@ -84,7 +85,7 @@ const global = currentInstance.appContext.config.globalProperties;
 const formDataRef = ref();
 
 const emit = defineEmits<{
-  (e: "onClose", event: any): void;
+  (e: "onClose"): void;
   (e: "onSubmit", formData: any): void;
 }>();
 
@@ -167,6 +168,7 @@ const handleSubmit = (event: any) => {
         state.formData.id = undefined;
       }
       emit("onSubmit", state.formData);
+      emit("onClose");
     })
     .catch((error: any) => {
       console.log(error);

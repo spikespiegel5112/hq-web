@@ -31,6 +31,14 @@
           <div v-if="item.name === 'index'">
             {{ scope.index + 1 }}
           </div>
+          <div v-if="item.name === 'attachment'" class="attachment">
+            <a href="javascript:;">
+              <img
+                :src="global.$getImageUrl('/src/assets/camera.png')"
+                alt=""
+              />
+            </a>
+          </div>
           <div v-if="item.name === 'operationColumn'" class="operation">
             <a-button
               v-for="action in item.actions"
@@ -122,8 +130,13 @@ const state = reactive({
       color: "",
     },
     {
-      label: "查看",
+      label: "详情",
       name: "view",
+      color: "",
+    },
+    {
+      label: "详情",
+      name: "detail",
       color: "",
     },
     {
@@ -288,6 +301,12 @@ onMounted(() => {});
         .ant-table-row {
           .ant-table-cell {
             padding: 0.05rem;
+            .attachment {
+              img {
+                display: inline-block;
+                width: 0.3rem;
+              }
+            }
             .operation {
               .ant-btn {
                 color: #0096ff;

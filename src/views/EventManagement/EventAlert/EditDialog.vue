@@ -1,11 +1,15 @@
 <template>
   <a-modal
+    class="common_dailog_wrapper"
     v-model:open="state.visible"
-    :title="props.mode === 'edit' ? '编辑' : '新增'"
-    @cancel="handleClose"
-    @ok="handleSubmit"
     width="8rem"
+    @cancel="handleClose"
   >
+    <template #title>
+      <span class="square"></span>
+      <span></span>
+      {{ props.mode === "edit" ? "编辑" : "新增" }}
+    </template>
     <a-form
       :model="state.formData"
       ref="formDataRef"
@@ -14,39 +18,34 @@
       :label-col="{ style: { width: '120px' } }"
     >
       <a-row>
-        <a-space
-          :size="20"
-          :style="{
-            width: '100%',
-          }"
-        >
-          <a-form-item name="statisticalDate" label="日期">
-            <a-input
+        <a-col :span="22">
+          <a-form-item name="statisticalDate" label="报警类型">
+            <a-select
+              placeholder="请选择"
               v-model:value="state.formData.statisticalDate"
-              placeholder="请输入"
             >
-            </a-input>
+              <a-select-option value="全部">全部</a-select-option>
+            </a-select>
           </a-form-item>
-          <a-form-item name="dispersedHourlyPassengerCount" label="小时疏散数">
-            <a-input-number
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="dispersedHourlyPassengerCount" label="报警时间">
+            <a-input
               v-model:value="state.formData.dispersedHourlyPassengerCount"
               placeholder="请输入"
               :min="0"
             >
-            </a-input-number>
+            </a-input>
           </a-form-item>
-        </a-space>
+        </a-col>
       </a-row>
       <a-row>
-        <a-space
-          :size="20"
-          :style="{
-            width: '100%',
-          }"
-        >
+        <a-col :span="22">
           <a-form-item
             name="estimatedHourlyArrivePassengerCount"
-            label="预测小时到达数"
+            label="报警源"
           >
             <a-input-number
               v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
@@ -54,9 +53,55 @@
             >
             </a-input-number>
           </a-form-item>
-        </a-space>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item
+            name="estimatedHourlyArrivePassengerCount"
+            label="发生地点"
+          >
+            <a-input-number
+              v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
+              placeholder="请输入"
+            >
+            </a-input-number>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="estimatedHourlyArrivePassengerCount" label="内容">
+            <a-input-number
+              v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
+              placeholder="请输入"
+            >
+            </a-input-number>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="estimatedHourlyArrivePassengerCount" label="附件">
+            <a-input-number
+              v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
+              placeholder="请输入"
+            >
+            </a-input-number>
+          </a-form-item>
+        </a-col>
       </a-row>
     </a-form>
+    <template #footer>
+      <a-row>
+        <a-col :span="22">
+          <a-button key="submit" type="primary" @click="handleSubmit">
+            确认
+          </a-button>
+          <a-button key="back" @click="handleClose">取消</a-button>
+        </a-col>
+      </a-row>
+    </template>
   </a-modal>
 </template>
 
@@ -82,7 +127,7 @@ const global = currentInstance.appContext.config.globalProperties;
 const formDataRef = ref();
 
 const emit = defineEmits<{
-  (e: "onClose", event: any): void;
+  (e: "onClose"): void;
   (e: "onSubmit", formData: any): void;
 }>();
 
@@ -135,11 +180,6 @@ const rules: ComputedRef<RuleObject[]> = computed(() => {
 });
 
 watch(
-  () => props.mode,
-  async (newValue: any) => {}
-);
-
-watch(
   () => props.visible,
   async (newValue: any) => {
     state.visible = newValue;
@@ -152,9 +192,9 @@ watch(
   }
 );
 
-const handleClose = (event: any) => {
+const handleClose = () => {
   formDataRef.value.resetFields();
-  emit("onClose", event);
+  emit("onClose");
 };
 
 const handleSubmit = (event: any) => {
@@ -165,6 +205,7 @@ const handleSubmit = (event: any) => {
         state.formData.id = undefined;
       }
       emit("onSubmit", state.formData);
+      emit("onClose");
     })
     .catch((error: any) => {
       console.log(error);

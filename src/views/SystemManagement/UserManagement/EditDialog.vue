@@ -81,7 +81,7 @@ const global = currentInstance.appContext.config.globalProperties;
 
 const formDataRef = ref();
 const emit = defineEmits<{
-  (e: "onClose", event: any): void;
+  (e: "onClose"): void;
   (e: "onSubmit", formData: any): void;
 }>();
 

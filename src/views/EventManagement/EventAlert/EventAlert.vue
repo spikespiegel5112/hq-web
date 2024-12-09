@@ -86,7 +86,15 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "报警地点",
+    label: "报警源",
+    name: "bridgeCode",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "事件发生地点",
     name: "bridgeName",
     required: true,
     tableVisible: true,
@@ -94,11 +102,18 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
+    label: "附件",
+    name: "attachment",
+    tableVisible: true,
+    formVisible: false,
+    exportVisible: false,
+  },
+  {
     label: "操作",
     name: "operationColumn",
     tableVisible: true,
     exportVisible: false,
-    actions: ["edit"],
+    actions: ["edit", "view", "delete"],
   },
 ]);
 
