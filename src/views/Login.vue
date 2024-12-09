@@ -114,10 +114,7 @@ const rules: Record<string, Rule[]> = {
   ],
 };
 
-const init = () => {
-  const lineScaleEl: HTMLElement = document.getElementById("line-scale");
-  lineScaleEl.style.display = "none";
-};
+
 
 const handleLogin = () => {
   global.$router.push({

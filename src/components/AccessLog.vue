@@ -6,6 +6,7 @@
           class="route"
           :class="item.active ? 'active' : ''"
           v-for="item in state.accessLogList"
+          @auxclick="handleMouseClick(item)"
         >
           <a class="title" href="javascript:;" @click="handleNavigate(item)">
             {{ item.meta.title }}
@@ -37,8 +38,6 @@ import {
   nextTick,
 } from "vue";
 import { CloseOutlined, CloseCircleFilled } from "@ant-design/icons-vue";
-
-
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -81,6 +80,10 @@ const handleNavigate = (routeData: any) => {
   global.$router.push({
     name: routeData.name,
   });
+};
+
+const handleMouseClick = (routeData: any) => {
+  handleClose(routeData);
 };
 
 const handleClose = (routeData: any) => {

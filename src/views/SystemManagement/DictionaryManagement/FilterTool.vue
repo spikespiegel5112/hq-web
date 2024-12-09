@@ -1,52 +1,30 @@
 <template>
   <div class="common_filtertool_wrapper">
-    <a-form :model="state.formData" autocomplete="off">
+    <a-form :model="formData" autocomplete="off" ref="formDataRef">
       <a-row>
         <a-col :span="20">
           <a-row :gutter="20">
             <a-col :span="6">
-              <a-form-item name="userName" label="区域：">
+              <a-form-item name="dicName" label="字典名称">
                 <a-input
-                  v-model="state.formData.userName"
-                  placeholder="请输入帐号"
+                  v-model:value="formData.dicName"
+                  placeholder="请输入"
+                  allowClear
                 >
-                  <template #prefix>
-                    <span class="username"></span>
-                  </template>
-                </a-input>
-              </a-form-item>
-            </a-col>
-
-            <a-col :span="6">
-              <a-form-item name="password" label="日期类型：">
-                <a-input
-                  v-model="state.formData.password"
-                  placeholder="请输入密码"
-                >
-                  <template #prefix>
-                    <span class="password"></span>
-                  </template>
-                </a-input>
-              </a-form-item>
-            </a-col>
-            <a-col :span="6">
-              <a-form-item name="password" label="日期：">
-                <a-input
-                  v-model="state.formData.password"
-                  placeholder="请输入密码"
-                >
-                  <template #prefix>
-                    <span class="password"></span>
-                  </template>
                 </a-input>
               </a-form-item>
             </a-col>
           </a-row>
         </a-col>
         <a-col :span="4" class="operation">
-          <a-button class="submitbutton" type="primary" @click="handleSubmit">
-            查询
-          </a-button>
+          <a-space>
+            <a-button class="submitbutton" @click="handleReset">
+              重置
+            </a-button>
+            <a-button class="submitbutton" type="primary" @click="handleSearch">
+              查询
+            </a-button>
+          </a-space>
         </a-col>
       </a-row>
     </a-form>
@@ -64,32 +42,33 @@ import {
   ComponentInternalInstance,
   ref,
   nextTick,
+  defineEmits,
 } from "vue";
-
-import { screenBannerInfoRequest } from "@/api/management";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
-const layoutRef = ref(HTMLDivElement);
+const emit = defineEmits<{
+  (e: "onSearch", formData: object): void;
+  (e: "onReset", formData: object): void;
+}>();
 
-const state = reactive({
-  formData: {
-    userName: "",
-    password: "",
-  },
+const formDataRef: any = ref(null);
+
+const formData = reactive({
+  dicName: "",
 });
 
-const init = () => {
-  const lineScaleEl: HTMLElement = document.getElementById("line-scale");
-  lineScaleEl.style.display = "none";
+const handleSearch = () => {
+  emit("onSearch", formData);
 };
 
-const handleSubmit = () => {};
+const handleReset = () => {
+  formDataRef.value.resetFields();
+  emit("onReset", formData);
+};
 
-onMounted(async () => {
-  init();
-});
+onMounted(async () => {});
 
 onBeforeUnmount(() => {});
 </script>

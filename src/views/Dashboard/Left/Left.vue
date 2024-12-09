@@ -58,10 +58,7 @@ const state = reactive({
   bannerInfo: {},
 });
 
-const init = () => {
-  const lineScaleEl: HTMLElement = document.getElementById("line-scale");
-  lineScaleEl.style.display = "none";
-};
+
 
 onMounted(async () => {
   init();

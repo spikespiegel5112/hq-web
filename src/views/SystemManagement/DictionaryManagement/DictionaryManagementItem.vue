@@ -1,6 +1,6 @@
 <template>
   <div class="common_table_wrapper">
-    <FilterTool></FilterTool>
+    <FilterTool @onSearch="handleSearch" @onReset="handleReset"></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
         <a-button class="import">导入</a-button>
@@ -64,9 +64,8 @@ const pageModel = ref([
     formVisible: true,
     exportVisible: false,
   },
-
   {
-    label: "字典项名称",
+    label: "字典名称",
     name: "dicName",
     required: true,
     tableVisible: true,
@@ -82,7 +81,7 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "字典标签",
+    label: "字典项标题",
     name: "label",
     required: true,
     tableVisible: true,
@@ -90,7 +89,7 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "字典值",
+    label: "字典项值",
     name: "value",
     required: true,
     tableVisible: true,
@@ -98,7 +97,7 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "字典详细信息",
+    label: "字典项详细信息",
     name: "remark",
     required: true,
     tableVisible: true,
@@ -149,6 +148,16 @@ const handleEdit = () => {
 const handleAdd = () => {
   state.dialogVisible = true;
   state.dialogMode = "add";
+};
+
+const handleSearch = (formData: object) => {
+  queryFormData = formData;
+  getData();
+};
+
+const handleReset = (formData: object) => {
+  queryFormData = formData;
+  getData();
 };
 
 const handleClose = (event: any) => {

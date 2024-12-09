@@ -1,25 +1,30 @@
 <template>
   <div class="common_filtertool_wrapper">
-    <a-form :model="state.formData" autocomplete="off">
+    <a-form :model="formData" autocomplete="off" ref="formDataRef">
       <a-row>
         <a-col :span="20">
           <a-row :gutter="20">
             <a-col :span="4">
               <a-form-item name="userName" label="时段">
-                <a-time-picker v-model:value="state.formData.ccccc" />
+                <a-time-picker v-model:value="formData.ccccc" />
               </a-form-item>
             </a-col>
             <a-col :span="8">
               <a-form-item name="password" label="查询时间">
-                <a-time-range-picker v-model:value="state.formData.ddddd" />
+                <a-time-range-picker v-model:value="formData.ddddd" />
               </a-form-item>
             </a-col>
           </a-row>
         </a-col>
         <a-col :span="4" class="operation">
-          <a-button class="submitbutton" type="primary" @click="handleSubmit">
-            查询
-          </a-button>
+          <a-space>
+            <a-button class="submitbutton" @click="handleReset">
+              重置
+            </a-button>
+            <a-button class="submitbutton" type="primary" @click="handleSearch">
+              查询
+            </a-button>
+          </a-space>
         </a-col>
       </a-row>
     </a-form>
@@ -39,30 +44,34 @@ import {
   nextTick,
 } from "vue";
 
-import { screenBannerInfoRequest } from "@/api/management";
+
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
-const layoutRef = ref(HTMLDivElement);
+const emit = defineEmits<{
+  (e: "onSearch", formData: object): void;
+  (e: "onReset", formData: object): void;
+}>();
 
-const state = reactive({
-  formData: {
-    ccccc: "",
-    ddddd: [],
-  },
+const formDataRef: any = ref(null);
+
+const formData = reactive({
+  ccccc: "",
+  ddddd: [],
 });
 
-const init = () => {
-  const lineScaleEl: HTMLElement = document.getElementById("line-scale");
-  lineScaleEl.style.display = "none";
+
+const handleSearch = () => {
+  emit("onSearch", formData);
 };
 
-const handleSubmit = () => {};
+const handleReset = () => {
+  formDataRef.value.resetFields();
+  emit("onReset", formData);
+};
 
-onMounted(async () => {
-  init();
-});
+onMounted(async () => {});
 
 onBeforeUnmount(() => {});
 </script>

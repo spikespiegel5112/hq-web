@@ -1,6 +1,6 @@
 <template>
   <div class="common_table_wrapper">
-    <FilterTool></FilterTool>
+    <FilterTool @onSearch="handleSearch" @onReset="handleReset"></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
         <a-button class="import">导入</a-button>
@@ -153,6 +153,16 @@ const handleEdit = () => {
 const handleAdd = () => {
   state.dialogVisible = true;
   state.dialogMode = "add";
+};
+
+const handleSearch = (formData: object) => {
+  queryFormData = formData;
+  getData();
+};
+
+const handleReset = (formData: object) => {
+  queryFormData = formData;
+  getData();
 };
 
 const handleClose = (event: any) => {

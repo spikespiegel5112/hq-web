@@ -67,10 +67,7 @@ const state = reactive({
   timeType: 1,
 });
 
-const init = () => {
-  const lineScaleEl: HTMLElement = document.getElementById("line-scale");
-  lineScaleEl.style.display = "none";
-};
+
 
 const handleChooseAlarmTimeType = (timeType: number) => {
   state.timeType = timeType;

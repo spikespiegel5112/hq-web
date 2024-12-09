@@ -92,20 +92,22 @@ const state = reactive({
   },
 });
 
-const init = () => {
-  const lineScaleEl: HTMLElement = document.getElementById("line-scale");
-  lineScaleEl.style.display = "none";
-};
+
 
 const handleClose = (event: any) => {
   emit("onClose", event);
 };
 
-const handleSubmit = () => {};
+const handleSearch = () => {
+  emit("onSearch", formData);
+};
 
-onMounted(async () => {
-  init();
-});
+const handleReset = () => {
+  formDataRef.value.resetFields();
+  emit("onReset", formData);
+};
+
+onMounted(async () => {});
 
 onBeforeUnmount(() => {});
 </script>

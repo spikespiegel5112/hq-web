@@ -346,17 +346,22 @@ input:focus {
     width: 100%;
     .ant-form-item {
       margin: 0;
-
+      .ant-input,
       .ant-input-affix-wrapper,
       .ant-select-selector,
       .ant-picker {
         width: 100%;
         background-color: #041030;
         border-color: #0096ff;
+        &::placeholder {
+          color: #ccc;
+        }
         .ant-select-selection-placeholder {
           color: #ccc;
         }
-        .ant-input,
+        .ant-form-item-control-input {
+          background-color: red;
+        }
         .ant-select-selector,
         .ant-picker-input input {
           background-color: #041030;
