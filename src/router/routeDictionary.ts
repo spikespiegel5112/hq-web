@@ -33,13 +33,11 @@ const routerDictionary = [
         icon: "/src/assets/menu_regionalhourlypassengerflow.png",
         component: () =>
           import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
-
         children: [
           {
             title: "高铁小时到达",
             path: "HighSpeedRailArrivesWithinHours",
             name: "HighSpeedRailArrivesWithinHours",
-
             component: () =>
               import(
                 /* webpackChunkName: "HighSpeedRailArrivesWithinHours" */ "@/views/RegionalHourlyPassengerFlow/HighSpeedRailArrivesWithinHours/HighSpeedRailArrivesWithinHours.vue"
@@ -51,8 +49,7 @@ const routerDictionary = [
           {
             title: "出租车",
             path: "Taxi",
-            name: "Taxi",
-
+            name: "RegionalHourlyPassengerFlowTaxi",
             component: () =>
               import(
                 /* webpackChunkName: "Taxi" */ "@/views/RegionalHourlyPassengerFlow/Taxi/Taxi.vue"
@@ -65,7 +62,6 @@ const routerDictionary = [
             title: "地铁",
             path: "Subway",
             name: "Subway",
-
             component: () =>
               import(
                 /* webpackChunkName: "HighSpeedRailArrivesWithinHours" */ "@/views/RegionalHourlyPassengerFlow/HighSpeedRailArrivesWithinHours/HighSpeedRailArrivesWithinHours.vue"
@@ -78,7 +74,6 @@ const routerDictionary = [
             title: "车库流量信息",
             path: "GarageTrafficInformation",
             name: "GarageTrafficInformation",
-
             component: () =>
               import(
                 /* webpackChunkName: "GarageTrafficInformation" */ "@/views/RegionalHourlyPassengerFlow/GarageTrafficInformation/GarageTrafficInformation.vue"
@@ -95,13 +90,11 @@ const routerDictionary = [
         name: "RegionalRealTimePassengerFlow",
         icon: "/src/assets/menu_regionalreatimepassengerflow.png",
         component: () =>
-          import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
-        children: [
+          import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),        children: [
           {
             title: "出租车",
             path: "Taxi",
-            name: "Taxi",
-
+            name: "RegionalRealTimePassengerFlowTaxi",
             component: () =>
               import(
                 /* webpackChunkName: "Texi" */ "@/views/RegionalRealTimePassengerFlow/Taxi/Taxi.vue"
@@ -114,7 +107,6 @@ const routerDictionary = [
             title: "停车库",
             path: "ParkingGarage",
             name: "ParkingGarage",
-
             component: () =>
               import(
                 /* webpackChunkName: "ParkingGarage" */ "@/views/RegionalRealTimePassengerFlow/ParkingGarage/ParkingGarage.vue"
@@ -131,8 +123,7 @@ const routerDictionary = [
         name: "EventManagement",
         icon: "/src/assets/menu_eventmanagement.png",
         component: () =>
-          import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
-        children: [
+          import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),        children: [
           {
             title: "事件告警",
             path: "EventAlert",
@@ -165,13 +156,11 @@ const routerDictionary = [
         name: "InformationManagement",
         icon: "/src/assets/menu_informationmanagement.png",
         component: () =>
-          import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
-        children: [
+          import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),        children: [
           {
             title: "信息来源",
             path: "InformationSources",
             name: "InformationSources",
-
             component: () =>
               import(
                 /* webpackChunkName: "InformationSources" */ "@/views/InformationManagement/InformationSources/InformationSources.vue"
@@ -184,7 +173,6 @@ const routerDictionary = [
             title: "信息上报",
             path: "InformationReporting",
             name: "InformationReporting",
-
             component: () =>
               import(
                 /* webpackChunkName: "InformationReporting" */ "@/views/InformationManagement/InformationReporting/InformationReporting.vue"
@@ -197,7 +185,6 @@ const routerDictionary = [
             title: "舆情信息",
             path: "PublicOpinionInformation",
             name: "PublicOpinionInformation",
-
             component: () =>
               import(
                 /* webpackChunkName: "PublicOpinionInformation" */ "@/views/InformationManagement/PublicOpinionInformation/PublicOpinionInformation.vue"
@@ -210,7 +197,6 @@ const routerDictionary = [
             title: "外部投诉",
             path: "ExternalComplaints",
             name: "ExternalComplaints",
-
             component: () =>
               import(
                 /* webpackChunkName: "ExternalComplaints" */ "@/views/InformationManagement/ExternalComplaints/ExternalComplaints.vue"
@@ -227,13 +213,11 @@ const routerDictionary = [
         name: "OperationManagement",
         icon: "/src/assets/menu_operationmanagement.png",
         component: () =>
-          import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
-        children: [
+          import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),        children: [
           {
             title: "值班人员管理",
             path: "PersonOnDutyManagement",
             name: "PersonOnDutyManagement",
-
             component: () =>
               import(
                 /* webpackChunkName: "PersonOnDutyManagement" */ "@/views/OperationManagement/PersonOnDutyManagement/PersonOnDutyManagement.vue"
@@ -246,7 +230,6 @@ const routerDictionary = [
             title: "指示灯",
             path: "IndicatorLights",
             name: "IndicatorLights",
-
             component: () =>
               import(
                 /* webpackChunkName: "IndicatorLights" */ "@/views/OperationManagement/IndicatorLights/IndicatorLights.vue"
@@ -263,13 +246,11 @@ const routerDictionary = [
         name: "SheetManagement",
         icon: "/src/assets/menu_sheetmanagement.png",
         component: () =>
-          import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
-        children: [
+          import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),        children: [
           {
             title: "事件报表",
             path: "EventSheet",
             name: "EventSheet",
-
             component: () =>
               import(
                 /* webpackChunkName: "EventSheet" */ "@/views/SheetManagement/EventSheet/EventSheet.vue"
@@ -283,7 +264,6 @@ const routerDictionary = [
             title: "投诉报表",
             path: "ComplaintSheet",
             name: "ComplaintSheet",
-
             component: () =>
               import(
                 /* webpackChunkName: "ComplaintSheet" */ "@/views/SheetManagement/ComplaintSheet/ComplaintSheet.vue"
@@ -296,7 +276,6 @@ const routerDictionary = [
             title: "舆情报表",
             path: "PublicOpinionSheet",
             name: "PublicOpinionSheet",
-
             component: () =>
               import(
                 /* webpackChunkName: "PublicOpinionSheet" */ "@/views/SheetManagement/PublicOpinionSheet/PublicOpinionSheet.vue"
@@ -309,7 +288,6 @@ const routerDictionary = [
             title: "地铁月报表",
             path: "MonthlySubwaySheet",
             name: "MonthlySubwaySheet",
-
             component: () =>
               import(
                 /* webpackChunkName: "MonthlySubwaySheet" */ "@/views/SheetManagement/MonthlySubwaySheet/MonthlySubwaySheet.vue"
@@ -322,7 +300,6 @@ const routerDictionary = [
             title: "客流月报表",
             path: "MonthlyPassengerFlowSheet",
             name: "MonthlyPassengerFlowSheet",
-
             component: () =>
               import(
                 /* webpackChunkName: "MonthlyPassengerFlowSheet" */ "@/views/SheetManagement/MonthlyPassengerFlowSheet/MonthlyPassengerFlowSheet.vue"
@@ -339,13 +316,11 @@ const routerDictionary = [
         name: "SystemManagement",
         icon: "/src/assets/menu_systemmanagement.png",
         component: () =>
-          import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
-        children: [
+          import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),        children: [
           {
             title: "用户管理",
             path: "UserManagement",
             name: "UserManagement",
-
             component: () =>
               import(
                 /* webpackChunkName: "UserManagement" */ "@/views/SystemManagement/UserManagement/UserManagement.vue"
@@ -358,7 +333,6 @@ const routerDictionary = [
             title: "角色管理",
             path: "RoleManagement",
             name: "RoleManagement",
-
             component: () =>
               import(
                 /* webpackChunkName: "RoleManagement" */ "@/views/SystemManagement/RoleManagement/RoleManagement.vue"
@@ -371,7 +345,6 @@ const routerDictionary = [
             title: "权限管理",
             path: "PermissionManagement",
             name: "PermissionManagement",
-
             component: () =>
               import(
                 /* webpackChunkName: "PermissionManagement" */ "@/views/SystemManagement/PermissionManagement/PermissionManagement.vue"
@@ -384,7 +357,6 @@ const routerDictionary = [
             title: "字典参数管理",
             path: "DictionaryManagement",
             name: "DictionaryManagement",
-
             component: () =>
               import(
                 /* webpackChunkName: "DictionaryManagement" */ "@/views/SystemManagement/DictionaryManagement/DictionaryManagement.vue"

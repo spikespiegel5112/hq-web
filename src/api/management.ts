@@ -62,6 +62,7 @@ export const backendRailwayArriveRailwayArriveExportRequest = (params: any) => {
     url: prefix + "/backend/railwayArrive/railwayArriveExport",
     method: "GET",
     data: params,
+    responseType: "blob",
   });
 };
 

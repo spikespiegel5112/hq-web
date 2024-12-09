@@ -60,7 +60,6 @@ import {
 } from "vue";
 
 import type { MenuTheme } from "ant-design-vue";
-import { Menu } from "ant-design-vue";
 import routeDictionary from "@/router/routeDictionary";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;

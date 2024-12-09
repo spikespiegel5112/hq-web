@@ -7,7 +7,7 @@
           :action="`/api/manage/backend/railwayArrive/importPic`"
           @onSuccess="handleUploaded"
         />
-        <a-button class="export">导出</a-button>
+        <a-button class="export" @click="handleExport">导出</a-button>
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
@@ -15,7 +15,6 @@
       :tableData="state.tableData"
       :dataModel="pageModel"
       :pagination="pagination"
-      tabTable
       @onEdit="handleEdit"
       @onChangePage="handleChangePage"
     />
@@ -41,10 +40,12 @@ import {
   nextTick,
 } from "vue";
 
-import { backendRailwayArriveGetRailwayArrivePagingRequest } from "@/api/management";
+import {
+  backendRailwayArriveGetRailwayArrivePagingRequest,
+  backendRailwayArriveRailwayArriveExportRequest,
+} from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
-import { debug } from "console";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -172,6 +173,16 @@ const handleChangePage = (pagingData: any) => {
 
 const handleUploaded = (response: any) => {
   getData();
+};
+
+const handleExport = (response: any) => {
+  backendRailwayArriveRailwayArriveExportRequest()
+    .then((response: any) => {
+      global.$exportTable(response, global.$route);
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
 };
 
 onMounted(async () => {

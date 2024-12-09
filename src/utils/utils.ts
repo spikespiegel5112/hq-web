@@ -1,5 +1,6 @@
-import { store } from '@/store';
-import { message } from 'ant-design-vue';
+import { store } from "@/store";
+import { message } from "ant-design-vue";
+import { debug } from "console";
 const [messageApi, contextHolder] = message.useMessage();
 
 interface DAMNU_ENABLE {
@@ -14,14 +15,15 @@ const _utils = {
     return new URL(url, import.meta.url).href;
   },
   $objectToUrlString: (query: DAMNU_ENABLE) => {
-    let result = '';
+    let result = "";
     Object.keys(query).forEach((item: string, index: number) => {
-      result += (index === 0 ? '?' : '&') + item + '=' + query[item];
+      result += (index === 0 ? "?" : "&") + item + "=" + query[item];
     });
 
     return result;
   },
-  $isEmpty: (value: any): boolean => value === '' || (!value && value !== 0) || value === null,
+  $isEmpty: (value: any): boolean =>
+    value === "" || (!value && value !== 0) || value === null,
   $isNotEmpty: (value: any): boolean => !_utils.$isEmpty(value),
   $remResizing: (params: any) => {
     let options = Object.assign(
@@ -37,8 +39,8 @@ const _utils = {
       },
       params
     );
-    const htmlEl = document.getElementsByTagName('html')[0];
-    const bodyEl = document.getElementsByTagName('body')[0];
+    const htmlEl = document.getElementsByTagName("html")[0];
+    const bodyEl = document.getElementsByTagName("body")[0];
 
     const windowHeight = window.screen.availHeight;
     const windowWidth = window.screen.availWidth;
@@ -78,29 +80,29 @@ const _utils = {
           }
         }
         if (options.alignCenter) {
-          bodyEl.style.margin = '0';
-          bodyEl.style.width = 'auto';
+          bodyEl.style.margin = "0";
+          bodyEl.style.width = "auto";
         }
       } else if (frontLine > options.threshold) {
         if (options.alignCenter) {
           factor = options.threshold / options.baseline;
-          bodyEl.style.margin = '0 auto';
+          bodyEl.style.margin = "0 auto";
           bodyEl.style.width = options.threshold;
         } else {
           factor = frontLine / options.baseline;
-          bodyEl.style.margin = '0';
+          bodyEl.style.margin = "0";
           bodyEl.style.width = options.threshold;
         }
 
         if (options.dropoff) {
-          htmlEl.style.fontSize = 'none';
+          htmlEl.style.fontSize = "none";
           return;
         }
       }
-      htmlEl.style.fontSize = options.fontSize * factor + 'px';
+      htmlEl.style.fontSize = options.fontSize * factor + "px";
 
       if (options.dropoff && frontLine > options.threshold) {
-        htmlEl.style.fontSize = '';
+        htmlEl.style.fontSize = "";
       }
     };
 
@@ -109,7 +111,7 @@ const _utils = {
     }
     sizeConstraint();
     window.onresize = () => {
-      console.log('==========window.onresize==========');
+      console.log("==========window.onresize==========");
       sizeConstraint();
     };
   },
@@ -127,8 +129,8 @@ const _utils = {
       },
       params
     );
-    const htmlEl = document.getElementsByTagName('html')[0];
-    const bodyEl = document.getElementsByTagName('body')[0];
+    const htmlEl = document.getElementsByTagName("html")[0];
+    const bodyEl = document.getElementsByTagName("body")[0];
 
     const windowHeight = window.screen.availHeight;
     const windowWidth = window.screen.availWidth;
@@ -168,29 +170,29 @@ const _utils = {
           }
         }
         if (options.alignCenter) {
-          bodyEl.style.margin = '0';
-          bodyEl.style.width = 'auto';
+          bodyEl.style.margin = "0";
+          bodyEl.style.width = "auto";
         }
       } else if (frontLine > options.threshold) {
         if (options.alignCenter) {
           factor = options.threshold / options.baseline;
-          bodyEl.style.margin = '0 auto';
+          bodyEl.style.margin = "0 auto";
           bodyEl.style.width = options.threshold;
         } else {
           factor = frontLine / options.baseline;
-          bodyEl.style.margin = '0';
+          bodyEl.style.margin = "0";
           bodyEl.style.width = options.threshold;
         }
 
         if (options.dropoff) {
-          htmlEl.style.fontSize = 'none';
+          htmlEl.style.fontSize = "none";
           return;
         }
       }
-      htmlEl.style.fontSize = options.fontSize * factor + 'px';
+      htmlEl.style.fontSize = options.fontSize * factor + "px";
 
       if (options.dropoff && frontLine > options.threshold) {
-        htmlEl.style.fontSize = '';
+        htmlEl.style.fontSize = "";
       }
     };
 
@@ -210,22 +212,42 @@ const _utils = {
   },
 
   $isWindows: () => {
-    return navigator.platform === 'Win32';
+    return navigator.platform === "Win32";
+  },
+
+  $exportTable: (
+    response: any,
+    currentRoute: any,
+    fileName: string | undefined
+  ) => {
+    const data = response;
+    const blob = new Blob([data], { type: "text/plain" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+
+    link.download =
+      (utils.$isNotEmpty(fileName) ? fileName : currentRoute.meta.title) +
+      ".xlsx"; // 这里填保存成的文件名
+    link.click();
+    URL.revokeObjectURL(link.href);
+    messageApi.success("导出成功!", 3000);
   },
 } as any;
 
 const result = {
   install(app: any, options: object): any {
-    app.config.globalProperties['$messageApi'] = _utils['$messageApi'];
-    app.config.globalProperties['$getLightBlubImageUrlByColor'] =
-      _utils['$getLightBlubImageUrlByColor'];
-    app.config.globalProperties['$getImageUrl'] = _utils['$getImageUrl'];
-    app.config.globalProperties['$isEmpty'] = _utils['$isEmpty'];
-    app.config.globalProperties['$isNotEmpty'] = _utils['$isNotEmpty'];
-    app.config.globalProperties['$isMobile'] = _utils['$isMobile'];
-    app.config.globalProperties['$isWindows'] = _utils['$isWindows'];
-    app.config.globalProperties['$remResizing'] = _utils['$remResizing'];
-    app.config.globalProperties['$orientationSensor'] = _utils['$orientationSensor'];
+    app.config.globalProperties["$messageApi"] = _utils["$messageApi"];
+    app.config.globalProperties["$getLightBlubImageUrlByColor"] =
+      _utils["$getLightBlubImageUrlByColor"];
+    app.config.globalProperties["$getImageUrl"] = _utils["$getImageUrl"];
+    app.config.globalProperties["$isEmpty"] = _utils["$isEmpty"];
+    app.config.globalProperties["$isNotEmpty"] = _utils["$isNotEmpty"];
+    app.config.globalProperties["$isMobile"] = _utils["$isMobile"];
+    app.config.globalProperties["$isWindows"] = _utils["$isWindows"];
+    app.config.globalProperties["$remResizing"] = _utils["$remResizing"];
+    app.config.globalProperties["$orientationSensor"] =
+      _utils["$orientationSensor"];
+    app.config.globalProperties["$exportTable"] = _utils["$exportTable"];
   },
 } as any;
 
