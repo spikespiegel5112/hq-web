@@ -17,7 +17,16 @@
     <div class="content">
       <vue-scroll>
         <a-space wrap>
-          <div></div>
+          <div>
+            <img
+              :src="
+                global.$getImageUrl(
+                  '/src/assets/menu_regionalhourlypassengerflow.png'
+                )
+              "
+              alt=""
+            />
+          </div>
           <div></div>
           <div></div>
           <div></div>
@@ -82,9 +91,19 @@ onBeforeUnmount(() => {});
         border: 1px solid #ccc;
         width: calc(50% - 5px);
         padding-top: 50%;
+        box-sizing: border-box;
+        position: relative;
         > div {
           width: 100%;
           height: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          img {
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+          }
         }
       }
     }
