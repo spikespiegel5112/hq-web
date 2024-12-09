@@ -81,11 +81,11 @@ const emit = defineEmits<{
   (e: "onReset", formData: object): void;
 }>();
 
-const state = reactive({
-  formData: {
-    userName: "",
-    password: "",
-  },
+const formDataRef: any = ref(null);
+
+const formData = reactive({
+  userName: "",
+  password: "",
 });
 
 
