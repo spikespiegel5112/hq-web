@@ -5,8 +5,7 @@
     @cancel="handleClose"
     width="8rem"
   >
-   <a-form
-      :model="formData"
+   <a-form       :model="state.formData"
       ref="formDataRef"
       autocomplete="off"
       :label-col="{ style: { width: '80px' } }"

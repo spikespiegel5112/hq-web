@@ -1,12 +1,12 @@
 <template>
   <a-modal
-    v-model:open="props.visible"
+    v-model:open="state.visible"
     :title="props.mode === 'edit' ? '编辑' : '新增'"
     @cancel="handleClose"
     width="8rem"
   >
     <a-form
-      :model="formData"
+      :model="state.formData"
       ref="formDataRef"
       autocomplete="off"
       :label-col="{ style: { width: '80px' } }"
@@ -20,14 +20,14 @@
         >
           <a-form-item name="statisticalDate" label="日期">
             <a-input
-              v-model:value="formData.statisticalDate"
+              v-model:value="state.formData.statisticalDate"
               placeholder="请输入"
             >
             </a-input>
           </a-form-item>
           <a-form-item name="dispersedHourlyPassengerCount" label="小时疏散数">
             <a-input
-              v-model:value="formData.dispersedHourlyPassengerCount"
+              v-model:value="state.formData.dispersedHourlyPassengerCount"
               placeholder="请输入"
             >
             </a-input>
@@ -46,7 +46,7 @@
             label="预测小时到达数"
           >
             <a-input
-              v-model:value="formData.estimatedHourlyArrivePassengerCount"
+              v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
               placeholder="请输入"
             >
             </a-input>
@@ -58,7 +58,6 @@
 </template>
 
 <script lang="tsx" setup>
-import { debug } from "console";
 import {
   reactive,
   watch,
@@ -87,40 +86,43 @@ const props = defineProps({
   rowData: { type: Object, required: true, default: () => {} },
 });
 
-let formData = reactive({
-  dispersedHourlyPassengerCount: "",
-  estimatedHourlyArrivePassengerCount: "",
-  id: "",
-  statisticalBeginHour: "",
-  statisticalDate: "",
+let state = reactive({
+  visible: false,
+  formData: {
+    dispersedHourlyPassengerCount: "",
+    estimatedHourlyArrivePassengerCount: "",
+    id: "",
+    statisticalBeginHour: "",
+    statisticalDate: "",
+  } as any,
 });
 
 watch(
   () => props.mode,
+  async (newValue: any) => {}
+);
+
+watch(
+  () => props.visible,
   async (newValue: any) => {
-    if (newValue === "add") {
+    state.visible = newValue;
+    if (!!newValue) {
       await nextTick();
-      formDataRef.value.resetFields();
+      if (props.mode === "edit") {
+        state.formData = JSON.parse(JSON.stringify(props.rowData));
+      }
     }
   }
 );
 
-watch(
-  () => props.rowData,
-  (newValue: any) => {
-    formData = newValue;
-  }
-);
-
 const handleClose = (event: any) => {
+  formDataRef.value.resetFields();
   emit("onClose", event);
 };
 
 onMounted(async () => {});
 
-onBeforeUnmount(() => {
-  formDataRef.value.resetFields();
-});
+onBeforeUnmount(() => {});
 </script>
 
 <style scoped lang="scss"></style>

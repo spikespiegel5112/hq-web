@@ -1,7 +1,6 @@
 <template>
   <div class="common_filtertool_wrapper">
-    <a-form
-      :model="formData"
+    <a-form       :model="state.formData"
       autocomplete="off"
       ref="formDataRef"
   
