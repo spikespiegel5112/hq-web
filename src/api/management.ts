@@ -174,3 +174,12 @@ export const userManageQueryAllUserRequest = (params: any) => {
     data: params,
   });
 };
+
+// 系统管理-角色管理-条件查询角色
+export const roleManageQueryAllRoleRequest = (params: any) => {
+  return service({
+    url: prefix + "/sys/role/manage/queryAllRole",
+    method: "POST",
+    data: params,
+  });
+};

@@ -42,8 +42,6 @@ import EditDialog from "./EditDialog.vue";
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
-const layoutRef = ref(HTMLDivElement);
-
 const pageModel = ref([
   {
     label: "序号",
@@ -104,9 +102,16 @@ const pageModel = ref([
 
 const state = reactive({
   tableData: [] as any[],
-  dataModel: [] as any[],
   dialogVisible: false,
   dialogMode: "",
+});
+
+let queryFormData = reactive({} as any);
+
+const pagination = reactive({
+  page: 1,
+  pageSize: 30,
+  total: 0 as number | undefined,
 });
 
 const getData = () => {

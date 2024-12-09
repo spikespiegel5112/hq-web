@@ -5,30 +5,8 @@
         <a-col :span="20">
           <a-row :gutter="20">
             <a-col :span="6">
-              <a-form-item name="userName" label="区域">
-                <a-input v-model="formData.userName" placeholder="请输入帐号">
-                  <template #prefix>
-                    <span class="username"></span>
-                  </template>
-                </a-input>
-              </a-form-item>
-            </a-col>
-
-            <a-col :span="6">
-              <a-form-item name="password" label="事件性质">
-                <a-input v-model="formData.password" placeholder="请输入密码">
-                  <template #prefix>
-                    <span class="password"></span>
-                  </template>
-                </a-input>
-              </a-form-item>
-            </a-col>
-            <a-col :span="6">
-              <a-form-item name="password" label="日期">
-                <a-input v-model="formData.password" placeholder="请输入密码">
-                  <template #prefix>
-                    <span class="password"></span>
-                  </template>
+              <a-form-item name="name" label="角色名称">
+                <a-input v-model="formData.name" placeholder="请输入">
                 </a-input>
               </a-form-item>
             </a-col>
@@ -73,8 +51,7 @@ const emit = defineEmits<{
 const formDataRef: any = ref(null);
 
 const formData = reactive({
-  userName: "",
-  password: "",
+  name: "",
 });
 
 const handleSearch = () => {

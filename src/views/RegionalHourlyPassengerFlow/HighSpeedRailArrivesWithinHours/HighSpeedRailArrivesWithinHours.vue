@@ -49,8 +49,6 @@ import { debug } from "console";
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
-const layoutRef = ref(HTMLDivElement);
-
 const pageModel = ref([
   {
     label: "序号",
@@ -111,23 +109,24 @@ const pageModel = ref([
 
 const state = reactive({
   tableData: [] as any[],
-  dataModel: [] as any[],
   dialogVisible: false,
   dialogMode: "",
 });
 
+let queryFormData = reactive({} as any);
+
 const pagination = reactive({
   page: 1,
   pageSize: 30,
-  total: 0,
+  total: 0 as number | undefined,
 });
-
 const env = computed(() => {
   return import.meta.env;
 });
 
 const getData = () => {
   backendRailwayArriveGetRailwayArrivePagingRequest({
+    ...queryFormData,
     ...pagination,
   })
     .then((response: any) => {
@@ -168,11 +167,11 @@ const handleChangePage = (pagingData: any) => {
   pagination.page = pagingData.current;
   pagination.pageSize = pagingData.pageSize;
   pagination.total = pagingData.total;
-     getData();
+  getData();
 };
 
 const handleUploaded = (response: any) => {
-  getData()
+  getData();
 };
 
 onMounted(async () => {

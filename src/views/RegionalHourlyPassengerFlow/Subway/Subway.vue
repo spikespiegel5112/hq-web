@@ -11,7 +11,6 @@
     <BaseTable
       :tableData="state.tableData"
       :dataModel="pageModel"
-     
       @onEdit="handleEdit"
     />
     <EditDialog
@@ -41,8 +40,6 @@ import EditDialog from "./EditDialog.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
-
-const layoutRef = ref(HTMLDivElement);
 
 const pageModel = ref([
   {
@@ -104,13 +101,20 @@ const pageModel = ref([
 
 const state = reactive({
   tableData: [] as any[],
-  dataModel: [] as any[],
   dialogVisible: false,
   dialogMode: "",
 });
 
+let queryFormData = reactive({} as any);
+
+const pagination = reactive({
+  page: 1,
+  pageSize: 30,
+  total: 0 as number | undefined,
+});
+
 const getData = () => {
-    const result = [] as any[];
+  const result = [] as any[];
   for (let index = 0; index < 30; index++) {
     result.push({
       higywayCode: "aaa",

@@ -34,14 +34,12 @@ import {
   nextTick,
 } from "vue";
 
-import { screenBannerInfoRequest } from "@/api/management";
+import { roleManageQueryAllRoleRequest } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
-
-const layoutRef = ref(HTMLDivElement);
 
 const pageModel = ref([
   {
@@ -111,22 +109,32 @@ const pageModel = ref([
 
 const state = reactive({
   tableData: [] as any[],
-  dataModel: [] as any[],
   dialogVisible: false,
   dialogMode: "",
 });
 
+let queryFormData = reactive({} as any);
+
+const pagination = reactive({
+  page: 1,
+  pageSize: 30,
+  total: 0 as number | undefined,
+});
+
 const getData = () => {
-  const result = [] as any[];
-  for (let index = 0; index < 30; index++) {
-    result.push({
-      higywayCode: "aaa",
-      highwayName: "aaa",
-      bridgeCode: "aaa",
-      bridgeName: "aaa",
+  pagination.total = undefined;
+  roleManageQueryAllRoleRequest({
+    ...queryFormData,
+    ...pagination,
+  })
+    .then((response: any) => {
+      response = response.data;
+      state.tableData = response.list;
+      pagination.total = response.total;
+    })
+    .catch((error: any) => {
+      console.log(error);
     });
-  }
-  state.tableData = result;
 };
 
 const handleEdit = () => {

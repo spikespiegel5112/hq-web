@@ -39,8 +39,6 @@ const props = defineProps({
   timeType: { type: Number, default: 1, required: true },
 });
 
-const layoutRef = ref(HTMLDivElement);
-
 const pageModel = ref([
   {
     label: "序号",
