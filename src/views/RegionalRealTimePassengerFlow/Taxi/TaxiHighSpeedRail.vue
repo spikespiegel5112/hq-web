@@ -119,6 +119,7 @@ const state = reactive({
   tableData: [] as any[],
   dialogVisible: false,
   dialogMode: "",
+  currentRowData: {},
 });
 
 let queryFormData = reactive({} as any);

@@ -69,7 +69,7 @@ import {
 } from "vue";
 
 const emit = defineEmits<{
-  (e: "onEdit", action: string, tableData: any): void;
+  (e: "onEdit", rowData: any): void;
   (e: "onChangePage", pagination: object): void;
 }>();
 
@@ -236,7 +236,7 @@ const handleAction = (action: any, scope: any) => {
     // this.$emit("onView", row);
   }
   if (action === "edit") {
-    emit("onEdit", action, state.originalTableData[scope.$index]);
+    emit("onEdit", state.originalTableData[scope.index]);
   }
   if (action === "delete") {
     // this.$confirm("确认删除？", "提示", {

@@ -22,6 +22,7 @@
       :visible="state.dialogVisible"
       :mode="state.dialogMode"
       :dataModel="pageModel"
+      :rowData="state.currentRowData"
       @onClose="handleClose"
     ></EditDialog>
   </div>
@@ -112,6 +113,7 @@ const state = reactive({
   tableData: [] as any[],
   dialogVisible: false,
   dialogMode: "",
+  currentRowData: {},
 });
 
 let queryFormData = reactive({} as any);
@@ -140,9 +142,10 @@ const getData = () => {
     });
 };
 
-const handleEdit = () => {
+const handleEdit = (currentRowData: any) => {
   state.dialogVisible = true;
   state.dialogMode = "edit";
+  state.currentRowData = currentRowData;
 };
 
 const handleAdd = () => {
@@ -175,7 +178,7 @@ const handleUploaded = (response: any) => {
   getData();
 };
 
-const handleExport = (response: any) => {
+const handleExport = () => {
   backendRailwayArriveRailwayArriveExportRequest()
     .then((response: any) => {
       global.$exportTable(response, global.$route);

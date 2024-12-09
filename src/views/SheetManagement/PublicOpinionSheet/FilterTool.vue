@@ -1,15 +1,17 @@
 <template>
   <div class="common_filtertool_wrapper">
-    <a-form :model="formData" autocomplete="off" ref="formDataRef">
+    <a-form
+      :model="formData"
+      autocomplete="off"
+      ref="formDataRef"
+  
+    >
       <a-row>
         <a-col :span="20">
           <a-row :gutter="20">
             <a-col :span="6">
               <a-form-item name="userName" label="区域">
-                <a-input
-                  v-model="formData.userName"
-                  placeholder="请输入帐号"
-                >
+                <a-input v-model="formData.userName" placeholder="请输入帐号">
                   <template #prefix>
                     <span class="username"></span>
                   </template>
@@ -19,10 +21,7 @@
 
             <a-col :span="6">
               <a-form-item name="password" label="舆情来源">
-                <a-input
-                  v-model="formData.password"
-                  placeholder="请输入密码"
-                >
+                <a-input v-model="formData.password" placeholder="请输入密码">
                   <template #prefix>
                     <span class="password"></span>
                   </template>
@@ -31,10 +30,7 @@
             </a-col>
             <a-col :span="6">
               <a-form-item name="password" label="敏感程度">
-                <a-input
-                  v-model="formData.password"
-                  placeholder="请输入密码"
-                >
+                <a-input v-model="formData.password" placeholder="请输入密码">
                   <template #prefix>
                     <span class="password"></span>
                   </template>
@@ -43,10 +39,7 @@
             </a-col>
             <a-col :span="6">
               <a-form-item name="password" label="日期">
-                <a-input
-                  v-model="formData.password"
-                  placeholder="请输入密码"
-                >
+                <a-input v-model="formData.password" placeholder="请输入密码">
                   <template #prefix>
                     <span class="password"></span>
                   </template>
@@ -83,8 +76,6 @@ import {
   nextTick,
 } from "vue";
 
-
-
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
@@ -98,8 +89,6 @@ const formDataRef: any = ref(null);
 const formData = reactive({
   dicName: "",
 });
-
-
 
 const handleSearch = () => {
   emit("onSearch", formData);

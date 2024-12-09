@@ -64,7 +64,7 @@ import { screenBannerInfoRequest } from "@/api/management";
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
-const layoutRef = ref(HTMLDivElement);
+const formDataRef = ref();
 
 const state = reactive({});
 

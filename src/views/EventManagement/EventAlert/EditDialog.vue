@@ -5,7 +5,12 @@
     @cancel="handleClose"
     width="8rem"
   >
-    <a-form :model="state.formData" autocomplete="off">
+    <a-form
+      :model="formData"
+      ref="formDataRef"
+      autocomplete="off"
+      :label-col="{ style: { width: '80px' } }"
+    >
       <a-row>
         <a-space
           :size="20"
@@ -14,17 +19,11 @@
           }"
         >
           <a-form-item name="userName" label="报警类型">
-            <a-input v-model="state.formData.userName" placeholder="请输入">
-              <template #prefix>
-                <span class="username"></span>
-              </template>
+            <a-input v-model="formData.userName" placeholder="请输入">
             </a-input>
           </a-form-item>
           <a-form-item name="password" label="报警内容">
-            <a-input v-model="state.formData.password" placeholder="请输入">
-              <template #prefix>
-                <span class="password"></span>
-              </template>
+            <a-input v-model="formData.password" placeholder="请输入">
             </a-input>
           </a-form-item>
         </a-space>
@@ -37,17 +36,11 @@
           }"
         >
           <a-form-item name="userName" label="报警类型">
-            <a-input v-model="state.formData.userName" placeholder="请输入">
-              <template #prefix>
-                <span class="username"></span>
-              </template>
+            <a-input v-model="formData.userName" placeholder="请输入">
             </a-input>
           </a-form-item>
           <a-form-item name="password" label="报警内容">
-            <a-input v-model="state.formData.password" placeholder="请输入">
-              <template #prefix>
-                <span class="password"></span>
-              </template>
+            <a-input v-model="formData.password" placeholder="请输入">
             </a-input>
           </a-form-item>
         </a-space>
@@ -74,7 +67,7 @@ import { screenBannerInfoRequest } from "@/api/management";
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
-const layoutRef = ref(HTMLDivElement);
+const formDataRef = ref();
 
 const emit = defineEmits<{
   (e: "onClose", event: any): void;
@@ -83,28 +76,23 @@ const emit = defineEmits<{
 const props = defineProps({
   visible: { type: Boolean, required: true, default: false },
   mode: { type: String, required: true, default: "" },
+  formData: { type: Object, required: true, default: () => {} },
 });
 
-const state = reactive({
-  formData: {
-    userName: "",
-    password: "",
-  },
+let formData = reactive({
+  userName: "",
+  password: "",
 });
 
-
+watch(
+  () => props.formData.value,
+  (newValue: any, oldValue: any) => {
+    formData = newValue;
+  }
+);
 
 const handleClose = (event: any) => {
   emit("onClose", event);
-};
-
-const handleSearch = () => {
-  emit("onSearch", formData);
-};
-
-const handleReset = () => {
-  formDataRef.value.resetFields();
-  emit("onReset", formData);
 };
 
 onMounted(async () => {});

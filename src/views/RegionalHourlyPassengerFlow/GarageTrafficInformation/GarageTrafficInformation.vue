@@ -40,7 +40,7 @@ import GarageTrafficInformationP9P10 from "./GarageTrafficInformationP9P10.vue";
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
-const layoutRef = ref(HTMLDivElement);
+const formDataRef = ref();
 
 const state = reactive({
   activeKey: "GarageTrafficInformationP9P10",

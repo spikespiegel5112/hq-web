@@ -5,7 +5,12 @@
     @cancel="handleClose"
     width="8rem"
   >
-    <a-form :model="state.formData" autocomplete="off">
+    <a-form
+      :model="formData"
+      ref="formDataRef"
+      autocomplete="off"
+      :label-col="{ style: { width: '80px' } }"
+    >
       <a-row>
         <a-space
           :size="20"
@@ -13,18 +18,18 @@
             width: '100%',
           }"
         >
-          <a-form-item name="userName" label="报警类型">
-            <a-input v-model="state.formData.userName" placeholder="请输入">
-              <template #prefix>
-                <span class="username"></span>
-              </template>
+          <a-form-item name="statisticalDate" label="日期">
+            <a-input
+              v-model:value="formData.statisticalDate"
+              placeholder="请输入"
+            >
             </a-input>
           </a-form-item>
-          <a-form-item name="password" label="报警内容">
-            <a-input v-model="state.formData.password" placeholder="请输入">
-              <template #prefix>
-                <span class="password"></span>
-              </template>
+          <a-form-item name="dispersedHourlyPassengerCount" label="小时疏散数">
+            <a-input
+              v-model:value="formData.dispersedHourlyPassengerCount"
+              placeholder="请输入"
+            >
             </a-input>
           </a-form-item>
         </a-space>
@@ -36,18 +41,14 @@
             width: '100%',
           }"
         >
-          <a-form-item name="userName" label="报警类型">
-            <a-input v-model="state.formData.userName" placeholder="请输入">
-              <template #prefix>
-                <span class="username"></span>
-              </template>
-            </a-input>
-          </a-form-item>
-          <a-form-item name="password" label="报警内容">
-            <a-input v-model="state.formData.password" placeholder="请输入">
-              <template #prefix>
-                <span class="password"></span>
-              </template>
+          <a-form-item
+            name="estimatedHourlyArrivePassengerCount"
+            label="预测小时到达数"
+          >
+            <a-input
+              v-model:value="formData.estimatedHourlyArrivePassengerCount"
+              placeholder="请输入"
+            >
             </a-input>
           </a-form-item>
         </a-space>
@@ -57,6 +58,7 @@
 </template>
 
 <script lang="tsx" setup>
+import { debug } from "console";
 import {
   reactive,
   watch,
@@ -67,14 +69,13 @@ import {
   ComponentInternalInstance,
   ref,
   nextTick,
+  onUnmounted,
 } from "vue";
-
-import { screenBannerInfoRequest } from "@/api/management";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
-const layoutRef = ref(HTMLDivElement);
+const formDataRef = ref();
 
 const emit = defineEmits<{
   (e: "onClose", event: any): void;
@@ -83,35 +84,43 @@ const emit = defineEmits<{
 const props = defineProps({
   visible: { type: Boolean, required: true, default: false },
   mode: { type: String, required: true, default: "" },
+  rowData: { type: Object, required: true, default: () => {} },
 });
 
-const state = reactive({
-  formData: {
-    userName: "",
-    password: "",
-  },
+let formData = reactive({
+  dispersedHourlyPassengerCount: "",
+  estimatedHourlyArrivePassengerCount: "",
+  id: "",
+  statisticalBeginHour: "",
+  statisticalDate: "",
 });
 
+watch(
+  () => props.mode,
+  async (newValue: any) => {
+    if (newValue === "add") {
+      await nextTick();
+      formDataRef.value.resetFields();
+    }
+  }
+);
 
+watch(
+  () => props.rowData,
+  (newValue: any) => {
+    formData = newValue;
+  }
+);
 
 const handleClose = (event: any) => {
   emit("onClose", event);
 };
 
-const handleSearch = () => {
-  emit("onSearch", formData);
-};
-
-const handleReset = () => {
-  formDataRef.value.resetFields();
-  emit("onReset", formData);
-};
-
 onMounted(async () => {});
 
-onBeforeUnmount(() => {});
+onBeforeUnmount(() => {
+  formDataRef.value.resetFields();
+});
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>
