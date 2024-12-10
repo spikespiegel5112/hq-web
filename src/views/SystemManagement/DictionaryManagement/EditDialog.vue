@@ -1,7 +1,7 @@
 <template>
   <a-modal
     v-model:open="props.visible"
-    :title="props.mode === 'edit' ? '编辑' : '新增'"
+    :title="dialogTitle"
     @cancel="handleClose"
     @ok="handleSubmit"
     width="8rem"
@@ -98,6 +98,12 @@ const formDataState: UnwrapRef<any> = reactive({
   label: "",
   remark: "",
   value: "",
+});
+
+const dialogTitle: ComputedRef<string> = computed(() => {
+  return global.$store.state.dictionary.dialogMode.find(
+    (item: any) => item.value === props.mode
+  )?.title;
 });
 
 const rules: ComputedRef<RuleObject[]> = computed(() => {

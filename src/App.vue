@@ -10,6 +10,7 @@
           colorBorder: '#0096ff',
           colorInfo: '#0096FF',
           colorInfoHover: '#fff',
+          colorTextQuaternary: '#fff',
         },
       }"
     >

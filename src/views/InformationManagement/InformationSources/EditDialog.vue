@@ -1,7 +1,7 @@
 <template>
   <a-modal
     v-model:open="props.visible"
-    :title="props.mode === 'edit' ? '编辑' : '新增'"
+    :title="dialogTitle"
     @cancel="handleClose"
     width="8rem"
   >
@@ -79,9 +79,11 @@ const emit = defineEmits<{
 
 const props = defineProps({   visible: { type: Boolean, required: true, default: false },   mode: { type: String, required: true, default: "" },   formData: { type: Object, required: true, default: () => {} }, });
 
-const formData = reactive({
-  userName: "",
-  password: "",
+const state = reactive({
+  formData: {
+    userName: "",
+    password: "",
+  },
 });
 
 

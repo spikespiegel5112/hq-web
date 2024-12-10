@@ -1,7 +1,7 @@
 <template>
   <a-modal
     v-model:open="state.visible"
-    :title="props.mode === 'edit' ? '编辑' : '新增'"
+    :title="dialogTitle"
     width="8rem"
     @cancel="handleClose"
   >
@@ -9,6 +9,7 @@
       :model="state.formData"
       ref="formDataRef"
       autocomplete="off"
+      :disabled="props.mode === 'review'"
       :rules="rules"
       :label-col="{ style: { width: '120px' } }"
     >
@@ -53,10 +54,17 @@
     <template #footer>
       <a-row>
         <a-col :span="22">
-          <a-button key="submit" type="primary" @click="handleSubmit">
-            确认
-          </a-button>
-          <a-button key="back" @click="handleClose">取消</a-button>
+          <template v-if="props.mode === 'edit'">
+            <a-button key="submit" type="primary" @click="handleSubmit">
+              确认
+            </a-button>
+            <a-button key="back" @click="handleClose">取消</a-button>
+          </template>
+          <template v-else-if="props.mode === 'review'">
+            <a-button key="submit" type="primary" @click="handleClose">
+              关闭
+            </a-button>
+          </template>
         </a-col>
       </a-row>
     </template>
@@ -106,6 +114,12 @@ let state = reactive({
   } as any,
 });
 
+const dialogTitle: ComputedRef<string> = computed(() => {
+  return global.$store.state.dictionary.dialogMode.find(
+    (item: any) => item.value === props.mode
+  )?.title;
+});
+
 const rules: ComputedRef<RuleObject[]> = computed(() => {
   const validateNumber = (rule: any, value: any, callback: any) => {
     if (isNaN(Number(value))) {
@@ -148,7 +162,7 @@ watch(
     state.visible = newValue;
     if (!!newValue) {
       await nextTick();
-      if (props.mode === "edit") {
+      if (["edit", "review"].some((item) => item === props.mode)) {
         state.formData = JSON.parse(JSON.stringify(props.rowData));
       }
     }

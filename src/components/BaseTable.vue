@@ -87,6 +87,7 @@ import {
 
 const emit = defineEmits<{
   (e: "onEdit", rowData: any): void;
+  (e: "onReview", rowData: any): void;
   (e: "onChangePage", pagination: object): void;
 }>();
 
@@ -140,7 +141,7 @@ const state = reactive({
     },
     {
       label: "详情",
-      name: "view",
+      name: "review",
       color: "",
     },
     {
@@ -254,8 +255,8 @@ const handleAction = (action: any, scope: any) => {
     return;
   }
 
-  if (action === "view") {
-    // this.$emit("onView", row);
+  if (action === "review") {
+    emit("onReview", state.originalTableData[scope.index]);
   }
   if (action === "edit") {
     emit("onEdit", state.originalTableData[scope.index]);

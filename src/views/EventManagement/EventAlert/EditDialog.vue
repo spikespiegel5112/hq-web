@@ -148,6 +148,12 @@ let state = reactive({
   } as any,
 });
 
+const dialogTitle: ComputedRef<string> = computed(() => {
+  return global.$store.state.dictionary.dialogMode.find(
+    (item: any) => item.value === props.mode
+  )?.title;
+});
+
 const rules: ComputedRef<RuleObject[]> = computed(() => {
   const validateNumber = (rule: any, value: any, callback: any) => {
     if (isNaN(Number(value))) {
@@ -185,7 +191,7 @@ watch(
     state.visible = newValue;
     if (!!newValue) {
       await nextTick();
-      if (props.mode === "edit") {
+      if (["edit", "review"].some((item) => item === props.mode)) {
         state.formData = JSON.parse(JSON.stringify(props.rowData));
       }
     }

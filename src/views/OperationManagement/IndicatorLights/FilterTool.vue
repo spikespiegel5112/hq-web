@@ -71,9 +71,11 @@ const emit = defineEmits<{
 
 const formDataRef: any = ref(null);
 
-const formData = reactive({
-  userName: "",
-  password: "",
+const state = reactive({
+  formData: {
+    userName: "",
+    password: "",
+  },
 });
 
 

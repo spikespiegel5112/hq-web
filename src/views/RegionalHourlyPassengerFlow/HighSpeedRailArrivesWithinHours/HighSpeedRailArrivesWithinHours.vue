@@ -16,6 +16,7 @@
       :dataModel="pageModel"
       :pagination="pagination"
       @onEdit="handleEdit"
+      @onReview="handleReview"
       @onChangePage="handleChangePage"
     />
     <EditDialog
@@ -108,7 +109,7 @@ const pageModel = ref([
     name: "operationColumn",
     tableVisible: true,
     exportVisible: false,
-    actions: ["edit", "view", "delete"],
+    actions: ["edit", "review", "delete"],
   },
 ]);
 
@@ -148,6 +149,12 @@ const getData = () => {
 const handleEdit = (currentRowData: any) => {
   state.dialogVisible = true;
   state.dialogMode = "edit";
+  state.currentRowData = currentRowData;
+};
+
+const handleReview = (currentRowData: any) => {
+  state.dialogVisible = true;
+  state.dialogMode = "review";
   state.currentRowData = currentRowData;
 };
 
