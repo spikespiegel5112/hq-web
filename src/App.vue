@@ -3,7 +3,7 @@
     <a-config-provider
       :locale="locale"
       :theme="{
-        algorithm: theme.darkAlgorithm,
+        algorithm: studioDarkAlgorithm,
         token: {
           colorPrimary: '#0096FF',
           colorTextPlaceholder: '#999',
@@ -12,6 +12,9 @@
           colorInfoHover: '#fff',
           colorTextQuaternary: '#fff',
         },
+      }"
+      :seedToken="{
+        fontSize: 20,
       }"
     >
       <transition name="fade">
@@ -35,6 +38,7 @@ import {
 } from "vue";
 import { theme } from "ant-design-vue";
 import zhCN from "ant-design-vue/es/locale/zh_CN";
+import type { MappingAlgorithm } from "antd/es/config-provider/context";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -52,6 +56,24 @@ const initRemResizing = () => {
   });
   console.log("=====initRemResizing=====");
   console.log(fontSize);
+};
+
+// 定义 studio 暗色模式算法
+const studioDarkAlgorithm: MappingAlgorithm = (
+  seedToken: any,
+  mapToken: any
+) => {
+  // 使用 antd 默认的暗色算法生成基础token，这样其他不需要定制的部分则保持原样
+  const baseToken = theme.darkAlgorithm(seedToken, mapToken);
+
+  return {
+    ...baseToken,
+    fontSize: 16,
+
+    // colorBgLayout: "#20252b", // Layout 背景色
+    // colorBgContainer: "#282c34", // 组件容器背景色
+    // colorBgElevated: "#32363e", // 悬浮容器背景色
+  };
 };
 
 onMounted(() => {

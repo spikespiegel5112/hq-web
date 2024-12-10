@@ -12,38 +12,69 @@
       :label-col="{ style: { width: '80px' } }"
     >
       <a-row>
-        <a-space
-          :size="20"
-          :style="{
-            width: '100%',
-          }"
-        >
-          <a-form-item name="userName" label="报警类型">
+        <a-col :span="12">
+          <a-form-item name="userName" label="事件类型">
             <a-input v-model="state.formData.userName" placeholder="请输入">
             </a-input>
           </a-form-item>
-          <a-form-item name="password" label="报警内容">
-            <a-input v-model="state.formData.password" placeholder="请输入">
+        </a-col>
+        <a-col :span="12">
+          <a-form-item name="userName" label="时间">
+            <a-input v-model="state.formData.userName" placeholder="请输入">
             </a-input>
           </a-form-item>
-        </a-space>
+        </a-col>
       </a-row>
       <a-row>
-        <a-space
-          :size="20"
-          :style="{
-            width: '100%',
-          }"
-        >
-          <a-form-item name="userName" label="报警类型">
-            <a-input v-model="state.formData.userName" placeholder="请输入">
-            </a-input>
-          </a-form-item>
-          <a-form-item name="password" label="报警内容">
+        <a-col :span="24">
+          <a-form-item name="password" label="事件等级">
             <a-input v-model="state.formData.password" placeholder="请输入">
             </a-input>
           </a-form-item>
-        </a-space>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-item name="password" label="处置步骤">
+            <a-radio-group v-model:value="state.formData.password">
+              <a-radio :style="radioStyle" :value="1">
+                第一步<span>上报领导/部门/单位</span>
+              </a-radio>
+              <a-radio :style="radioStyle" :value="2">
+                第二步<span>上报领导/部门/单位</span>
+              </a-radio>
+              <a-radio :style="radioStyle" :value="3">
+                第三步<span>上报领导/部门/单位</span>
+              </a-radio>
+              <a-radio :style="radioStyle" :value="3">
+                第四步<span>上报领导/部门/单位</span>
+              </a-radio>
+              <a-radio :style="radioStyle" :value="4">
+                More...
+                <a-input
+                  v-if="state.formData.password === 4"
+                  style="width: 100px; margin-left: 10px"
+                />
+              </a-radio>
+            </a-radio-group>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-item name="password" label="事件描述">
+            <a-input v-model="state.formData.password" placeholder="请输入">
+            </a-input>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-form-item name="password" label="附件">
+            <a-input v-model="state.formData.password" placeholder="请输入">
+            </a-input>
+          </a-form-item>
+        </a-col>
       </a-row>
     </a-form>
   </a-modal>
@@ -85,6 +116,14 @@ const state = reactive({
     userName: "",
     password: "",
   },
+});
+
+const radioStyle = computed(() => {
+  return {
+    display: "flex",
+    height: "30px",
+    lineHeight: "30px",
+  };
 });
 
 const dialogTitle: ComputedRef<string> = computed(() => {
