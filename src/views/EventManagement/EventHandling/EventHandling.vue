@@ -70,7 +70,7 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "报警内容",
+    label: "处置时间",
     name: "highwayName",
     required: true,
     tableVisible: true,
@@ -78,7 +78,7 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "报警时间",
+    label: "来源",
     name: "bridgeCode",
     required: true,
     tableVisible: true,
@@ -86,7 +86,15 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "报警地点",
+    label: "处置内容",
+    name: "bridgeName",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "状态",
     name: "bridgeName",
     required: true,
     tableVisible: true,
@@ -98,7 +106,7 @@ const pageModel = ref([
     name: "operationColumn",
     tableVisible: true,
     exportVisible: false,
-    actions: ["edit"],
+    actions: ["edit", "view", "delete"],
   },
 ]);
 

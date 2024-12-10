@@ -99,7 +99,7 @@ const pageModel = ref([
     name: "operationColumn",
     tableVisible: true,
     exportVisible: false,
-    actions: ["edit"],
+    actions: ["edit", "view", "delete"],
   },
 ]);
 

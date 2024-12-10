@@ -184,3 +184,39 @@ export const roleManageQueryAllRoleRequest = (params: any) => {
     data: params,
   });
 };
+
+// 系统管理-菜单管理-删除菜单
+export const nodeManageDeleteNodeRequest = (params: any) => {
+  return service({
+    url: prefix + "/sys/node/manage/deleteNode",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 系统管理-菜单管理-条件查询菜单
+export const nodeManageQueryAllNodeRequest = (params: any) => {
+  return service({
+    url: prefix + "/sys/node/manage/queryAllNode",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 系统管理-菜单管理-父菜单筛选器
+export const nodeManageQueryParentNodeRequest = (params: any) => {
+  return service({
+    url: prefix + "/sys/node/manage/queryParentNode",
+    method: "GET",
+    data: params,
+  });
+};
+
+// 系统管理-菜单管理-保存菜单
+export const nodeManageSaveSysNodeRequest = (params: any) => {
+  return service({
+    url: prefix + "/sys/node/manage/saveSysNode",
+    method: "POST",
+    data: params,
+  });
+};

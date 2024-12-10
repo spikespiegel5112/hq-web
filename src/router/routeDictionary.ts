@@ -348,6 +348,30 @@ const routerDictionary = [
             },
           },
           {
+            title: "菜单管理",
+            path: "MenuManagement",
+            name: "MenuManagement",
+            component: () =>
+              import(
+                /* webpackChunkName: "MenuManagement" */ "@/views/SystemManagement/MenuManagement/MenuManagement.vue"
+              ),
+            meta: {
+              title: "角色管理",
+            },
+          },
+          {
+            title: "角色管理",
+            path: "RoleManagement",
+            name: "RoleManagement",
+            component: () =>
+              import(
+                /* webpackChunkName: "RoleManagement" */ "@/views/SystemManagement/RoleManagement/RoleManagement.vue"
+              ),
+            meta: {
+              title: "角色管理",
+            },
+          },
+          {
             title: "权限管理",
             path: "PermissionManagement",
             name: "PermissionManagement",

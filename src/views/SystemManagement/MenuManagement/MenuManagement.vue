@@ -11,7 +11,6 @@
     <BaseTable
       :tableData="state.tableData"
       :dataModel="pageModel"
-      tabTable
       @onEdit="handleEdit"
     />
     <EditDialog
@@ -38,7 +37,7 @@ import {
   nextTick,
 } from "vue";
 
-import { screenBannerInfoRequest } from "@/api/management";
+import { nodeManageQueryAllNodeRequest } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
 
@@ -63,7 +62,7 @@ const pageModel = ref([
     exportVisible: false,
   },
   {
-    label: "报警类型",
+    label: "来源种类",
     name: "higywayCode",
     required: true,
     tableVisible: true,
@@ -71,7 +70,7 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "报警内容",
+    label: "事件级别",
     name: "highwayName",
     required: true,
     tableVisible: true,
@@ -79,7 +78,7 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "报警时间",
+    label: "事件状态",
     name: "bridgeCode",
     required: true,
     tableVisible: true,
@@ -87,7 +86,15 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "报警地点",
+    label: "日期",
+    name: "bridgeName",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "内容",
     name: "bridgeName",
     required: true,
     tableVisible: true,
@@ -119,16 +126,19 @@ const pagination = reactive({
 });
 
 const getData = () => {
-  const result = [] as any[];
-  for (let index = 0; index < 30; index++) {
-    result.push({
-      higywayCode: "aaa",
-      highwayName: "aaa",
-      bridgeCode: "aaa",
-      bridgeName: "aaa",
+  pagination.total = undefined;
+  nodeManageQueryAllNodeRequest({
+    ...queryFormData,
+    ...pagination,
+  })
+    .then((response: any) => {
+      response = response.data;
+      state.tableData = response.list;
+      pagination.total = response.total;
+    })
+    .catch((error: any) => {
+      console.log(error);
     });
-  }
-  state.tableData = result;
 };
 
 const handleEdit = () => {

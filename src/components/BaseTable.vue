@@ -31,6 +31,7 @@
           <div v-if="item.name === 'index'">
             {{ scope.index + 1 }}
           </div>
+
           <div v-if="item.name === 'attachment'" class="attachment">
             <a href="javascript:;">
               <img
@@ -309,6 +310,12 @@ onMounted(() => {});
         .ant-table-row {
           .ant-table-cell {
             padding: 0.05rem;
+            .status {
+              img {
+                display: inline-block;
+                width: 0.3rem;
+              }
+            }
             .attachment {
               img {
                 display: inline-block;
