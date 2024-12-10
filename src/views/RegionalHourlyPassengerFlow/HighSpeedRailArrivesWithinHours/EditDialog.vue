@@ -171,7 +171,7 @@ watch(
 
 const handleClose = (event: any) => {
   formDataRef.value.resetFields();
-  emit("onClose", event);
+  emit("onClose");
 };
 
 const handleSubmit = (event: any) => {

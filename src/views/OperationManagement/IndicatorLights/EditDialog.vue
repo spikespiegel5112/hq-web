@@ -88,7 +88,7 @@ const state = reactive({
 });
 
 const handleClose = (event: any) => {
-  emit("onClose", event);
+  emit("onClose");
 };
 
 onMounted(async () => {});

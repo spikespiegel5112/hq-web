@@ -165,7 +165,7 @@ const handleReset = (formData: object) => {
   getData();
 };
 
-const handleClose = (event: any) => {
+const handleClose = () => {
   state.dialogVisible = false;
 };
 

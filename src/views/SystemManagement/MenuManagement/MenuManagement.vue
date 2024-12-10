@@ -8,11 +8,7 @@
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
-    <BaseTable
-      :tableData="state.tableData"
-      :dataModel="pageModel"
-      @onEdit="handleEdit"
-    />
+
     <EditDialog
       :visible="state.dialogVisible"
       :mode="state.dialogMode"
@@ -161,7 +157,7 @@ const handleReset = (formData: object) => {
   getData();
 };
 
-const handleClose = (event: any) => {
+const handleClose = () => {
   state.dialogVisible = false;
 };
 

@@ -138,7 +138,7 @@ const rules: ComputedRef<RuleObject[]> = computed(() => {
 });
 
 const handleClose = (event: any) => {
-  emit("onClose", event);
+  emit("onClose");
 };
 
 const handleSubmit = () => {
