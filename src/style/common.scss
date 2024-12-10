@@ -109,11 +109,6 @@ input:focus {
   &:active {
     background-color: #ccc;
   }
-
-  // .van-icon {
-  //   font-size: 0.7rem;
-  //   color: #999;
-  // }
 }
 
 .alignleft {
@@ -193,9 +188,6 @@ input:focus {
       background-color: #041335;
       font-size: 0.17rem;
       .ant-table-container {
-        .ant-table-placeholder {
-          // height: 3rem;
-        }
         .ant-table-thead {
           > tr {
             > th {
@@ -372,21 +364,16 @@ input:focus {
     .ant-picker {
       width: 100%;
       background-color: #041030;
-      border-color: #0096ff;
-      &::placeholder {
-        color: #999;
-      }
+      // border-color: #0096ff;
+
       .ant-select-selection-placeholder {
-        color: #999;
-      }
-      .ant-form-item-control-input {
-        background-color: red;
+        // color: #999;
       }
       .ant-select-selector,
       .ant-picker-input input {
         background-color: #041030;
         &::placeholder {
-          color: #999;
+          // color: #999;
         }
       }
     }
@@ -445,11 +432,12 @@ input:focus {
     width: 100%;
     height: 100%;
   }
-  .a-button {
-    .ant-btn-default {
-      &:hover {
-        color: #fff;
-      }
+  .ant-btn {
+    border-color: transparent;
+  }
+  .ant-btn-default {
+    &:hover {
+      color: #fff;
     }
   }
   .import {

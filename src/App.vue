@@ -4,6 +4,13 @@
       :locale="locale"
       :theme="{
         algorithm: theme.darkAlgorithm,
+        token: {
+          colorPrimary: '#0096FF',
+          colorTextPlaceholder: '#999',
+          colorBorder: '#0096ff',
+          colorInfo: '#0096FF',
+          colorInfoHover: '#fff',
+        },
       }"
     >
       <transition name="fade">

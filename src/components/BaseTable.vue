@@ -40,19 +40,27 @@
             </a>
           </div>
           <div v-if="item.name === 'operationColumn'" class="operation">
-            <a-button
-              v-for="action in item.actions"
-              :key="action + scope.$index"
+            <span
+              v-for="(action, index) in item.actions"
               :class="
                 state.actionDictionary.find((item2:any) => item2.name === action).color
               "
-              type="link"
-              @click.stop="handleAction(action, scope)"
             >
-              {{
+              <a-divider
+                v-if="index > 0"
+                type="vertical"
+                style="margin: 0; height: 20px; background-color: #0096ff"
+              />
+              <a-button
+                :key="action + scope.$index"
+                type="link"
+                @click.stop="handleAction(action, scope)"
+              >
+                {{
                 state.actionDictionary.find((item2:any) => item2.name === action).label
-              }}
-            </a-button>
+                }}
+              </a-button>
+            </span>
           </div>
           <div v-else>
             {{ scope.record[item.name] }}
@@ -305,11 +313,6 @@ onMounted(() => {});
               img {
                 display: inline-block;
                 width: 0.3rem;
-              }
-            }
-            .operation {
-              .ant-btn {
-                color: #0096ff;
               }
             }
           }
