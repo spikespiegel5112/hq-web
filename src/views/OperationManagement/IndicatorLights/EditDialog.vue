@@ -77,7 +77,7 @@ const emit = defineEmits<{
 const props = defineProps({
   visible: { type: Boolean, required: true, default: false },
   mode: { type: String, required: true, default: "" },
-  formData: { type: Object, required: true, default: () => {} },
+  rowData: { type: Object, required: true, default: () => {} },
 });
 
 const state = reactive({
@@ -85,6 +85,12 @@ const state = reactive({
     userName: "",
     password: "",
   },
+});
+
+const dialogTitle: ComputedRef<string> = computed(() => {
+  return global.$store.state.dictionary.dialogMode.find(
+    (item: any) => item.value === props.mode
+  )?.title;
 });
 
 const handleClose = (event: any) => {

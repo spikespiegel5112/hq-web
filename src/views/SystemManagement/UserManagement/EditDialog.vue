@@ -137,6 +137,12 @@ const rules: ComputedRef<RuleObject[]> = computed(() => {
   return result;
 });
 
+const dialogTitle: ComputedRef<string> = computed(() => {
+  return global.$store.state.dictionary.dialogMode.find(
+    (item: any) => item.value === props.mode
+  )?.title;
+});
+
 const handleClose = (event: any) => {
   emit("onClose");
 };

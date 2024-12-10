@@ -6,12 +6,18 @@
           <span></span>
           当日已处理数量
         </span>
-        <span class="right"><i>4</i>/12</span>
+        <span class="right">
+          <i>
+            {{ disposoedEventList.length }}
+          </i>
+          /
+          {{ state.eventList.length }}
+        </span>
       </div>
       <div class="progressbar">
         <span
           :style="{
-            width: '50%',
+            width: `${(disposoedEventList.length / state.eventList.length) * 100}%`,
           }"
         ></span>
       </div>
@@ -78,6 +84,10 @@ const state = reactive({
   tableData: [] as any[],
   timeType: 1,
   eventList: [] as any[],
+});
+
+const disposoedEventList = computed(() => {
+  return state.eventList.filter((item) => item.status === 2);
 });
 
 watch(

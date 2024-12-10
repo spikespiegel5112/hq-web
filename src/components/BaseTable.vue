@@ -241,6 +241,7 @@ watch(
 const hangleChangePage = (pagin: any) => {
   state.loading = true;
   pagination.current = pagin.current;
+  pagination.pageSize = pagin.pageSize;
   emit("onChangePage", pagination);
 };
 

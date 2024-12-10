@@ -6,7 +6,7 @@
           <a-row :gutter="20">
             <a-col :span="8">
               <a-form-item name="userName" label="停车库">
-                <a-select v-model="formData">
+                <a-select v-model="formData" placeholder="请选择">
                   <a-select-option value="全部">全部</a-select-option>
                 </a-select>
               </a-form-item>
@@ -41,8 +41,6 @@ import {
   nextTick,
 } from "vue";
 
-
-
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
@@ -57,8 +55,6 @@ const formData = reactive({
   userName: "",
   password: "",
 });
-
-
 
 const handleSearch = () => {
   emit("onSearch", formData);
