@@ -132,7 +132,21 @@ const dialogTitle: ComputedRef<string> = computed(() => {
   )?.title;
 });
 
+watch(
+  () => props.visible,
+  async (newValue: any) => {
+    state.visible = newValue;
+    if (!!newValue) {
+      await nextTick();
+      if (["edit", "review"].some((item) => item === props.mode)) {
+        state.formData = JSON.parse(JSON.stringify(props.rowData));
+      }
+    }
+  }
+);
+
 const handleClose = (event: any) => {
+  formDataRef.value.resetFields();
   emit("onClose");
 };
 

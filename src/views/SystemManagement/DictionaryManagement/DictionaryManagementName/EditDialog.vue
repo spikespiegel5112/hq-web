@@ -16,7 +16,7 @@
       }"
     >
       <a-row :gutter="20">
-        <a-col :span="12">
+        <a-col :span="24">
           <a-form-item name="dicName" label="字典名称">
             <a-input
               v-model:value="state.formData.dicName"
@@ -25,7 +25,9 @@
             </a-input>
           </a-form-item>
         </a-col>
-        <a-col :span="12">
+      </a-row>
+      <a-row :gutter="20">
+        <a-col :span="24">
           <a-form-item name="code" label="字典编码">
             <a-input v-model:value="state.formData.code" placeholder="请输入">
             </a-input>
@@ -67,6 +69,7 @@ const props = defineProps({
   visible: { type: Boolean, required: true, default: false },
   mode: { type: String, required: true, default: "" },
   dataModel: { type: Array, required: true, default: () => [] as any[] },
+  rowData: { type: Object, required: true, default: () => {} },
 });
 
 const state: UnwrapRef<any> = reactive({
@@ -74,9 +77,6 @@ const state: UnwrapRef<any> = reactive({
     id: null as number | null | undefined,
     code: "",
     dicName: "",
-    label: "",
-    remark: "",
-    value: "",
   },
 });
 
@@ -117,7 +117,21 @@ const rules: ComputedRef<RuleObject[]> = computed(() => {
   return result;
 });
 
+watch(
+  () => props.visible,
+  async (newValue: any) => {
+    state.visible = newValue;
+    if (!!newValue) {
+      await nextTick();
+      if (["edit", "review"].some((item) => item === props.mode)) {
+        state.formData = JSON.parse(JSON.stringify(props.rowData));
+      }
+    }
+  }
+);
+
 const handleClose = (event: any) => {
+  formDataRef.value.resetFields();
   emit("onClose");
 };
 

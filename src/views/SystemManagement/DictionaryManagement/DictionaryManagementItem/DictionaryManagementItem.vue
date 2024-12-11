@@ -20,7 +20,9 @@
       :visible="state.dialogVisible"
       :mode="state.dialogMode"
       :dataModel="pageModel"
+      :rowData="state.currentRowData"
       @onClose="handleClose"
+      @onSubmit="handleSubmit"
     ></EditDialog>
   </div>
 </template>

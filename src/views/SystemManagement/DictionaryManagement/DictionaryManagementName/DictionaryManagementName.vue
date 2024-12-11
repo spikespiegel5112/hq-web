@@ -20,7 +20,9 @@
       :visible="state.dialogVisible"
       :mode="state.dialogMode"
       :dataModel="pageModel"
+      :rowData="state.currentRowData"
       @onClose="handleClose"
+      @onSubmit="handleSubmit"
     ></EditDialog>
   </div>
 </template>
@@ -117,9 +119,10 @@ const getData = () => {
     });
 };
 
-const handleEdit = () => {
+const handleEdit = (rowData: any) => {
   state.dialogVisible = true;
   state.dialogMode = "edit";
+  state.currentRowData = rowData;
 };
 
 const handleAdd = () => {
