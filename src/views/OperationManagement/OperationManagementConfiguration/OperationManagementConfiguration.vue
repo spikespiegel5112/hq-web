@@ -1,5 +1,5 @@
 <template>
-  <div class="common_table_wrapper">
+  <div class="operationmanagementconfigurment">
     <a-form
       ref="formDataRef"
       :model="state.formData"
@@ -150,4 +150,10 @@ onMounted(async () => {
 onBeforeUnmount(() => {});
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.operationmanagementconfigurment {
+  margin: 0.1rem;
+  padding: 0.3rem;
+  background-color: #010f27;
+}
+</style>

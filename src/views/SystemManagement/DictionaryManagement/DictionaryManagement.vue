@@ -2,10 +2,14 @@
   <div class="common_tab_container">
     <a-tabs v-model:activeKey="state.activeKey">
       <a-tab-pane key="DictionaryManagementName" tab="字典名称">
-        <DictionaryManagementName />
+        <DictionaryManagementName
+          :dictionaryNameList="state.dictionaryNameList"
+        />
       </a-tab-pane>
       <a-tab-pane key="DictionaryManagementItem" tab="字典项">
-        <DictionaryManagementItem />
+        <DictionaryManagementItem
+          :dictionaryNameList="state.dictionaryNameList"
+        />
       </a-tab-pane>
     </a-tabs>
   </div>
@@ -24,6 +28,8 @@ import {
   nextTick,
 } from "vue";
 
+import { dictionaryManageGetDictPagingRequest } from "@/api/management";
+
 import DictionaryManagementItem from "./DictionaryManagementItem/DictionaryManagementItem.vue";
 import DictionaryManagementName from "./DictionaryManagementName/DictionaryManagementName.vue";
 
@@ -34,9 +40,24 @@ const formDataRef = ref();
 
 const state = reactive({
   activeKey: "DictionaryManagementName",
+  dictionaryNameList: [],
 });
 
-onMounted(async () => {});
+const getDictionaryNameList = () => {
+  dictionaryManageGetDictPagingRequest({
+    pageSize: 1000,
+  })
+    .then((response: any) => {
+      state.dictionaryNameList = response.data.list;
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+};
+
+onMounted(async () => {
+  getDictionaryNameList();
+});
 
 onBeforeUnmount(() => {});
 </script>

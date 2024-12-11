@@ -1,6 +1,10 @@
 <template>
   <div class="common_table_wrapper">
-    <FilterTool @onSearch="handleSearch" @onReset="handleReset"></FilterTool>
+    <FilterTool
+      @onSearch="handleSearch"
+      @onReset="handleReset"
+      :dictionaryNameList="props.dictionaryNameList"
+    ></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
         <a-button class="import">导入</a-button>
@@ -40,6 +44,7 @@ import {
   ref,
   nextTick,
 } from "vue";
+import type { DefaultOptionType } from "ant-design-vue/es/select";
 
 import {
   dictionaryManageGetDictPagingRequest,
@@ -51,6 +56,16 @@ import EditDialog from "./EditDialog.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
+
+const props = defineProps({
+  dictionaryNameList: {
+    type: Array,
+    required: false,
+    default: () => {
+      return [] as DefaultOptionType[];
+    },
+  },
+});
 
 const pageModel = ref([
   {

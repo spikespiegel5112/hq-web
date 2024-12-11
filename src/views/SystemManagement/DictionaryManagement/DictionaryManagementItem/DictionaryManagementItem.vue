@@ -1,6 +1,10 @@
 <template>
   <div class="common_table_wrapper">
-    <FilterTool @onSearch="handleSearch" @onReset="handleReset"></FilterTool>
+    <FilterTool
+      @onSearch="handleSearch"
+      @onReset="handleReset"
+      :dictionaryNameList="props.dictionaryNameList"
+    ></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
         <a-button class="import">导入</a-button>
@@ -22,6 +26,7 @@
       :mode="state.dialogMode"
       :dataModel="pageModel"
       :rowData="state.currentRowData"
+      :dictionaryNameList="state.dictionaryNameList"
       @onClose="handleClose"
       @onSubmit="handleSubmit"
     ></EditDialog>
@@ -41,16 +46,29 @@ import {
   nextTick,
 } from "vue";
 
+import type { DefaultOptionType } from "ant-design-vue/es/select";
+
 import {
   dictionaryManageGetDictItemPagingRequest,
   dictionaryManageSaveDictItemRequest,
   dictionaryManageDelDelDictItemRequest,
+  dictionaryManageGetDictPagingRequest,
 } from "@/api/management";
 import FilterTool from "../FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
+
+const props = defineProps({
+  dictionaryNameList: {
+    type: Array,
+    required: false,
+    default: () => {
+      return [] as DefaultOptionType[];
+    },
+  },
+});
 
 const pageModel = ref([
   {
@@ -177,12 +195,10 @@ const handleSubmit = (formData: any) => {
     .then((response: any) => {
       global.$message.success("提交成功");
       getData();
-      debugger
     })
     .catch((error: any) => {
       console.log(error);
       global.$message.error("提交失败");
-      debugger
     });
 };
 

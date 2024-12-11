@@ -6,12 +6,18 @@
           <a-row :gutter="20">
             <a-col :span="6">
               <a-form-item name="dicName" label="字典名称">
-                <a-input
+                <a-select
                   v-model:value="formData.dicName"
-                  placeholder="请输入"
+                  placeholder="请选择"
                   allowClear
+                  show-search
+                  :options="state.dictionaryNameList"
+                  :filter-option="filterOption"
+                  @focus="handleFocus"
+                  @blur="handleBlur"
+                  @change="handleChange"
                 >
-                </a-input>
+                </a-select>
               </a-form-item>
             </a-col>
           </a-row>
@@ -47,6 +53,17 @@ import {
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
+import type { DefaultOptionType } from "ant-design-vue/es/select";
+
+const props = defineProps({
+  dictionaryNameList: {
+    type: Array,
+    required: false,
+    default: () => {
+      return [] as DefaultOptionType[];
+    },
+  },
+});
 
 const emit = defineEmits<{
   (e: "onSearch", formData: object): void;
@@ -56,8 +73,24 @@ const emit = defineEmits<{
 const formDataRef: any = ref(null);
 
 const formData = reactive({
-  dicName: "",
+  dicName: [],
 });
+
+const state = reactive({
+  dictionaryNameList: [] as DefaultOptionType[],
+});
+
+watch(
+  () => props.dictionaryNameList,
+  (newValue: any, oldValue: any) => {
+    state.dictionaryNameList = newValue.map((item: any) => {
+      return {
+        label: item.dicName,
+        value: item.id,
+      };
+    });
+  }
+);
 
 const handleSearch = () => {
   emit("onSearch", formData);
@@ -68,7 +101,21 @@ const handleReset = () => {
   emit("onReset", formData);
 };
 
-onMounted(async () => {});
+const filterOption = (input: string, option: any) => {
+  return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+};
+const handleFocus = () => {};
+const handleBlur = () => {};
+const handleChange = () => {};
+
+onMounted(async () => {
+  state.dictionaryNameList = props.dictionaryNameList.map((item: any) => {
+    return {
+      label: item.dicName,
+      value: item.id,
+    };
+  });
+});
 
 onBeforeUnmount(() => {});
 </script>

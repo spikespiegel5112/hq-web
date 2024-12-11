@@ -20,7 +20,7 @@
           <a-form-item name="dicName" label="字典名称">
             <a-select v-model:value="state.formData.dicId" placeholder="请输入">
               <a-select-option
-                v-for="item in state.dictionaryNameList"
+                v-for="item in props.dictionaryNameList"
                 :key="item.id"
                 :value="item.id"
               >
@@ -66,8 +66,6 @@ import {
 import type { UnwrapRef } from "vue";
 import type { Rule, RuleObject } from "ant-design-vue/es/form";
 
-import { dictionaryManageGetDictPagingRequest } from "@/api/management";
-
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
@@ -82,6 +80,13 @@ const props = defineProps({
   mode: { type: String, required: true, default: "" },
   dataModel: { type: Array, required: true, default: () => [] as any[] },
   rowData: { type: Object, required: true, default: () => {} },
+  dictionaryNameList: {
+    type: Array,
+    required: false,
+    default: () => {
+      return [] as any[];
+    },
+  },
 });
 
 const state: UnwrapRef<any> = reactive({
@@ -164,21 +169,7 @@ const handleSubmit = () => {
     });
 };
 
-const getDictionaryNameList = () => {
-  dictionaryManageGetDictPagingRequest({
-    pageSize: 1000,
-  })
-    .then((response: any) => {
-      state.dictionaryNameList = response.data.list;
-    })
-    .catch((error: any) => {
-      console.log(error);
-    });
-};
-
-onMounted(async () => {
-  getDictionaryNameList();
-});
+onMounted(async () => {});
 
 onBeforeUnmount(() => {});
 </script>
