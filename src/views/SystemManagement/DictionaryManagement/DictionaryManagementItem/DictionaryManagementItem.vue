@@ -15,6 +15,7 @@
       tabTable
       @onEdit="handleEdit"
       @onChangePage="handleChangePage"
+      @onDelete="handleDelete"
     />
     <EditDialog
       :visible="state.dialogVisible"
@@ -40,7 +41,11 @@ import {
   nextTick,
 } from "vue";
 
-import { dictionaryManageGetDictItemPagingRequest } from "@/api/management";
+import {
+  dictionaryManageGetDictItemPagingRequest,
+  dictionaryManageGetDictPagingRequest,
+  dictionaryManageDelDelDictItemRequest,
+} from "@/api/management";
 import FilterTool from "../FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
 
@@ -118,6 +123,7 @@ const state = reactive({
   dialogVisible: false,
   dialogMode: "",
   currentRowData: {},
+  dictionaryNameList: [],
 });
 
 let queryFormData = reactive({} as any);
@@ -143,9 +149,10 @@ const getData = () => {
     });
 };
 
-const handleEdit = () => {
+const handleEdit = (rowData: any) => {
   state.dialogVisible = true;
   state.dialogMode = "edit";
+  state.currentRowData = rowData;
 };
 
 const handleAdd = () => {
@@ -168,11 +175,37 @@ const handleClose = () => {
 };
 
 const handleSubmit = () => {};
+
+const handleDelete = (id: number) => {
+  handleDeletePromise({
+    id,
+  })
+    .then((response: any) => {
+      global.$message.success("删除成功");
+      getData();
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+};
+
 const handleChangePage = (pagingData: any) => {
   pagination.page = pagingData.current;
   pagination.pageSize = pagingData.pageSize;
   pagination.total = pagingData.total;
   getData();
+};
+
+const handleDeletePromise = (params: object) => {
+  return new Promise((resolve, reject) => {
+    dictionaryManageDelDelDictItemRequest(params)
+      .then((response: any) => {
+        resolve(response);
+      })
+      .catch((error: any) => {
+        reject(error);
+      });
+  });
 };
 
 onMounted(async () => {

@@ -163,7 +163,7 @@ export const dictionaryManageDelDictRequest = (params: any) => {
   return service({
     url: prefix + "/sys/dictionary/manage/delDict",
     method: "POST",
-    data: params,
+    params: params,
   });
 };
 

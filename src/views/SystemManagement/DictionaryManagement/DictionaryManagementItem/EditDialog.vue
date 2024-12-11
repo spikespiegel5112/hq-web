@@ -12,11 +12,26 @@
       :rules="rules"
       autocomplete="off"
       :label-col="{
-        style: { width: '100px' },
+        style: { width: '120px' },
       }"
     >
       <a-row :gutter="20">
-        <a-col :span="12">
+        <a-col :span="24">
+          <a-form-item name="dicName" label="字典名称">
+            <a-select v-model:value="state.formData.dicName">
+              <a-select-option
+                v-for="item in state.dictionaryNameList"
+                :key="item.id"
+                :value="item.id"
+              >
+                {{ item.dicName }}
+              </a-select-option>
+            </a-select>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row :gutter="20">
+        <a-col :span="24">
           <a-form-item name="dicName" label="字典项名称">
             <a-input
               v-model:value="state.formData.dicName"
@@ -25,35 +40,12 @@
             </a-input>
           </a-form-item>
         </a-col>
-        <a-col :span="12">
-          <a-form-item name="code" label="字典编码">
-            <a-input v-model:value="state.formData.code" placeholder="请输入">
-            </a-input>
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row :gutter="20">
-        <a-col :span="12">
-          <a-form-item name="label" label="字典标签">
-            <a-input v-model:value="state.formData.label" placeholder="请输入">
-            </a-input>
-          </a-form-item>
-        </a-col>
-        <a-col :span="12">
-          <a-form-item name="value" label="字典值">
-            <a-input v-model:value="state.formData.value" placeholder="请输入">
-            </a-input>
-          </a-form-item>
-        </a-col>
       </a-row>
       <a-row :gutter="20">
         <a-col :span="24">
-          <a-form-item name="remark" label="字典详细信息">
-            <a-textarea
-              v-model:value="state.formData.remark"
-              placeholder="请输入"
-              :rows="4"
-            />
+          <a-form-item name="code" label="字典编码">
+            <a-input v-model:value="state.formData.code" placeholder="请输入">
+            </a-input>
           </a-form-item>
         </a-col>
       </a-row>
@@ -77,7 +69,11 @@ import {
 import type { UnwrapRef } from "vue";
 import type { Rule, RuleObject } from "ant-design-vue/es/form";
 
-import { dictionaryManageSaveDictRequest } from "@/api/management";
+import {
+  dictionaryManageSaveDictRequest,
+  dictionaryManageGetDictPagingRequest,
+} from "@/api/management";
+import dictionary from "../../../../store/modules/dictionary";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -92,13 +88,13 @@ const props = defineProps({
   visible: { type: Boolean, required: true, default: false },
   mode: { type: String, required: true, default: "" },
   dataModel: { type: Array, required: true, default: () => [] as any[] },
+  rowData: { type: Object, required: true, default: () => {} },
 });
 
 const state: UnwrapRef<any> = reactive({
   formData: {
     id: null as number | null | undefined,
-    code: "",
-    dicName: "",
+    dicId: "",
     label: "",
     remark: "",
     value: "",
@@ -181,7 +177,21 @@ const handleSubmit = () => {
     });
 };
 
-onMounted(async () => {});
+const getDictionaryNameList = () => {
+  dictionaryManageGetDictPagingRequest({
+    pageSize: 1000,
+  })
+    .then((response: any) => {
+      state.dictionaryNameList = response.data.list;
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+};
+
+onMounted(async () => {
+  getDictionaryNameList();
+});
 
 onBeforeUnmount(() => {});
 </script>

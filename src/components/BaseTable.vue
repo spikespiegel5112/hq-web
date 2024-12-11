@@ -73,6 +73,7 @@
 </template>
 
 <script lang="tsx" setup>
+import { debug, error } from "console";
 import {
   reactive,
   watch,
@@ -89,6 +90,7 @@ const emit = defineEmits<{
   (e: "onEdit", rowData: any): void;
   (e: "onReview", rowData: any): void;
   (e: "onChangePage", pagination: object): void;
+  (e: "onDelete", id: number): void;
 }>();
 
 const props = defineProps({
@@ -246,7 +248,7 @@ const hangleChangePage = (pagin: any) => {
 };
 
 const handleAction = (action: any, scope: any) => {
-  const row = scope.row;
+  const row = scope.record;
   if (action === "download") {
     // this.$emit("onDownload", row);
     return;
@@ -263,15 +265,13 @@ const handleAction = (action: any, scope: any) => {
     emit("onEdit", state.originalTableData[scope.index]);
   }
   if (action === "delete") {
-    // this.$confirm("确认删除？", "提示", {
-    //   confirmButtonText: "确定",
-    //   cancelButtonText: "取消",
-    //   type: "warning",
-    // })
-    //   .then(() => {
-    //     this.$emit("onDelete", row.id);
-    //   })
-    //   .catch(() => {});
+    global.$confirm({
+      title: "提示",
+      content: "确认删除？",
+      onOk: () => {
+        emit("onDelete", row.id);
+      },
+    });
   }
 };
 
