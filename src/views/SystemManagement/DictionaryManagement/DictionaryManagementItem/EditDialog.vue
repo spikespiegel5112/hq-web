@@ -18,7 +18,7 @@
       <a-row :gutter="20">
         <a-col :span="24">
           <a-form-item name="dicName" label="字典名称">
-            <a-select v-model:value="state.formData.dicName">
+            <a-select v-model:value="state.formData.dicId" placeholder="请输入">
               <a-select-option
                 v-for="item in state.dictionaryNameList"
                 :key="item.id"
@@ -32,19 +32,16 @@
       </a-row>
       <a-row :gutter="20">
         <a-col :span="24">
-          <a-form-item name="dicName" label="字典项名称">
-            <a-input
-              v-model:value="state.formData.dicName"
-              placeholder="请输入"
-            >
+          <a-form-item name="label" label="字典项名称">
+            <a-input v-model:value="state.formData.label" placeholder="请输入">
             </a-input>
           </a-form-item>
         </a-col>
       </a-row>
       <a-row :gutter="20">
         <a-col :span="24">
-          <a-form-item name="code" label="字典编码">
-            <a-input v-model:value="state.formData.code" placeholder="请输入">
+          <a-form-item name="value" label="字典编码">
+            <a-input v-model:value="state.formData.value" placeholder="请输入">
             </a-input>
           </a-form-item>
         </a-col>
@@ -94,7 +91,7 @@ const props = defineProps({
 const state: UnwrapRef<any> = reactive({
   formData: {
     id: null as number | null | undefined,
-    dicId: "",
+    dicId: null,
     label: "",
     remark: "",
     value: "",
