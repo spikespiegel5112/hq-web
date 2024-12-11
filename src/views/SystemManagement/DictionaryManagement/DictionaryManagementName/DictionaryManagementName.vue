@@ -38,8 +38,8 @@ import {
   nextTick,
 } from "vue";
 
-import { dictionaryManageGetDictItemPagingRequest } from "@/api/management";
-import FilterTool from "./FilterTool.vue";
+import { dictionaryManageGetDictPagingRequest } from "@/api/management";
+import FilterTool from "../FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
@@ -79,30 +79,6 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "字典项标题",
-    name: "label",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
-    label: "字典项值",
-    name: "value",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
-    label: "字典项详细信息",
-    name: "remark",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
     label: "操作",
     name: "operationColumn",
     tableVisible: true,
@@ -127,7 +103,7 @@ const pagination = reactive({
 });
 
 const getData = () => {
-  dictionaryManageGetDictItemPagingRequest({
+  dictionaryManageGetDictPagingRequest({
     ...queryFormData,
     ...pagination,
   })

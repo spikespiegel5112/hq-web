@@ -24,8 +24,8 @@ import {
   nextTick,
 } from "vue";
 
-import DictionaryManagementItem from "./DictionaryManagementItem.vue";
-import DictionaryManagementName from "./DictionaryManagementName.vue";
+import DictionaryManagementItem from "./DictionaryManagementItem/DictionaryManagementItem.vue";
+import DictionaryManagementName from "./DictionaryManagementName/DictionaryManagementName.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;

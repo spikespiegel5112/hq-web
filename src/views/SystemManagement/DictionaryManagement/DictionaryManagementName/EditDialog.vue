@@ -17,7 +17,7 @@
     >
       <a-row :gutter="20">
         <a-col :span="12">
-          <a-form-item name="dicName" label="字典项名称">
+          <a-form-item name="dicName" label="字典名称">
             <a-input
               v-model:value="state.formData.dicName"
               placeholder="请输入"
@@ -29,31 +29,6 @@
           <a-form-item name="code" label="字典编码">
             <a-input v-model:value="state.formData.code" placeholder="请输入">
             </a-input>
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row :gutter="20">
-        <a-col :span="12">
-          <a-form-item name="label" label="字典标签">
-            <a-input v-model:value="state.formData.label" placeholder="请输入">
-            </a-input>
-          </a-form-item>
-        </a-col>
-        <a-col :span="12">
-          <a-form-item name="value" label="字典值">
-            <a-input v-model:value="state.formData.value" placeholder="请输入">
-            </a-input>
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row :gutter="20">
-        <a-col :span="24">
-          <a-form-item name="remark" label="字典详细信息">
-            <a-textarea
-              v-model:value="state.formData.remark"
-              placeholder="请输入"
-              :rows="4"
-            />
           </a-form-item>
         </a-col>
       </a-row>
@@ -156,10 +131,11 @@ const handleSubmit = () => {
     .then(() => {
       dictionaryManageSaveDictRequest(state.formData)
         .then((response: any) => {
-          global.$message("adsadas");
+          global.$message.success("提交成功");
         })
         .catch((error: any) => {
           console.log(error);
+          global.$message.error("提交失败");
         });
     })
     .catch((error: any) => {
