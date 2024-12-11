@@ -82,7 +82,6 @@ const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
 const formDataRef = ref();
-const formDataRef = ref();
 
 const formDataState = reactive({
   username: "",
@@ -113,8 +112,6 @@ const rules: Record<string, Rule[]> = {
     },
   ],
 };
-
-
 
 const handleLogin = () => {
   global.$router.push({

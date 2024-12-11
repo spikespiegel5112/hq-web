@@ -1,20 +1,9 @@
 <template>
   <div class="common_table_wrapper">
-    <FilterTool @onSearch="handleSearch" @onReset="handleReset"></FilterTool>
-    <div class="common_tableoperation_wrapper">
-      <a-space size="middle" wrap>
-        <a-button class="import">导入</a-button>
-        <a-button class="export">导出</a-button>
-        <a-button class="add" @click="handleAdd">新增</a-button>
-      </a-space>
-    </div>
     <a-table
-      :columns="columns"
-      :data-source="state.tableData"
+      :columns="pageModel"
+      :data-source="data"
       :row-selection="rowSelection"
-      :scroll="{
-        y: tableBodyHeight,
-      }"
     />
   </div>
 </template>
@@ -35,7 +24,6 @@ import {
 import { screenBannerInfoRequest } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
-import routeDictionary from "@/router/routeDictionary";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -58,23 +46,31 @@ const pageModel = ref([
     exportVisible: false,
   },
   {
-    label: "菜单名称",
-    name: "title",
+    label: "id",
+    name: "id",
+    required: false,
+    tableVisible: false,
+    formVisible: true,
+    exportVisible: false,
+  },
+  {
+    label: "人员姓名",
+    name: "higywayCode",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "排序图标",
-    name: "icon",
+    label: "人员电话",
+    name: "highwayName",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "权限标识",
+    label: "人员职务",
     name: "bridgeCode",
     required: true,
     tableVisible: true,
@@ -82,24 +78,32 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "组件路径",
-    name: "path",
+    label: "HOC值班人员姓名",
+    name: "bridgeName",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "状态",
-    name: "status",
+    label: "HOC值班人员电话",
+    name: "bridgeName",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "创建时间",
-    name: "createTime",
+    label: "值班开始日期",
+    name: "bridgeName",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "值班结束日期",
+    name: "bridgeName",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -110,12 +114,12 @@ const pageModel = ref([
     name: "operationColumn",
     tableVisible: true,
     exportVisible: false,
-    actions: ["edit", "delete"],
+    actions: ["edit", "review", "delete"],
   },
 ]);
 
 const rowSelection = ref({
-  checkStrictly: true,
+  checkStrictly: false,
   onChange: (
     selectedRowKeys: (string | number)[],
     selectedRows: DataItem[]
@@ -138,8 +142,6 @@ const rowSelection = ref({
   },
 });
 
-const columns = ref([] as any[]);
-
 const state = reactive({
   tableData: [] as any[],
   dialogVisible: false,
@@ -155,15 +157,17 @@ const pagination = reactive({
   total: 0 as number | undefined,
 });
 
-const tableBodyHeight = computed(() => {
-  let result = "calc(100vh - 4rem)";
-  return result;
-}) as any;
-
 const getData = () => {
-  state.tableData = routeDictionary.find(
-    (item: any) => item.name === "layout"
-  ).children;
+  const result = [] as any[];
+  for (let index = 0; index < 30; index++) {
+    result.push({
+      higywayCode: "aaa",
+      highwayName: "aaa",
+      bridgeCode: "aaa",
+      bridgeName: "aaa",
+    });
+  }
+  state.tableData = result;
 };
 
 const handleEdit = () => {
@@ -191,32 +195,11 @@ const handleClose = () => {
 };
 
 const handleSubmit = () => {};
-
-const init = () => {
-  columns.value = pageModel.value.map((item: any) => {
-    return {
-      ...item,
-      title: item.label,
-      dataIndex: item.name,
-      key: item.name,
-    };
-  });
-};
-
 onMounted(async () => {
-  init();
   getData();
 });
 
 onBeforeUnmount(() => {});
 </script>
 
-<style scoped lang="scss">
-.ant-table {
-  .ant-table-container {
-    .ant-table-body {
-      height: calc(-4rem + 100vh);
-    }
-  }
-}
-</style>
+<style scoped lang="scss"></style>
