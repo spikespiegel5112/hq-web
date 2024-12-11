@@ -15,6 +15,11 @@ const app = {
     lastOneHourDate: "",
     bannerInfo: {},
     currentPeriod: "",
+    defaultPagination: {
+      page: 1,
+      pageSize: 30,
+      total: 0 as number | undefined,
+    },
   }),
   mutations: {
     updateBannerInfo: (state: any, payload: any) => {

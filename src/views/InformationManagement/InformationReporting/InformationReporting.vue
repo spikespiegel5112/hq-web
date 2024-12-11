@@ -113,9 +113,7 @@ const state = reactive({
 let queryFormData = reactive({} as any);
 
 const pagination = reactive({
-  page: 1,
-  pageSize: 30,
-  total: 0 as number | undefined,
+  ...global.$store.state.app.defaultPagination,
 });
 
 const getData = () => {
