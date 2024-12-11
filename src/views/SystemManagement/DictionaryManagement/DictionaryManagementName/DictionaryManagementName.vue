@@ -44,6 +44,7 @@ import {
 import {
   dictionaryManageGetDictPagingRequest,
   dictionaryManageDelDictRequest,
+  dictionaryManageSaveDictRequest,
 } from "@/api/management";
 import FilterTool from "../FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
@@ -151,7 +152,17 @@ const handleChangePage = (pagingData: any) => {
   getData();
 };
 
-const handleSubmit = () => {};
+const handleSubmit = (formData: any) => {
+  dictionaryManageSaveDictRequest(formData)
+    .then((response: any) => {
+      global.$message.success("提交成功");
+      getData();
+    })
+    .catch((error: any) => {
+      console.log(error);
+      global.$message.error("提交失败");
+    });
+};
 
 const handleDelete = (id: number) => {
   handleDeletePromise({

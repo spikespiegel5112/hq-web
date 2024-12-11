@@ -158,6 +158,15 @@ export const dictionaryManageSaveDictRequest = (params: any) => {
   });
 };
 
+// 字典-保存字典列表条目（新）
+export const dictionaryManageSaveDictItemRequest = (params: any) => {
+  return service({
+    url: prefix + "/sys/dictionary/manage/saveDictItem",
+    method: "POST",
+    data: params,
+  });
+};
+
 // 字典-删除字典列表
 export const dictionaryManageDelDictRequest = (params: any) => {
   return service({

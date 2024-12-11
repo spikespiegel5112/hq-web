@@ -133,9 +133,7 @@ const handleLogin = () => {
 
 const submitLogin = () => {
   authLoginRequest(toRaw(state.formData))
-    .then((response: any) => {
-      debugger;
-    })
+    .then((response: any) => {})
     .catch((error: any) => {
       console.log(error);
     });

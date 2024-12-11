@@ -66,11 +66,7 @@ import {
 import type { UnwrapRef } from "vue";
 import type { Rule, RuleObject } from "ant-design-vue/es/form";
 
-import {
-  dictionaryManageSaveDictRequest,
-  dictionaryManageGetDictPagingRequest,
-} from "@/api/management";
-import dictionary from "../../../../store/modules/dictionary";
+import { dictionaryManageGetDictPagingRequest } from "@/api/management";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -157,17 +153,11 @@ const handleSubmit = () => {
   if (props.mode === "add") {
     state.formData.id = undefined;
   }
-  console.log(state.formData);
   formDataRef.value
     .validate()
     .then(() => {
-      dictionaryManageSaveDictRequest(state.formData)
-        .then((response: any) => {
-          global.$message("提交成功");
-        })
-        .catch((error: any) => {
-          console.log(error);
-        });
+      emit("onSubmit", state.formData);
+      emit("onClose");
     })
     .catch((error: any) => {
       console.log("error", error);

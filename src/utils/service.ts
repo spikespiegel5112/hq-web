@@ -36,6 +36,9 @@ service.interceptors.response.use(
     }
     if (res.baseURL === "") {
     }
+    if (res.data.code === 501) {
+      return Promise.reject(res.data);
+    }
     // console.log("service.interceptors++++", res);
     const result = res.data;
     return result;

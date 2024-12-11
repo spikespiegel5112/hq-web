@@ -43,7 +43,7 @@ import {
 
 import {
   dictionaryManageGetDictItemPagingRequest,
-  dictionaryManageGetDictPagingRequest,
+  dictionaryManageSaveDictItemRequest,
   dictionaryManageDelDelDictItemRequest,
 } from "@/api/management";
 import FilterTool from "../FilterTool.vue";
@@ -174,7 +174,19 @@ const handleClose = () => {
   state.dialogVisible = false;
 };
 
-const handleSubmit = () => {};
+const handleSubmit = (formData: any) => {
+  dictionaryManageSaveDictItemRequest(formData)
+    .then((response: any) => {
+      global.$message.success("提交成功");
+      getData();
+      debugger
+    })
+    .catch((error: any) => {
+      console.log(error);
+      global.$message.error("提交失败");
+      debugger
+    });
+};
 
 const handleDelete = (id: number) => {
   handleDeletePromise({
