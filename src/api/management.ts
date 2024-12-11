@@ -158,6 +158,33 @@ export const dictionaryManageSaveDictRequest = (params: any) => {
   });
 };
 
+// 字典-删除字典列表
+export const dictionaryManageDelDictRequest = (params: any) => {
+  return service({
+    url: prefix + "/sys/dictionary/manage/delDict",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 字典-删除字典列表条目
+export const dictionaryManageDelDelDictItemRequest = (params: any) => {
+  return service({
+    url: prefix + "/sys/dictionary/manage/delDictItem",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 分页查询字典列表(新)
+export const dictionaryManageGetDictItemPagingRequest = (params: any) => {
+  return service({
+    url: prefix + "/sys/dictionary/manage/getDictItemPaging",
+    method: "POST",
+    data: params,
+  });
+};
+
 // 测试系统字典列表查询(新)
 export const dictionaryManageTestDictRequest = (params: any) => {
   return service({

@@ -63,6 +63,7 @@ onBeforeUnmount(() => {});
   height: 100vh;
   min-height: 100vh;
   background-color: #05061c;
+
   .ant-layout {
     height: 100%;
     .ant-layout-header {

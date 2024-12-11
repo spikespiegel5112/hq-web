@@ -6,13 +6,13 @@
         <label for="">欢迎登录</label>
         <a-form
           ref="formDataRef"
-          :model="formDataState"
+          :model="state.formData"
           autocomplete="off"
           :rules="rules"
         >
           <a-form-item name="username" label="">
             <a-input
-              v-model:value="formDataState.username"
+              v-model:value="state.formData.username"
               placeholder="请输入帐号"
             >
               <template #prefix>
@@ -22,7 +22,7 @@
           </a-form-item>
           <a-form-item name="password" label="">
             <a-input
-              v-model:value="formDataState.password"
+              v-model:value="state.formData.password"
               placeholder="请输入密码"
             >
               <template #prefix>
@@ -32,7 +32,7 @@
           </a-form-item>
           <a-form-item name="verifycode" label="">
             <a-input
-              v-model:value="formDataState.seconds"
+              v-model:value="state.formData.seconds"
               placeholder="请输入验证码"
             >
               <template #suffix>
@@ -83,10 +83,16 @@ const global = currentInstance.appContext.config.globalProperties;
 
 const formDataRef = ref();
 
-const formDataState = reactive({
-  username: "",
-  password: "",
-  seconds: "",
+const state = reactive({
+  formData: {
+    deviceId: "dev_znjt_001",
+    loginType: 2,
+    password: "shzj002",
+    seconds: 30,
+    simId: "simznjtpos",
+    userId: "shzj002",
+    username: "shzj002",
+  },
 });
 
 const rules: Record<string, Rule[]> = {
@@ -126,13 +132,18 @@ const handleLogin = () => {
 };
 
 const submitLogin = () => {
-  authLoginRequest(toRaw(formDataState))
+  authLoginRequest(toRaw(state.formData))
     .then((response: any) => {
       debugger;
     })
     .catch((error: any) => {
       console.log(error);
     });
+};
+
+const init = () => {
+  const lineScaleEl: HTMLElement = document.getElementById("line-scale");
+  lineScaleEl.style.display = "none";
 };
 
 onMounted(async () => {
@@ -153,9 +164,11 @@ onBeforeUnmount(() => {});
   background-repeat: no-repeat;
   background-position: center;
   overflow: hidden;
-  position: relative;
+  position: absolute;
+  top: 0;
   .title {
     margin: 1rem 0 0 0;
+    padding: 0 0 0 1rem;
     font-family: ALiHanYiZhiNengHeiTi-2;
     font-size: 0.75rem;
     color: #fff;

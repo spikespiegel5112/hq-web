@@ -8,7 +8,7 @@
   >
     <a-form
       ref="formDataRef"
-      :model="formDataState"
+      :model="state.formData"
       :rules="rules"
       autocomplete="off"
       :label-col="{
@@ -18,13 +18,16 @@
       <a-row :gutter="20">
         <a-col :span="12">
           <a-form-item name="dicName" label="字典项名称">
-            <a-input v-model:value="formDataState.dicName" placeholder="请输入">
+            <a-input
+              v-model:value="state.formData.dicName"
+              placeholder="请输入"
+            >
             </a-input>
           </a-form-item>
         </a-col>
         <a-col :span="12">
           <a-form-item name="code" label="字典编码">
-            <a-input v-model:value="formDataState.code" placeholder="请输入">
+            <a-input v-model:value="state.formData.code" placeholder="请输入">
             </a-input>
           </a-form-item>
         </a-col>
@@ -32,13 +35,13 @@
       <a-row :gutter="20">
         <a-col :span="12">
           <a-form-item name="label" label="字典标签">
-            <a-input v-model:value="formDataState.label" placeholder="请输入">
+            <a-input v-model:value="state.formData.label" placeholder="请输入">
             </a-input>
           </a-form-item>
         </a-col>
         <a-col :span="12">
           <a-form-item name="value" label="字典值">
-            <a-input v-model:value="formDataState.value" placeholder="请输入">
+            <a-input v-model:value="state.formData.value" placeholder="请输入">
             </a-input>
           </a-form-item>
         </a-col>
@@ -47,7 +50,7 @@
         <a-col :span="24">
           <a-form-item name="remark" label="字典详细信息">
             <a-textarea
-              v-model:value="formDataState.remark"
+              v-model:value="state.formData.remark"
               placeholder="请输入"
               :rows="4"
             />
@@ -88,16 +91,18 @@ const emit = defineEmits<{
 const props = defineProps({
   visible: { type: Boolean, required: true, default: false },
   mode: { type: String, required: true, default: "" },
-  dataModel: { type: Array, required: true, default: () => [] as any },
+  dataModel: { type: Array, required: true, default: () => [] as any[] },
 });
 
-const formDataState: UnwrapRef<any> = reactive({
-  id: null as number | null | undefined,
-  code: "",
-  dicName: "",
-  label: "",
-  remark: "",
-  value: "",
+const state: UnwrapRef<any> = reactive({
+  formData: {
+    id: null as number | null | undefined,
+    code: "",
+    dicName: "",
+    label: "",
+    remark: "",
+    value: "",
+  },
 });
 
 const dialogTitle: ComputedRef<string> = computed(() => {
@@ -116,7 +121,7 @@ const rules: ComputedRef<RuleObject[]> = computed(() => {
   };
 
   const result: any = {};
-  Object.keys(toRaw(formDataState)).forEach((item) => {
+  Object.keys(toRaw(state.formData)).forEach((item) => {
     const dataModelInfo = props.dataModel.find(
       (item2: any) => item2.name === item
     ) as any;
@@ -137,26 +142,19 @@ const rules: ComputedRef<RuleObject[]> = computed(() => {
   return result;
 });
 
-const dialogTitle: ComputedRef<string> = computed(() => {
-  return global.$store.state.dictionary.dialogMode.find(
-    (item: any) => item.value === props.mode
-  )?.title;
-});
-
 const handleClose = (event: any) => {
   emit("onClose");
 };
 
 const handleSubmit = () => {
   if (props.mode === "add") {
-    formDataState.id = undefined;
+    state.formData.id = undefined;
   }
-  const formDataStateRaw = toRaw(formDataState);
-  console.log(formDataStateRaw);
+  console.log(state.formData);
   formDataRef.value
     .validate()
     .then(() => {
-      dictionaryManageSaveDictRequest(formDataStateRaw)
+      dictionaryManageSaveDictRequest(state.formData)
         .then((response: any) => {
           global.$message("adsadas");
         })

@@ -38,7 +38,7 @@ import {
   nextTick,
 } from "vue";
 
-import { dictionaryManageGetDictPagingRequest } from "@/api/management";
+import { dictionaryManageGetDictItemPagingRequest } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
 
@@ -125,8 +125,12 @@ const pagination = reactive({
   pageSize: 30,
   total: 0 as number | undefined,
 });
+
 const getData = () => {
-  dictionaryManageGetDictPagingRequest({     ...queryFormData,     ...pagination,   })
+  dictionaryManageGetDictItemPagingRequest({
+    ...queryFormData,
+    ...pagination,
+  })
     .then((response: any) => {
       response = response.data;
       state.tableData = response.list;

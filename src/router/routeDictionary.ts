@@ -35,7 +35,7 @@ const routerDictionary = [
           import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
         children: [
           {
-            title: "高铁小时到达",
+            title: "高铁",
             path: "HighSpeedRailArrivesWithinHours",
             name: "HighSpeedRailArrivesWithinHours",
             component: () =>
@@ -43,7 +43,7 @@ const routerDictionary = [
                 /* webpackChunkName: "HighSpeedRailArrivesWithinHours" */ "@/views/RegionalHourlyPassengerFlow/HighSpeedRailArrivesWithinHours/HighSpeedRailArrivesWithinHours.vue"
               ),
             meta: {
-              title: "高铁小时到达",
+              title: "高铁",
             },
           },
           {
@@ -242,6 +242,18 @@ const routerDictionary = [
               title: "指示灯",
             },
           },
+          {
+            title: "配置",
+            path: "OperationManagementConfiguration",
+            name: "OperationManagementConfiguration",
+            component: () =>
+              import(
+                /* webpackChunkName: "OperationManagementConfiguration" */ "@/views/OperationManagement/OperationManagementConfiguration/OperationManagementConfiguration.vue"
+              ),
+            meta: {
+              title: "指示灯",
+            },
+          },
         ],
       },
       {
@@ -356,19 +368,7 @@ const routerDictionary = [
                 /* webpackChunkName: "MenuManagement" */ "@/views/SystemManagement/MenuManagement/MenuManagement.vue"
               ),
             meta: {
-              title: "角色管理",
-            },
-          },
-          {
-            title: "角色管理",
-            path: "RoleManagement",
-            name: "RoleManagement",
-            component: () =>
-              import(
-                /* webpackChunkName: "RoleManagement" */ "@/views/SystemManagement/RoleManagement/RoleManagement.vue"
-              ),
-            meta: {
-              title: "角色管理",
+              title: "菜单管理",
             },
           },
           {

@@ -1,7 +1,6 @@
 <template>
   <div class="common_title_item">
-    <span class="bg"></span>
-    <span class="title">{{ title }}</span>
+    <span class="title">{{ props.title }}</span>
   </div>
 </template>
 
@@ -18,46 +17,40 @@ import {
   nextTick,
 } from "vue";
 
-
 const props = defineProps({
   title: {
     type: String,
-    default: '',
+    default: "",
     required: false,
-  }
+  },
 });
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
-
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .common_title_item {
-  display: inline-block;
+  display: flex;
   width: 5rem;
-  height: 0.5rem;
+  height: 0.25rem;
   position: relative;
-  .bg {
+  align-items: center;
+  &:before {
+    content: "";
     display: inline-block;
-    width: 1.6rem;
-    height: 0.7rem;
-    background-image: url('@/assets/title@2x.png');
-    background-size: 100%;
-    background-repeat: no-repeat;
-    position: absolute;
-    top: 0;
-    left: 0;
+    width: 3px;
+    height: 100%;
+    background-color: #fff;
   }
 
   .title {
+    display: inline-block;
     margin: 0 0 0 0.1rem;
     font-size: 0.25rem;
     color: #fff;
     line-height: 0.5rem;
   }
-
-
 }
 </style>
