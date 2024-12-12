@@ -289,7 +289,7 @@ export const infoManagementExternalInfoDeleteRequest = (params: any) => {
   return service({
     url: prefix + "/infoManagement/externalInfo/delete",
     method: "POST",
-    data: params,
+    params,
   });
 };
 

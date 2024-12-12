@@ -11,7 +11,11 @@
     <BaseTable
       :tableData="state.tableData"
       :dataModel="pageModel"
+      :pagination="pagination"
+      tabTable
       @onEdit="handleEdit"
+      @onChangePage="handleChangePage"
+      @onDelete="handleDelete"
     />
     <EditDialog
       :visible="state.dialogVisible"
@@ -40,6 +44,8 @@ import {
 import {
   infoManagementExternalInfoGetPageRequest,
   infoManagementExternalInfoSaveRequest,
+  infoManagementExternalInfoUpdateRequest,
+  infoManagementExternalInfoDeleteRequest,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
@@ -192,14 +198,46 @@ const handleClose = () => {
 };
 
 const handleSubmit = (formData: any) => {
-  infoManagementExternalInfoSaveRequest(formData)
+  if (state.dialogMode === "add") {
+    infoManagementExternalInfoSaveRequest(formData)
+      .then((response: any) => {
+        global.$message.success("提交成功");
+        getData();
+      })
+      .catch((error: any) => {
+        console.log(error);
+        global.$message.error("提交失败");
+      });
+  } else if (state.dialogMode === "edit") {
+    infoManagementExternalInfoUpdateRequest(formData)
+      .then((response: any) => {
+        global.$message.success("提交成功");
+        getData();
+      })
+      .catch((error: any) => {
+        console.log(error);
+        global.$message.error("提交失败");
+      });
+  }
+};
+
+const handleChangePage = (pagingData: any) => {
+  pagination.page = pagingData.current;
+  pagination.pageSize = pagingData.pageSize;
+  pagination.total = pagingData.total;
+  getData();
+};
+
+const handleDelete = (id: number) => {
+  infoManagementExternalInfoDeleteRequest({
+    id,
+  })
     .then((response: any) => {
-      global.$message.success("提交成功");
+      global.$message.success("删除成功");
       getData();
     })
     .catch((error: any) => {
       console.log(error);
-      global.$message.error("提交失败");
     });
 };
 

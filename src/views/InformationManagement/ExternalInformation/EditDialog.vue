@@ -52,6 +52,7 @@
               v-model:value="state.formData.infoReportTime"
               placeholder="请输入"
               format="YYYY-MM-DD HH:mm:ss"
+              @change="handleChangeInfoReportTime"
             ></a-date-picker>
           </a-form-item>
         </a-col>
@@ -195,7 +196,13 @@ const handleSubmit = (event: any) => {
       if (props.mode === "add") {
         state.formData.id = undefined;
       }
-      emit("onSubmit", state.formData);
+      const infoReportTime = global
+        .$dayjs(state.formData.infoReportTime)
+        .format("YYYY-MM-DD HH:mm:ss");
+      emit("onSubmit", {
+        ...state.formData,
+        infoReportTime,
+      });
       handleClose();
     })
     .catch((error: any) => {

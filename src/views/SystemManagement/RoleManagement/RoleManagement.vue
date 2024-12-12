@@ -8,10 +8,14 @@
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
-    <BaseTable
+   a    <BaseTable
       :tableData="state.tableData"
       :dataModel="pageModel"
+      :pagination="pagination"
+      tabTable
       @onEdit="handleEdit"
+      @onChangePage="handleChangePage"
+      @onDelete="handleDelete"
     />
     <EditDialog
       :visible="state.dialogVisible"
