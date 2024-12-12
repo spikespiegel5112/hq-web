@@ -283,3 +283,48 @@ export const eventManageSuddenEventSaveRequest = (params: any) => {
     data: params,
   });
 };
+
+// 信息管理-外部信息-删除
+export const infoManagementExternalInfoDeleteRequest = (params: any) => {
+  return service({
+    url: prefix + "/infoManagement/externalInfo/delete",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 信息管理-外部信息-根据Id查询
+export const infoManagementExternalInfoGetOneByIdRequest = (params: any) => {
+  return service({
+    url: prefix + "/infoManagement/externalInfo/getOneById",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 信息管理-外部信息-分页查询
+export const infoManagementExternalInfoGetPageRequest = (params: any) => {
+  return service({
+    url: prefix + "/infoManagement/externalInfo/getPage",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 信息管理-外部信息-保存
+export const infoManagementExternalInfoSaveRequest = (params: any) => {
+  return service({
+    url: prefix + "/infoManagement/externalInfo/save",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 信息管理-外部信息-修改
+export const infoManagementExternalInfoUpdateRequest = (params: any) => {
+  return service({
+    url: prefix + "/infoManagement/externalInfo/update",
+    method: "POST",
+    data: params,
+  });
+};

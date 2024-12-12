@@ -16,11 +16,16 @@
 
             <a-col :span="6">
               <a-form-item name="password" label="来源">
-                <a-input v-model="formData.password" placeholder="请输入密码">
-                  <template #prefix>
-                    <span class="password"></span>
-                  </template>
-                </a-input>
+                <a-select v-model="formData.source" placeholder="请输入密码">
+                  <a-select-option
+                    v-for="item in global.$store.state.dictionary[
+                      'externalDataSources'
+                    ]"
+                    :value="item.value"
+                  >
+                    {{ item.label }}
+                  </a-select-option>
+                </a-select>
               </a-form-item>
             </a-col>
 
@@ -74,19 +79,21 @@ const emit = defineEmits<{
 const formDataRef: any = ref(null);
 
 const formData = reactive({
-  dicName: "",
+  source: "",
 });
 
 const handleSearch = () => {
-  emit("onSearch", state.formData);
+  emit("onSearch", formData);
 };
 
 const handleReset = () => {
   formDataRef.value.resetFields();
-  emit("onReset", state.formData);
+  emit("onReset", formData);
 };
 
-onMounted(async () => {});
+onMounted(async () => {
+  global.$getDictionary("externalDataSources");
+});
 
 onBeforeUnmount(() => {});
 </script>

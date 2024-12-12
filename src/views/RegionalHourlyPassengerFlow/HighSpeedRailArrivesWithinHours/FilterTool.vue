@@ -72,7 +72,7 @@ const state = reactive({
 });
 
 const handleSearch = () => {
-  emit("onSearch", state.formData);
+  emit("onSearch", formData);
 };
 
 const handleReset = () => {
@@ -80,7 +80,7 @@ const handleReset = () => {
   state.formData.statisticalDateBegin = "";
   state.formData.statisticalDateEnd = "";
   state.statisticalDate = [];
-  emit("onReset", state.formData);
+  emit("onReset", formData);
 };
 
 const handleChangeStatisticalDate = (data: any) => {

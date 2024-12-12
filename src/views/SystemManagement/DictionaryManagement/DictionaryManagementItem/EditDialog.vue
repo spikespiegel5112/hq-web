@@ -45,6 +45,17 @@
           </a-form-item>
         </a-col>
       </a-row>
+      <a-row :gutter="20">
+        <a-col :span="24">
+          <a-form-item name="remark" label="字典项详细信息">
+            <a-textarea
+              v-model:value="state.formData.remark"
+              placeholder="请输入"
+            >
+            </a-textarea>
+          </a-form-item>
+        </a-col>
+      </a-row>
     </a-form>
     <template #footer>
       <a-row>
@@ -163,7 +174,7 @@ watch(
   }
 );
 
-const handleClose = (event: any) => {
+const handleClose = () => {
   formDataRef.value.resetFields();
   emit("onClose");
 };
@@ -176,7 +187,7 @@ const handleSubmit = () => {
     .validate()
     .then(() => {
       emit("onSubmit", state.formData);
-      emit("onClose");
+      handleClose();
     })
     .catch((error: any) => {
       console.log("error", error);

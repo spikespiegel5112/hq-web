@@ -334,6 +334,9 @@ const dictionary = {
     updateCurrentChatList: (state: any, payload: object) => {
       state.currentChatList = payload;
     },
+    addDictionary: (state: any, payload: any) => {
+      state[payload.code] = payload.data;
+    },
   },
   actions: {},
   getters: {},

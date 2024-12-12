@@ -87,12 +87,12 @@ const formData = reactive({
 });
 
 const handleSearch = () => {
-  emit("onSearch", state.formData);
+  emit("onSearch", formData);
 };
 
 const handleReset = () => {
   formDataRef.value.resetFields();
-  emit("onReset", state.formData);
+  emit("onReset", formData);
 };
 
 onMounted(async () => {});

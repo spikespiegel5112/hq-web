@@ -161,27 +161,15 @@ const routerDictionary = [
           import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
         children: [
           {
-            title: "信息来源",
-            path: "InformationSources",
-            name: "InformationSources",
+            title: "外部信息",
+            path: "ExternalInformation",
+            name: "ExternalInformation",
             component: () =>
               import(
-                /* webpackChunkName: "InformationSources" */ "@/views/InformationManagement/InformationSources/InformationSources.vue"
+                /* webpackChunkName: "ExternalInformation" */ "@/views/InformationManagement/ExternalInformation/ExternalInformation.vue"
               ),
             meta: {
-              title: "信息来源",
-            },
-          },
-          {
-            title: "信息上报",
-            path: "InformationReporting",
-            name: "InformationReporting",
-            component: () =>
-              import(
-                /* webpackChunkName: "InformationReporting" */ "@/views/InformationManagement/InformationReporting/InformationReporting.vue"
-              ),
-            meta: {
-              title: "信息上报",
+              title: "外部信息",
             },
           },
           {
@@ -197,7 +185,7 @@ const routerDictionary = [
             },
           },
           {
-            title: "外部投诉",
+            title: "投诉信息",
             path: "ExternalComplaints",
             name: "ExternalComplaints",
             component: () =>
@@ -205,7 +193,7 @@ const routerDictionary = [
                 /* webpackChunkName: "ExternalComplaints" */ "@/views/InformationManagement/ExternalComplaints/ExternalComplaints.vue"
               ),
             meta: {
-              title: "外部投诉",
+              title: "投诉信息",
             },
           },
         ],

@@ -54,14 +54,6 @@ const pageModel = ref([
     exportVisible: false,
   },
   {
-    label: "id",
-    name: "id",
-    required: false,
-    tableVisible: false,
-    formVisible: true,
-    exportVisible: false,
-  },
-  {
     label: "出租车",
     name: "higywayCode",
     required: true,

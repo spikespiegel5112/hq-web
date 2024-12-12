@@ -54,14 +54,6 @@ const pageModel = ref([
     exportVisible: false,
   },
   {
-    label: "id",
-    name: "id",
-    required: false,
-    tableVisible: false,
-    formVisible: true,
-    exportVisible: false,
-  },
-  {
     label: "北上客点累计发车人数",
     name: "higywayCode",
     required: true,

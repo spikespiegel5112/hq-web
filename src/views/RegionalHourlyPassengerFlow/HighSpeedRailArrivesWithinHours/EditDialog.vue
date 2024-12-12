@@ -183,7 +183,7 @@ const handleSubmit = (event: any) => {
         state.formData.id = undefined;
       }
       emit("onSubmit", state.formData);
-      emit("onClose");
+      handleClose();
     })
     .catch((error: any) => {
       console.log(error);

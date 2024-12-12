@@ -7,7 +7,7 @@
             <a-col :span="6">
               <a-form-item name="dicId" label="字典名称">
                 <a-select
-                  v-model:value="formData.dicId"
+                  v-model:value="formData.code"
                   placeholder="请输入"
                   allowClear
                   show-search
@@ -73,7 +73,7 @@ const emit = defineEmits<{
 const formDataRef: any = ref(null);
 
 const formData = reactive({
-  dicName: "",
+  code: "",
 });
 
 const state = reactive({
@@ -83,22 +83,17 @@ const state = reactive({
 watch(
   () => props.dictionaryNameList,
   (newValue: any, oldValue: any) => {
-    state.dictionaryNameList = newValue.map((item: any) => {
-      return {
-        label: item.dicName,
-        value: item.id,
-      };
-    });
+    importDictionary(newValue);
   }
 );
 
 const handleSearch = () => {
-  emit("onSearch", state.formData);
+  emit("onSearch", formData);
 };
 
 const handleReset = () => {
   formDataRef.value.resetFields();
-  emit("onReset", state.formData);
+  emit("onReset", formData);
 };
 
 const filterOption = (input: string, option: any) => {
@@ -108,13 +103,17 @@ const handleFocus = () => {};
 const handleBlur = () => {};
 const handleChange = () => {};
 
-onMounted(async () => {
-  state.dictionaryNameList = props.dictionaryNameList.map((item: any) => {
+const importDictionary = (dictionaryNameList: any[]) => {
+  state.dictionaryNameList = dictionaryNameList.map((item: any) => {
     return {
       label: item.dicName,
-      value: item.id,
+      value: item.code,
     };
   });
+};
+
+onMounted(async () => {
+  importDictionary(props.dictionaryNameList);
 });
 
 onBeforeUnmount(() => {});

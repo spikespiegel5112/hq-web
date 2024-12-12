@@ -1,5 +1,6 @@
 import { store } from "@/store";
 import { message } from "ant-design-vue";
+import { dictionaryManageGetDictListRequest } from "@/api/management";
 
 const [messageApi, contextHolder] = message.useMessage();
 
@@ -232,6 +233,26 @@ const _utils = {
     URL.revokeObjectURL(link.href);
     messageApi.success("导出成功!", 3000);
   },
+  $getDictionary: async (code: string) => {
+    let result = [] as any[];
+    const currentDictionaryData = store.state.dictionary[code];
+    if (
+      currentDictionaryData instanceof Array &&
+      currentDictionaryData.length > 0
+    ) {
+      result = currentDictionaryData;
+    } else {
+      const response: any = await dictionaryManageGetDictListRequest({
+        code,
+      });
+      result = response.data;
+      store.commit("dictionary/addDictionary", {
+        code,
+        data: result,
+      });
+    }
+    return result;
+  },
 } as any;
 
 const result = {
@@ -248,6 +269,7 @@ const result = {
     app.config.globalProperties["$orientationSensor"] =
       _utils["$orientationSensor"];
     app.config.globalProperties["$exportTable"] = _utils["$exportTable"];
+    app.config.globalProperties["$getDictionary"] = _utils["$getDictionary"];
   },
 } as any;
 

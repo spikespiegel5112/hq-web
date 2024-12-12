@@ -77,14 +77,6 @@ const pageModel = ref([
     exportVisible: false,
   },
   {
-    label: "id",
-    name: "id",
-    required: false,
-    tableVisible: false,
-    formVisible: true,
-    exportVisible: false,
-  },
-  {
     label: "字典名称",
     name: "dicName",
     required: true,

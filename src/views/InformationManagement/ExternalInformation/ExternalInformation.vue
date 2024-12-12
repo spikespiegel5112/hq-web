@@ -37,7 +37,7 @@ import {
   nextTick,
 } from "vue";
 
-import { screenBannerInfoRequest } from "@/api/management";
+import { infoManagementExternalInfoGetPageRequest } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
 
@@ -54,40 +54,57 @@ const pageModel = ref([
     exportVisible: false,
   },
   {
-    label: "id",
-    name: "id",
-    required: false,
-    tableVisible: false,
+    label: "信息上报单位",
+    name: "infoReportUnit",
+    required: true,
+    tableVisible: true,
     formVisible: true,
-    exportVisible: false,
+    exportVisible: true,
   },
+
   {
-    label: "上报单位",
-    name: "higywayCode",
+    label: "信息上报开始时间",
+    name: "infoReportTime",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "时间",
-    name: "highwayName",
+    label: "信息上报结束时间",
+    name: "infoReportTimeEnd",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "类型",
-    name: "bridgeCode",
+    label: "信息等级",
+    name: "infoLevel",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "内容",
-    name: "bridgeName",
+    label: "信息类型",
+    name: "infoType",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "信息状态",
+    name: "infoStatus",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "附件",
+    name: "attachment",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -116,16 +133,19 @@ const pagination = reactive({
 });
 
 const getData = () => {
-  const result = [] as any[];
-  for (let index = 0; index < 30; index++) {
-    result.push({
-      higywayCode: "aaa",
-      highwayName: "aaa",
-      bridgeCode: "aaa",
-      bridgeName: "aaa",
+  pagination.total = undefined;
+  infoManagementExternalInfoGetPageRequest({
+    ...queryFormData,
+    ...pagination,
+  })
+    .then((response: any) => {
+      response = response.data;
+      state.tableData = response.list;
+      pagination.total = response.total;
+    })
+    .catch((error: any) => {
+      console.log(error);
     });
-  }
-  state.tableData = result;
 };
 
 const handleEdit = (rowData: any) => {

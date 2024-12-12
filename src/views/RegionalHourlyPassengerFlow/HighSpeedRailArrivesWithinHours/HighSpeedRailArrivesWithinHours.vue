@@ -64,14 +64,6 @@ const pageModel = ref([
     exportVisible: false,
   },
   {
-    label: "id",
-    name: "id",
-    required: false,
-    tableVisible: false,
-    formVisible: true,
-    exportVisible: false,
-  },
-  {
     label: "日期",
     name: "statisticalDate",
     required: true,

@@ -166,7 +166,7 @@ const handleSubmit = () => {
     .validate()
     .then(() => {
       emit("onSubmit", state.formData);
-      emit("onClose");
+      handleClose();
     })
     .catch((error: any) => {
       console.log("error", error);
