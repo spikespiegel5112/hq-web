@@ -26,7 +26,7 @@
       :mode="state.dialogMode"
       :dataModel="pageModel"
       :rowData="state.currentRowData"
-      :dictionaryNameList="state.dictionaryNameList"
+      :dictionaryNameList="props.dictionaryNameList"
       @onClose="handleClose"
       @onSubmit="handleSubmit"
     ></EditDialog>
@@ -92,6 +92,14 @@ const pageModel = ref([
     name: "dicName",
     required: true,
     tableVisible: true,
+    formVisible: false,
+    exportVisible: true,
+  },
+  {
+    label: "字典名ID",
+    name: "dicId",
+    required: true,
+    tableVisible: false,
     formVisible: true,
     exportVisible: true,
   },
@@ -151,6 +159,11 @@ const pagination = reactive({
 });
 
 const getData = () => {
+  const aaa = {
+    ...queryFormData,
+    ...pagination,
+  };
+
   dictionaryManageGetDictItemPagingRequest({
     ...queryFormData,
     ...pagination,

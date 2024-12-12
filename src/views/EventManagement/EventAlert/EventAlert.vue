@@ -37,7 +37,7 @@ import {
   nextTick,
 } from "vue";
 
-import { screenBannerInfoRequest } from "@/api/management";
+import { eventManageSuddenEventGetPageRequest } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
 
@@ -63,7 +63,7 @@ const pageModel = ref([
   },
   {
     label: "报警类型",
-    name: "higywayCode",
+    name: "eventType",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -71,7 +71,7 @@ const pageModel = ref([
   },
   {
     label: "报警内容",
-    name: "highwayName",
+    name: "eventContent",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -79,7 +79,7 @@ const pageModel = ref([
   },
   {
     label: "报警时间",
-    name: "bridgeCode",
+    name: "eventTime",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -87,7 +87,7 @@ const pageModel = ref([
   },
   {
     label: "报警源",
-    name: "bridgeCode",
+    name: "eventLocation",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -95,7 +95,7 @@ const pageModel = ref([
   },
   {
     label: "事件发生地点",
-    name: "bridgeName",
+    name: "eventLocation",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -131,16 +131,19 @@ const pagination = reactive({
 });
 
 const getData = () => {
-  const result = [] as any[];
-  for (let index = 0; index < 30; index++) {
-    result.push({
-      higywayCode: "aaa",
-      highwayName: "aaa",
-      bridgeCode: "aaa",
-      bridgeName: "aaa",
+  pagination.total = undefined;
+  eventManageSuddenEventGetPageRequest({
+    ...queryFormData,
+    ...pagination,
+  })
+    .then((response: any) => {
+      response = response.data;
+      state.tableData = response.list;
+      pagination.total = response.total;
+    })
+    .catch((error: any) => {
+      console.log(error);
     });
-  }
-  state.tableData = result;
 };
 
 const handleEdit = (rowData: any) => {

@@ -1,17 +1,25 @@
 <template>
   <div class="common_filtertool_wrapper">
-    <a-form :model="formData" autocomplete="off" ref="formDataRef">
+    <a-form :model="state.formData" autocomplete="off" ref="formDataRef">
       <a-row>
         <a-col :span="20">
           <a-row :gutter="20">
             <a-col :span="4">
-              <a-form-item name="userName" label="时段">
-                <a-time-picker v-model:value="formData.ccccc" />
+              <a-form-item name="statisticalBeginHour" label="时段">
+                <a-time-picker
+                  v-model:value="state.formData.statisticalBeginHour"
+                  format="h"
+                  valueFormat="h"
+                />
               </a-form-item>
             </a-col>
             <a-col :span="8">
-              <a-form-item name="password" label="查询时间">
-                <a-time-range-picker v-model:value="formData.ddddd" />
+              <a-form-item name="statisticalDate" label="查询时间">
+                <a-range-picker
+                  v-model:value="state.statisticalDate"
+                  format="YYYY-MM-DD"
+                  @change="handleChangeStatisticalDate"
+                />
               </a-form-item>
             </a-col>
           </a-row>
@@ -44,8 +52,6 @@ import {
   nextTick,
 } from "vue";
 
-
-
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
@@ -56,19 +62,34 @@ const emit = defineEmits<{
 
 const formDataRef: any = ref(null);
 
-const formData = reactive({
-  ccccc: "",
-  ddddd: [],
+const state = reactive({
+  formData: {
+    statisticalBeginHour: null,
+    statisticalDateBegin: "",
+    statisticalDateEnd: "",
+  },
+  statisticalDate: [],
 });
 
-
 const handleSearch = () => {
-  emit("onSearch", formData);
+  emit("onSearch", state.formData);
 };
 
 const handleReset = () => {
   formDataRef.value.resetFields();
-  emit("onReset", formData);
+  state.formData.statisticalDateBegin = "";
+  state.formData.statisticalDateEnd = "";
+  state.statisticalDate = [];
+  emit("onReset", state.formData);
+};
+
+const handleChangeStatisticalDate = (data: any) => {
+  state.formData.statisticalDateBegin = global
+    .$dayjs(data[0])
+    .format("YYYY-MM-DD");
+  state.formData.statisticalDateEnd = global
+    .$dayjs(data[1])
+    .format("YYYY-MM-DD");
 };
 
 onMounted(async () => {});

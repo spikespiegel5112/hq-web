@@ -5,10 +5,10 @@
         <a-col :span="20">
           <a-row :gutter="20">
             <a-col :span="6">
-              <a-form-item name="dicName" label="字典名称">
+              <a-form-item name="dicId" label="字典名称">
                 <a-select
-                  v-model:value="formData.dicName"
-                  placeholder="请选择"
+                  v-model:value="formData.dicId"
+                  placeholder="请输入"
                   allowClear
                   show-search
                   :options="state.dictionaryNameList"
@@ -73,7 +73,7 @@ const emit = defineEmits<{
 const formDataRef: any = ref(null);
 
 const formData = reactive({
-  dicName: [],
+  dicName: "",
 });
 
 const state = reactive({
@@ -93,12 +93,12 @@ watch(
 );
 
 const handleSearch = () => {
-  emit("onSearch", formData);
+  emit("onSearch", state.formData);
 };
 
 const handleReset = () => {
   formDataRef.value.resetFields();
-  emit("onReset", formData);
+  emit("onReset", state.formData);
 };
 
 const filterOption = (input: string, option: any) => {

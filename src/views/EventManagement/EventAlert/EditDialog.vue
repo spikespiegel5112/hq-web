@@ -1,7 +1,7 @@
 <template>
   <a-modal
     class="common_dailog_wrapper"
-    v-model:open="state.visible"
+    v-model:open="props.visible"
     width="8rem"
     @cancel="handleClose"
   >
@@ -19,10 +19,10 @@
     >
       <a-row>
         <a-col :span="22">
-          <a-form-item name="statisticalDate" label="报警类型">
+          <a-form-item name="eventType" label="报警类型">
             <a-select
+              v-model:value="state.formData.eventType"
               placeholder="请选择"
-              v-model:value="state.formData.statisticalDate"
             >
               <a-select-option value="全部">全部</a-select-option>
             </a-select>
@@ -31,9 +31,9 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="dispersedHourlyPassengerCount" label="报警时间">
+          <a-form-item name="eventTime" label="报警时间">
             <a-input
-              v-model:value="state.formData.dispersedHourlyPassengerCount"
+              v-model:value="state.formData.eventTime"
               placeholder="请输入"
               :min="0"
             >
@@ -43,26 +43,21 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item
-            name="estimatedHourlyArrivePassengerCount"
-            label="报警源"
-          >
-            <a-input-number
-              v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
+          <a-form-item name="eventLocation" label="报警源">
+            <a-select
+              v-model:value="state.formData.eventLocation"
               placeholder="请输入"
             >
-            </a-input-number>
+              <a-select-option value="全部">全部</a-select-option>
+            </a-select>
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item
-            name="estimatedHourlyArrivePassengerCount"
-            label="发生地点"
-          >
+          <a-form-item name="eventLocation" label="事件发生地点">
             <a-input-number
-              v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
+              v-model:value="state.formData.eventLocation"
               placeholder="请输入"
             >
             </a-input-number>
@@ -72,22 +67,29 @@
       <a-row>
         <a-col :span="22">
           <a-form-item name="estimatedHourlyArrivePassengerCount" label="内容">
-            <a-input-number
+            <a-textarea
               v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
               placeholder="请输入"
             >
-            </a-input-number>
+            </a-textarea>
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="22">
           <a-form-item name="estimatedHourlyArrivePassengerCount" label="附件">
-            <a-input-number
-              v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
-              placeholder="请输入"
+            <a-upload
+              v-model:file-list="fileList"
+              name="file"
+              action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+              :headers="{}"
+              @change="handleChangeAttachment"
             >
-            </a-input-number>
+              <a-button type="primary">
+                <upload-outlined></upload-outlined>
+                上传
+              </a-button>
+            </a-upload>
           </a-form-item>
         </a-col>
       </a-row>
@@ -120,11 +122,13 @@ import {
 } from "vue";
 
 import type { Rule, RuleObject } from "ant-design-vue/es/form";
+import { UploadOutlined } from "@ant-design/icons-vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
 const formDataRef = ref();
+const fileList = ref([]);
 
 const emit = defineEmits<{
   (e: "onClose"): void;
@@ -217,6 +221,8 @@ const handleSubmit = (event: any) => {
       console.log(error);
     });
 };
+
+const handleChangeAttachment = () => {};
 
 onMounted(async () => {});
 

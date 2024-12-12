@@ -1,6 +1,6 @@
 <template>
   <a-modal
-    v-model:open="state.visible"
+    v-model:open="props.visible"
     :title="dialogTitle"
     width="8rem"
     @cancel="handleClose"
@@ -16,11 +16,12 @@
       <a-row>
         <a-col :span="22">
           <a-form-item name="statisticalDate" label="日期">
-            <a-input
+            <a-date-picker
               v-model:value="state.formData.statisticalDate"
-              placeholder="请输入"
-            >
-            </a-input>
+              placeholder="情选择"
+              format="YYYY-MM-DD"
+              valueFormat="string"
+            />
           </a-form-item>
         </a-col>
       </a-row>
@@ -54,11 +55,11 @@
     <template #footer>
       <a-row>
         <a-col :span="22">
-          <template v-if="props.mode === 'edit'">
+          <template v-if="['edit', 'add'].some((item) => item === props.mode)">
+            <a-button key="back" @click="handleClose">取消</a-button>
             <a-button key="submit" type="primary" @click="handleSubmit">
               确认
             </a-button>
-            <a-button key="back" @click="handleClose">取消</a-button>
           </template>
           <template v-else-if="props.mode === 'review'">
             <a-button key="submit" type="primary" @click="handleClose">

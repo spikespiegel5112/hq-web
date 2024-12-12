@@ -256,3 +256,30 @@ export const nodeManageSaveSysNodeRequest = (params: any) => {
     data: params,
   });
 };
+
+// 事件管理-突发事件-分页查询
+export const eventManageSuddenEventGetPageRequest = (params: any) => {
+  return service({
+    url: prefix + "/eventManage/suddenEvent/getPage",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 事件管理-突发事件-删除突发事件
+export const eventManageSuddenEventDeleteRequest = (params: any) => {
+  return service({
+    url: prefix + "/eventManage/suddenEvent/delete",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 事件管理-突发事件-保存
+export const eventManageSuddenEventSaveRequest = (params: any) => {
+  return service({
+    url: prefix + "/eventManage/suddenEvent/save",
+    method: "POST",
+    data: params,
+  });
+};

@@ -6,7 +6,7 @@
           <a-col :span="12"> </a-col>
           <a-col :span="12">
             <a-form-item label="区域">
-              <a-select placeholder="请输入">
+              <a-select placeholder="请选择">
                 <a-select-option value="全部">全部</a-select-option>
               </a-select>
             </a-form-item>

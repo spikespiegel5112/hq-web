@@ -50,7 +50,6 @@ import {
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
-import { debug } from "console";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -177,7 +176,10 @@ const handleClose = () => {
 
 const handleSubmit = (formData: any) => {
   backendRailwayArriveSaveRailwayArriveRequest(formData)
-    .then((response: any) => {})
+    .then((response: any) => {
+      global.$message.success("提交成功");
+      getData();
+    })
     .catch((error: any) => {
       console.log(error);
     });

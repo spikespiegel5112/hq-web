@@ -2,9 +2,8 @@
   <a-modal
     v-model:open="props.visible"
     :title="dialogTitle"
-    @cancel="handleClose"
-    @ok="handleSubmit"
     width="8rem"
+    @cancel="handleClose"
   >
     <a-form
       ref="formDataRef"
@@ -17,7 +16,7 @@
     >
       <a-row :gutter="20">
         <a-col :span="24">
-          <a-form-item name="dicName" label="字典名称">
+          <a-form-item name="dicId" label="字典名称">
             <a-select v-model:value="state.formData.dicId" placeholder="请输入">
               <a-select-option
                 v-for="item in props.dictionaryNameList"
@@ -47,6 +46,23 @@
         </a-col>
       </a-row>
     </a-form>
+    <template #footer>
+      <a-row>
+        <a-col :span="22">
+          <template v-if="['edit', 'add'].some((item) => item === props.mode)">
+            <a-button key="back" @click="handleClose">取消</a-button>
+            <a-button key="submit" type="primary" @click="handleSubmit">
+              确认
+            </a-button>
+          </template>
+          <template v-else-if="props.mode === 'review'">
+            <a-button key="submit" type="primary" @click="handleClose">
+              关闭
+            </a-button>
+          </template>
+        </a-col>
+      </a-row>
+    </template>
   </a-modal>
 </template>
 
@@ -83,9 +99,7 @@ const props = defineProps({
   dictionaryNameList: {
     type: Array,
     required: false,
-    default: () => {
-      return [] as any[];
-    },
+    default: () => [] as any[],
   },
 });
 
