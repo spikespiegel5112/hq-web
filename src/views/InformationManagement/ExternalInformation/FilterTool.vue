@@ -5,37 +5,38 @@
         <a-col :span="20">
           <a-row :gutter="20">
             <a-col :span="6">
-              <a-form-item name="userName" label="来源">
-                <a-input
-                  v-model="formData.userName"
-                  placeholder="请输入帐号"
-                >
-                  <template #prefix>
-                    <span class="username"></span>
-                  </template>
-                </a-input>
+              <a-form-item name="source" label="来源">
+                <a-select v-model="formData.source" placeholder="请输入">
+                  <a-select-option
+                    v-for="item in global.$store.state.dictionary[
+                      'externalDataSources'
+                    ]"
+                    :value="item.value"
+                  >
+                    {{ item.label }}
+                  </a-select-option>
+                </a-select>
               </a-form-item>
             </a-col>
 
             <a-col :span="6">
               <a-form-item name="password" label="类型">
-                <a-input
-                  v-model="formData.password"
-                  placeholder="请输入密码"
-                >
-                  <template #prefix>
-                    <span class="password"></span>
-                  </template>
-                </a-input>
+                <a-select v-model="formData.infoType" placeholder="请输入">
+                  <a-select-option
+                    v-for="item in global.$store.state.dictionary[
+                      'externalDataSources'
+                    ]"
+                    :value="item.value"
+                  >
+                    {{ item.label }}
+                  </a-select-option>
+                </a-select>
               </a-form-item>
             </a-col>
 
             <a-col :span="6">
               <a-form-item name="password" label="查询时间">
-                <a-input
-                  v-model="formData.password"
-                  placeholder="请输入密码"
-                >
+                <a-input v-model:value="formData.password" placeholder="请输入密码">
                   <template #prefix>
                     <span class="password"></span>
                   </template>
@@ -72,8 +73,6 @@ import {
   nextTick,
 } from "vue";
 
-
-
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
@@ -85,11 +84,9 @@ const emit = defineEmits<{
 const formDataRef: any = ref(null);
 
 const formData = reactive({
-  userName: "",
-  password: "",
+  source: "",
+  infoType: "",
 });
-
-
 
 const handleSearch = () => {
   emit("onSearch", formData);

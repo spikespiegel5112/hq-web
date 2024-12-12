@@ -15,7 +15,7 @@
       }"
     >
       <a-row :gutter="20">
-        <a-col :span="24">
+        <a-col :span="22">
           <a-form-item name="dicId" label="字典名称">
             <a-select v-model:value="state.formData.dicId" placeholder="请输入">
               <a-select-option
@@ -30,7 +30,7 @@
         </a-col>
       </a-row>
       <a-row :gutter="20">
-        <a-col :span="24">
+        <a-col :span="22">
           <a-form-item name="label" label="字典项名称">
             <a-input v-model:value="state.formData.label" placeholder="请输入">
             </a-input>
@@ -38,7 +38,7 @@
         </a-col>
       </a-row>
       <a-row :gutter="20">
-        <a-col :span="24">
+        <a-col :span="22">
           <a-form-item name="value" label="字典编码">
             <a-input v-model:value="state.formData.value" placeholder="请输入">
             </a-input>
@@ -46,7 +46,7 @@
         </a-col>
       </a-row>
       <a-row :gutter="20">
-        <a-col :span="24">
+        <a-col :span="22">
           <a-form-item name="remark" label="字典项详细信息">
             <a-textarea
               v-model:value="state.formData.remark"

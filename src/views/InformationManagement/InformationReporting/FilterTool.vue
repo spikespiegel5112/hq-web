@@ -18,16 +18,18 @@
             </a-col>
 
             <a-col :span="6">
-              <a-form-item name="password" label="来源">
-                <a-input
-                  v-model="formData.password"
-                  placeholder="请输入密码"
-                >
-                  <template #prefix>
-                    <span class="password"></span>
-                  </template>
-                </a-input>
-              </a-form-item>
+              <a-form-item name="source" label="来源">
+                <a-select v-model="formData.source" placeholder="请输入">
+                  <a-select-option
+                    v-for="item in global.$store.state.dictionary[
+                      'externalDataSources'
+                    ]"
+                    :value="item.value"
+                  >
+                    {{ item.label }}
+                  </a-select-option>
+                </a-select>
+               </a-form-item>
             </a-col>
 
             <a-col :span="6">

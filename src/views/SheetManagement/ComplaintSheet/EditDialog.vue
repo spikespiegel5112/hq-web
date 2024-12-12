@@ -18,12 +18,12 @@
           }"
         >
           <a-form-item name="userName" label="报警类型">
-            <a-input v-model="state.formData.userName" placeholder="请输入">
+            <a-input v-model:value="state.formData.userName" placeholder="请输入">
          
             </a-input>
           </a-form-item>
           <a-form-item name="password" label="报警内容">
-            <a-input v-model="state.formData.password" placeholder="请输入">
+            <a-input v-model:value="state.formData.password" placeholder="请输入">
               
             </a-input>
           </a-form-item>
@@ -37,12 +37,12 @@
           }"
         >
           <a-form-item name="userName" label="报警类型">
-            <a-input v-model="state.formData.userName" placeholder="请输入">
+            <a-input v-model:value="state.formData.userName" placeholder="请输入">
          
             </a-input>
           </a-form-item>
           <a-form-item name="password" label="报警内容">
-            <a-input v-model="state.formData.password" placeholder="请输入">
+            <a-input v-model:value="state.formData.password" placeholder="请输入">
               
             </a-input>
           </a-form-item>
@@ -107,7 +107,7 @@ watch(
   }
 );
 
-const handleClose = (event: any) => {
+const handleClose = () => {
   formDataRef.value.resetFields();
   emit("onClose");
 };

@@ -16,7 +16,7 @@
       }"
     >
       <a-row :gutter="20">
-        <a-col :span="24">
+        <a-col :span="22">
           <a-form-item name="dicName" label="字典名称">
             <a-input
               v-model:value="state.formData.dicName"
@@ -27,7 +27,7 @@
         </a-col>
       </a-row>
       <a-row :gutter="20">
-        <a-col :span="24">
+        <a-col :span="22">
           <a-form-item name="code" label="字典编码">
             <a-input v-model:value="state.formData.code" placeholder="请输入">
             </a-input>
@@ -128,7 +128,7 @@ watch(
   }
 );
 
-const handleClose = (event: any) => {
+const handleClose = () => {
   formDataRef.value.resetFields();
   emit("onClose");
 };

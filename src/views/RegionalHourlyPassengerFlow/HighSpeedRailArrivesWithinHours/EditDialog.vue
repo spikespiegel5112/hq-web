@@ -170,7 +170,7 @@ watch(
   }
 );
 
-const handleClose = (event: any) => {
+const handleClose = () => {
   formDataRef.value.resetFields();
   emit("onClose");
 };

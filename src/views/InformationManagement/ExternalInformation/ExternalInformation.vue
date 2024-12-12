@@ -37,7 +37,10 @@ import {
   nextTick,
 } from "vue";
 
-import { infoManagementExternalInfoGetPageRequest } from "@/api/management";
+import {
+  infoManagementExternalInfoGetPageRequest,
+  infoManagementExternalInfoSaveRequest,
+} from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
 
@@ -54,6 +57,22 @@ const pageModel = ref([
     exportVisible: false,
   },
   {
+    label: "信息代码",
+    name: "infoCode",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "信息内容",
+    name: "infoContent",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
     label: "信息上报单位",
     name: "infoReportUnit",
     required: true,
@@ -61,7 +80,6 @@ const pageModel = ref([
     formVisible: true,
     exportVisible: true,
   },
-
   {
     label: "信息上报开始时间",
     name: "infoReportTime",
@@ -173,7 +191,18 @@ const handleClose = () => {
   state.dialogVisible = false;
 };
 
-const handleSubmit = () => {};
+const handleSubmit = (formData: any) => {
+  infoManagementExternalInfoSaveRequest(formData)
+    .then((response: any) => {
+      global.$message.success("提交成功");
+      getData();
+    })
+    .catch((error: any) => {
+      console.log(error);
+      global.$message.error("提交失败");
+    });
+};
+
 onMounted(async () => {
   getData();
 });

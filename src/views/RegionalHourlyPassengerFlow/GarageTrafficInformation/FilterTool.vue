@@ -1,17 +1,23 @@
 <template>
   <div class="common_filtertool_wrapper">
-    <a-form :model="formData" autocomplete="off" ref="formDataRef">
+    <a-form :model="state.formData" autocomplete="off" ref="formDataRef">
       <a-row>
         <a-col :span="20">
           <a-row :gutter="20">
             <a-col :span="8">
-              <a-form-item name="userName" label="时段">
-                <a-time-picker v-model:value="formData.ccccc" />
+              <a-form-item name="statisticalBeginHour" label="时段">
+                <a-time-picker
+                  v-model:value="state.formData.statisticalBeginHour"
+                  format="HH:mm:ss"
+                  valueFormat="HH"
+                  :minute-step="60"
+                  :second-step="60"
+                />
               </a-form-item>
             </a-col>
             <a-col :span="8">
               <a-form-item name="password" label="查询时间">
-                <a-time-range-picker v-model:value="formData.ddddd" />
+                <a-time-range-picker v-model:value="state.formData.ddddd" />
               </a-form-item>
             </a-col>
           </a-row>
@@ -54,18 +60,19 @@ const emit = defineEmits<{
 
 const formDataRef: any = ref(null);
 
-const formData = reactive({
-  ccccc: "",
-  ddddd: [],
+const state = reactive({
+  formData: {
+    statisticalBeginHour: "",
+  },
 });
 
 const handleSearch = () => {
-  emit("onSearch", formData);
+  emit("onSearch", state.formData);
 };
 
 const handleReset = () => {
   formDataRef.value.resetFields();
-  emit("onReset", formData);
+  emit("onReset", state.formData);
 };
 
 onMounted(async () => {});

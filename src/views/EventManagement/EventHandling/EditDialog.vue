@@ -14,27 +14,27 @@
       <a-row>
         <a-col :span="12">
           <a-form-item name="userName" label="事件类型">
-            <a-input v-model="state.formData.userName" placeholder="请输入">
+            <a-input v-model:value="state.formData.userName" placeholder="请输入">
             </a-input>
           </a-form-item>
         </a-col>
         <a-col :span="12">
           <a-form-item name="userName" label="时间">
-            <a-input v-model="state.formData.userName" placeholder="请输入">
+            <a-input v-model:value="state.formData.userName" placeholder="请输入">
             </a-input>
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="24">
+        <a-col :span="22">
           <a-form-item name="password" label="事件等级">
-            <a-input v-model="state.formData.password" placeholder="请输入">
+            <a-input v-model:value="state.formData.password" placeholder="请输入">
             </a-input>
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="24">
+        <a-col :span="22">
           <a-form-item name="password" label="处置步骤">
             <a-radio-group v-model:value="state.formData.password">
               <a-radio :style="radioStyle" :value="1">
@@ -61,17 +61,17 @@
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="24">
+        <a-col :span="22">
           <a-form-item name="password" label="事件描述">
-            <a-input v-model="state.formData.password" placeholder="请输入">
+            <a-input v-model:value="state.formData.password" placeholder="请输入">
             </a-input>
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="24">
+        <a-col :span="22">
           <a-form-item name="password" label="附件">
-            <a-input v-model="state.formData.password" placeholder="请输入">
+            <a-input v-model:value="state.formData.password" placeholder="请输入">
             </a-input>
           </a-form-item>
         </a-col>
@@ -145,12 +145,25 @@ watch(
   }
 );
 
-const handleClose = (event: any) => {
+const handleClose = () => {
   formDataRef.value.resetFields();
   emit("onClose");
 };
 
-onMounted(async () => {});
+const handleSubmit = (event: any) => {
+  formDataRef.value
+    .validate()
+    .then(() => {
+      if (props.mode === "add") {
+        state.formData.id = undefined;
+      }
+      emit("onSubmit", state.formData);
+      handleClose();
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+};
 
 onBeforeUnmount(() => {});
 </script>

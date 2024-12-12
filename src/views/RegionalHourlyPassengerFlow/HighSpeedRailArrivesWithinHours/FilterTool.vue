@@ -8,8 +8,10 @@
               <a-form-item name="statisticalBeginHour" label="时段">
                 <a-time-picker
                   v-model:value="state.formData.statisticalBeginHour"
-                  format="h"
-                  valueFormat="h"
+                  format="HH:mm:ss"
+                  valueFormat="HH"
+                  :minute-step="60"
+                  :second-step="60"
                 />
               </a-form-item>
             </a-col>
@@ -72,7 +74,7 @@ const state = reactive({
 });
 
 const handleSearch = () => {
-  emit("onSearch", formData);
+  emit("onSearch", state.formData);
 };
 
 const handleReset = () => {
@@ -80,7 +82,7 @@ const handleReset = () => {
   state.formData.statisticalDateBegin = "";
   state.formData.statisticalDateEnd = "";
   state.statisticalDate = [];
-  emit("onReset", formData);
+  emit("onReset", state.formData);
 };
 
 const handleChangeStatisticalDate = (data: any) => {

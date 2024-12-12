@@ -48,6 +48,9 @@ const state = reactive({
 const init = () => {
   const lineScaleEl: HTMLElement = document.getElementById("line-scale");
   lineScaleEl.style.display = "none";
+
+  global.$getDictionary("externalDataSources");
+  global.$getDictionary("disposalStatus");
 };
 
 onMounted(async () => {

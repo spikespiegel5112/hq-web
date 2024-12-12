@@ -6,7 +6,7 @@
           <a-row :gutter="20">
             <a-col :span="6">
               <a-form-item name="name" label="角色名称">
-                <a-input v-model="formData.name" placeholder="请输入">
+                <a-input v-model:value="formData.name" placeholder="请输入">
                 </a-input>
               </a-form-item>
             </a-col>

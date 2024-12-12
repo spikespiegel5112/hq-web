@@ -47,7 +47,7 @@
         </a-col>
       </a-row>
       <a-row :gutter="20">
-        <a-col :span="24">
+        <a-col :span="22">
           <a-form-item name="remark" label="字典详细信息">
             <a-textarea
               v-model:value="state.formData.remark"
@@ -153,7 +153,7 @@ watch(
   }
 );
 
-const handleClose = (event: any) => {
+const handleClose = () => {
   formDataRef.value.resetFields();
   emit("onClose");
 };

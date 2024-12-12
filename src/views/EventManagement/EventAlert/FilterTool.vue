@@ -6,7 +6,7 @@
           <a-row :gutter="20">
             <a-col :span="6">
               <a-form-item name="userName" label="时段">
-                <a-input v-model="formData.userName" placeholder="请输入帐号">
+                <a-input v-model:value="formData.userName" placeholder="请输入帐号">
                   <template #prefix>
                     <span class="username"></span>
                   </template>
@@ -16,7 +16,7 @@
 
             <a-col :span="6">
               <a-form-item name="password" label="查询时间">
-                <a-input v-model="formData.password" placeholder="请输入密码">
+                <a-input v-model:value="formData.password" placeholder="请输入密码">
                   <template #prefix>
                     <span class="password"></span>
                   </template>
@@ -26,7 +26,7 @@
 
             <a-col :span="6">
               <a-form-item name="password" label="查询时间">
-                <a-input v-model="formData.password" placeholder="请输入密码">
+                <a-input v-model:value="formData.password" placeholder="请输入密码">
                   <template #prefix>
                     <span class="password"></span>
                   </template>
@@ -36,7 +36,7 @@
 
             <a-col :span="6">
               <a-form-item name="password" label="查询时间">
-                <a-input v-model="formData.password" placeholder="请输入密码">
+                <a-input v-model:value="formData.password" placeholder="请输入密码">
                   <template #prefix>
                     <span class="password"></span>
                   </template>

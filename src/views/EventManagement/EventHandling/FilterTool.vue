@@ -6,7 +6,7 @@
           <a-row :gutter="20">
             <a-col :span="6">
               <a-form-item name="userName" label="报警类型">
-                <a-input v-model="formData.userName" placeholder="请输入帐号">
+                <a-input v-model:value="formData.userName" placeholder="请输入帐号">
                   <template #prefix>
                     <span class="username"></span>
                   </template>
@@ -15,8 +15,8 @@
             </a-col>
 
             <a-col :span="6">
-              <a-form-item name="password" label="来源">
-                <a-select v-model="formData.source" placeholder="请输入密码">
+              <a-form-item name="source" label="来源">
+                <a-select v-model="formData.source" placeholder="请输入">
                   <a-select-option
                     v-for="item in global.$store.state.dictionary[
                       'externalDataSources'
@@ -31,7 +31,7 @@
 
             <a-col :span="6">
               <a-form-item name="password" label="时间">
-                <a-input v-model="formData.password" placeholder="请输入密码">
+                <a-input v-model:value="formData.password" placeholder="请输入密码">
                   <template #prefix>
                     <span class="password"></span>
                   </template>
@@ -91,9 +91,7 @@ const handleReset = () => {
   emit("onReset", formData);
 };
 
-onMounted(async () => {
-  global.$getDictionary("externalDataSources");
-});
+onMounted(async () => {});
 
 onBeforeUnmount(() => {});
 </script>

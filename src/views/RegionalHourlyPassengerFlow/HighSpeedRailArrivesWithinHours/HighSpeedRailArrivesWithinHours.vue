@@ -72,6 +72,14 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
+    label: "时段",
+    name: "statisticalBeginHour",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
     label: "小时疏散数",
     name: "dispersedHourlyPassengerCount",
     required: true,
