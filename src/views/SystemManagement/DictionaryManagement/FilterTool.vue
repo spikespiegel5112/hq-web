@@ -5,7 +5,7 @@
         <a-col :span="20">
           <a-row :gutter="20">
             <a-col :span="6">
-              <a-form-item name="dicId" label="字典名称">
+              <a-form-item name="code" label="字典名称">
                 <a-select
                   v-model:value="formData.code"
                   placeholder="请输入"

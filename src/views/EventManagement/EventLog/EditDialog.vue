@@ -1,6 +1,6 @@
 <template>
   <a-modal
-    v-model:open="props.visible"
+    v-model:open="state.visible"
     :title="dialogTitle"
     @cancel="handleClose"
     width="8rem"
@@ -14,13 +14,19 @@
       <a-row>
         <a-col :span="12">
           <a-form-item name="userName" label="事件类型">
-            <a-input v-model:value="state.formData.userName" placeholder="请输入">
+            <a-input
+              v-model:value="state.formData.userName"
+              placeholder="请输入"
+            >
             </a-input>
           </a-form-item>
         </a-col>
         <a-col :span="12">
           <a-form-item name="userName" label="时间">
-            <a-input v-model:value="state.formData.userName" placeholder="请输入">
+            <a-input
+              v-model:value="state.formData.userName"
+              placeholder="请输入"
+            >
             </a-input>
           </a-form-item>
         </a-col>
@@ -28,7 +34,10 @@
       <a-row>
         <a-col :span="22">
           <a-form-item name="password" label="事件等级">
-            <a-input v-model:value="state.formData.password" placeholder="请输入">
+            <a-input
+              v-model:value="state.formData.password"
+              placeholder="请输入"
+            >
             </a-input>
           </a-form-item>
         </a-col>
@@ -63,7 +72,10 @@
       <a-row>
         <a-col :span="22">
           <a-form-item name="password" label="事件描述">
-            <a-input v-model:value="state.formData.password" placeholder="请输入">
+            <a-input
+              v-model:value="state.formData.password"
+              placeholder="请输入"
+            >
             </a-input>
           </a-form-item>
         </a-col>
@@ -71,7 +83,10 @@
       <a-row>
         <a-col :span="22">
           <a-form-item name="password" label="附件">
-            <a-input v-model:value="state.formData.password" placeholder="请输入">
+            <a-input
+              v-model:value="state.formData.password"
+              placeholder="请输入"
+            >
             </a-input>
           </a-form-item>
         </a-col>
@@ -112,6 +127,7 @@ const props = defineProps({
 });
 
 const state = reactive({
+  visible: false,
   formData: {
     userName: "",
     password: "",
@@ -150,18 +166,18 @@ const handleClose = () => {
   emit("onClose");
 };
 
-const handleSubmit = (event: any) => {
+const handleSubmit = () => {
+  if (props.mode === "add") {
+    state.formData.id = undefined;
+  }
   formDataRef.value
     .validate()
     .then(() => {
-      if (props.mode === "add") {
-        state.formData.id = undefined;
-      }
       emit("onSubmit", state.formData);
       handleClose();
     })
     .catch((error: any) => {
-      console.log(error);
+      console.log("error", error);
     });
 };
 

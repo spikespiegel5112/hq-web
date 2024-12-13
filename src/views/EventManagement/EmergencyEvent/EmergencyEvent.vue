@@ -8,7 +8,7 @@
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
-   a    <BaseTable
+    <BaseTable
       :tableData="state.tableData"
       :dataModel="pageModel"
       :pagination="pagination"
@@ -41,7 +41,10 @@ import {
   nextTick,
 } from "vue";
 
-import { eventManageSuddenEventGetPageRequest } from "@/api/management";
+import {
+  eventManageSuddenEventGetPageRequest,
+  eventManageSuddenEventDeleteRequest,
+} from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
 
@@ -168,6 +171,26 @@ const handleClose = () => {
 };
 
 const handleSubmit = () => {};
+
+const handleDelete = (id: number) => {
+  eventManageSuddenEventDeleteRequest({
+    id,
+  })
+    .then((response: any) => {
+      global.$message.success("删除成功");
+      getData();
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+};
+
+const handleChangePage = (pagingData: any) => {
+  pagination.page = pagingData.current;
+  pagination.pageSize = pagingData.pageSize;
+  pagination.total = pagingData.total;
+  getData();
+};
 
 onMounted(async () => {
   getData();

@@ -65,7 +65,7 @@ const emit = defineEmits<{
 const formDataRef: any = ref(null);
 
 const state = reactive({
-  formData: {
+  visible: false,
     statisticalBeginHour: null,
     statisticalDateBegin: "",
     statisticalDateEnd: "",

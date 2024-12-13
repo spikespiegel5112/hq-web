@@ -1,6 +1,6 @@
 <template>
   <a-modal
-    v-model:open="props.visible"
+    v-model:open="state.visible"
     :title="dialogTitle"
     @cancel="handleClose"
     @ok="handleSubmit"
@@ -71,6 +71,7 @@ const props = defineProps({
 });
 
 const state: UnwrapRef<any> = reactive({
+  visible: false,
   formData: {
     id: null as number | null | undefined,
     code: "",
@@ -94,7 +95,7 @@ const rules: ComputedRef<RuleObject[]> = computed(() => {
   };
 
   const result: any = {};
-  Object.keys(toRaw(state.formData)).forEach((item) => {
+  Object.keys(state.formData).forEach((item) => {
     const dataModelInfo = props.dataModel.find(
       (item2: any) => item2.name === item
     ) as any;

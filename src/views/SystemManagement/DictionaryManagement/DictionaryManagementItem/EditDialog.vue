@@ -1,10 +1,11 @@
 <template>
   <a-modal
-    v-model:open="props.visible"
+    v-model:open="state.visible"
     :title="dialogTitle"
     width="8rem"
     @cancel="handleClose"
   >
+
     <a-form
       ref="formDataRef"
       :model="state.formData"
@@ -115,6 +116,7 @@ const props = defineProps({
 });
 
 const state: UnwrapRef<any> = reactive({
+  visible: false,
   formData: {
     id: null as number | null | undefined,
     dicId: null,

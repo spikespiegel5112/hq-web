@@ -84,7 +84,7 @@ const global = currentInstance.appContext.config.globalProperties;
 const formDataRef = ref();
 
 const state = reactive({
-  formData: {
+  visible: false,
     deviceId: "dev_znjt_001",
     loginType: 2,
     password: "shzj002",

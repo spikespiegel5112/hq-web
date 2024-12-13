@@ -1,6 +1,6 @@
 <template>
   <a-modal
-    v-model:open="props.visible"
+    v-model:open="state.visible"
     :title="dialogTitle"
     width="8rem"
     @cancel="handleClose"
@@ -175,18 +175,18 @@ const handleClose = () => {
   emit("onClose");
 };
 
-const handleSubmit = (event: any) => {
+const handleSubmit = () => {
+  if (props.mode === "add") {
+    state.formData.id = undefined;
+  }
   formDataRef.value
     .validate()
     .then(() => {
-      if (props.mode === "add") {
-        state.formData.id = undefined;
-      }
       emit("onSubmit", state.formData);
       handleClose();
     })
     .catch((error: any) => {
-      console.log(error);
+      console.log("error", error);
     });
 };
 

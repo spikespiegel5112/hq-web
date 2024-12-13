@@ -1,14 +1,14 @@
 <template>
   <a-modal
     class="common_dailog_wrapper"
-    v-model:open="props.visible"
+    v-model:open="state.visible"
     width="8rem"
     @cancel="handleClose"
   >
     <template #title>
       <span class="square"></span>
       <span></span>
-      {{ props.mode === "edit" ? "编辑" : "新增" }}
+      {{ dialogTitle }}
     </template>
     <a-form
       :model="state.formData"
@@ -66,9 +66,9 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="estimatedHourlyArrivePassengerCount" label="内容">
+          <a-form-item name="eventContent" label="报警内容">
             <a-textarea
-              v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
+              v-model:value="state.formData.eventContent"
               placeholder="请输入"
             >
             </a-textarea>
@@ -77,9 +77,9 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="estimatedHourlyArrivePassengerCount" label="附件">
+          <a-form-item name="attachment" label="附件">
             <a-upload
-              v-model:file-list="fileList"
+              v-model:file-list="state.fileList"
               name="file"
               action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
               :headers="{}"
@@ -145,11 +145,14 @@ const props = defineProps({
 let state = reactive({
   visible: false,
   formData: {
-    dispersedHourlyPassengerCount: null,
-    estimatedHourlyArrivePassengerCount: null,
     id: null,
-    statisticalDate: "",
+    eventType: "",
+    eventContent: "",
+    eventTime: "",
+    eventLocation: "",
+    attachment: "",
   } as any,
+  fileList: [] as any,
 });
 
 const dialogTitle: ComputedRef<string> = computed(() => {
@@ -207,18 +210,18 @@ const handleClose = () => {
   emit("onClose");
 };
 
-const handleSubmit = (event: any) => {
+const handleSubmit = () => {
+  if (props.mode === "add") {
+    state.formData.id = undefined;
+  }
   formDataRef.value
     .validate()
     .then(() => {
-      if (props.mode === "add") {
-        state.formData.id = undefined;
-      }
       emit("onSubmit", state.formData);
       handleClose();
     })
     .catch((error: any) => {
-      console.log(error);
+      console.log("error", error);
     });
 };
 

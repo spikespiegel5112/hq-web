@@ -203,7 +203,7 @@ const handleSubmit = (formData: any) => {
 };
 
 const handleDelete = (id: number) => {
-  handleDeletePromise({
+  dictionaryManageDelDelDictItemRequest({
     id,
   })
     .then((response: any) => {
@@ -220,18 +220,6 @@ const handleChangePage = (pagingData: any) => {
   pagination.pageSize = pagingData.pageSize;
   pagination.total = pagingData.total;
   getData();
-};
-
-const handleDeletePromise = (params: object) => {
-  return new Promise((resolve, reject) => {
-    dictionaryManageDelDelDictItemRequest(params)
-      .then((response: any) => {
-        resolve(response);
-      })
-      .catch((error: any) => {
-        reject(error);
-      });
-  });
 };
 
 onMounted(async () => {

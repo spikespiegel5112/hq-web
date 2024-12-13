@@ -127,27 +127,27 @@ const routerDictionary = [
           import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
         children: [
           {
-            title: "事件告警",
-            path: "EventAlert",
-            name: "EventAlert",
+            title: "突发事件",
+            path: "EmergencyEvent",
+            name: "EmergencyEvent",
             component: () =>
               import(
-                /* webpackChunkName: "EventAlert" */ "@/views/EventManagement/EventAlert/EventAlert.vue"
+                /* webpackChunkName: "EmergencyEvent" */ "@/views/EventManagement/EmergencyEvent/EmergencyEvent.vue"
               ),
             meta: {
-              title: "事件告警",
+              title: "突发事件",
             },
           },
           {
-            title: "事件处置",
-            path: "EventHandling",
-            name: "EventHandling",
+            title: "事件记录",
+            path: "EventLog",
+            name: "EventLog",
             component: () =>
               import(
-                /* webpackChunkName: "EventHandling" */ "@/views/EventManagement/EventHandling/EventHandling.vue"
+                /* webpackChunkName: "EventLog" */ "@/views/EventManagement/EventLog/EventLog.vue"
               ),
             meta: {
-              title: "事件处置",
+              title: "事件记录",
             },
           },
         ],

@@ -113,7 +113,7 @@ const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
 const state = reactive({
-  formData: {},
+  visible: false,},
 });
 
 const rules: Record<string, Rule[]> = {

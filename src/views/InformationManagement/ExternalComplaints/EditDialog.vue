@@ -1,6 +1,6 @@
 <template>
   <a-modal
-    v-model:open="props.visible"
+    v-model:open="state.visible"
     :title="dialogTitle"
     @cancel="handleClose"
     width="8rem"
@@ -93,6 +93,7 @@ const props = defineProps({
 });
 
 const state = reactive({
+  visible: false,
   formData: {
     userName: "",
     password: "",
@@ -123,18 +124,18 @@ const handleClose = () => {
   emit("onClose");
 };
 
-const handleSubmit = (event: any) => {
+const handleSubmit = () => {
+  if (props.mode === "add") {
+    state.formData.id = undefined;
+  }
   formDataRef.value
     .validate()
     .then(() => {
-      if (props.mode === "add") {
-        state.formData.id = undefined;
-      }
       emit("onSubmit", state.formData);
       handleClose();
     })
     .catch((error: any) => {
-      console.log(error);
+      console.log("error", error);
     });
 };
 
