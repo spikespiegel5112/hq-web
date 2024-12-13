@@ -108,7 +108,7 @@ const pageModel = ref([
     name: "operationColumn",
     tableVisible: true,
     exportVisible: false,
-    actions: ["edit", "review", "delete"],
+    actions: ["edit", "review"],
   },
 ]);
 
@@ -182,6 +182,7 @@ const handleSubmit = (formData: any) => {
     })
     .catch((error: any) => {
       console.log(error);
+      global.$message.error("提交失败");
     });
 };
 

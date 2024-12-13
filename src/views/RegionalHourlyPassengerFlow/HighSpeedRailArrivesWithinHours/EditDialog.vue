@@ -15,12 +15,26 @@
     >
       <a-row>
         <a-col :span="22">
-          <a-form-item name="statisticalDate" label="日期">
+          <a-form-item name="statisticalDate" label="统计日期">
             <a-date-picker
               v-model:value="state.formData.statisticalDate"
               placeholder="情选择"
               format="YYYY-MM-DD"
-              valueFormat="string"
+              valueFormat="YYYY-MM-DD"
+            />
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="statisticalBeginHour" label="统计开始时间">
+            {{ state.formData.statisticalBeginHour }}
+            <a-time-picker
+              v-model:value="state.formData.statisticalBeginHour"
+              format="HH"
+              valueFormat="HH"
+              :minute-step="60"
+              :second-step="60"
             />
           </a-form-item>
         </a-col>
@@ -111,6 +125,7 @@ let state = reactive({
     dispersedHourlyPassengerCount: null,
     estimatedHourlyArrivePassengerCount: null,
     id: null,
+    statisticalBeginHour: null,
     statisticalDate: "",
   } as any,
 });
@@ -163,8 +178,11 @@ watch(
     state.visible = newValue;
     if (!!newValue) {
       await nextTick();
-if (["edit", "review"].some((item) => item === props.mode)) {
+      if (["edit", "review"].some((item) => item === props.mode)) {
         const formData = JSON.parse(JSON.stringify(props.rowData));
+        formData.statisticalBeginHour = global.$dayjs(
+          formData.statisticalBeginHour
+        );
         state.formData = formData;
       }
     }
@@ -177,13 +195,19 @@ const handleClose = () => {
 };
 
 const handleSubmit = () => {
+  const statisticalDate = global
+    .$dayjs(state.formData.statisticalDate)
+    .format("YYYY-MM-DD");
+
   if (props.mode === "add") {
     state.formData.id = undefined;
   }
   formDataRef.value
     .validate()
     .then(() => {
-      emit("onSubmit", state.formData);
+      emit("onSubmit", {
+        ...state.formData,
+      });
       handleClose();
     })
     .catch((error: any) => {
