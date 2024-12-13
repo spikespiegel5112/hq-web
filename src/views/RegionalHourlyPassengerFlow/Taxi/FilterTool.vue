@@ -61,7 +61,8 @@ const emit = defineEmits<{
 const formDataRef: any = ref(null);
 
 const state = reactive({
-  visible: false,},
+  visible: false,
+  formData: {},
 });
 
 const handleSearch = () => {

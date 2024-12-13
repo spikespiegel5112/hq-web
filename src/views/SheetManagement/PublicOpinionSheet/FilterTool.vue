@@ -20,28 +20,22 @@
 
             <a-col :span="6">
               <a-form-item name="password" label="舆情来源">
-                <a-input v-model:value="formData.password" placeholder="请输入密码">
-                  <template #prefix>
-                    <span class="password"></span>
-                  </template>
+                <a-input v-model:value="formData.password" placeholder="请输入">
+                  
                 </a-input>
               </a-form-item>
             </a-col>
             <a-col :span="6">
               <a-form-item name="password" label="敏感程度">
-                <a-input v-model:value="formData.password" placeholder="请输入密码">
-                  <template #prefix>
-                    <span class="password"></span>
-                  </template>
+                <a-input v-model:value="formData.password" placeholder="请输入">
+                  
                 </a-input>
               </a-form-item>
             </a-col>
             <a-col :span="6">
               <a-form-item name="password" label="日期">
-                <a-input v-model:value="formData.password" placeholder="请输入密码">
-                  <template #prefix>
-                    <span class="password"></span>
-                  </template>
+                <a-input v-model:value="formData.password" placeholder="请输入">
+                  
                 </a-input>
               </a-form-item>
             </a-col>

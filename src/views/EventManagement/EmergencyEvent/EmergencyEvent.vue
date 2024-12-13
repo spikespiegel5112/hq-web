@@ -44,6 +44,7 @@ import {
 import {
   eventManageSuddenEventGetPageRequest,
   eventManageSuddenEventDeleteRequest,
+  eventManageSuddenEventSaveRequest,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
@@ -59,6 +60,15 @@ const pageModel = ref([
     tableVisible: true,
     formVisible: true,
     exportVisible: false,
+  },
+  {
+    label: "报警类型",
+    name: "eventType",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+    width: "1rem",
   },
   {
     label: "报警源",
@@ -95,15 +105,7 @@ const pageModel = ref([
     exportVisible: true,
     width: "1.5rem",
   },
-  {
-    label: "报警类型",
-    name: "eventType",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-    width: "1rem",
-  },
+
   {
     label: "报警内容",
     name: "eventContent",
@@ -200,7 +202,17 @@ const handleClose = () => {
   state.dialogVisible = false;
 };
 
-const handleSubmit = () => {};
+const handleSubmit = (formData: any) => {
+  eventManageSuddenEventSaveRequest(formData)
+    .then((response: any) => {
+      global.$message.success("提交成功");
+      getData();
+    })
+    .catch((error: any) => {
+      console.log(error);
+      global.$message.error("提交失败");
+    });
+};
 
 const handleDelete = (id: number) => {
   eventManageSuddenEventDeleteRequest({

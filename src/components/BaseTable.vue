@@ -73,7 +73,6 @@
 </template>
 
 <script lang="tsx" setup>
-import { debug, error } from "console";
 import {
   reactive,
   watch,
@@ -90,7 +89,7 @@ const emit = defineEmits<{
   (e: "onEdit", rowData: any): void;
   (e: "onReview", rowData: any): void;
   (e: "onChangePage", pagination: object): void;
-  (e: "onDelete", id: number): void;
+  (e: "onDelete", id: number, row: object): void;
 }>();
 
 const props = defineProps({
@@ -269,7 +268,7 @@ const handleAction = (action: any, scope: any) => {
       title: "提示",
       content: "确认删除？",
       onOk: () => {
-        emit("onDelete", row.id);
+        emit("onDelete", row.id, row);
       },
     });
   }

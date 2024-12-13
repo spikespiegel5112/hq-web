@@ -190,11 +190,12 @@ const handleClose = () => {
   state.dialogVisible = false;
 };
 
-const handleSubmit = (formData: any) => {
+const handleSubmit = (formData: any, code: string) => {
   dictionaryManageSaveDictItemRequest(formData)
     .then((response: any) => {
       global.$message.success("提交成功");
       getData();
+      global.$getDictionary(code, true);
     })
     .catch((error: any) => {
       console.log(error);
@@ -202,13 +203,14 @@ const handleSubmit = (formData: any) => {
     });
 };
 
-const handleDelete = (id: number) => {
+const handleDelete = (id: number, row: any) => {
   dictionaryManageDelDelDictItemRequest({
     id,
   })
     .then((response: any) => {
       global.$message.success("删除成功");
       getData();
+      global.$getDictionary(row.code, true);
     })
     .catch((error: any) => {
       console.log(error);

@@ -21,11 +21,9 @@
               <a-form-item name="password" label="事件性质">
                 <a-input
                   v-model="formData.password"
-                  placeholder="请输入密码"
+                  placeholder="请输入"
                 >
-                  <template #prefix>
-                    <span class="password"></span>
-                  </template>
+                  
                 </a-input>
               </a-form-item>
             </a-col>
@@ -33,11 +31,9 @@
               <a-form-item name="password" label="日期">
                 <a-input
                   v-model="formData.password"
-                  placeholder="请输入密码"
+                  placeholder="请输入"
                 >
-                  <template #prefix>
-                    <span class="password"></span>
-                  </template>
+                  
                 </a-input>
               </a-form-item>
             </a-col>

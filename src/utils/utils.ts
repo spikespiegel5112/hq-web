@@ -233,12 +233,13 @@ const _utils = {
     URL.revokeObjectURL(link.href);
     messageApi.success("导出成功!", 3000);
   },
-  $getDictionary: async (code: string) => {
+  $getDictionary: async (code: string, force: boolean) => {
     let result = [] as any[];
     const currentDictionaryData = store.state.dictionary[code];
     if (
       currentDictionaryData instanceof Array &&
-      currentDictionaryData.length > 0
+      currentDictionaryData.length > 0 &&
+      !force
     ) {
       result = currentDictionaryData;
     } else {

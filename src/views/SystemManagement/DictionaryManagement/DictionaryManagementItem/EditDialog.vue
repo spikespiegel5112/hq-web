@@ -5,7 +5,6 @@
     width="8rem"
     @cancel="handleClose"
   >
-
     <a-form
       ref="formDataRef"
       :model="state.formData"
@@ -18,7 +17,11 @@
       <a-row :gutter="20">
         <a-col :span="22">
           <a-form-item name="dicId" label="字典名称">
-            <a-select v-model:value="state.formData.dicId" placeholder="请输入">
+            <a-select
+              v-model:value="state.formData.dicId"
+              placeholder="请输入"
+              @change="hangleCHangeDictionaryNameList"
+            >
               <a-select-option
                 v-for="item in props.dictionaryNameList"
                 :key="item.id"
@@ -100,7 +103,7 @@ const global = currentInstance.appContext.config.globalProperties;
 const formDataRef = ref();
 const emit = defineEmits<{
   (e: "onClose"): void;
-  (e: "onSubmit", formData: any): void;
+  (e: "onSubmit", formData: any, code: string): void;
 }>();
 
 const props = defineProps({
@@ -169,7 +172,7 @@ watch(
     state.visible = newValue;
     if (!!newValue) {
       await nextTick();
-if (["edit", "review"].some((item) => item === props.mode)) {
+      if (["edit", "review"].some((item) => item === props.mode)) {
         const formData = JSON.parse(JSON.stringify(props.rowData));
         state.formData = formData;
       }
@@ -189,12 +192,19 @@ const handleSubmit = () => {
   formDataRef.value
     .validate()
     .then(() => {
-      emit("onSubmit", state.formData);
+      emit("onSubmit", state.formData, state.currentDictionaryCode);
       handleClose();
     })
     .catch((error: any) => {
       console.log("error", error);
     });
+};
+
+const hangleCHangeDictionaryNameList = (value: any) => {
+  const dictionaryItem: any = props.dictionaryNameList.find(
+    (item: any) => item.id == value
+  );
+  state.currentDictionaryCode = dictionaryItem?.code;
 };
 
 onMounted(async () => {});

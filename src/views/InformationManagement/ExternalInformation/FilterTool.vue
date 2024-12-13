@@ -1,12 +1,15 @@
 <template>
   <div class="common_filtertool_wrapper">
-    <a-form :model="formData" autocomplete="off" ref="formDataRef">
+    <a-form :model="state.formData" autocomplete="off" ref="formDataRef">
       <a-row>
         <a-col :span="20">
           <a-row :gutter="20">
             <a-col :span="6">
-              <a-form-item name="source" label="来源">
-                <a-select v-model="formData.source" placeholder="请输入">
+              <a-form-item name="infoReportUnit" label="信息上报单位">
+                <a-select
+                  v-model:value="state.formData.infoReportUnit"
+                  placeholder="请输入"
+                >
                   <a-select-option
                     v-for="item in global.$store.state.dictionary[
                       'externalDataSources'
@@ -20,8 +23,11 @@
             </a-col>
 
             <a-col :span="6">
-              <a-form-item name="password" label="类型">
-                <a-select v-model="formData.infoType" placeholder="请输入">
+              <a-form-item name="infoType" label="信息类型">
+                <a-select
+                  v-model:value="state.formData.infoType"
+                  placeholder="请输入"
+                >
                   <a-select-option
                     v-for="item in global.$store.state.dictionary[
                       'externalDataSources'
@@ -35,11 +41,11 @@
             </a-col>
 
             <a-col :span="6">
-              <a-form-item name="password" label="查询时间">
-                <a-input v-model:value="formData.password" placeholder="请输入密码">
-                  <template #prefix>
-                    <span class="password"></span>
-                  </template>
+              <a-form-item name="infoReportTime" label="查询时间">
+                <a-input
+                  v-model:value="state.infoReportTime"
+                  placeholder="请输入"
+                >
                 </a-input>
               </a-form-item>
             </a-col>
@@ -83,18 +89,23 @@ const emit = defineEmits<{
 
 const formDataRef: any = ref(null);
 
-const formData = reactive({
-  source: "",
-  infoType: "",
+const state = reactive({
+  infoReportTime: [],
+  formData: {
+    infoReportTimeEnd: "",
+    infoReportTimeStart: "",
+    infoReportUnit: "",
+    infoType: "",
+  },
 });
 
 const handleSearch = () => {
-  emit("onSearch", formData);
+  emit("onSearch", state.formData);
 };
 
 const handleReset = () => {
   formDataRef.value.resetFields();
-  emit("onReset", formData);
+  emit("onReset", state.formData);
 };
 
 onMounted(async () => {});

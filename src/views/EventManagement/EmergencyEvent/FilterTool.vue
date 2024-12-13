@@ -5,8 +5,11 @@
         <a-col :span="20">
           <a-row :gutter="20">
             <a-col :span="6">
-              <a-form-item name="userName" label="时段">
-                <a-input v-model:value="formData.userName" placeholder="请输入帐号">
+              <a-form-item name="eventType" label="报警类型">
+                <a-input
+                  v-model:value="formData.eventType"
+                  placeholder="请输入帐号"
+                >
                   <template #prefix>
                     <span class="username"></span>
                   </template>
@@ -15,31 +18,31 @@
             </a-col>
 
             <a-col :span="6">
-              <a-form-item name="password" label="查询时间">
-                <a-input v-model:value="formData.password" placeholder="请输入密码">
-                  <template #prefix>
-                    <span class="password"></span>
-                  </template>
+              <a-form-item name="eventContent" label="报警内容">
+                <a-input
+                  v-model:value="formData.eventContent"
+                  placeholder="请输入"
+                >
                 </a-input>
               </a-form-item>
             </a-col>
 
             <a-col :span="6">
-              <a-form-item name="password" label="查询时间">
-                <a-input v-model:value="formData.password" placeholder="请输入密码">
-                  <template #prefix>
-                    <span class="password"></span>
-                  </template>
+              <a-form-item name="eventTime" label="时间">
+                <a-input
+                  v-model:value="formData.eventTime"
+                  placeholder="请输入"
+                >
                 </a-input>
               </a-form-item>
             </a-col>
 
             <a-col :span="6">
-              <a-form-item name="password" label="查询时间">
-                <a-input v-model:value="formData.password" placeholder="请输入密码">
-                  <template #prefix>
-                    <span class="password"></span>
-                  </template>
+              <a-form-item name="eventLocation" label="报警源">
+                <a-input
+                  v-model:value="formData.eventLocation"
+                  placeholder="请输入"
+                >
                 </a-input>
               </a-form-item>
             </a-col>
@@ -84,7 +87,10 @@ const emit = defineEmits<{
 const formDataRef: any = ref(null);
 
 const formData = reactive({
-  dicName: "",
+  eventType: "",
+  eventTime: "",
+  eventContent: "",
+  eventLocation: "",
 });
 
 const handleSearch = () => {

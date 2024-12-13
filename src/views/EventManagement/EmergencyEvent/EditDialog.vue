@@ -24,7 +24,12 @@
               v-model:value="state.formData.eventType"
               placeholder="请选择"
             >
-              <a-select-option value="全部">全部</a-select-option>
+              <a-select-option
+                v-for="item in global.$store.state.dictionary.alarmType"
+                :value="item.value"
+              >
+                {{ item.label }}
+              </a-select-option>
             </a-select>
           </a-form-item>
         </a-col>
@@ -168,7 +173,7 @@ let state = reactive({
     eventStatus: "",
     eventTime: "",
     eventLocation: "",
-    attachment: "",
+    attachmentPath: "",
   } as any,
   fileList: [] as any,
 });
