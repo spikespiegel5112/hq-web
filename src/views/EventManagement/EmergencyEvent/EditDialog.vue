@@ -31,25 +31,23 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="eventTime" label="报警时间">
-            <a-input
+          <a-form-item name="eventTime" label="报警日期">
+            <a-date-picker
               v-model:value="state.formData.eventTime"
               placeholder="请输入"
-              :min="0"
-            >
-            </a-input>
+              format="YYYY-MM-DD HH:mm:ss"
+            ></a-date-picker>
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="22">
           <a-form-item name="eventLocation" label="报警源">
-            <a-select
+            <a-input
               v-model:value="state.formData.eventLocation"
               placeholder="请输入"
             >
-              <a-select-option value="全部">全部</a-select-option>
-            </a-select>
+            </a-input>
           </a-form-item>
         </a-col>
       </a-row>
@@ -70,8 +68,27 @@
             <a-textarea
               v-model:value="state.formData.eventContent"
               placeholder="请输入"
+              :rows="4"
             >
             </a-textarea>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="eventStatus" label="处置情况">
+            <a-select
+              v-model:value="state.formData.eventStatus"
+              placeholder="请选择"
+            >
+              <a-select-option
+                v-for="item in global.$store.state.dictionary.disposalStatus"
+                :key="item.value"
+                :value="item.value"
+              >
+                {{ item.title }}
+              </a-select-option>
+            </a-select>
           </a-form-item>
         </a-col>
       </a-row>
@@ -148,6 +165,7 @@ let state = reactive({
     id: null,
     eventType: "",
     eventContent: "",
+    eventStatus: "",
     eventTime: "",
     eventLocation: "",
     attachment: "",
@@ -199,7 +217,11 @@ watch(
     if (!!newValue) {
       await nextTick();
       if (["edit", "review"].some((item) => item === props.mode)) {
-        state.formData = JSON.parse(JSON.stringify(props.rowData));
+        const formData = JSON.parse(JSON.stringify(props.rowData));
+        state.formData = {
+          ...formData,
+          eventTime: global.$dayjs(formData.eventTime),
+        };
       }
     }
   }
@@ -211,19 +233,27 @@ const handleClose = () => {
 };
 
 const handleSubmit = () => {
+  const eventTime = global
+    .$dayjs(state.formData.eventTime)
+    .format("YYYY-MM-DD HH:mm:ss");
   if (props.mode === "add") {
     state.formData.id = undefined;
   }
   formDataRef.value
     .validate()
     .then(() => {
-      emit("onSubmit", state.formData);
+      emit("onSubmit", {
+        ...state.formData,
+        eventTime,
+      });
       handleClose();
     })
     .catch((error: any) => {
       console.log("error", error);
     });
 };
+
+const handleChangeEventTime = (date: any) => {};
 
 const handleChangeAttachment = () => {};
 

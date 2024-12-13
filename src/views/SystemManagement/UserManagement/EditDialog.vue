@@ -147,8 +147,9 @@ watch(
     state.visible = newValue;
     if (!!newValue) {
       await nextTick();
-      if (["edit", "review"].some((item) => item === props.mode)) {
-        state.formData = JSON.parse(JSON.stringify(props.rowData));
+if (["edit", "review"].some((item) => item === props.mode)) {
+        const formData = JSON.parse(JSON.stringify(props.rowData));
+        state.formData = formData;
       }
     }
   }
