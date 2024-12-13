@@ -31,12 +31,14 @@ service.interceptors.request.use(
 // 响应拦截器
 service.interceptors.response.use(
   (res: any) => {
+    const rejectList = [500, 501];
     // console.log(res);
     if (res.status === 404) {
     }
     if (res.baseURL === "") {
     }
-    if (res.data.code === 501) {
+
+    if (rejectList.some((item: number) => item === res.data.code)) {
       return Promise.reject(res.data);
     }
     // console.log("service.interceptors++++", res);

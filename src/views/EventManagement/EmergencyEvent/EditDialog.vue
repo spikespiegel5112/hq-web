@@ -14,6 +14,7 @@
       :model="state.formData"
       ref="formDataRef"
       autocomplete="off"
+      :disabled="props.mode === 'review'"
       :rules="rules"
       :label-col="{ style: { width: '120px' } }"
     >

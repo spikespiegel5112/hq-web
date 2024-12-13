@@ -31,8 +31,8 @@
             {{ state.formData.statisticalBeginHour }}
             <a-time-picker
               v-model:value="state.formData.statisticalBeginHour"
-              format="HH"
-              valueFormat="HH"
+              format="HH:mm:ss"
+              value-format="HH:mm:ss"
               :minute-step="60"
               :second-step="60"
             />
@@ -180,9 +180,11 @@ watch(
       await nextTick();
       if (["edit", "review"].some((item) => item === props.mode)) {
         const formData = JSON.parse(JSON.stringify(props.rowData));
-        formData.statisticalBeginHour = global.$dayjs(
-          formData.statisticalBeginHour
-        );
+
+        formData.statisticalBeginHour = global
+          .$dayjs(formData.statisticalBeginHour.toString(), "HH")
+          .format("HH:mm:ss");
+
         state.formData = formData;
       }
     }
@@ -195,9 +197,13 @@ const handleClose = () => {
 };
 
 const handleSubmit = () => {
-  const statisticalDate = global
-    .$dayjs(state.formData.statisticalDate)
-    .format("YYYY-MM-DD");
+  let statisticalBeginHour = state.formData.statisticalBeginHour;
+  statisticalBeginHour = global
+    .$dayjs(statisticalBeginHour, "HH:mm:ss")
+    .format("HH");
+  console.log(statisticalBeginHour);
+
+  statisticalBeginHour = Number(statisticalBeginHour);
 
   if (props.mode === "add") {
     state.formData.id = undefined;
@@ -207,6 +213,7 @@ const handleSubmit = () => {
     .then(() => {
       emit("onSubmit", {
         ...state.formData,
+        statisticalBeginHour,
       });
       handleClose();
     })
