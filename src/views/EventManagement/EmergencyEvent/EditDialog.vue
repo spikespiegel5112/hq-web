@@ -19,7 +19,7 @@
     >
       <a-row>
         <a-col :span="22">
-          <a-form-item name="eventType" label="报警类型">
+          <a-form-item name="eventType" label="事件类别">
             <a-select
               v-model:value="state.formData.eventType"
               placeholder="请选择"
@@ -47,7 +47,7 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="eventLocation" label="报警源">
+          <a-form-item name="eventLocation" label="事件发生地点">
             <a-input
               v-model:value="state.formData.eventLocation"
               placeholder="请输入"
@@ -58,18 +58,18 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="eventLocation" label="事件发生地点">
-            <a-input-number
-              v-model:value="state.formData.eventLocation"
+          <a-form-item name="eventCode" label="事件编码">
+            <a-input
+              v-model:value="state.formData.eventCode"
               placeholder="请输入"
             >
-            </a-input-number>
+            </a-input>
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="eventContent" label="报警内容">
+          <a-form-item name="eventContent" label="事件内容">
             <a-textarea
               v-model:value="state.formData.eventContent"
               placeholder="请输入"
@@ -81,7 +81,7 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="eventStatus" label="处置情况">
+          <a-form-item name="eventStatus" label="事件状态">
             <a-select
               v-model:value="state.formData.eventStatus"
               placeholder="请选择"
@@ -119,10 +119,10 @@
     <template #footer>
       <a-row>
         <a-col :span="22">
+          <a-button key="back" @click="handleClose">取消</a-button>
           <a-button key="submit" type="primary" @click="handleSubmit">
             确认
           </a-button>
-          <a-button key="back" @click="handleClose">取消</a-button>
         </a-col>
       </a-row>
     </template>
@@ -168,12 +168,18 @@ let state = reactive({
   visible: false,
   formData: {
     id: null,
-    eventType: "",
-    eventContent: "",
-    eventStatus: "",
-    eventTime: "",
-    eventLocation: "",
     attachmentPath: "",
+    createBy: "",
+    createTime: "",
+    eventCode: "",
+    eventContent: "",
+    eventLocation: "",
+    eventStatus: null,
+    eventTime: "",
+    eventType: "",
+    manageRegion: "",
+    updateBy: "",
+    updateTime: "",
   } as any,
   fileList: [] as any,
 });

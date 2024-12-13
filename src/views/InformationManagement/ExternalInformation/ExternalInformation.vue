@@ -44,7 +44,6 @@ import {
 import {
   infoManagementExternalInfoGetPageRequest,
   infoManagementExternalInfoSaveRequest,
-  infoManagementExternalInfoUpdateRequest,
   infoManagementExternalInfoDeleteRequest,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
@@ -198,27 +197,15 @@ const handleClose = () => {
 };
 
 const handleSubmit = (formData: any) => {
-  if (state.dialogMode === "add") {
-    infoManagementExternalInfoSaveRequest(formData)
-      .then((response: any) => {
-        global.$message.success("提交成功");
-        getData();
-      })
-      .catch((error: any) => {
-        console.log(error);
-        global.$message.error("提交失败");
-      });
-  } else if (state.dialogMode === "edit") {
-    infoManagementExternalInfoUpdateRequest(formData)
-      .then((response: any) => {
-        global.$message.success("提交成功");
-        getData();
-      })
-      .catch((error: any) => {
-        console.log(error);
-        global.$message.error("提交失败");
-      });
-  }
+  infoManagementExternalInfoSaveRequest(formData)
+    .then((response: any) => {
+      global.$message.success("提交成功");
+      getData();
+    })
+    .catch((error: any) => {
+      console.log(error);
+      global.$message.error("提交失败");
+    });
 };
 
 const handleChangePage = (pagingData: any) => {

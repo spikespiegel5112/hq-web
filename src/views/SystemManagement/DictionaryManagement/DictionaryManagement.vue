@@ -1,13 +1,13 @@
 <template>
   <div class="common_tab_container">
     <a-tabs v-model:activeKey="state.activeKey">
-      <a-tab-pane key="DictionaryManagementName" tab="字典名称">
-        <DictionaryManagementName
+      <a-tab-pane key="DictionaryManagementItem" tab="字典项">
+        <DictionaryManagementItem
           :dictionaryNameList="state.dictionaryNameList"
         />
       </a-tab-pane>
-      <a-tab-pane key="DictionaryManagementItem" tab="字典项">
-        <DictionaryManagementItem
+      <a-tab-pane key="DictionaryManagementName" tab="字典名称">
+        <DictionaryManagementName
           :dictionaryNameList="state.dictionaryNameList"
         />
       </a-tab-pane>
@@ -39,7 +39,7 @@ const global = currentInstance.appContext.config.globalProperties;
 const formDataRef = ref();
 
 const state = reactive({
-  activeKey: "DictionaryManagementName",
+  activeKey: "DictionaryManagementItem",
   dictionaryNameList: [],
 });
 

@@ -271,7 +271,7 @@ export const eventManageSuddenEventDeleteRequest = (params: any) => {
   return service({
     url: prefix + "/eventManage/suddenEvent/delete",
     method: "POST",
-    data: params,
+    params,
   });
 };
 

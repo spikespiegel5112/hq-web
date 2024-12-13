@@ -6,19 +6,11 @@
           <a-row :gutter="20">
             <a-col :span="6">
               <a-form-item name="infoReportUnit" label="信息上报单位">
-                <a-select
-                  v-model:value="state.formData.infoReportUnit"
+                <a-input
+                  v-model:value="state.infoReportTime"
                   placeholder="请输入"
                 >
-                  <a-select-option
-                    v-for="item in global.$store.state.dictionary[
-                      'externalDataSources'
-                    ]"
-                    :value="item.value"
-                  >
-                    {{ item.label }}
-                  </a-select-option>
-                </a-select>
+                </a-input>
               </a-form-item>
             </a-col>
 
@@ -30,7 +22,7 @@
                 >
                   <a-select-option
                     v-for="item in global.$store.state.dictionary[
-                      'externalDataSources'
+                      'informationType'
                     ]"
                     :value="item.value"
                   >
@@ -40,13 +32,13 @@
               </a-form-item>
             </a-col>
 
-            <a-col :span="6">
-              <a-form-item name="infoReportTime" label="查询时间">
-                <a-input
+            <a-col :span="8">
+              <a-form-item name="infoReportTime" label="信息上报时间">
+                <a-range-picker
                   v-model:value="state.infoReportTime"
-                  placeholder="请输入"
-                >
-                </a-input>
+                  format="YYYY-MM-DD"
+                  @change="handleChangeInfoReportTime"
+                />
               </a-form-item>
             </a-col>
           </a-row>
@@ -99,6 +91,10 @@ const state = reactive({
   },
 });
 
+const handleChangeInfoReportTime = (value: any) => {
+  debugger;
+};
+
 const handleSearch = () => {
   emit("onSearch", state.formData);
 };
@@ -106,6 +102,7 @@ const handleSearch = () => {
 const handleReset = () => {
   formDataRef.value.resetFields();
   emit("onReset", state.formData);
+  state.infoReportTime = [];
 };
 
 onMounted(async () => {});

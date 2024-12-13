@@ -72,11 +72,19 @@
       <a-row>
         <a-col :span="22">
           <a-form-item name="infoType" label="信息类型">
-            <a-input
+            <a-select
               v-model:value="state.formData.infoType"
-              placeholder="请输入"
+              placeholder="请选择"
             >
-            </a-input>
+              <a-select-option
+                v-for="item in global.$store.state.dictionary[
+                  'informationType'
+                ]"
+                :value="item.value"
+              >
+                {{ item.label }}
+              </a-select-option>
+            </a-select>
           </a-form-item>
         </a-col>
       </a-row>

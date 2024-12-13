@@ -52,6 +52,7 @@ const init = () => {
   global.$getDictionary("externalDataSources");
   global.$getDictionary("disposalStatus");
   global.$getDictionary("alarmType");
+  global.$getDictionary("informationType");
 };
 
 onMounted(async () => {
