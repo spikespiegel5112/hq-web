@@ -73,9 +73,6 @@ import {
 } from "vue";
 import type { Rule } from "ant-design-vue/es/form";
 
-import Header from "@/components/Header.vue";
-import Menu from "@/components/Menu.vue";
-
 import { authLoginRequest } from "@/api/management";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
@@ -85,6 +82,7 @@ const formDataRef = ref();
 
 const state = reactive({
   visible: false,
+  formData: {
     deviceId: "dev_znjt_001",
     loginType: 2,
     password: "shzj002",
