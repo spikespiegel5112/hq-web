@@ -19,6 +19,7 @@ import {
 } from "vue";
 
 import { screenTimeDistFlowRequest } from "@/api/screen.ts";
+import { color } from "echarts";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -26,7 +27,7 @@ type EChartsOption = global.$echarts.EChartsOption;
 
 let xAxis = [] as string[];
 const dataDictionary: any[] = [];
-for (let index = 0; index < 22; index++) {
+for (let index = 0; index < 4; index++) {
   dataDictionary.push({
     title: index,
     value: Math.floor(Math.random() * 3000),
@@ -100,6 +101,8 @@ const setOption: EChartsOption = () => {
         type: "bar",
         barWidth: "60%",
         data: [10, 52, 200, 334, 390, 330, 220],
+        color: "#FCB501",
+        barWidth: "10",
       },
     ],
   };

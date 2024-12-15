@@ -10,15 +10,31 @@
           <ul>
             <li>
               <span class="label">蓄车场数：</span>
-              <span class="value">11111</span>
+              <span class="value">
+                {{ state.southTaxiParkingLotParkingCount }}
+              </span>
             </li>
             <li>
               <span class="label">入库速度：</span>
-              <span class="value">11111</span>
+              <span class="value">
+                {{
+                  !!state.southSecondTaxiBoardingPointWaitingTime
+                    ? state.southTaxiParkingLotArrivalSituation /
+                      state.southSecondTaxiBoardingPointWaitingTime
+                    : ""
+                }}
+              </span>
             </li>
             <li>
               <span class="label">出库速度：</span>
-              <span class="value">11111</span>
+              <span class="value">
+                {{
+                  !!state.southSecondTaxiBoardingPointWaitingTime
+                    ? state.southTaxiParkingLotArrivalSituation /
+                      state.southSecondTaxiBoardingPointWaitingTime
+                    : ""
+                }}
+              </span>
             </li>
           </ul>
         </div>
@@ -26,15 +42,31 @@
           <ul>
             <li>
               <span class="label">蓄车场数：</span>
-              <span class="value">11111</span>
+              <span class="value">
+                {{ state.southTaxiParkingLotArrivalSituation }}
+              </span>
             </li>
             <li>
               <span class="label">入库速度：</span>
-              <span class="value">11111</span>
+              <span class="value">
+                {{
+                  !!state.northFirstTaxiBoardingPointWaitingTime
+                    ? state.northFirstTaxiBoardingPointWaitingCount /
+                      state.northFirstTaxiBoardingPointWaitingTime
+                    : ""
+                }}
+              </span>
             </li>
             <li>
               <span class="label">出库速度：</span>
-              <span class="value">11111</span>
+              <span class="value">
+                {{
+                  !!state.northFirstTaxiBoardingPointWaitingTime
+                    ? state.northFirstTaxiBoardingPointWaitingCount /
+                      state.northFirstTaxiBoardingPointWaitingTime
+                    : ""
+                }}
+              </span>
             </li>
           </ul>
         </div>
@@ -58,20 +90,11 @@ import {
 } from "vue";
 import QueueTime from "./QueueTime.vue";
 
-import { screenTimeDistFlowRequest } from "@/api/screen.ts";
+import { backendIndexPageTaxiVehicleMonitorRequest } from "@/api/management.ts";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 type EChartsOption = global.$echarts.EChartsOption;
-
-let xAxis = [] as string[];
-const dataDictionary = [];
-for (let index = 0; index < 22; index++) {
-  dataDictionary.push({
-    title: index,
-    value: Math.floor(Math.random() * 3000),
-  });
-}
 
 const props = defineProps({
   text: {
@@ -81,14 +104,38 @@ const props = defineProps({
   },
 });
 
-const state = reactive({});
+const state = reactive({
+  northFirstTaxiBoardingPointWaitingCount: null,
+  northFirstTaxiBoardingPointWaitingTime: null,
+  northSecondTaxiBoardingPointWaitingCount: null,
+  northSecondTaxiBoardingPointWaitingTime: null,
+  northTaxiParkingLotArrivalSituation: "",
+  northTaxiParkingLotParkingCount: null,
+  southFirstTaxiBoardingPointWaitingCount: null,
+  southFirstTaxiBoardingPointWaitingTime: null,
+  southSecondTaxiBoardingPointWaitingCount: null,
+  southSecondTaxiBoardingPointWaitingTime: null,
+  southTaxiParkingLotArrivalSituation: "",
+  southTaxiParkingLotParkingCount: null,
+}) as any;
 
 watch(
   () => global.$store.state.app.currentQueryDateParams,
   (newValue: any, oldValue: any) => {}
 );
 
-const getData = () => {};
+const getData = () => {
+  backendIndexPageTaxiVehicleMonitorRequest({})
+    .then((response: any) => {
+      Object.keys(state).forEach((item: any) => {
+        response = response.data;
+        // state[item] = response[item];
+      });
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+};
 
 onMounted(() => {
   getData();
