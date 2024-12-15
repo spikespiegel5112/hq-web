@@ -135,14 +135,6 @@ const setOption: EChartsOption = () => {
               name: item.title,
             };
           }),
-        // data: [
-        //   { value: 1048, name: "出租车" },
-        //   { value: 735, name: "网约车" },
-        //   { value: 580, name: "地铁" },
-        //   { value: 484, name: "公交" },
-        //   { value: 300, name: "航班" },
-        //   { value: 300, name: "其他" },
-        // ],
       },
     ],
   };

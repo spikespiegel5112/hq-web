@@ -20,7 +20,7 @@ import {
   nextTick,
 } from "vue";
 
-import { screenTimeDistFlowRequest } from "@/api/screen.ts";
+import { backendIndexPageTodayFlowAcceleratedRequest } from "@/api/management.ts";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -28,12 +28,6 @@ type EChartsOption = global.$echarts.EChartsOption;
 
 let xAxis = [] as string[];
 const dataDictionary = [] as any[];
-for (let index = 0; index < 22; index++) {
-  dataDictionary.push({
-    title: index,
-    value: Math.floor(Math.random() * 3000),
-  });
-}
 
 const props = defineProps({
   text: {
@@ -105,7 +99,7 @@ const setOption: EChartsOption = () => {
     },
     series: [
       {
-        name: "预测",
+        name: "实时",
         type: "line",
         label: {
           show: false,
@@ -135,7 +129,27 @@ const setOption: EChartsOption = () => {
 };
 
 const getData = () => {
-  setOption();
+  backendIndexPageTodayFlowAcceleratedRequest({
+    ...global.$store.state.app.currentQueryDateParams,
+    timeType: 1,
+  })
+    .then((response: any) => {
+      response = response.data;
+      response.forEach((item: any, index: number) => {
+        dataDictionary.push({
+          title: index,
+          value: response.reduce((cum: number, item2: any, index2: number) => {
+            return index2 < index
+              ? cum + item2.dispersedHourlyPassengerCount
+              : cum;
+          }, 0),
+        });
+      });
+      setOption();
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
 };
 
 onMounted(() => {
