@@ -19,15 +19,24 @@ import {
   nextTick,
 } from "vue";
 
-import { screenTimeDistFlowRequest } from "@/api/screen.ts";
+import { backendIndexPageFlowHourlyRequest } from "@/api/management.ts";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 type EChartsOption = global.$echarts.EChartsOption;
 
-let xAxis = [] as string[];
-
-let dataDictionary = [] as any[];
+let dataDictionary = [
+  {
+    title: "地铁",
+    name: "dispersedMetroPassengerCount",
+    value: null,
+  },
+  {
+    title: "高铁",
+    name: "highSpeedRailwayPassengerCount",
+    value: null,
+  },
+] as any[];
 
 const props = defineProps({
   text: {
@@ -37,7 +46,15 @@ const props = defineProps({
   },
 });
 
-const state = reactive({});
+const state = reactive({
+  dispersedTaxiPassengerCount: null,
+  dispersedEhailingPassengerCount: null,
+  dispersedParkingPassengerCount: null,
+  dispersedMetroPassengerCount: null,
+  dispersedOthersPassengerCount: null,
+  statisticalDate: "",
+  statisticalBeginHour: null,
+});
 
 watch(
   () => global.$store.state.app.currentQueryDateParams,
@@ -59,7 +76,7 @@ const setOption: EChartsOption = () => {
       type: "scroll",
       orient: "vertical",
       right: 10,
-      top: 50,
+      top: 5,
       bottom: 20,
       textStyle: {
         color: "#fff",
@@ -86,33 +103,54 @@ const setOption: EChartsOption = () => {
         labelLine: {
           show: false,
         },
-        data: [
-          { value: 1048, name: "高铁" },
-          { value: 735, name: "地铁" },
-        ],
+        data: dataDictionary
+          .filter((item: any) => {
+            return global.$isNotEmpty(item.value);
+          })
+          .map((item: any) => {
+            return {
+              value: item.value,
+              name: item.title,
+            };
+          }),
+        // data: [
+        //   { value: 1048, name: "出租车" },
+        //   { value: 735, name: "网约车" },
+        //   { value: 580, name: "地铁" },
+        //   { value: 484, name: "公交" },
+        //   { value: 300, name: "航班" },
+        //   { value: 300, name: "其他" },
+        // ],
       },
     ],
   };
-
   option && myChart.setOption(option);
 };
 
 const getData = () => {
   setOption();
-  //   screenTimeDistFlowRequest({
-  //     ...global.$store.state.app.currentQueryDateParams,
-  //   })
-  //     .then((response: any) => {
-  //       console.log("=====screenTimeDistFlowRequest=====");
-  //       console.log(response);
-  //       response = response.data;
-  //       transformData(response);
-  //       setOption();
-  //       updateData();
-  //     })
-  //     .catch((error: any) => {
-  //       console.log(error);
-  //     });
+  backendIndexPageFlowHourlyRequest({
+    ...global.$store.state.app.currentQueryDateParams,
+    hour: 1,
+    timeType: 1,
+  })
+    .then((response: any) => {
+      console.log("=====screenTimeDistFlowRequest=====");
+      console.log(response);
+      response = response.data;
+      transformData(response);
+      setOption();
+      // updateData();
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+};
+
+const transformData = (response: any) => {
+  dataDictionary.forEach((item: any) => {
+    item.value = response[item.name];
+  });
 };
 
 onMounted(() => {
