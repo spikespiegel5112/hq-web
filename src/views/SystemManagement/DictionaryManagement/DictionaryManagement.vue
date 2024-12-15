@@ -4,11 +4,13 @@
       <a-tab-pane key="DictionaryManagementItem" tab="字典项">
         <DictionaryManagementItem
           :dictionaryNameList="state.dictionaryNameList"
+          @onUpdateDictionaryNameList="handleUpdateDictionaryList"
         />
       </a-tab-pane>
       <a-tab-pane key="DictionaryManagementName" tab="字典名称">
         <DictionaryManagementName
           :dictionaryNameList="state.dictionaryNameList"
+          @onUpdateDictionaryNameList="handleUpdateDictionaryList"
         />
       </a-tab-pane>
     </a-tabs>
@@ -40,7 +42,7 @@ const formDataRef = ref();
 
 const state = reactive({
   activeKey: "DictionaryManagementItem",
-  dictionaryNameList: [],
+  dictionaryNameList: [] as any[],
 });
 
 const getDictionaryNameList = () => {
@@ -53,6 +55,10 @@ const getDictionaryNameList = () => {
     .catch((error: any) => {
       console.log(error);
     });
+};
+
+const handleUpdateDictionaryList = (list: any[]) => {
+  getDictionaryNameList();
 };
 
 onMounted(async () => {

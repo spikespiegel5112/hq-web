@@ -223,6 +223,7 @@ const handleDelete = (id: number) => {
       getData();
     })
     .catch((error: any) => {
+      global.$message.error("删除失败");
       console.log(error);
     });
 };

@@ -11,7 +11,7 @@
       autocomplete="off"
       :disabled="props.mode === 'review'"
       :rules="rules"
-      :label-col="{ style: { width: '120px' } }"
+      :label-col="{ style: { width: '130px' } }"
     >
       <a-row>
         <a-col :span="22">
@@ -28,13 +28,14 @@
       <a-row>
         <a-col :span="22">
           <a-form-item name="statisticalBeginHour" label="统计开始时间">
-            {{ state.formData.statisticalBeginHour }}
             <a-time-picker
               v-model:value="state.formData.statisticalBeginHour"
               format="HH:mm:ss"
               value-format="HH:mm:ss"
               :minute-step="60"
               :second-step="60"
+              inputReadOnly
+              @change="handleChangeStatisticalBeginHour"
             />
           </a-form-item>
         </a-col>
@@ -220,6 +221,10 @@ const handleSubmit = () => {
     .catch((error: any) => {
       console.log("error", error);
     });
+};
+
+const handleChangeStatisticalBeginHour = (value: any) => {
+  state.formData.statisticalBeginHour = value;
 };
 
 onMounted(async () => {});

@@ -4,7 +4,7 @@
       <a-row>
         <a-col :span="20">
           <a-row :gutter="20">
-            <a-col :span="4">
+            <a-col :span="5">
               <a-form-item name="statisticalBeginHour" label="时段">
                 <a-time-picker
                   v-model:value="state.formData.statisticalBeginHour"

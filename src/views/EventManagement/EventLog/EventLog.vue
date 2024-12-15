@@ -8,7 +8,7 @@
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
-   a    <BaseTable
+    <BaseTable
       :tableData="state.tableData"
       :dataModel="pageModel"
       :pagination="pagination"
@@ -41,7 +41,10 @@ import {
   nextTick,
 } from "vue";
 
-import { eventManageSuddenEventGetPageRequest } from "@/api/management";
+import {
+  eventManageSuddenEventGetPageRequest,
+  eventManageSuddenEventDeleteRequest,
+} from "@/api/management";
 
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
@@ -59,7 +62,7 @@ const pageModel = ref([
     exportVisible: false,
   },
   {
-    label: "报警类型",
+    label: "管理区域",
     name: "eventType",
     required: true,
     tableVisible: true,
@@ -67,7 +70,7 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "处置时间",
+    label: "事件类型",
     name: "highwayName",
     required: true,
     tableVisible: true,
@@ -75,7 +78,7 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "来源",
+    label: "详细地址",
     name: "bridgeCode",
     required: true,
     tableVisible: true,
@@ -83,7 +86,7 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "处置内容",
+    label: "事件内容",
     name: "bridgeName",
     required: true,
     tableVisible: true,
@@ -91,8 +94,32 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "状态",
+    label: "发生时间",
     name: "bridgeName",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "处置完成时间",
+    name: "bridgeName",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "处置完成时间",
+    name: "bridgeName",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "附件",
+    name: "attachment",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -165,6 +192,27 @@ const handleSubmit = () => {};
 onMounted(async () => {
   getData();
 });
+
+const handleDelete = (id: number) => {
+  eventManageSuddenEventDeleteRequest({
+    id,
+  })
+    .then((response: any) => {
+      global.$message.success("删除成功");
+      getData();
+    })
+    .catch((error: any) => {
+      global.$message.error("删除失败");
+      console.log(error);
+    });
+};
+
+const handleChangePage = (pagingData: any) => {
+  pagination.page = pagingData.current;
+  pagination.pageSize = pagingData.pageSize;
+  pagination.total = pagingData.total;
+  getData();
+};
 
 onBeforeUnmount(() => {});
 </script>

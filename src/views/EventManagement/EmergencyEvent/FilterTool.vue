@@ -1,13 +1,13 @@
 <template>
   <div class="common_filtertool_wrapper">
-    <a-form :model="formData" autocomplete="off" ref="formDataRef">
+    <a-form :model="state.formData" autocomplete="off" ref="formDataRef">
       <a-row>
         <a-col :span="20">
           <a-row :gutter="20">
             <a-col :span="6">
               <a-form-item name="eventType" label="报警类型">
                 <a-input
-                  v-model:value="formData.eventType"
+                  v-model:value="state.formData.eventType"
                   placeholder="请输入帐号"
                 >
                   <template #prefix>
@@ -20,7 +20,7 @@
             <a-col :span="6">
               <a-form-item name="eventContent" label="报警内容">
                 <a-input
-                  v-model:value="formData.eventContent"
+                  v-model:value="state.formData.eventContent"
                   placeholder="请输入"
                 >
                 </a-input>
@@ -30,7 +30,7 @@
             <a-col :span="6">
               <a-form-item name="eventTime" label="时间">
                 <a-input
-                  v-model:value="formData.eventTime"
+                  v-model:value="state.formData.eventTime"
                   placeholder="请输入"
                 >
                 </a-input>
@@ -40,7 +40,7 @@
             <a-col :span="6">
               <a-form-item name="eventLocation" label="报警源">
                 <a-input
-                  v-model:value="formData.eventLocation"
+                  v-model:value="state.formData.eventLocation"
                   placeholder="请输入"
                 >
                 </a-input>
@@ -86,19 +86,26 @@ const emit = defineEmits<{
 
 const formDataRef: any = ref(null);
 
-const formData = reactive({
-  eventType: "",
-  eventTime: "",
-  eventContent: "",
-  eventLocation: "",
+const state = reactive({
+  formData: {
+    eventType: "",
+    eventTime: "",
+    eventContent: "",
+    eventLocation: "",
+  } as any,
 });
 
 const handleSearch = () => {
-  emit("onSearch", formData);
+  emit("onSearch", state.formData);
 };
 
 const handleReset = () => {
   formDataRef.value.resetFields();
+  const formData: any = Object.keys(state.formData).forEach((item: any) => {
+    state.formData[item] = global.$isEmpty(state.formData[item])
+      ? undefined
+      : state.formData[item];
+  });
   emit("onReset", formData);
 };
 

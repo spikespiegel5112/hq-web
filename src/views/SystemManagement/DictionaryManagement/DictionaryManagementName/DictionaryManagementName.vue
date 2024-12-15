@@ -43,6 +43,7 @@ import {
   ComponentInternalInstance,
   ref,
   nextTick,
+  defineEmits,
 } from "vue";
 import type { DefaultOptionType } from "ant-design-vue/es/select";
 
@@ -56,6 +57,10 @@ import EditDialog from "./EditDialog.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
+
+const emit = defineEmits<{
+  (e: "onUpdateDictionaryNameList"): void;
+}>();
 
 const props = defineProps({
   dictionaryNameList: {
@@ -106,6 +111,7 @@ const state = reactive({
   dialogVisible: false,
   dialogMode: "",
   currentRowData: {},
+  dictionaryNameList: [] as any[],
 });
 
 let queryFormData = reactive({} as any);
@@ -113,6 +119,13 @@ let queryFormData = reactive({} as any);
 const pagination = reactive({
   ...global.$store.state.app.defaultPagination,
 });
+
+watch(
+  () => props.dictionaryNameList,
+  (newValue: any, oldValue: any) => {
+    state.dictionaryNameList = newValue;
+  }
+);
 
 const getData = () => {
   dictionaryManageGetDictPagingRequest({
@@ -123,6 +136,8 @@ const getData = () => {
       response = response.data;
       state.tableData = response.list;
       pagination.total = response.total;
+      emit("onUpdateDictionaryNameList");
+      state.dictionaryNameList = state.tableData;
     })
     .catch((error: any) => {
       console.log(error);
@@ -170,7 +185,7 @@ const handleSubmit = (formData: any) => {
 };
 
 const handleDelete = (id: number) => {
-  handleDeletePromise({
+  dictionaryManageDelDictRequest({
     id,
   })
     .then((response: any) => {
@@ -178,24 +193,13 @@ const handleDelete = (id: number) => {
       getData();
     })
     .catch((error: any) => {
+      global.$message.error("删除失败");
       console.log(error);
     });
 };
 
 const handleClose = () => {
   state.dialogVisible = false;
-};
-
-const handleDeletePromise = (params: object) => {
-  return new Promise((resolve, reject) => {
-    dictionaryManageDelDictRequest(params)
-      .then((response: any) => {
-        resolve(response);
-      })
-      .catch((error: any) => {
-        reject(error);
-      });
-  });
 };
 
 onMounted(async () => {
