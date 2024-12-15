@@ -1,16 +1,7 @@
 <template>
   <div class="dashboardleft">
     <div class="top common_block_wrapper">
-      <div class="currentpassengerflowquantity">
-        <span class="icon"></span>
-        <div class="detail">
-          <span class="title">当前客流数量</span>
-          <div class="data">
-            <span class="number">1231</span>
-            <span class="unit">人次</span>
-          </div>
-        </div>
-      </div>
+      <CurrentPassengerFlow />
       <a-row>
         <a-col :span="12" class="evacuationofpassengerflow">
           <EvacuationOfPassengerFlow />
@@ -41,12 +32,12 @@ import {
   nextTick,
 } from "vue";
 
+import CurrentPassengerFlow from "./CurrentPassengerFlow.vue";
 import EvacuationOfPassengerFlow from "./EvacuationOfPassengerFlow.vue";
 import HourlyPassengerFlow from "./HourlyPassengerFlow.vue";
 import AccumulatedEvacuationOfPassengerFlowOnTheSameDay from "./AccumulatedEvacuationOfPassengerFlowOnTheSameDay.vue";
 import Taxi from "./Taxi.vue";
 
-import { screenBannerInfoRequest } from "@/api/management";
 import dayjs from "dayjs";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
@@ -75,51 +66,6 @@ onBeforeUnmount(() => {});
     width: 100%;
     height: 55%;
     min-height: 42%;
-    .currentpassengerflowquantity {
-      display: flex;
-      align-items: center;
-      .icon {
-        display: inline-block;
-        margin: 0 0.2rem 0 0;
-        width: 1rem;
-        height: 1rem;
-        background-image: url("@/assets/dashboard_passager.png");
-        background-size: contain;
-        background-repeat: no-repeat;
-      }
-      .detail {
-        display: flex;
-        flex: 1;
-        height: 0.5rem;
-        font-size: 0.2rem;
-        text-align: left;
-        align-items: center;
-        background-image: linear-gradient(
-          to right,
-          rgba(18, 105, 146, 1),
-          rgba(18, 105, 146, 0)
-        );
-        .title {
-          display: inline-block;
-          padding: 0 0 0 0.2rem;
-          width: 3rem;
-        }
-
-        .data {
-          display: inline-block;
-          flex: 1;
-          .number {
-            display: inline-block;
-            margin: 0 0.1rem 0 0;
-            color: #f1bc4d;
-            font-size: 0.3rem;
-          }
-          .unit {
-            font-size: 0.16rem;
-          }
-        }
-      }
-    }
   }
   .bottom {
     position: relative;
