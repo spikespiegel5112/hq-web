@@ -62,7 +62,7 @@ const pageModel = ref([
     exportVisible: false,
   },
   {
-    label: "报警类型",
+    label: "事件类型",
     name: "eventType",
     required: true,
     tableVisible: true,
@@ -71,12 +71,13 @@ const pageModel = ref([
     width: "1rem",
   },
   {
-    label: "报警源",
+    label: "事件发生地点",
     name: "eventLocation",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
+    width: "2rem",
   },
   {
     label: "报警日期",
@@ -113,6 +114,7 @@ const pageModel = ref([
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
+    width: "3rem",
   },
   {
     label: "处置情况",
@@ -144,7 +146,8 @@ const pageModel = ref([
     name: "operationColumn",
     tableVisible: true,
     exportVisible: false,
-    actions: ["edit", "review", "delete"],
+    fixed: "right",
+    actions: ["edit", "review", "delete", "disposal"],
   },
 ]);
 

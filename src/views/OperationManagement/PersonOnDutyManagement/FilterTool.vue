@@ -8,7 +8,7 @@
               <a-form-item name="userName" label="姓名">
                 <a-input
                   v-model="formData.userName"
-                  placeholder="请输入帐号"
+                  placeholder="请输入"
                 >
                   <template #prefix>
                     <span class="username"></span>

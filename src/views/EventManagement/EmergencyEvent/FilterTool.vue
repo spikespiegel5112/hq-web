@@ -2,43 +2,35 @@
   <div class="common_filtertool_wrapper">
     <a-form :model="state.formData" autocomplete="off" ref="formDataRef">
       <a-row>
-        <a-col :span="20">
+        <a-col :span="21">
           <a-row :gutter="20">
             <a-col :span="6">
-              <a-form-item name="eventType" label="报警类型">
+              <a-form-item name="manageRegion" label="管理区域">
                 <a-input
+                  v-model:value="state.formData.manageRegion"
+                  placeholder="请输入"
+                >
+                </a-input>
+              </a-form-item>
+            </a-col>
+
+            <a-col :span="5">
+              <a-form-item name="eventType" label="事件类型">
+                <a-select
                   v-model:value="state.formData.eventType"
-                  placeholder="请输入帐号"
+                  placeholder="请选择"
                 >
-                  <template #prefix>
-                    <span class="username"></span>
-                  </template>
-                </a-input>
+                  <a-select-option
+                    v-for="item in global.$store.state.dictionary.alarmType"
+                    :value="item.value"
+                  >
+                    {{ item.label }}
+                  </a-select-option>
+                </a-select>
               </a-form-item>
             </a-col>
-
             <a-col :span="6">
-              <a-form-item name="eventContent" label="报警内容">
-                <a-input
-                  v-model:value="state.formData.eventContent"
-                  placeholder="请输入"
-                >
-                </a-input>
-              </a-form-item>
-            </a-col>
-
-            <a-col :span="6">
-              <a-form-item name="eventTime" label="时间">
-                <a-input
-                  v-model:value="state.formData.eventTime"
-                  placeholder="请输入"
-                >
-                </a-input>
-              </a-form-item>
-            </a-col>
-
-            <a-col :span="6">
-              <a-form-item name="eventLocation" label="报警源">
+              <a-form-item name="eventLocation" label="事件发生地点">
                 <a-input
                   v-model:value="state.formData.eventLocation"
                   placeholder="请输入"
@@ -46,9 +38,19 @@
                 </a-input>
               </a-form-item>
             </a-col>
+
+            <a-col :span="7">
+              <a-form-item name="eventTime" label="时间">
+                <a-range-picker
+                  v-model:value="state.eventTime"
+                  format="YYYY-MM-DD"
+                  @change="handleChangeEventTime"
+                />
+              </a-form-item>
+            </a-col>
           </a-row>
         </a-col>
-        <a-col :span="4" class="operation">
+        <a-col :span="3" class="operation">
           <a-space>
             <a-button class="submitbutton" @click="handleReset">
               重置
@@ -88,11 +90,12 @@ const formDataRef: any = ref(null);
 
 const state = reactive({
   formData: {
+    eventTimeBegin: "",
+    eventTimeEnd: "",
     eventType: "",
-    eventTime: "",
-    eventContent: "",
-    eventLocation: "",
+    manageRegion: "",
   } as any,
+  eventTime: [],
 });
 
 const handleSearch = () => {
@@ -107,6 +110,15 @@ const handleReset = () => {
       : state.formData[item];
   });
   emit("onReset", formData);
+};
+
+const handleChangeEventTime = (value: any) => {
+  state.formData.eventTimeBegin = global
+    .$dayjs(value[0])
+    .format("YYYY-MM-DD HH:mm:ss");
+  state.formData.eventTimeEnd = global
+    .$dayjs(value[1])
+    .format("YYYY-MM-DD HH:mm:ss");
 };
 
 onMounted(async () => {});

@@ -10,7 +10,7 @@
           <a-row :gutter="20">
             <a-col :span="6">
               <a-form-item name="userName" label="区域">
-                <a-input v-model:value="formData.userName" placeholder="请输入帐号">
+                <a-input v-model:value="formData.userName" placeholder="请输入">
                   <template #prefix>
                     <span class="username"></span>
                   </template>

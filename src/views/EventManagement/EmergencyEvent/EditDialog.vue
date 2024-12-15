@@ -20,7 +20,7 @@
     >
       <a-row>
         <a-col :span="22">
-          <a-form-item name="eventType" label="事件类别">
+          <a-form-item name="eventType" label="事件类型">
             <a-select
               v-model:value="state.formData.eventType"
               placeholder="请选择"

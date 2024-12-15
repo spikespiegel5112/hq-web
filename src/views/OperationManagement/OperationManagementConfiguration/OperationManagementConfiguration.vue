@@ -14,7 +14,7 @@
             <a-form-item name="username" label="P9进/出场车流阈值">
               <a-input
                 v-model:value="state.formData.username"
-                placeholder="请输入帐号"
+                placeholder="请输入"
               >
                 <template #prefix>
                   <span class="username"></span>
@@ -26,7 +26,7 @@
             <a-form-item name="username" label="P10进/出场车流阈值">
               <a-input
                 v-model:value="state.formData.username"
-                placeholder="请输入帐号"
+                placeholder="请输入"
               >
                 <template #prefix>
                   <span class="username"></span>
@@ -40,7 +40,7 @@
             <a-form-item name="username" label="P9进/出场车流阈值">
               <a-input
                 v-model:value="state.formData.username"
-                placeholder="请输入帐号"
+                placeholder="请输入"
               >
                 <template #prefix>
                   <span class="username"></span>
@@ -52,7 +52,7 @@
             <a-form-item name="username" label="P10进/出场车流阈值">
               <a-input
                 v-model:value="state.formData.username"
-                placeholder="请输入帐号"
+                placeholder="请输入"
               >
                 <template #prefix>
                   <span class="username"></span>
@@ -67,7 +67,7 @@
             <a-form-item name="username" label="P9进/出场车流阈值">
               <a-input
                 v-model:value="state.formData.username"
-                placeholder="请输入帐号"
+                placeholder="请输入"
               >
                 <template #prefix>
                   <span class="username"></span>
@@ -79,7 +79,7 @@
             <a-form-item name="username" label="P10进/出场车流阈值">
               <a-input
                 v-model:value="state.formData.username"
-                placeholder="请输入帐号"
+                placeholder="请输入"
               >
                 <template #prefix>
                   <span class="username"></span>

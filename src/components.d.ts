@@ -44,6 +44,7 @@ declare module 'vue' {
     Block: typeof import('./components/Block.vue')['default']
     CommonTitle: typeof import('./components/CommonTitle.vue')['default']
     DigitFlipper: typeof import('./components/DigitFlipper.vue')['default']
+    ElDatePicker: typeof import('element-plus/es')['ElDatePicker']
     Header: typeof import('./components/Header.vue')['default']
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']
     ImportButton: typeof import('./components/ImportButton.vue')['default']

@@ -90,10 +90,7 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "操作",
-    name: "operationColumn",
-    tableVisible: true,
-    exportVisible: false,
+    label: "操作",     name: "operationColumn",     tableVisible: true,     exportVisible: false,     fixed: "right",
     actions: ["edit", "review", "delete"],
   },
 ]);
