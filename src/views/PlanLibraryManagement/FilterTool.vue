@@ -9,6 +9,7 @@
                 <a-select
                   v-model:value="state.formData.eventType"
                   placeholder="请选择"
+                  allow-clear
                 >
                   <a-select-option
                     v-for="item in global.$store.state.dictionary.alarmType"
