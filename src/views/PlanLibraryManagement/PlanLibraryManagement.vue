@@ -11,10 +11,13 @@
     <a-table
       :columns="transformPageModel()"
       :data-source="state.tableData"
+      rowKey="id"
       :scroll="{
         y: 'calc(100vh - 4.3rem)',
       }"
+      expandRowByClick
       @expand="handleExpand"
+      @expandedRowsChange="handleExpandedRowsChange"
     >
       <template
         #bodyCell="{ column }"
@@ -46,7 +49,7 @@
           </span>
         </template>
       </template>
-      <template #expandedRowRender="{ record }">
+      <template #expandedRowRender="{ record, index, indent, expanded }">
         <BaseTable
           :tableData="state.tableDataPlan"
           :dataModel="pageModelPlan"
@@ -58,15 +61,14 @@
         <span></span>
       </template>
     </a-table>
-    <!-- <BaseTable
-      :tableData="state.tableData"
+    <EditDialog
+      :visible="state.dialogVisible"
+      :mode="state.dialogMode"
       :dataModel="pageModel"
-      :pagination="pagination"
-      tabTable
-      @onEdit="handleEdit"
-      @onChangePage="handleChangePage"
-      @onDelete="handleDelete"
-    /> -->
+      :rowData="state.currentRowData"
+      @onClose="handleClose"
+      @onSubmit="handleSubmit"
+    ></EditDialog>
     <EditDialog
       :visible="state.dialogVisible"
       :mode="state.dialogMode"
@@ -134,7 +136,23 @@ const pageModel = ref([
 
 const pageModelPlan = ref([
   {
-    label: "事件类型",
+    label: "处置步骤",
+    name: "eventType",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "步骤名称",
+    name: "eventType",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "处置内容",
     name: "eventType",
     required: true,
     tableVisible: true,
@@ -153,6 +171,7 @@ const pageModelPlan = ref([
 
 const state = reactive({
   tableData: [] as any[],
+  planTableData: [] as any[],
   dialogVisible: false,
   dialogMode: "",
   currentRowData: {},
@@ -170,25 +189,6 @@ const getData = () => {
   preplanPreplanGetPageRequest({
     ...queryFormData,
     ...pagination,
-  })
-    .then((response: any) => {
-      response = response.data;
-      state.tableData = response.list;
-      pagination.total = response.total;
-    })
-    .catch((error: any) => {
-      console.log(error);
-    });
-};
-
-const getDataPlan = (planId: number) => {
-  pagination.total = undefined;
-  preplanPreplanGetStepPageRequest({
-    ...{
-      prId: planId,
-    },
-    ...pagination,
-    pageSize: 1000,
   })
     .then((response: any) => {
       response = response.data;
@@ -271,9 +271,34 @@ const transformPageModel: any = () => {
   return result;
 };
 
-const handleExpand = (data: any, row: any, bbb: any) => {
+const handleExpand = (expand: boolean, row: any) => {
   console.log(row);
-  getDataPlan(row.id);
+  if (!!expand) {
+    getDataPlan(row.id);
+  }
+};
+
+const getDataPlan = (planId: number) => {
+  pagination.total = undefined;
+  preplanPreplanGetStepPageRequest({
+    ...{
+      prId: planId,
+    },
+    ...pagination,
+    pageSize: 1000,
+  })
+    .then((response: any) => {
+      response = response.data;
+      state.tableDataPlan = response.list;
+      pagination.total = response.total;
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+};
+
+const handleExpandedRowsChange = (expandedRows: any) => {
+  console.log(expandedRows);
 };
 
 const handleAction = (action: any, column: any) => {};

@@ -5,9 +5,9 @@
         <a-col :span="21">
           <a-row :gutter="20">
             <a-col :span="6">
-              <a-form-item name="preplanType" label="事件类型">
+              <a-form-item name="eventType" label="事件类型">
                 <a-input
-                  v-model:value="state.formData.preplanType"
+                  v-model:value="state.formData.eventType"
                   placeholder="请输入"
                   allow-clear
                 >
