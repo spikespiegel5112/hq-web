@@ -9,6 +9,7 @@
                 <a-input
                   v-model="formData.userName"
                   placeholder="请输入"
+                  allow-clear
                 >
                   <template #prefix>
                     <span class="username"></span>
@@ -37,6 +38,7 @@
                 <a-input
                   v-model="formData.password"
                   placeholder="请输入"
+                  allow-clear
                 >
                   
                 </a-input>

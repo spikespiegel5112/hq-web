@@ -9,6 +9,7 @@
                 <a-input
                   v-model:value="state.formData.manageRegion"
                   placeholder="请输入"
+                  allow-clear
                 >
                 </a-input>
               </a-form-item>
@@ -35,6 +36,7 @@
                 <a-input
                   v-model:value="state.formData.eventLocation"
                   placeholder="请输入"
+                  allow-clear
                 >
                 </a-input>
               </a-form-item>

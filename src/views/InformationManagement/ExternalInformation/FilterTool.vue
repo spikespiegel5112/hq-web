@@ -9,6 +9,7 @@
                 <a-input
                   v-model:value="state.infoReportTime"
                   placeholder="请输入"
+                  allow-clear
                 >
                 </a-input>
               </a-form-item>
@@ -19,6 +20,7 @@
                 <a-select
                   v-model:value="state.formData.infoType"
                   placeholder="请输入"
+                  allow-clear
                 >
                   <a-select-option
                     v-for="item in global.$store.state.dictionary[

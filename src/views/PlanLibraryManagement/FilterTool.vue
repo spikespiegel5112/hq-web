@@ -5,19 +5,13 @@
         <a-col :span="21">
           <a-row :gutter="20">
             <a-col :span="6">
-              <a-form-item name="eventType" label="事件类型">
-                <a-select
-                  v-model:value="state.formData.eventType"
-                  placeholder="请选择"
+              <a-form-item name="preplanType" label="事件类型">
+                <a-input
+                  v-model:value="state.formData.preplanType"
+                  placeholder="请输入"
                   allow-clear
                 >
-                  <a-select-option
-                    v-for="item in global.$store.state.dictionary.alarmType"
-                    :value="item.value"
-                  >
-                    {{ item.label }}
-                  </a-select-option>
-                </a-select>
+                </a-input>
               </a-form-item>
             </a-col>
           </a-row>
@@ -62,10 +56,7 @@ const formDataRef: any = ref(null);
 
 const state = reactive({
   formData: {
-    eventTimeBegin: "",
-    eventTimeEnd: "",
-    eventType: "",
-    manageRegion: "",
+    preplanType: "",
   } as any,
   eventTime: [],
 });
