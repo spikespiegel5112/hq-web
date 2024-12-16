@@ -16,6 +16,7 @@
       @onEdit="handleEdit"
       @onChangePage="handleChangePage"
       @onDelete="handleDelete"
+      @onHandling="handleHandling"
     />
     <EditDialog
       :visible="state.dialogVisible"
@@ -25,6 +26,12 @@
       @onClose="handleClose"
       @onSubmit="handleSubmit"
     ></EditDialog>
+    <HandlingDialog
+      :visible="state.dialogHandlingVisible"
+      :rowData="state.currentRowData"
+      @onClose="handleCloseHandling"
+      @onSubmit="handleSubmitHandling"
+    ></HandlingDialog>
   </div>
 </template>
 
@@ -48,6 +55,7 @@ import {
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
+import HandlingDialog from "./HandlingDialog.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -154,6 +162,7 @@ const pageModel = ref([
 const state = reactive({
   tableData: [] as any[],
   dialogVisible: false,
+  dialogHandlingVisible: false,
   dialogMode: "",
   currentRowData: {},
 });
@@ -231,12 +240,20 @@ const handleDelete = (id: number) => {
     });
 };
 
+const handleHandling = () => {
+  state.dialogHandlingVisible = true;
+};
+
 const handleChangePage = (pagingData: any) => {
   pagination.page = pagingData.current;
   pagination.pageSize = pagingData.pageSize;
   pagination.total = pagingData.total;
   getData();
 };
+
+const handleCloseHandling = () => {};
+
+const handleSubmitHandling = () => {};
 
 onMounted(async () => {
   getData();

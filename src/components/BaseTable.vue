@@ -90,7 +90,7 @@ const emit = defineEmits<{
   (e: "onReview", rowData: any): void;
   (e: "onChangePage", pagination: object): void;
   (e: "onDelete", id: number, row: object): void;
-  (e: "onDisposal", row: object): void;
+  (e: "onHandling", row: object): void;
 }>();
 
 const props = defineProps({
@@ -157,7 +157,7 @@ const state = reactive({
       color: "",
     },
     {
-      label: "处置",
+      label: "事件处置",
       name: "disposal",
       color: "",
     },
@@ -279,7 +279,7 @@ const handleAction = (action: any, scope: any) => {
     });
   }
   if (action === "delete") {
-    emit("onDisposal", row);
+    emit("onHandling", row);
   }
 };
 
