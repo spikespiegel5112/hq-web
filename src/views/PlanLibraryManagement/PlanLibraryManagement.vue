@@ -16,11 +16,16 @@
         y: 'calc(100vh - 4.3rem)',
       }"
       expandRowByClick
+      :pagination="{
+        current: pagination.page,
+        total: pagination.total,
+        pageSize: pagination.pageSize,
+      }"
       @expand="handleExpand"
       @expandedRowsChange="handleExpandedRowsChange"
     >
       <template
-        #bodyCell="{ column }"
+        #bodyCell="{ text, record, index, column }"
         :style="{
           width: '2rem',
         }"
@@ -40,7 +45,7 @@
             <a-button
               :key="action"
               type="link"
-              @click.stop="handleAction(action, column)"
+              @click.stop="handleAction(action, record)"
             >
               {{
                 global.$store.state.dictionary.actionDictionary.find((item2:any) => item2.name === action).label
@@ -50,25 +55,12 @@
         </template>
       </template>
       <template #expandedRowRender="{ record, index, indent, expanded }">
-        <BaseTable
-          :tableData="state.tableDataPlan"
-          :dataModel="pageModelPlan"
-          height="100%"
-          tableBodyHeight="calc(100% - 0.4rem)"
-        />
+        <PlanTable :planId="record.id" />
       </template>
       <template #expandColumnTitle>
         <span></span>
       </template>
     </a-table>
-    <EditDialog
-      :visible="state.dialogVisible"
-      :mode="state.dialogMode"
-      :dataModel="pageModel"
-      :rowData="state.currentRowData"
-      @onClose="handleClose"
-      @onSubmit="handleSubmit"
-    ></EditDialog>
     <EditDialog
       :visible="state.dialogVisible"
       :mode="state.dialogMode"
@@ -102,6 +94,7 @@ import {
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
+import PlanTable from "./PlanTable.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -206,6 +199,12 @@ const handleEdit = (rowData: any) => {
   state.currentRowData = rowData;
 };
 
+const handleReview = (rowData: any) => {
+  state.dialogVisible = true;
+  state.dialogMode = "review";
+  state.currentRowData = rowData;
+};
+
 const handleAdd = () => {
   state.dialogVisible = true;
   state.dialogMode = "add";
@@ -301,7 +300,41 @@ const handleExpandedRowsChange = (expandedRows: any) => {
   console.log(expandedRows);
 };
 
-const handleAction = (action: any, column: any) => {};
+const handleAction = (action: any, record: any) => {
+  switch (action) {
+    case "add":
+      state.dialogVisible = true;
+      state.dialogMode = "add";
+      break;
+    case "edit":
+      state.dialogVisible = true;
+      state.dialogMode = "edit";
+      state.currentRowData = record;
+      break;
+    case "review":
+      state.dialogVisible = true;
+      state.dialogMode = "review";
+      state.currentRowData = record;
+      break;
+    case "delete":
+      global.$confirm({
+        title: "提示",
+        content: "确认删除？",
+        onOk: () => {
+          preplanPreplanDeleteRequest({
+            id: record.id,
+          })
+            .then((response: any) => {
+              getData()
+            })
+            .catch((error: any) => {
+              console.log(error);
+            });
+        },
+      });
+      break;
+  }
+};
 
 onMounted(async () => {
   transformPageModel();

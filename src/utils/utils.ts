@@ -254,6 +254,9 @@ const _utils = {
     }
     return result;
   },
+  $checkEditable: (mode: string) => {
+    return ["add", "edit"].some((item: string) => item === mode);
+  },
 } as any;
 
 const result = {
@@ -271,6 +274,7 @@ const result = {
       _utils["$orientationSensor"];
     app.config.globalProperties["$exportTable"] = _utils["$exportTable"];
     app.config.globalProperties["$getDictionary"] = _utils["$getDictionary"];
+    app.config.globalProperties["$checkEditable"] = _utils["$checkEditable"];
   },
 } as any;
 

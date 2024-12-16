@@ -168,6 +168,12 @@ const handleEdit = (rowData: any) => {
   state.currentRowData = rowData;
 };
 
+const handleReview = (rowData: any) => {
+  state.dialogVisible = true;
+  state.dialogMode = "review";
+  state.currentRowData = rowData;
+};
+
 const handleAdd = () => {
   state.dialogVisible = true;
   state.dialogMode = "add";

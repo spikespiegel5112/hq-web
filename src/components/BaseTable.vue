@@ -25,7 +25,7 @@
         :data-index="item.name"
         :width="item.width"
         :fixed="item.fixed"
-        align="center"
+        :align="global.$isNotEmpty(item.align) ? item.align : 'center'"
       >
         <template #default="scope">
           <div v-if="item.name === 'index'">

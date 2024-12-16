@@ -94,7 +94,7 @@ const state = reactive({
 });
 
 const handleChangeInfoReportTime = (value: any) => {
-  debugger;
+  
 };
 
 const handleSearch = () => {
