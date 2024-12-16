@@ -145,7 +145,6 @@ const rules: ComputedRef<RuleObject[]> = computed(() => {
       callback();
     }
   };
-
   const result: any = {};
   Object.keys(state.formData).forEach((item) => {
     const dataModelInfo = props.dataModel.find(
@@ -159,6 +158,7 @@ const rules: ComputedRef<RuleObject[]> = computed(() => {
           message: "请输入" + dataModelInfo.label,
           trigger: "change",
         });
+        if (props.mode === "review") result[item] = false;
       }
       if (dataModelInfo.dataType === "number") {
         result[item].push({ validator: validateNumber, trigger: "change" });

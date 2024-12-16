@@ -2,7 +2,7 @@
   <a-modal
     class="common_dailog_wrapper"
     v-model:open="state.visible"
-    width="8rem"
+    width="12rem"
     @cancel="handleClose"
   >
     <template #title>
@@ -17,9 +17,9 @@
       :label-col="{ style: { width: '120px' } }"
     >
       <a-row>
-        <a-col :span="22">
+        <a-col :span="11">
           <a-form-item name="eventType" label="事件类型">
-            <a-select
+            <!-- <a-select
               v-model:value="state.formData.eventType"
               placeholder="请选择"
             >
@@ -29,13 +29,12 @@
               >
                 {{ item.label }}
               </a-select-option>
-            </a-select>
+            </a-select> -->
+            {{ state.formData.eventType }}
           </a-form-item>
         </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="22">
-          <a-form-item name="eventTime" label="报警日期">
+        <a-col :span="11">
+          <a-form-item name="eventType" label="时间">
             <a-date-picker
               v-model:value="state.formData.eventTime"
               placeholder="请输入"
@@ -46,12 +45,16 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="eventLocation" label="事件发生地点">
-            <a-input
+          <a-form-item name="eventTime" label="事件等级"> 红色 </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="eventLocation" label="处置步骤">
+            <a-radio-group
               v-model:value="state.formData.eventLocation"
-              placeholder="请输入"
-            >
-            </a-input>
+              :options="['Apple', 'Pear', 'Orange']"
+            />
           </a-form-item>
         </a-col>
       </a-row>
@@ -186,7 +189,6 @@ const rules: ComputedRef<RuleObject[]> = computed(() => {
       callback();
     }
   };
-
   const result: any = {};
   Object.keys(state.formData).forEach((item) => {
     const dataModelInfo = props.dataModel.find(
@@ -200,6 +202,7 @@ const rules: ComputedRef<RuleObject[]> = computed(() => {
           message: "请输入" + dataModelInfo.label,
           trigger: "change",
         });
+        if (props.mode === "review") result[item] = false;
       }
       if (dataModelInfo.dataType === "number") {
         result[item].push({ validator: validateNumber, trigger: "change" });

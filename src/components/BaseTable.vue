@@ -278,7 +278,7 @@ const handleAction = (action: any, scope: any) => {
       },
     });
   }
-  if (action === "delete") {
+  if (action === "disposal") {
     emit("onHandling", row);
   }
 };

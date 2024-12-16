@@ -24,6 +24,7 @@
             <a-select
               v-model:value="state.formData.eventType"
               placeholder="请选择"
+              v-if="props.mode === 'edit'"
             >
               <a-select-option
                 v-for="item in global.$store.state.dictionary.alarmType"
@@ -32,6 +33,9 @@
                 {{ item.label }}
               </a-select-option>
             </a-select>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.eventType }}
+            </template>
           </a-form-item>
         </a-col>
       </a-row>
@@ -39,10 +43,14 @@
         <a-col :span="22">
           <a-form-item name="eventTime" label="报警日期">
             <a-date-picker
+              v-if="props.mode === 'edit'"
               v-model:value="state.formData.eventTime"
               placeholder="请输入"
               format="YYYY-MM-DD HH:mm:ss"
             ></a-date-picker>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.eventTime }}
+            </template>
           </a-form-item>
         </a-col>
       </a-row>
@@ -50,10 +58,14 @@
         <a-col :span="22">
           <a-form-item name="eventLocation" label="事件发生地点">
             <a-input
+              v-if="props.mode === 'edit'"
               v-model:value="state.formData.eventLocation"
               placeholder="请输入"
             >
             </a-input>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.eventLocation }}
+            </template>
           </a-form-item>
         </a-col>
       </a-row>
@@ -61,10 +73,14 @@
         <a-col :span="22">
           <a-form-item name="eventCode" label="事件编码">
             <a-input
+              v-if="props.mode === 'edit'"
               v-model:value="state.formData.eventCode"
               placeholder="请输入"
             >
             </a-input>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.eventLocation }}
+            </template>
           </a-form-item>
         </a-col>
       </a-row>
@@ -72,11 +88,15 @@
         <a-col :span="22">
           <a-form-item name="eventContent" label="事件内容">
             <a-textarea
+              v-if="props.mode === 'edit'"
               v-model:value="state.formData.eventContent"
               placeholder="请输入"
               :rows="4"
             >
             </a-textarea>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.eventContent }}
+            </template>
           </a-form-item>
         </a-col>
       </a-row>
@@ -84,6 +104,7 @@
         <a-col :span="22">
           <a-form-item name="eventStatus" label="事件状态">
             <a-select
+              v-if="props.mode === 'edit'"
               v-model:value="state.formData.eventStatus"
               placeholder="请选择"
             >
@@ -95,6 +116,9 @@
                 {{ item.title }}
               </a-select-option>
             </a-select>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.eventStatus }}
+            </template>
           </a-form-item>
         </a-col>
       </a-row>
@@ -102,6 +126,7 @@
         <a-col :span="22">
           <a-form-item name="attachment" label="附件">
             <a-upload
+              v-if="props.mode === 'edit'"
               v-model:file-list="state.fileList"
               name="file"
               action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
@@ -199,7 +224,6 @@ const rules: ComputedRef<RuleObject[]> = computed(() => {
       callback();
     }
   };
-
   const result: any = {};
   Object.keys(state.formData).forEach((item) => {
     const dataModelInfo = props.dataModel.find(
@@ -213,6 +237,7 @@ const rules: ComputedRef<RuleObject[]> = computed(() => {
           message: "请输入" + dataModelInfo.label,
           trigger: "change",
         });
+        if (props.mode === "review") result[item] = false;
       }
       if (dataModelInfo.dataType === "number") {
         result[item].push({ validator: validateNumber, trigger: "change" });

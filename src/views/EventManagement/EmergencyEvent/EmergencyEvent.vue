@@ -14,6 +14,7 @@
       :pagination="pagination"
       tabTable
       @onEdit="handleEdit"
+      @onReview="handleReview"
       @onChangePage="handleChangePage"
       @onDelete="handleDelete"
       @onHandling="handleHandling"
@@ -195,6 +196,12 @@ const handleEdit = (rowData: any) => {
   state.currentRowData = rowData;
 };
 
+const handleReview = (rowData: any) => {
+  state.dialogVisible = true;
+  state.dialogMode = "review";
+  state.currentRowData = rowData;
+};
+
 const handleAdd = () => {
   state.dialogVisible = true;
   state.dialogMode = "add";
@@ -251,7 +258,9 @@ const handleChangePage = (pagingData: any) => {
   getData();
 };
 
-const handleCloseHandling = () => {};
+const handleCloseHandling = () => {
+  state.dialogHandlingVisible = false;
+};
 
 const handleSubmitHandling = () => {};
 
