@@ -199,6 +199,40 @@ const routerDictionary = [
         ],
       },
       {
+        title: "预案管理",
+        path: "PlanManagement",
+        name: "PlanManagement",
+        icon: "/src/assets/menu_informationmanagement.png",
+        component: () =>
+          import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
+        children: [
+          {
+            title: "应急预案",
+            path: "EmergencyPlan",
+            name: "EmergencyPlan",
+            component: () =>
+              import(
+                /* webpackChunkName: "EmergencyPlan" */ "@/views/PlanManagement/EmergencyPlan/EmergencyPlan.vue"
+              ),
+            meta: {
+              title: "应急预案",
+            },
+          },
+          {
+            title: "预案记录",
+            path: "PlanRecord",
+            name: "PlanRecord",
+            component: () =>
+              import(
+                /* webpackChunkName: "PlanRecord" */ "@/views/PlanManagement/PlanRecord/PlanRecord.vue"
+              ),
+            meta: {
+              title: "预案记录",
+            },
+          },
+        ],
+      },
+      {
         title: "运行管理",
         path: "OperationManagement",
         name: "OperationManagement",
@@ -242,6 +276,29 @@ const routerDictionary = [
               title: "指示灯",
             },
           },
+        ],
+      },
+      {
+        title: "预案库管理",
+        path: "PlanLibraryManagement",
+        name: "PlanLibraryManagement",
+        icon: "/src/assets/menu_informationmanagement.png",
+        component: () =>
+          import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
+        children: [
+          {
+            title: "预案库管理",
+            path: "PlanLibraryManagement",
+            name: "PlanLibraryManagement",
+            component: () =>
+              import(
+                /* webpackChunkName: "PlanLibraryManagement" */ "@/views/PlanLibraryManagement/PlanLibraryManagement.vue"
+              ),
+            meta: {
+              title: "预案库管理",
+            },
+          },
+       
         ],
       },
       {
