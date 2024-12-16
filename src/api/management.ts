@@ -328,3 +328,76 @@ export const infoManagementExternalInfoUpdateRequest = (params: any) => {
     data: params,
   });
 };
+
+// 事件管理-突发事件-删除突发事件
+
+export const preplanPreplanDeleteRequest = (params: any) => {
+  return service({
+    url: prefix + "/preplan/preplan/delete",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 预案库管理-预案库管理-删除预案库步骤
+export const preplanPreplanDeleteStepRequest = (params: any) => {
+  return service({
+    url: prefix + "/preplan/preplan/deleteStep",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 预案库管理-预案库管理-预案库报表导出
+export const preplanPreplanExportRequest = (params: any) => {
+  return service({
+    url: prefix + "/preplan/preplan/export",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 预案库管理-预案库管理-预案库步骤报表导出
+export const preplanPreplanExportStepRequest = (params: any) => {
+  return service({
+    url: prefix + "/preplan/preplan/exportStep",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 预案库管理-预案库管理-分页查询
+export const preplanPreplanGetPageRequest = (params: any) => {
+  return service({
+    url: prefix + "/preplan/preplan/getPage",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 预案库管理-预案库管理-预案库步骤分页查询
+export const preplanPreplanGetStepPageRequest = (params: any) => {
+  return service({
+    url: prefix + "/preplan/preplan/getStepPage",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 预案库管理-预案库管理-保存
+export const preplanPreplanSaveRequest = (params: any) => {
+  return service({
+    url: prefix + "/preplan/preplan/save",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 预案库管理-预案库管理-保存预案库步骤
+export const preplanPreplanSaveStepRequest = (params: any) => {
+  return service({
+    url: prefix + "/preplan/preplan/saveStep",
+    method: "POST",
+    data: params,
+  });
+};

@@ -4,7 +4,7 @@
     :title="dialogTitle"
     @cancel="handleClose"
     @ok="handleSubmit"
-    width="8rem"
+    width="9rem"
   >
     <a-form
       ref="formDataRef"

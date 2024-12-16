@@ -2,7 +2,7 @@
   <a-modal
     v-model:open="state.visible"
     :title="dialogTitle"
-    width="8rem"
+    width="9rem"
     @cancel="handleClose"
   >
     <a-form

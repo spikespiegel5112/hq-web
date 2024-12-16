@@ -2,7 +2,7 @@
   <a-modal
     class="common_dailog_wrapper"
     v-model:open="state.visible"
-    width="8rem"
+    width="9rem"
     @cancel="handleClose"
   >
     <template #title>

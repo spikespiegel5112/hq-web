@@ -3,7 +3,7 @@
     v-model:open="state.visible"
     :title="dialogTitle"
     @cancel="handleClose"
-    width="8rem"
+    width="9rem"
   >
     <a-form
       :model="state.formData"
