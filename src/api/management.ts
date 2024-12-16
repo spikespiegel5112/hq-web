@@ -330,7 +330,6 @@ export const infoManagementExternalInfoUpdateRequest = (params: any) => {
 };
 
 // 事件管理-突发事件-删除突发事件
-
 export const preplanPreplanDeleteRequest = (params: any) => {
   return service({
     url: prefix + "/preplan/preplan/delete",
@@ -352,7 +351,7 @@ export const preplanPreplanDeleteStepRequest = (params: any) => {
 export const preplanPreplanExportRequest = (params: any) => {
   return service({
     url: prefix + "/preplan/preplan/export",
-    method: "POST",
+    method: "GET",
     data: params,
   });
 };
@@ -361,7 +360,7 @@ export const preplanPreplanExportRequest = (params: any) => {
 export const preplanPreplanExportStepRequest = (params: any) => {
   return service({
     url: prefix + "/preplan/preplan/exportStep",
-    method: "POST",
+    method: "GET",
     data: params,
   });
 };

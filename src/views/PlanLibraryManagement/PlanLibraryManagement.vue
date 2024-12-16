@@ -8,7 +8,46 @@
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
-    <BaseTable
+    <a-table
+      :columns="transformPageModel()"
+      :data-source="state.tableData"
+      :expand-column-width="100"
+    >
+      <template #bodyCell="{ column }">
+        <template v-if="column.key === 'operationColumn'">
+          <span
+            v-for="(action, index) in column.actions"
+            :class="
+                global.$store.state.dictionary.actionDictionary.find((item2:any) => item2.name === action).color
+              "
+          >
+            <a-divider
+              v-if="index > 0"
+              type="vertical"
+              style="margin: 0; height: 20px; background-color: #0096ff"
+            />
+            <a-button
+              :key="action"
+              type="link"
+              @click.stop="handleAction(action, column)"
+            >
+              {{
+                global.$store.state.dictionary.actionDictionary.find((item2:any) => item2.name === action).label
+              }}
+            </a-button>
+          </span>
+        </template>
+      </template>
+      <template #expandedRowRender="{ record }">
+        <p style="margin: 0">
+          {{ record.description }}
+        </p>
+      </template>
+      <template #expandColumnTitle>
+        <span></span>
+      </template>
+    </a-table>
+    <!-- <BaseTable
       :tableData="state.tableData"
       :dataModel="pageModel"
       :pagination="pagination"
@@ -16,7 +55,7 @@
       @onEdit="handleEdit"
       @onChangePage="handleChangePage"
       @onDelete="handleDelete"
-    />
+    /> -->
     <EditDialog
       :visible="state.dialogVisible"
       :mode="state.dialogMode"
@@ -39,12 +78,13 @@ import {
   ComponentInternalInstance,
   ref,
   nextTick,
+  toRaw,
 } from "vue";
 
 import {
-  eventManageSuddenEventGetPageRequest,
-  eventManageSuddenEventDeleteRequest,
-  eventManageSuddenEventSaveRequest,
+  preplanPreplanGetPageRequest,
+  preplanPreplanDeleteRequest,
+  preplanPreplanSaveRequest,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
@@ -53,14 +93,14 @@ const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
 const pageModel = ref([
-  {
-    label: "序号",
-    name: "index",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: false,
-  },
+  // {
+  //   label: "序号",
+  //   name: "index",
+  //   required: true,
+  //   tableVisible: true,
+  //   formVisible: true,
+  //   exportVisible: false,
+  // },
   {
     label: "事件类型",
     name: "eventType",
@@ -68,78 +108,6 @@ const pageModel = ref([
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
-    width: "1rem",
-  },
-  {
-    label: "事件发生地点",
-    name: "eventLocation",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-    width: "2rem",
-  },
-  {
-    label: "报警日期",
-    name: "eventTime",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-    width: "2.5rem",
-  },
-  {
-    label: "接收时间",
-    name: "eventTime",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-    width: "2.5rem",
-  },
-  {
-    label: "突发事件编码",
-    name: "eventType",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-    width: "1.5rem",
-  },
-
-  {
-    label: "报警内容",
-    name: "eventContent",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-    width: "3rem",
-  },
-  {
-    label: "处置情况",
-    name: "eventStatus",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-    width: "1rem",
-  },
-  {
-    label: "数据时间",
-    name: "createTime",
-    tableVisible: true,
-    formVisible: false,
-    exportVisible: false,
-    width: "2.5rem",
-  },
-  {
-    label: "更新时间",
-    name: "updateTime",
-    tableVisible: true,
-    formVisible: false,
-    exportVisible: false,
-    width: "2.5rem",
   },
   {
     label: "操作",
@@ -147,7 +115,7 @@ const pageModel = ref([
     tableVisible: true,
     exportVisible: false,
     fixed: "right",
-    actions: ["edit", "review", "delete", "disposal"],
+    actions: ["edit", "review", "delete"],
   },
 ]);
 
@@ -166,7 +134,7 @@ const pagination = reactive({
 
 const getData = () => {
   pagination.total = undefined;
-  eventManageSuddenEventGetPageRequest({
+  preplanPreplanGetPageRequest({
     ...queryFormData,
     ...pagination,
   })
@@ -206,7 +174,7 @@ const handleClose = () => {
 };
 
 const handleSubmit = (formData: any) => {
-  eventManageSuddenEventSaveRequest(formData)
+  preplanPreplanSaveRequest(formData)
     .then((response: any) => {
       global.$message.success("提交成功");
       getData();
@@ -218,7 +186,7 @@ const handleSubmit = (formData: any) => {
 };
 
 const handleDelete = (id: number) => {
-  eventManageSuddenEventDeleteRequest({
+  preplanPreplanDeleteRequest({
     id,
   })
     .then((response: any) => {
@@ -238,7 +206,23 @@ const handleChangePage = (pagingData: any) => {
   getData();
 };
 
+const transformPageModel: any = () => {
+  // title: 'Name', dataIndex: 'name', key: 'name', fixed: true
+  const result = pageModel.value.map((item: any) => {
+    return {
+      ...item,
+      title: item.label,
+      dataIndex: item.name,
+      key: item.name,
+    };
+  });
+  return result;
+};
+
+const handleAction = (action: any, column: any) => {};
+
 onMounted(async () => {
+  transformPageModel();
   getData();
 });
 

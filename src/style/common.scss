@@ -182,7 +182,11 @@ input:focus {
 }
 
 .common_table_wrapper {
-  margin: 0 0.4rem;
+  margin: 0.1rem 0.2rem;
+  padding: 0.1rem 0.3rem;
+  background-color: #040d2b;
+  border: 1px solid #004390;
+  border-radius: 0.1rem;
   .ant-spin-container {
     .ant-table {
       background-color: #041335;
@@ -395,13 +399,14 @@ input:focus {
 }
 .common_main_container,
 .common_tab_container {
-  margin: 0 0.2rem;
+  margin: 0.1rem 0.2rem;
   background-color: #040c1f;
   border-radius: 0.1rem;
+  border: 1px solid #004390;
 }
 .common_main_container {
   padding: 0.1rem 0.3rem;
-  height: calc(100vh - 2.6rem);
+  // height: calc(100vh - 2.6rem);
 }
 .common_tab_container {
   padding: 0 0.3rem;
@@ -414,7 +419,7 @@ input:focus {
   &.tabtable {
     .ant-table-wrapper {
       .ant-table {
-        height: calc(100vh - 4.1rem);
+        // height: calc(100vh - 2rem);
       }
     }
   }

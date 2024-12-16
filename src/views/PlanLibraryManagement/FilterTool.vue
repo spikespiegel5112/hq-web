@@ -5,16 +5,6 @@
         <a-col :span="21">
           <a-row :gutter="20">
             <a-col :span="6">
-              <a-form-item name="manageRegion" label="管理区域">
-                <a-input
-                  v-model:value="state.formData.manageRegion"
-                  placeholder="请输入"
-                >
-                </a-input>
-              </a-form-item>
-            </a-col>
-
-            <a-col :span="5">
               <a-form-item name="eventType" label="事件类型">
                 <a-select
                   v-model:value="state.formData.eventType"
@@ -27,25 +17,6 @@
                     {{ item.label }}
                   </a-select-option>
                 </a-select>
-              </a-form-item>
-            </a-col>
-            <a-col :span="6">
-              <a-form-item name="eventLocation" label="事件发生地点">
-                <a-input
-                  v-model:value="state.formData.eventLocation"
-                  placeholder="请输入"
-                >
-                </a-input>
-              </a-form-item>
-            </a-col>
-
-            <a-col :span="7">
-              <a-form-item name="eventTime" label="时间">
-                <a-range-picker
-                  v-model:value="state.eventTime"
-                  format="YYYY-MM-DD"
-                  @change="handleChangeEventTime"
-                />
               </a-form-item>
             </a-col>
           </a-row>

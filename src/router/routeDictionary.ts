@@ -279,9 +279,9 @@ const routerDictionary = [
         ],
       },
       {
-        title: "预案库管理",
-        path: "PlanLibraryManagement",
-        name: "PlanLibraryManagement",
+        title: "电子预案",
+        path: "ElectronicPlan",
+        name: "ElectronicPlan",
         icon: "/src/assets/menu_informationmanagement.png",
         component: () =>
           import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
@@ -298,7 +298,6 @@ const routerDictionary = [
               title: "预案库管理",
             },
           },
-       
         ],
       },
       {

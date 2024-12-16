@@ -3,6 +3,48 @@ import { color } from "echarts";
 const dictionary = {
   namespaced: true,
   state: () => ({
+    actionDictionary:[
+      {
+        label: "下载",
+        name: "download",
+        color: "",
+      },
+      {
+        label: "预览",
+        name: "preview",
+        color: "",
+      },
+      {
+        label: "定位",
+        name: "locate",
+        color: "",
+      },
+      {
+        label: "详情",
+        name: "review",
+        color: "",
+      },
+      {
+        label: "详情",
+        name: "detail",
+        color: "",
+      },
+      {
+        label: "编辑",
+        name: "edit",
+        color: "",
+      },
+      {
+        label: "事件处置",
+        name: "disposal",
+        color: "",
+      },
+      {
+        label: "删除",
+        name: "delete",
+        color: "font-color-red",
+      },
+    ],
     dialogMode: [
       {
         title: "新增",
