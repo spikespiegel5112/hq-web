@@ -9,14 +9,14 @@
       @onReview="handleReview"
       @onDelete="handleDelete"
     />
-    <EditDialog
+    <EditDialogPlan
       :visible="state.dialogVisible"
       :mode="state.dialogMode"
       :dataModel="pageModel"
       :rowData="state.currentRowData"
       @onClose="handleClose"
       @onSubmit="handleSubmit"
-    ></EditDialog>
+    ></EditDialogPlan>
   </div>
 </template>
 
@@ -40,7 +40,7 @@ import {
   preplanPreplanSaveRequest,
   preplanPreplanGetStepPageRequest,
 } from "@/api/management";
-import EditDialog from "./EditDialog.vue";
+import EditDialogPlan from "./EditDialogPlan.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -132,7 +132,6 @@ const handleEdit = (rowData: any) => {
   state.dialogVisible = true;
   state.dialogMode = "edit";
   state.currentRowData = rowData;
-  
 };
 
 const handleReview = (rowData: any) => {
