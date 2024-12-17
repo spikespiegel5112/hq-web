@@ -34,7 +34,7 @@ import Header from "@/components/Header.vue";
 import Menu from "@/components/Menu.vue";
 import AccessLog from "@/components/AccessLog.vue";
 
-import { screenBannerInfoRequest } from "@/api/management";
+import { preplanPreplanGetPageRequest } from "@/api/management";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -55,8 +55,37 @@ const init = () => {
   global.$getDictionary("informationType");
 };
 
+const getEventTypeList = () => {
+  preplanPreplanGetPageRequest({
+    preplanType: "突发事件处置",
+  })
+    .then((response: any) => {
+      global.$store.commit("app/updateCurrentEventTypeList", {
+        type: "突发事件处置",
+        data: response.data.list,
+      });
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+
+  preplanPreplanGetPageRequest({
+    preplanType: "应急预案处置",
+  })
+    .then((response: any) => {
+      global.$store.commit("app/updateCurrentEventTypeList", {
+        type: "应急预案处置",
+        data: response.data.list,
+      });
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+};
+
 onMounted(async () => {
   init();
+  getEventTypeList();
 });
 
 onBeforeUnmount(() => {});

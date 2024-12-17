@@ -73,7 +73,12 @@ const handleSearch = () => {
 
 const handleReset = () => {
   formDataRef.value.resetFields();
-  emit("onReset", state.formData);
+  const formData: any = Object.keys(state.formData).forEach((item: any) => {
+    state.formData[item] = global.$isEmpty(state.formData[item])
+      ? undefined
+      : state.formData[item];
+  });
+  emit("onReset", formData);
 };
 
 onMounted(async () => {});

@@ -20,6 +20,7 @@ const app = {
       pageSize: 30,
       total: 0 as number | undefined,
     },
+    currentEventTypeList: [] as any,
   }),
   mutations: {
     updateBannerInfo: (state: any, payload: any) => {
@@ -48,6 +49,14 @@ const app = {
     },
     updateVideoPlayerFilePath: (state: any, payload: any) => {
       state.videoPlayerFilePath = payload;
+    },
+    updateCurrentEventTypeList: (state: any, payload: any) => {
+      const isExist = state.currentEventTypeList.some(
+        (item: any) => item.type === payload.type
+      );
+      if (!isExist) {
+        state.currentEventTypeList.push(payload);
+      }
     },
   },
   actions: {

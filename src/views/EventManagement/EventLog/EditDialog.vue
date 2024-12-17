@@ -199,13 +199,19 @@ const handleClose = () => {
 };
 
 const handleSubmit = () => {
+  const eventTime = global
+    .$dayjs(state.formData.eventTime)
+    .format("YYYY-MM-DD HH:mm:ss");
   if (props.mode === "add") {
     state.formData.id = undefined;
   }
   formDataRef.value
     .validate()
     .then(() => {
-      emit("onSubmit", state.formData);
+      emit("onSubmit", {
+        ...state.formData,
+        eventTime,
+      });
       handleClose();
     })
     .catch((error: any) => {

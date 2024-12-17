@@ -45,6 +45,7 @@ import {
 import {
   eventManageSuddenEventGetRecordPageRequest,
   eventManageSuddenEventDeleteRequest,
+  eventManageSuddenEventSaveRequest,
 } from "@/api/management";
 
 import FilterTool from "./FilterTool.vue";
@@ -124,7 +125,7 @@ const pageModel = ref([
     tableVisible: true,
     exportVisible: false,
     fixed: "right",
-    actions: ["edit", "review", "delete"],
+    actions: ["review"],
   },
 ]);
 
@@ -188,7 +189,18 @@ const handleClose = () => {
   state.dialogVisible = false;
 };
 
-const handleSubmit = () => {};
+const handleSubmit = (formData: any) => {
+  eventManageSuddenEventSaveRequest(formData)
+    .then((response: any) => {
+      global.$message.success("提交成功");
+      getData();
+    })
+    .catch((error: any) => {
+      console.log(error);
+      global.$message.error("提交失败");
+    });
+};
+
 onMounted(async () => {
   getData();
 });
