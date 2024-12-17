@@ -137,7 +137,9 @@ const state = reactive({
   tableDataPlan: [] as any[],
 });
 
-let queryFormData = reactive({} as any);
+let queryFormData = reactive({
+  preplanType: "应急预案处置",
+} as any);
 
 const pagination = reactive({
   ...global.$store.state.app.defaultPagination,
@@ -299,6 +301,6 @@ onBeforeUnmount(() => {});
 .common_table_wrapper {
   border: 0;
   background-color: transparent;
-  padding:0.1rem 0;
+  padding: 0.1rem 0;
 }
 </style>

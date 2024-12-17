@@ -137,7 +137,9 @@ const state = reactive({
   tableDataPlan: [] as any[],
 });
 
-let queryFormData = reactive({} as any);
+let queryFormData = reactive({
+  preplanType: '突发事件处置',
+} as any);
 
 const pagination = reactive({
   ...global.$store.state.app.defaultPagination,

@@ -1,14 +1,11 @@
 <template>
   <div class="common_tab_container">
     <a-tabs v-model:activeKey="state.activeKey">
-      <a-tab-pane key="PlanLibraryManagementNonRoutineEvents" tab="非日常事件">
-        <PlanLibraryManagementNonRoutineEvents />
+      <a-tab-pane key="TabEmergencyEventHandling" tab="突发事件处置">
+        <TabEmergencyEventHandling />
       </a-tab-pane>
-      <a-tab-pane key="EmergencyPlan" tab="应急预案">
-        <PlanLibraryManagementEmergencyPlan />
-      </a-tab-pane>
-      <a-tab-pane key="ExternalInformation" tab="外部信息">
-        <PlanLibraryManagementExternalInformation />
+      <a-tab-pane key="TabEmergencyPlanHandling" tab="应急预案处置">
+        <TabEmergencyPlanHandling />
       </a-tab-pane>
     </a-tabs>
   </div>
@@ -28,9 +25,8 @@ import {
   toRaw,
 } from "vue";
 
-import PlanLibraryManagementNonRoutineEvents from "./PlanLibraryManagementNonRoutineEvents.vue";
-import PlanLibraryManagementEmergencyPlan from "./PlanLibraryManagementEmergencyPlan.vue";
-import PlanLibraryManagementExternalInformation from "./PlanLibraryManagementExternalInformation.vue";
+import TabEmergencyEventHandling from "./TabEmergencyEventHandling.vue";
+import TabEmergencyPlanHandling from "./TabEmergencyPlanHandling.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -38,7 +34,7 @@ const global = currentInstance.appContext.config.globalProperties;
 const props = defineProps({});
 
 const state = reactive({
-  activeKey: "PlanLibraryManagementNonRoutineEvents",
+  activeKey: "TabEmergencyEventHandling",
 });
 
 let queryFormData = reactive({} as any);
