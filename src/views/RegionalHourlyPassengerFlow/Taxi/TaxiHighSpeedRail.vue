@@ -151,9 +151,14 @@ const handleClose = () => {
 
 const handleSubmit = () => {};
 
-const handleChangePage = () => {};
+const handleChangePage = (pagingData: any) => {
+  pagination.page = pagingData.current;
+  pagination.pageSize = pagingData.pageSize;
+  pagination.total = pagingData.total;
+  getData();
+};
 
-const handleDelete = () => {};
+const handleDelete = (id: number) => {};
 onMounted(async () => {
   getData();
 });

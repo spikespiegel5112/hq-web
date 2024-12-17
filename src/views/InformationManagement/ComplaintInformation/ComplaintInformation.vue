@@ -42,7 +42,10 @@ import {
   nextTick,
 } from "vue";
 
-import { infoManagementComplaintInfoGetPageRequest } from "@/api/management";
+import {
+  infoManagementComplaintInfoGetPageRequest,
+  infoManagementComplaintInfoDeleteRequest,
+} from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
 
@@ -176,9 +179,26 @@ const handleClose = () => {
 
 const handleSubmit = () => {};
 
-const handleChangePage = () => {};
+const handleChangePage = (pagingData: any) => {
+  pagination.page = pagingData.current;
+  pagination.pageSize = pagingData.pageSize;
+  pagination.total = pagingData.total;
+  getData();
+};
 
-const handleDelete = () => {};
+const handleDelete = (id: number) => {
+  infoManagementComplaintInfoDeleteRequest({
+    id,
+  })
+    .then((response: any) => {
+      global.$message.success("删除成功");
+      getData();
+    })
+    .catch((error: any) => {
+      global.$message.error("删除失败");
+      console.log(error);
+    });
+};
 
 onMounted(async () => {
   getData();

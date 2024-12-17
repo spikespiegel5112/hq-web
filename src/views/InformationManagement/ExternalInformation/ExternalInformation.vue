@@ -222,6 +222,7 @@ const handleChangePage = (pagingData: any) => {
   pagination.total = pagingData.total;
   getData();
 };
+
 const handleDelete = (id: number) => {
   infoManagementExternalInfoDeleteRequest({ id })
     .then((response: any) => {
