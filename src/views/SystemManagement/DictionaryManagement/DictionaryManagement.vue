@@ -10,7 +10,6 @@
       <a-tab-pane key="DictionaryManagementName" tab="字典名称">
         <DictionaryManagementName
           :dictionaryNameList="state.dictionaryNameList"
-          @onUpdateDictionaryNameList="handleUpdateDictionaryList"
         />
       </a-tab-pane>
     </a-tabs>
@@ -47,7 +46,6 @@ const state = reactive({
 
 const getDictionaryNameList = () => {
   dictionaryManageGetDictPagingRequest({
-    pageSize: 1000,
   })
     .then((response: any) => {
       state.dictionaryNameList = response.data.list;

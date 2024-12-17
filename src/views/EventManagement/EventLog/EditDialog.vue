@@ -79,7 +79,6 @@
             <a-date-picker
               v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.eventTime"
-              placeholder="请输入"
               format="YYYY-MM-DD HH:mm:ss"
             ></a-date-picker>
             <template v-if="props.mode === 'review'">
@@ -98,7 +97,6 @@
             <a-date-picker
               v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.eventTime"
-              placeholder="请输入"
               format="YYYY-MM-DD HH:mm:ss"
             ></a-date-picker>
             <template v-if="props.mode === 'review'">
