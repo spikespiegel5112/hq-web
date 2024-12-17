@@ -266,6 +266,16 @@ export const eventManageSuddenEventGetPageRequest = (params: any) => {
   });
 };
 
+// 事件管理-事件记录-分页查询
+export const eventManageSuddenEventGetRecordPageRequest = (params: any) => {
+  return service({
+    url: prefix + "/eventManage/suddenEvent/getRecordPage",
+    method: "POST",
+    data: params,
+  });
+};
+
+
 // 事件管理-突发事件-删除突发事件
 export const eventManageSuddenEventDeleteRequest = (params: any) => {
   return service({

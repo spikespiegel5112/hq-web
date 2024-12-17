@@ -14,6 +14,7 @@
       :pagination="pagination"
       tabTable
       @onEdit="handleEdit"
+      @onReview="handleReview"
       @onChangePage="handleChangePage"
       @onDelete="handleDelete"
     />
@@ -42,7 +43,7 @@ import {
 } from "vue";
 
 import {
-  eventManageSuddenEventGetPageRequest,
+  eventManageSuddenEventGetRecordPageRequest,
   eventManageSuddenEventDeleteRequest,
 } from "@/api/management";
 
@@ -63,7 +64,7 @@ const pageModel = ref([
   },
   {
     label: "管理区域",
-    name: "eventType",
+    name: "manageRegion",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -71,7 +72,7 @@ const pageModel = ref([
   },
   {
     label: "事件类型",
-    name: "highwayName",
+    name: "eventType",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -79,7 +80,7 @@ const pageModel = ref([
   },
   {
     label: "详细地址",
-    name: "bridgeCode",
+    name: "eventLocation",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -87,7 +88,7 @@ const pageModel = ref([
   },
   {
     label: "事件内容",
-    name: "bridgeName",
+    name: "eventContent",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -95,15 +96,7 @@ const pageModel = ref([
   },
   {
     label: "发生时间",
-    name: "bridgeName",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
-    label: "处置完成时间",
-    name: "bridgeName",
+    name: "eventTime",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -126,7 +119,11 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "操作",     name: "operationColumn",     tableVisible: true,     exportVisible: false,     fixed: "right",
+    label: "操作",
+    name: "operationColumn",
+    tableVisible: true,
+    exportVisible: false,
+    fixed: "right",
     actions: ["edit", "review", "delete"],
   },
 ]);
@@ -146,7 +143,7 @@ const pagination = reactive({
 
 const getData = () => {
   pagination.total = undefined;
-  eventManageSuddenEventGetPageRequest({
+  eventManageSuddenEventGetRecordPageRequest({
     ...queryFormData,
     ...pagination,
   })

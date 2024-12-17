@@ -12,7 +12,8 @@
       :tableData="state.tableData"
       :dataModel="pageModel"
       :pagination="pagination"
-      @onEdit="handleEdit"
+@onEdit="handleEdit"
+      @onReview="handleReview"
       @onChangePage="handleChangePage"
     />
     <EditDialog

@@ -145,6 +145,13 @@ import {
 import type { Rule, RuleObject } from "ant-design-vue/es/form";
 import { UploadOutlined } from "@ant-design/icons-vue";
 
+import {
+  preplanPreplanGetPageRequest,
+  preplanPreplanDeleteRequest,
+  preplanPreplanSaveRequest,
+  preplanPreplanGetStepPageRequest,
+} from "@/api/management";
+
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
@@ -163,8 +170,9 @@ const props = defineProps({
 
 let state = reactive({
   visible: false,
+  planInfo: [],
   formData: {
-    id: null,
+    id: null as number | null | undefined,
     attachmentPath: "",
     createBy: "",
     createTime: "",
@@ -217,7 +225,10 @@ watch(
   async (newValue: any) => {
     state.visible = newValue;
     if (!!newValue) {
+      getData();
+
       const formData = JSON.parse(JSON.stringify(props.rowData));
+
       state.formData = {
         ...formData,
         eventTime: global.$dayjs(formData.eventTime),
@@ -225,6 +236,19 @@ watch(
     }
   }
 );
+
+const getData = () => {
+  preplanPreplanGetStepPageRequest({
+    preplanType: "突发事件处置",
+    eventType: props.rowData.eventType,
+  })
+    .then((response: any) => {
+      state.planInfo = response;
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+};
 
 const handleClose = () => {
   formDataRef.value.resetFields();

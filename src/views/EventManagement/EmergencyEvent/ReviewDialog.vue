@@ -168,7 +168,7 @@ const props = defineProps({
 let state = reactive({
   visible: false,
   formData: {
-    id: null,
+    id: null as number | null | undefined,
     attachmentPath: "",
     createBy: "",
     createTime: "",

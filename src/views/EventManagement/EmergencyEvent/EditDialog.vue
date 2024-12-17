@@ -49,7 +49,11 @@
               format="YYYY-MM-DD HH:mm:ss"
             ></a-date-picker>
             <template v-if="props.mode === 'review'">
-              {{ state.formData.eventTime }}
+              {{
+                global
+                  .$dayjs(state.formData.eventTime)
+                  .format("YYYY-MM-DD HH:mm:ss")
+              }}
             </template>
           </a-form-item>
         </a-col>
@@ -193,7 +197,7 @@ const props = defineProps({
 let state = reactive({
   visible: false,
   formData: {
-    id: null,
+    id: null as number | null | undefined,
     attachmentPath: "",
     createBy: "",
     createTime: "",

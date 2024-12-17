@@ -17,7 +17,7 @@ const app = {
     currentPeriod: "",
     defaultPagination: {
       page: 1,
-      pageSize: 10,
+      pageSize: 30,
       total: 0 as number | undefined,
     },
   }),

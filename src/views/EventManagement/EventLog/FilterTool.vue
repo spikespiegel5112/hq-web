@@ -1,12 +1,15 @@
 <template>
   <div class="common_filtertool_wrapper">
-    <a-form :model="formData" autocomplete="off" ref="formDataRef">
+    <a-form :model="state.formData" autocomplete="off" ref="formDataRef">
       <a-row>
         <a-col :span="20">
           <a-row :gutter="20">
             <a-col :span="6">
-              <a-form-item name="userName" label="报警类型">
-                <a-input v-model:value="formData.userName" placeholder="请输入">
+              <a-form-item name="eventType" label="事件类型">
+                <a-input
+                  v-model:value="state.formData.eventType"
+                  placeholder="请输入"
+                >
                   <template #prefix>
                     <span class="username"></span>
                   </template>
@@ -15,8 +18,11 @@
             </a-col>
 
             <a-col :span="6">
-              <a-form-item name="source" label="来源">
-                <a-select v-model="formData.source" placeholder="请输入">
+              <a-form-item name="manageRegion" label="来源">
+                <a-select
+                  v-model="state.formData.manageRegion"
+                  placeholder="请输入"
+                >
                   <a-select-option
                     v-for="item in global.$store.state.dictionary[
                       'externalDataSources'
@@ -30,9 +36,8 @@
             </a-col>
 
             <a-col :span="6">
-              <a-form-item name="password" label="时间">
-                <a-input v-model:value="formData.password" placeholder="请输入">
-                  
+              <a-form-item name="eventTime" label="时间">
+                <a-input v-model:value="state.eventTime" placeholder="请输入">
                 </a-input>
               </a-form-item>
             </a-col>
@@ -76,17 +81,23 @@ const emit = defineEmits<{
 
 const formDataRef: any = ref(null);
 
-const formData = reactive({
-  source: "",
+const state = reactive({
+  formData: {
+    eventType: "",
+    manageRegion: "",
+    eventTimeBegin: "",
+    eventTimeEnd: "",
+  },
+  eventTime: "",
 });
 
 const handleSearch = () => {
-  emit("onSearch", formData);
+  emit("onSearch", state.formData);
 };
 
 const handleReset = () => {
   formDataRef.value.resetFields();
-  emit("onReset", formData);
+  emit("onReset", state.formData);
 };
 
 onMounted(async () => {});

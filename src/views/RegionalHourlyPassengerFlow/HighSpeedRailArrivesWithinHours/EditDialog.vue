@@ -125,7 +125,7 @@ let state = reactive({
   formData: {
     dispersedHourlyPassengerCount: null,
     estimatedHourlyArrivePassengerCount: null,
-    id: null,
+    id: null as number | null | undefined,
     statisticalBeginHour: null,
     statisticalDate: "",
   } as any,

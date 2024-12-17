@@ -247,8 +247,9 @@ const handleDelete = (id: number) => {
     });
 };
 
-const handleHandling = () => {
+const handleHandling = (rowData: any) => {
   state.dialogHandlingVisible = true;
+  state.currentRowData = rowData;
 };
 
 const handleChangePage = (pagingData: any) => {

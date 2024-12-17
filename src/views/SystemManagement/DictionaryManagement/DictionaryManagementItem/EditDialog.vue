@@ -122,7 +122,7 @@ const state: UnwrapRef<any> = reactive({
   visible: false,
   formData: {
     id: null as number | null | undefined,
-    dicId: null,
+    dicid: null as number | null | undefined,
     label: "",
     remark: "",
     value: "",

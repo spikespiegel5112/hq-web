@@ -13,7 +13,8 @@
       :dataModel="pageModel"
       :pagination="pagination"
       tabTable
-      @onEdit="handleEdit"
+@onEdit="handleEdit"
+      @onReview="handleReview"
       @onChangePage="handleChangePage"
       @onDelete="handleDelete"
     />

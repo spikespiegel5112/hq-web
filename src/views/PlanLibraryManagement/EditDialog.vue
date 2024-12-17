@@ -86,7 +86,7 @@ let state = reactive({
   visible: false,
   formData: {
     eventType: "",
-    id: null,
+    id: null as number | null | undefined,
     preplanType: "",
   } as any,
   fileList: [] as any,
