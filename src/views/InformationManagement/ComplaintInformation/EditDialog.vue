@@ -136,6 +136,7 @@ import {
   ref,
   nextTick,
 } from "vue";
+import type { Dayjs } from "dayjs";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -220,8 +221,6 @@ const handleSubmit = () => {
       console.log(error);
     });
 };
-
-const handleChangeInfoReportTime = () => {};
 
 onBeforeUnmount(() => {});
 </script>

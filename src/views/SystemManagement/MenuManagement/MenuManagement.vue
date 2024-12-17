@@ -194,6 +194,10 @@ const handleClose = () => {
 
 const handleSubmit = () => {};
 
+const handleChangePage = () => {};
+
+const handleDelete = () => {};
+
 const init = () => {
   columns.value = pageModel.value.map((item: any) => {
     return {

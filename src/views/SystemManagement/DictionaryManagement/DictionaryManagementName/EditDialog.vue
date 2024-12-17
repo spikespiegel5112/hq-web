@@ -19,6 +19,7 @@
         <a-col :span="22">
           <a-form-item name="dicName" label="字典名称">
             <a-input
+              v-if="props.mode === 'edit'"
               v-model:value="state.formData.dicName"
               placeholder="请输入"
             >

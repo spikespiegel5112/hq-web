@@ -186,11 +186,11 @@ const routerDictionary = [
           },
           {
             title: "投诉信息",
-            path: "ExternalComplaints",
-            name: "ExternalComplaints",
+            path: "ComplaintInformation",
+            name: "ComplaintInformation",
             component: () =>
               import(
-                /* webpackChunkName: "ExternalComplaints" */ "@/views/InformationManagement/ExternalComplaints/ExternalComplaints.vue"
+                /* webpackChunkName: "ComplaintInformation" */ "@/views/InformationManagement/ComplaintInformation/ComplaintInformation.vue"
               ),
             meta: {
               title: "投诉信息",

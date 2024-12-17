@@ -8,12 +8,13 @@
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
-   a    <BaseTable
+    a
+    <BaseTable
       :tableData="state.tableData"
       :dataModel="pageModel"
       :pagination="pagination"
       tabTable
-@onEdit="handleEdit"
+      @onEdit="handleEdit"
       @onReview="handleReview"
       @onChangePage="handleChangePage"
       @onDelete="handleDelete"
@@ -99,7 +100,11 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "操作",     name: "operationColumn",     tableVisible: true,     exportVisible: false,     fixed: "right",
+    label: "操作",
+    name: "operationColumn",
+    tableVisible: true,
+    exportVisible: false,
+    fixed: "right",
     actions: ["edit", "review", "delete"],
   },
 ]);
@@ -162,6 +167,10 @@ const handleClose = () => {
 };
 
 const handleSubmit = () => {};
+
+const handleChangePage = () => {};
+
+const handleDelete = () => {};
 onMounted(async () => {
   getData();
 });

@@ -233,6 +233,13 @@ const handleSubmit = (formData: any) => {
     });
 };
 
+const handleChangePage = (pagingData: any) => {
+  pagination.page = pagingData.current;
+  pagination.pageSize = pagingData.pageSize;
+  pagination.total = pagingData.total;
+  getData();
+};
+
 const handleDelete = (id: number) => {
   eventManageSuddenEventDeleteRequest({
     id,
@@ -250,13 +257,6 @@ const handleDelete = (id: number) => {
 const handleHandling = (rowData: any) => {
   state.dialogHandlingVisible = true;
   state.currentRowData = rowData;
-};
-
-const handleChangePage = (pagingData: any) => {
-  pagination.page = pagingData.current;
-  pagination.pageSize = pagingData.pageSize;
-  pagination.total = pagingData.total;
-  getData();
 };
 
 const handleCloseHandling = () => {

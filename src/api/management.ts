@@ -275,7 +275,6 @@ export const eventManageSuddenEventGetRecordPageRequest = (params: any) => {
   });
 };
 
-
 // 事件管理-突发事件-删除突发事件
 export const eventManageSuddenEventDeleteRequest = (params: any) => {
   return service({
@@ -293,6 +292,8 @@ export const eventManageSuddenEventSaveRequest = (params: any) => {
     data: params,
   });
 };
+
+// 信息管理-外部信息
 
 // 信息管理-外部信息-删除
 export const infoManagementExternalInfoDeleteRequest = (params: any) => {
@@ -338,6 +339,64 @@ export const infoManagementExternalInfoUpdateRequest = (params: any) => {
     data: params,
   });
 };
+
+// 信息管理-投诉信息
+
+// 删除
+export const infoManagementComplaintInfoDeleteRequest = (params: any) => {
+  return service({
+    url: prefix + "/infoManagement/complaintInfo/delete",
+    method: "POST",
+    data: params,
+  });
+};
+
+// excel导出
+export const infoManagementComplaintInfoExportExcelRequest = (params: any) => {
+  return service({
+    url: prefix + "/infoManagement/complaintInfo/exportExcel",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 根据Id查询
+export const infoManagementComplaintInfoGetOneByIdRequest = (params: any) => {
+  return service({
+    url: prefix + "/infoManagement/complaintInfo/getOneById",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 分页查询
+export const infoManagementComplaintInfoGetPageRequest = (params: any) => {
+  return service({
+    url: prefix + "/infoManagement/complaintInfo/getPage",
+    method: "POST",
+    data: params,
+  });
+};
+
+// excel导入
+export const infoManagementComplaintInfoImportExcelRequest = (params: any) => {
+  return service({
+    url: prefix + "/infoManagement/complaintInfo/importExcel",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 保存
+export const infoManagementComplaintInfoSaveRequest = (params: any) => {
+  return service({
+    url: prefix + "/infoManagement/complaintInfo/save",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 事件管理-突发事件
 
 // 事件管理-突发事件-删除突发事件
 export const preplanPreplanDeleteRequest = (params: any) => {

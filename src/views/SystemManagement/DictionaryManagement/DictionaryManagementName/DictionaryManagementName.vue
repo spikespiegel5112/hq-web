@@ -17,7 +17,7 @@
       :dataModel="pageModel"
       :pagination="pagination"
       tabTable
-@onEdit="handleEdit"
+      @onEdit="handleEdit"
       @onReview="handleReview"
       @onChangePage="handleChangePage"
       @onDelete="handleDelete"
@@ -99,7 +99,11 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "操作",     name: "operationColumn",     tableVisible: true,     exportVisible: false,     fixed: "right",
+    label: "操作",
+    name: "operationColumn",
+    tableVisible: true,
+    exportVisible: false,
+    fixed: "right",
     actions: ["edit", "review", "delete"],
   },
 ]);
@@ -169,13 +173,6 @@ const handleReset = (formData: object) => {
   getData();
 };
 
-const handleChangePage = (pagingData: any) => {
-  pagination.page = pagingData.current;
-  pagination.pageSize = pagingData.pageSize;
-  pagination.total = pagingData.total;
-  getData();
-};
-
 const handleSubmit = (formData: any) => {
   dictionaryManageSaveDictRequest(formData)
     .then((response: any) => {
@@ -186,6 +183,13 @@ const handleSubmit = (formData: any) => {
       console.log(error);
       global.$message.error("提交失败");
     });
+};
+
+const handleChangePage = (pagingData: any) => {
+  pagination.page = pagingData.current;
+  pagination.pageSize = pagingData.pageSize;
+  pagination.total = pagingData.total;
+  getData();
 };
 
 const handleDelete = (id: number) => {

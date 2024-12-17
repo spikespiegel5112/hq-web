@@ -150,6 +150,10 @@ const handleClose = () => {
 };
 
 const handleSubmit = () => {};
+
+const handleChangePage = () => {};
+
+const handleDelete = () => {};
 onMounted(async () => {
   getData();
 });

@@ -201,6 +201,13 @@ const handleSubmit = (formData: any) => {
     });
 };
 
+const handleChangePage = (pagingData: any) => {
+  pagination.page = pagingData.current;
+  pagination.pageSize = pagingData.pageSize;
+  pagination.total = pagingData.total;
+  getData();
+};
+
 onMounted(async () => {
   getData();
 });
@@ -217,13 +224,6 @@ const handleDelete = (id: number) => {
       global.$message.error("删除失败");
       console.log(error);
     });
-};
-
-const handleChangePage = (pagingData: any) => {
-  pagination.page = pagingData.current;
-  pagination.pageSize = pagingData.pageSize;
-  pagination.total = pagingData.total;
-  getData();
 };
 
 onBeforeUnmount(() => {});

@@ -8,12 +8,12 @@
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
-   a    <BaseTable
+    <BaseTable
       :tableData="state.tableData"
       :dataModel="pageModel"
       :pagination="pagination"
       tabTable
-@onEdit="handleEdit"
+      @onEdit="handleEdit"
       @onReview="handleReview"
       @onChangePage="handleChangePage"
       @onDelete="handleDelete"
@@ -42,7 +42,7 @@ import {
   nextTick,
 } from "vue";
 
-import { screenBannerInfoRequest } from "@/api/management";
+import { infoManagementComplaintInfoGetPageRequest } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
 
@@ -59,39 +59,83 @@ const pageModel = ref([
     exportVisible: false,
   },
   {
-    label: "区域",
-    name: "higywayCode",
+    label: "信息代码",
+    name: "infoCode",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "类型",
-    name: "highwayName",
+    label: "信息内容",
+    name: "infoContent",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "内容",
-    name: "bridgeName",
+    label: "信息上报单位",
+    name: "infoReportUnit",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "投诉日期",
-    name: "bridgeName",
+    label: "信息上报开始时间",
+    name: "infoReportTime",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "操作",     name: "operationColumn",     tableVisible: true,     exportVisible: false,     fixed: "right",
+    label: "信息上报结束时间",
+    name: "infoReportTimeEnd",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "信息等级",
+    name: "infoLevel",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "信息类型",
+    name: "infoType",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "信息状态",
+    name: "infoStatus",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "附件",
+    name: "attachment",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "操作",
+    name: "operationColumn",
+    tableVisible: true,
+    exportVisible: false,
+    fixed: "right",
     actions: ["edit", "review", "delete"],
   },
 ]);
@@ -110,16 +154,17 @@ const pagination = reactive({
 });
 
 const getData = () => {
-  const result = [] as any[];
-  for (let index = 0; index < 30; index++) {
-    result.push({
-      higywayCode: "aaa",
-      highwayName: "aaa",
-      bridgeCode: "aaa",
-      bridgeName: "aaa",
+  infoManagementComplaintInfoGetPageRequest({
+    ...queryFormData,
+    ...pagination,
+  })
+    .then((response: any) => {
+      response = response.data;
+      state.tableData = response.list;
+    })
+    .catch((error: any) => {
+      console.log(error);
     });
-  }
-  state.tableData = result;
 };
 
 const handleEdit = (rowData: any) => {
@@ -154,6 +199,11 @@ const handleClose = () => {
 };
 
 const handleSubmit = () => {};
+
+const handleChangePage = () => {};
+
+const handleDelete = () => {};
+
 onMounted(async () => {
   getData();
 });

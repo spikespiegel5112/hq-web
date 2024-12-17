@@ -162,6 +162,10 @@ const handleClose = () => {
 
 const handleSubmit = () => {};
 
+const handleChangePage = () => {};
+
+const handleDelete = () => {};
+
 const handleChangePage = (pagingData: any) => {
   pagination.page = pagingData.current;
   pagination.pageSize = pagingData.pageSize;

@@ -39,6 +39,7 @@
         <a-col :span="22">
           <a-form-item name="eventTime" label="报警日期">
             <a-date-picker
+              v-if="props.mode === 'edit'"
               v-model:value="state.formData.eventTime"
               placeholder="请输入"
               format="YYYY-MM-DD HH:mm:ss"

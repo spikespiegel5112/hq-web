@@ -17,7 +17,7 @@
       :dataModel="pageModel"
       :pagination="pagination"
       tabTable
-@onEdit="handleEdit"
+      @onEdit="handleEdit"
       @onReview="handleReview"
       @onChangePage="handleChangePage"
       @onDelete="handleDelete"
@@ -129,7 +129,11 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "操作",     name: "operationColumn",     tableVisible: true,     exportVisible: false,     fixed: "right",
+    label: "操作",
+    name: "operationColumn",
+    tableVisible: true,
+    exportVisible: false,
+    fixed: "right",
     actions: ["edit", "review", "delete"],
   },
 ]);
