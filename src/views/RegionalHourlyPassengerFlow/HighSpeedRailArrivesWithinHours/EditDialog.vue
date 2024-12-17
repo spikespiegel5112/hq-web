@@ -17,7 +17,7 @@
         <a-col :span="22">
           <a-form-item name="statisticalDate" label="统计日期">
             <a-date-picker
-              v-if="props.mode === 'edit'"
+              v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.statisticalDate"
               placeholder="情选择"
               format="YYYY-MM-DD"

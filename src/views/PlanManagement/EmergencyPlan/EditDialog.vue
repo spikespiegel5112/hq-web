@@ -39,7 +39,7 @@
         <a-col :span="22">
           <a-form-item name="eventTime" label="报警日期">
             <a-date-picker
-              v-if="props.mode === 'edit'"
+              v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.eventTime"
               placeholder="请输入"
               format="YYYY-MM-DD HH:mm:ss"
@@ -51,7 +51,7 @@
         <a-col :span="22">
           <a-form-item name="eventLocation" label="事件发生地点">
             <a-input
-              v-if="props.mode === 'edit'"
+              v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.eventLocation"
               placeholder="请输入"
             >
@@ -63,7 +63,7 @@
         <a-col :span="22">
           <a-form-item name="eventCode" label="事件编码">
             <a-input
-              v-if="props.mode === 'edit'"
+              v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.eventCode"
               placeholder="请输入"
             >

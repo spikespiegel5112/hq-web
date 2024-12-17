@@ -11,16 +11,18 @@
       :rules="rules"
       autocomplete="off"
       :label-col="{
-        style: { width: '120px' },
+        style: { width: '150px' },
       }"
     >
       <a-row :gutter="20">
         <a-col :span="22">
           <a-form-item name="dicId" label="字典名称">
             <a-select
+              v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.dicId"
               placeholder="请输入"
               @change="hangleCHangeDictionaryNameList"
+              :disabled="props.mode === 'edit'"
             >
               <a-select-option
                 v-for="item in props.dictionaryNameList"
@@ -30,22 +32,39 @@
                 {{ item.dicName }}
               </a-select-option>
             </a-select>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.dicId }}
+            </template>
           </a-form-item>
         </a-col>
       </a-row>
       <a-row :gutter="20">
         <a-col :span="22">
           <a-form-item name="label" label="字典项名称">
-            <a-input v-model:value="state.formData.label" placeholder="请输入">
+            <a-input
+              v-if="global.$checkEditable(props.mode)"
+              v-model:value="state.formData.label"
+              placeholder="请输入"
+            >
             </a-input>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.label }}
+            </template>
           </a-form-item>
         </a-col>
       </a-row>
       <a-row :gutter="20">
         <a-col :span="22">
           <a-form-item name="value" label="字典编码">
-            <a-input v-model:value="state.formData.value" placeholder="请输入">
+            <a-input
+              v-if="global.$checkEditable(props.mode)"
+              v-model:value="state.formData.value"
+              placeholder="请输入"
+            >
             </a-input>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.value }}
+            </template>
           </a-form-item>
         </a-col>
       </a-row>
@@ -53,10 +72,14 @@
         <a-col :span="22">
           <a-form-item name="remark" label="字典项详细信息">
             <a-textarea
+              v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.remark"
               placeholder="请输入"
             >
             </a-textarea>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.remark }}
+            </template>
           </a-form-item>
         </a-col>
       </a-row>
@@ -65,6 +88,13 @@
       <a-row>
         <a-col :span="22">
           <template v-if="['edit', 'add'].some((item) => item === props.mode)">
+            <a-button
+              v-if="props.mode === 'edit'"
+              key="submit"
+              @click="handleDuplicate"
+            >
+              创建副本
+            </a-button>
             <a-button key="back" @click="handleClose">取消</a-button>
             <a-button key="submit" type="primary" @click="handleSubmit">
               确认
@@ -189,6 +219,19 @@ const handleSubmit = () => {
   if (props.mode === "add") {
     state.formData.id = undefined;
   }
+  formDataRef.value
+    .validate()
+    .then(() => {
+      emit("onSubmit", state.formData, state.currentDictionaryCode);
+      handleClose();
+    })
+    .catch((error: any) => {
+      console.log("error", error);
+    });
+};
+
+const handleDuplicate = () => {
+  state.formData.id = undefined;
   formDataRef.value
     .validate()
     .then(() => {

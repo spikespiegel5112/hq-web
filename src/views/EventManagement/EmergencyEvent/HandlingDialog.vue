@@ -36,7 +36,7 @@
         <a-col :span="11">
           <a-form-item name="eventType" label="时间">
             <a-date-picker
-              v-if="props.mode === 'edit'"
+              v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.eventTime"
               placeholder="请输入"
               format="YYYY-MM-DD HH:mm:ss"

@@ -15,7 +15,7 @@
         <a-col :span="22">
           <a-form-item name="infoCode" label="信息代码">
             <a-input
-              v-if="props.mode === 'edit'"
+              v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.infoCode"
               placeholder="请输入"
             >
@@ -28,7 +28,7 @@
         <a-col :span="22">
           <a-form-item name="infoContent" label="信息内容">
             <a-input
-              v-if="props.mode === 'edit'"
+              v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.infoContent"
               placeholder="请输入"
             >
@@ -40,7 +40,7 @@
         <a-col :span="22">
           <a-form-item name="infoReportUnit" label="信息上报单位">
             <a-input
-              v-if="props.mode === 'edit'"
+              v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.infoReportUnit"
               placeholder="请输入"
             >
@@ -52,7 +52,7 @@
         <a-col :span="22">
           <a-form-item name="infoReportTime" label="信息上报开始时间">
             <a-date-picker
-              v-if="props.mode === 'edit'"
+              v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.infoReportTime"
               placeholder="请输入"
               format="YYYY-MM-DD HH:mm:ss"

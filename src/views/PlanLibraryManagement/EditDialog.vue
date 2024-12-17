@@ -22,7 +22,7 @@
         <a-col :span="22">
           <a-form-item name="eventType" label="事件类型">
             <a-input
-              v-if="props.mode === 'edit'"
+              v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.eventType"
               placeholder="请输入"
               v-if="global.$checkEditable(props.mode)"

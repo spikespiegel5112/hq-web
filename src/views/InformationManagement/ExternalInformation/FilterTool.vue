@@ -7,7 +7,7 @@
             <a-col :span="6">
               <a-form-item name="infoReportUnit" label="信息上报单位">
                 <a-input
-                  v-model:value="state.infoReportTime"
+                  v-model:value="state.formData.infoReportUnit"
                   placeholder="请输入"
                   allow-clear
                 >
@@ -93,9 +93,7 @@ const state = reactive({
   },
 });
 
-const handleChangeInfoReportTime = (value: any) => {
-  
-};
+const handleChangeInfoReportTime = (value: any) => {};
 
 const handleSearch = () => {
   emit("onSearch", state.formData);

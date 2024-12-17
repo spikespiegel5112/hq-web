@@ -19,7 +19,7 @@
         <a-col :span="12">
           <a-form-item name="dicName" label="字典项名称">
             <a-input
-              v-if="props.mode === 'edit'"
+              v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.dicName"
               placeholder="请输入"
             >

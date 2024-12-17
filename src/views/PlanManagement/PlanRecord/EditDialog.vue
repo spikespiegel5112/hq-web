@@ -15,7 +15,7 @@
         <a-col :span="12">
           <a-form-item name="userName" label="事件类型">
             <a-input
-              v-if="props.mode === 'edit'"
+              v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.userName"
               placeholder="请输入"
             >
@@ -25,7 +25,7 @@
         <a-col :span="12">
           <a-form-item name="userName" label="时间">
             <a-input
-              v-if="props.mode === 'edit'"
+              v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.userName"
               placeholder="请输入"
             >
@@ -37,7 +37,7 @@
         <a-col :span="22">
           <a-form-item name="password" label="事件等级">
             <a-input
-              v-if="props.mode === 'edit'"
+              v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.password"
               placeholder="请输入"
             >
@@ -76,7 +76,7 @@
         <a-col :span="22">
           <a-form-item name="password" label="事件描述">
             <a-input
-              v-if="props.mode === 'edit'"
+              v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.password"
               placeholder="请输入"
             >
@@ -88,7 +88,7 @@
         <a-col :span="22">
           <a-form-item name="password" label="附件">
             <a-input
-              v-if="props.mode === 'edit'"
+              v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.password"
               placeholder="请输入"
             >

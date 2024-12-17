@@ -4,7 +4,7 @@
     :title="dialogTitle"
     @cancel="handleClose"
     @ok="handleSubmit"
-    width="9rem"
+    width="6rem"
   >
     <a-form
       ref="formDataRef"
@@ -19,19 +19,29 @@
         <a-col :span="22">
           <a-form-item name="dicName" label="字典名称">
             <a-input
-              v-if="props.mode === 'edit'"
+              v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.dicName"
               placeholder="请输入"
             >
             </a-input>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.dicName }}
+            </template>
           </a-form-item>
         </a-col>
       </a-row>
       <a-row :gutter="20">
         <a-col :span="22">
           <a-form-item name="code" label="字典编码">
-            <a-input v-model:value="state.formData.code" placeholder="请输入">
+            <a-input
+              v-if="global.$checkEditable(props.mode)"
+              v-model:value="state.formData.code"
+              placeholder="请输入"
+            >
             </a-input>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.code }}
+            </template>
           </a-form-item>
         </a-col>
       </a-row>
@@ -123,7 +133,7 @@ watch(
     state.visible = newValue;
     if (!!newValue) {
       await nextTick();
-if (["edit", "review"].some((item) => item === props.mode)) {
+      if (["edit", "review"].some((item) => item === props.mode)) {
         const formData = JSON.parse(JSON.stringify(props.rowData));
         state.formData = formData;
       }

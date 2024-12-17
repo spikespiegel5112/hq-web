@@ -20,7 +20,7 @@
         >
           <a-form-item name="userName" label="报警类型">
             <a-input
-              v-if="props.mode === 'edit'"
+              v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.userName"
               placeholder="请输入"
             >
@@ -28,7 +28,7 @@
           </a-form-item>
           <a-form-item name="password" label="报警内容">
             <a-input
-              v-if="props.mode === 'edit'"
+              v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.password"
               placeholder="请输入"
             >
@@ -45,7 +45,7 @@
         >
           <a-form-item name="userName" label="报警类型">
             <a-input
-              v-if="props.mode === 'edit'"
+              v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.userName"
               placeholder="请输入"
             >
@@ -53,7 +53,7 @@
           </a-form-item>
           <a-form-item name="password" label="报警内容">
             <a-input
-              v-if="props.mode === 'edit'"
+              v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.password"
               placeholder="请输入"
             >
