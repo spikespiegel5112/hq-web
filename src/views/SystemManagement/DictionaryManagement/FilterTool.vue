@@ -5,9 +5,9 @@
         <a-col :span="20">
           <a-row :gutter="20">
             <a-col :span="6">
-              <a-form-item name="code" label="字典名称">
+              <a-form-item name="dicName" label="字典名称">
                 <a-select
-                  v-model:value="formData.code"
+                  v-model:value="formData.dicName"
                   placeholder="请输入"
                   allowClear
                   show-search
@@ -18,6 +18,15 @@
                   @change="handleChange"
                 >
                 </a-select>
+              </a-form-item>
+            </a-col>
+            <a-col :span="6">
+              <a-form-item name="code" label="字典编码">
+                <a-input
+                  v-model:value="formData.code"
+                  placeholder="请输入"
+                  allowClear
+                ></a-input>
               </a-form-item>
             </a-col>
           </a-row>
@@ -73,6 +82,7 @@ const emit = defineEmits<{
 const formDataRef: any = ref(null);
 
 const formData = reactive({
+  dicName: "",
   code: "",
 });
 
@@ -107,7 +117,7 @@ const importDictionary = (dictionaryNameList: any[]) => {
   state.dictionaryNameList = dictionaryNameList.map((item: any) => {
     return {
       label: item.dicName,
-      value: item.code,
+      value: item.dicName,
     };
   });
 };

@@ -13,10 +13,10 @@
     >
       <a-row>
         <a-col :span="22">
-          <a-form-item name="infoCode" label="信息代码">
+          <a-form-item name="complaintRegion" label="投诉区域">
             <a-input
               v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.infoCode"
+              v-model:value="state.formData.complaintRegion"
               placeholder="请输入"
             >
             </a-input>
@@ -25,64 +25,20 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="infoContent" label="信息内容">
-            <a-input
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.infoContent"
-              placeholder="请输入"
-            >
-            </a-input>
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="22">
-          <a-form-item name="infoReportUnit" label="信息上报单位">
-            <a-input
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.infoReportUnit"
-              placeholder="请输入"
-            >
-            </a-input>
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="22">
-          <a-form-item name="infoReportTime" label="信息上报开始时间">
-            <a-date-picker
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.infoReportTime"
-              placeholder="请输入"
-              format="YYYY-MM-DD HH:mm:ss"
-              @change="handleChangeInfoReportTime"
-            ></a-date-picker>
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="22">
-          <a-form-item name="infoLevel" label="信息等级">
-            <a-input-number
-              v-model:value="state.formData.infoLevel"
-              placeholder="请输入"
-            >
-            </a-input-number>
-          </a-form-item>
-        </a-col>
-      </a-row>
-
-      <a-row>
-        <a-col :span="22">
-          <a-form-item name="infoType" label="信息类型">
+          <a-form-item name="complaintType" label="投诉类型">
+            {{ typeof state.formData.complaintType }}
+            {{
+              global.$store.state.dictionary.complaintType.map(
+                (item) => item.value
+              )
+            }}
             <a-select
-              v-model:value="state.formData.infoType"
+              v-if="global.$checkEditable(props.mode)"
+              v-model:value="state.formData.complaintType"
               placeholder="请选择"
             >
               <a-select-option
-                v-for="item in global.$store.state.dictionary[
-                  'informationType'
-                ]"
+                v-for="item in global.$store.state.dictionary.complaintType"
                 :value="item.value"
               >
                 {{ item.label }}
@@ -93,12 +49,51 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="infoStatus" label="信息状态">
-            <a-input-number
-              v-model:value="state.formData.infoStatus"
-              placeholder="请输入"
+          <a-form-item name="complaintSensitive" label="敏感程度">
+            <a-select
+              v-if="global.$checkEditable(props.mode)"
+              v-model:value="state.formData.complaintSensitive"
+              placeholder="请选择"
             >
-            </a-input-number>
+              <a-select-option
+                v-for="item in global.$store.state.dictionary
+                  .complaintSensitive"
+                :value="item.value"
+              >
+                {{ item.label }}
+              </a-select-option>
+            </a-select>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="complaintTime" label="投诉时间">
+            <!-- <a-date-picker
+              v-if="global.$checkEditable(props.mode)"
+              v-model:value="state.formData.complaintTime"
+              placeholder="请输入"
+              format="YYYY-MM-DD HH:mm:ss"
+              @change="handleChangeInfoReportTime"
+            ></a-date-picker> -->
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="handlingStatus" label="处置状态">
+            <a-select
+              v-if="global.$checkEditable(props.mode)"
+              v-model:value="state.formData.handlingStatus"
+              placeholder="请选择"
+            >
+              <a-select-option
+                v-for="item in global.$store.state.dictionary.disposalStatus"
+                :value="item.value"
+              >
+                {{ item.label }}
+              </a-select-option>
+            </a-select>
           </a-form-item>
         </a-col>
       </a-row>
@@ -157,14 +152,11 @@ const state = reactive({
   visible: false,
   formData: {
     id: null as number | null | undefined,
-    attachmentPath: "",
-    infoCode: "",
-    infoContent: "",
-    infoLevel: null,
-    infoReportTime: "",
-    infoReportUnit: "",
-    infoStatus: null,
-    infoType: "",
+    complaintRegion: "",
+    complaintType: "",
+    complaintSensitive: "",
+    complaintTime: "",
+    handlingStatus: "",
   },
 });
 
@@ -220,6 +212,8 @@ const handleSubmit = () => {
       console.log(error);
     });
 };
+
+const handleChangeInfoReportTime = (value: any) => {};
 
 onBeforeUnmount(() => {});
 </script>

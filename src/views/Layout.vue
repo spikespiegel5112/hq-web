@@ -53,6 +53,10 @@ const init = () => {
   global.$getDictionary("disposalStatus");
   global.$getDictionary("alarmType");
   global.$getDictionary("informationType");
+  global.$getDictionary("complaintType");
+  global.$getDictionary("complaintSensitive");
+
+  
 };
 
 const getEventTypeList = () => {

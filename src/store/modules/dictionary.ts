@@ -3,7 +3,7 @@ import { color } from "echarts";
 const dictionary = {
   namespaced: true,
   state: () => ({
-    actionDictionary:[
+    actionDictionary: [
       {
         label: "下载",
         name: "download",
@@ -171,50 +171,6 @@ const dictionary = {
         color: "red",
       },
     ],
-    complaintSensitive: [
-      {
-        title: "非敏感",
-        value: 1,
-      },
-      {
-        title: "中性",
-        value: 2,
-      },
-      {
-        title: "敏感",
-        value: 3,
-      },
-    ],
-    complaintType: [
-      {
-        title: "运行组织",
-        value: 1,
-      },
-      {
-        title: "服务质量",
-        value: 2,
-      },
-      {
-        title: "标识类",
-        value: 3,
-      },
-      {
-        title: "环境卫生",
-        value: 4,
-      },
-      {
-        title: "收费类",
-        value: 5,
-      },
-      {
-        title: "设施设备",
-        value: 6,
-      },
-      {
-        title: "其他",
-        value: 7,
-      },
-    ],
     weather: [
       {
         fileName: "中雨@1x.png",
@@ -314,24 +270,7 @@ const dictionary = {
         value: 1,
       },
     ],
-    disposalStatus: [
-      {
-        title: "未处置",
-        value: 0,
-        lightColor: "red",
-      },
-      {
-        title: "处置中",
-        value: 1,
-        lightColor: "yellow",
-      },
 
-      {
-        title: "已处置",
-        value: 2,
-        lightColor: "green",
-      },
-    ],
     disposalStatus2: [
       {
         title: "未处置",
