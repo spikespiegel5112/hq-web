@@ -247,6 +247,12 @@ const _utils = {
         code,
       });
       result = response.data;
+      result = result.map((item: any) => {
+        if (typeof Number(item.value) === "number") {
+          item.value = Number(item.value);
+        }
+        return item;
+      });
       store.commit("dictionary/addDictionary", {
         code,
         data: result,

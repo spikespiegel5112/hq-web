@@ -9,59 +9,105 @@
       :model="state.formData"
       ref="formDataRef"
       autocomplete="off"
-      :label-col="{ style: { width: '80px' } }"
+      :label-col="{ style: { width: '130px' } }"
     >
       <a-row>
-        <a-space
-          :size="20"
-          :style="{
-            width: '100%',
-          }"
-        >
-          <a-form-item name="userName" label="报警类型">
+        <a-col :span="22">
+          <a-form-item name="complaintRegion" label="投诉区域">
             <a-input
               v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.userName"
+              v-model:value="state.formData.complaintRegion"
               placeholder="请输入"
             >
             </a-input>
           </a-form-item>
-          <a-form-item name="password" label="报警内容">
-            <a-input
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.password"
-              placeholder="请输入"
-            >
-            </a-input>
-          </a-form-item>
-        </a-space>
+        </a-col>
       </a-row>
       <a-row>
-        <a-space
-          :size="20"
-          :style="{
-            width: '100%',
-          }"
-        >
-          <a-form-item name="userName" label="报警类型">
-            <a-input
+        <a-col :span="22">
+          <a-form-item name="complaintType" label="投诉类型">
+            <a-select
               v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.userName"
-              placeholder="请输入"
+              v-model:value="state.formData.complaintType"
+              placeholder="请选择"
             >
-            </a-input>
+              <a-select-option
+                v-for="item in global.$store.state.dictionary.complaintType"
+                :value="Number(item.value)"
+              >
+                {{ item.label }}
+              </a-select-option>
+            </a-select>
           </a-form-item>
-          <a-form-item name="password" label="报警内容">
-            <a-input
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="complaintSensitive" label="敏感程度">
+            <a-select
               v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.password"
-              placeholder="请输入"
+              v-model:value="state.formData.complaintSensitive"
+              placeholder="请选择"
             >
-            </a-input>
+              <a-select-option
+                v-for="item in global.$store.state.dictionary
+                  .complaintSensitive"
+                :value="item.value"
+              >
+                {{ item.label }}
+              </a-select-option>
+            </a-select>
           </a-form-item>
-        </a-space>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="complaintTime" label="投诉时间">
+            <!-- <a-date-picker
+              v-if="global.$checkEditable(props.mode)"
+              v-model:value="state.formData.complaintTime"
+              format="YYYY-MM-DD HH:mm:ss"
+              @change="handleChangeInfoReportTime"
+            ></a-date-picker> -->
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="handlingStatus" label="处置状态">
+            <a-select
+              v-if="global.$checkEditable(props.mode)"
+              v-model:value="state.formData.handlingStatus"
+              placeholder="请选择"
+            >
+              <a-select-option
+                v-for="item in global.$store.state.dictionary.disposalStatus"
+                :value="item.value"
+              >
+                {{ item.label }}
+              </a-select-option>
+            </a-select>
+          </a-form-item>
+        </a-col>
       </a-row>
     </a-form>
+    <template #footer>
+      <a-row>
+        <a-col :span="22">
+          <template v-if="['edit', 'add'].some((item) => item === props.mode)">
+            <a-button key="back" @click="handleClose">取消</a-button>
+            <a-button key="submit" type="primary" @click="handleSubmit">
+              确认
+            </a-button>
+          </template>
+          <template v-else-if="props.mode === 'review'">
+            <a-button key="submit" type="primary" @click="handleClose">
+              关闭
+            </a-button>
+          </template>
+        </a-col>
+      </a-row>
+    </template>
   </a-modal>
 </template>
 
@@ -77,8 +123,7 @@ import {
   ref,
   nextTick,
 } from "vue";
-
-import { screenBannerInfoRequest } from "@/api/management";
+import type { Dayjs } from "dayjs";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -99,8 +144,12 @@ const props = defineProps({
 const state = reactive({
   visible: false,
   formData: {
-    userName: "",
-    password: "",
+    id: null as number | null | undefined,
+    complaintRegion: "",
+    complaintType: "",
+    complaintSensitive: "",
+    complaintTime: "",
+    handlingStatus: "",
   },
 });
 
@@ -116,9 +165,16 @@ watch(
     state.visible = newValue;
     if (!!newValue) {
       await nextTick();
-if (["edit", "review"].some((item) => item === props.mode)) {
-        const formData = JSON.parse(JSON.stringify(props.rowData));
-        state.formData = formData;
+      if (["edit", "review"].some((item) => item === props.mode)) {
+        let rowData = JSON.parse(JSON.stringify(props.rowData));
+        rowData = {
+          ...rowData,
+          infoReportTime: global.$dayjs(
+            rowData.infoReportTime,
+            "YYYY-MM-DD HH:mm:ss"
+          ),
+        };
+        state.formData = rowData;
       }
     }
   }
@@ -130,19 +186,27 @@ const handleClose = () => {
 };
 
 const handleSubmit = () => {
-  if (props.mode === "add") {
-    state.formData.id = undefined;
-  }
   formDataRef.value
     .validate()
     .then(() => {
-      emit("onSubmit", state.formData);
+      if (props.mode === "add") {
+        state.formData.id = undefined;
+      }
+      const infoReportTime = global
+        .$dayjs(state.formData.infoReportTime)
+        .format("YYYY-MM-DD HH:mm:ss");
+      emit("onSubmit", {
+        ...state.formData,
+        infoReportTime,
+      });
       handleClose();
     })
     .catch((error: any) => {
-      console.log("error", error);
+      console.log(error);
     });
 };
+
+const handleChangeInfoReportTime = (value: any) => {};
 
 onBeforeUnmount(() => {});
 </script>

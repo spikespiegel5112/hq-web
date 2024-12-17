@@ -8,7 +8,7 @@
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
-   a    <BaseTable
+    <BaseTable
       :tableData="state.tableData"
       :dataModel="pageModel"
       :pagination="pagination"
@@ -42,7 +42,13 @@ import {
   nextTick,
 } from "vue";
 
-import { screenBannerInfoRequest } from "@/api/management";
+import {
+  infoManagementPublicSentimentInfoDeleteRequest,
+  infoManagementPublicSentimentInfoGetOneByIdRequest,
+  infoManagementPublicSentimentInfoGetPageRequest,
+  infoManagementPublicSentimentInfoSaveRequest,
+  infoManagementPublicSentimentInfoUpdateRequest,
+} from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
 
@@ -59,47 +65,59 @@ const pageModel = ref([
     exportVisible: false,
   },
   {
-    label: "区域",
-    name: "higywayCode",
+    label: "投诉区域",
+    name: "complaintRegion",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "舆情来源",
-    name: "highwayName",
+    label: "投诉类型",
+    name: "complaintType",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "信息属性",
-    name: "bridgeCode",
+    label: "敏感程度",
+    name: "complaintSensitive",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "内容",
-    name: "bridgeName",
+    label: "投诉时间",
+    name: "complaintTime",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "舆情发生时间",
-    name: "bridgeName",
+    label: "处置状态",
+    name: "handlingStatus",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "操作",     name: "operationColumn",     tableVisible: true,     exportVisible: false,     fixed: "right",
+    label: "附件",
+    name: "attachment",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "操作",
+    name: "operationColumn",
+    tableVisible: true,
+    exportVisible: false,
+    fixed: "right",
     actions: ["edit", "review", "delete"],
   },
 ]);
@@ -118,16 +136,17 @@ const pagination = reactive({
 });
 
 const getData = () => {
-  const result = [] as any[];
-  for (let index = 0; index < 30; index++) {
-    result.push({
-      higywayCode: "aaa",
-      highwayName: "aaa",
-      bridgeCode: "aaa",
-      bridgeName: "aaa",
+  infoManagementPublicSentimentInfoGetPageRequest({
+    ...queryFormData,
+    ...pagination,
+  })
+    .then((response: any) => {
+      response = response.data;
+      state.tableData = response.list;
+    })
+    .catch((error: any) => {
+      console.log(error);
     });
-  }
-  state.tableData = result;
 };
 
 const handleEdit = (rowData: any) => {
@@ -170,7 +189,20 @@ const handleChangePage = (pagingData: any) => {
   getData();
 };
 
-const handleDelete = (id: number) => {};
+const handleDelete = (id: number) => {
+  infoManagementPublicSentimentInfoDeleteRequest({
+    id,
+  })
+    .then((response: any) => {
+      global.$message.success("删除成功");
+      getData();
+    })
+    .catch((error: any) => {
+      global.$message.error("删除失败");
+      console.log(error);
+    });
+};
+
 onMounted(async () => {
   getData();
 });

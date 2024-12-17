@@ -26,12 +26,6 @@
       <a-row>
         <a-col :span="22">
           <a-form-item name="complaintType" label="投诉类型">
-            {{ typeof state.formData.complaintType }}
-            {{
-              global.$store.state.dictionary.complaintType.map(
-                (item) => item.value
-              )
-            }}
             <a-select
               v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.complaintType"
@@ -39,7 +33,7 @@
             >
               <a-select-option
                 v-for="item in global.$store.state.dictionary.complaintType"
-                :value="item.value"
+                :value="Number(item.value)"
               >
                 {{ item.label }}
               </a-select-option>

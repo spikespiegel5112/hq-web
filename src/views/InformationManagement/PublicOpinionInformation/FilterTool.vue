@@ -1,13 +1,13 @@
 <template>
   <div class="common_filtertool_wrapper">
-    <a-form :model="formData" autocomplete="off" ref="formDataRef">
+    <a-form :model="state.formData" autocomplete="off" ref="formDataRef">
       <a-row>
         <a-col :span="20">
           <a-row :gutter="20">
             <a-col :span="6">
-              <a-form-item name="userName" label="区域">
+              <a-form-item name="complaintRegion" label="投诉区域">
                 <a-input
-                  v-model="formData.userName"
+                  v-model:value="state.formData.complaintRegion"
                   placeholder="请输入"
                   allow-clear
                 >
@@ -19,26 +19,30 @@
             </a-col>
 
             <a-col :span="6">
-              <a-form-item name="password" label="信息属性">
-                <a-input
-                  v-model="formData.password"
+              <a-form-item name="complaintType" label="投诉类型">
+                <a-select
+                  v-model:value="state.formData.complaintType"
                   placeholder="请输入"
-                  allow-clear
                 >
-                  
-                </a-input>
+                  <a-select-option
+                    v-for="item in global.$store.state.dictionary[
+                      'complaintType'
+                    ]"
+                    :value="item.value"
+                  >
+                    {{ item.label }}
+                  </a-select-option>
+                </a-select>
               </a-form-item>
             </a-col>
 
-            <a-col :span="6">
-              <a-form-item name="password" label="查询时间">
-                <a-input
-                  v-model="formData.password"
-                  placeholder="请输入"
+            <a-col :span="8">
+              <a-form-item name="time" label="投诉时间">
+                <a-range-picker
+                  v-model="state.dateRange"
+                  format="YYYY-MM-DD"
                   allow-clear
-                >
-                  
-                </a-input>
+                />
               </a-form-item>
             </a-col>
           </a-row>
@@ -71,8 +75,6 @@ import {
   nextTick,
 } from "vue";
 
-
-
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
@@ -83,20 +85,23 @@ const emit = defineEmits<{
 
 const formDataRef: any = ref(null);
 
-const formData = reactive({
-  userName: "",
-  password: "",
+const state = reactive({
+  formData: {
+    complaintRegion: "",
+    complaintType: "",
+    complaintTimeStart: "",
+    complaintTimeEnd: "",
+  },
+  dateRange: [],
 });
 
-
-
 const handleSearch = () => {
-  emit("onSearch", formData);
+  emit("onSearch", state.formData);
 };
 
 const handleReset = () => {
   formDataRef.value.resetFields();
-  emit("onReset", formData);
+  emit("onReset", state.formData);
 };
 
 onMounted(async () => {});

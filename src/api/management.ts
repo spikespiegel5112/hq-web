@@ -293,48 +293,52 @@ export const eventManageSuddenEventSaveRequest = (params: any) => {
   });
 };
 
-// 信息管理-外部信息
+// 信息管理-舆情信息
 
-// 信息管理-外部信息-删除
-export const infoManagementExternalInfoDeleteRequest = (params: any) => {
+// 信息管理-舆情信息-删除
+export const infoManagementPublicSentimentInfoDeleteRequest = (params: any) => {
   return service({
-    url: prefix + "/infoManagement/externalInfo/delete",
+    url: prefix + "/infoManagement/publicSentimentInfo/delete",
     method: "POST",
     params,
   });
 };
 
-// 信息管理-外部信息-根据Id查询
-export const infoManagementExternalInfoGetOneByIdRequest = (params: any) => {
+// 信息管理-舆情信息-根据Id查询
+export const infoManagementPublicSentimentInfoGetOneByIdRequest = (
+  params: any
+) => {
   return service({
-    url: prefix + "/infoManagement/externalInfo/getOneById",
+    url: prefix + "/infoManagement/publicSentimentInfo/getOneById",
     method: "POST",
     data: params,
   });
 };
 
-// 信息管理-外部信息-分页查询
-export const infoManagementExternalInfoGetPageRequest = (params: any) => {
+// 信息管理-舆情信息-分页查询
+export const infoManagementPublicSentimentInfoGetPageRequest = (
+  params: any
+) => {
   return service({
-    url: prefix + "/infoManagement/externalInfo/getPage",
+    url: prefix + "/infoManagement/publicSentimentInfo/getPage",
     method: "POST",
     data: params,
   });
 };
 
-// 信息管理-外部信息-保存
-export const infoManagementExternalInfoSaveRequest = (params: any) => {
+// 信息管理-舆情信息-保存
+export const infoManagementPublicSentimentInfoSaveRequest = (params: any) => {
   return service({
-    url: prefix + "/infoManagement/externalInfo/save",
+    url: prefix + "/infoManagement/publicSentimentInfo/save",
     method: "POST",
     data: params,
   });
 };
 
-// 信息管理-外部信息-修改
-export const infoManagementExternalInfoUpdateRequest = (params: any) => {
+// 信息管理-舆情信息-修改
+export const infoManagementPublicSentimentInfoUpdateRequest = (params: any) => {
   return service({
-    url: prefix + "/infoManagement/externalInfo/update",
+    url: prefix + "/infoManagement/publicSentimentInfo/update",
     method: "POST",
     data: params,
   });
