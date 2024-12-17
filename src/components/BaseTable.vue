@@ -171,7 +171,7 @@ const state = reactive({
 
 const tableHeight = computed(() => {
   if (props.tabTable) {
-    return "calc(100vh - 4.7rem)";
+    return "calc(100vh - 4.9rem)";
   } else {
     return "calc(100vh - 4.3rem)";
   }

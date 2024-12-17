@@ -24,13 +24,12 @@
             <a-col :span="6">
               <a-form-item name="eventType" label="事件类型">
                 <a-select
-                  v-model="state.formData.eventType"
-                  placeholder="请输入"
+                  v-model:value="state.formData.eventType"
+                  placeholder="请选择"
+                  allow-clear
                 >
                   <a-select-option
-                    v-for="item in global.$store.state.dictionary[
-                      'externalDataSources'
-                    ]"
+                    v-for="item in eventList"
                     :value="item.value"
                   >
                     {{ item.label }}
@@ -94,6 +93,12 @@ const state = reactive({
     eventTime: [] as any[],
   },
   eventTime: "",
+});
+
+const eventList = computed(() => {
+  return global.$store.state.app.currentEventTypeList.find(
+    (item: any) => item.type === "突发事件处置"
+  )?.data;
 });
 
 const handleSearch = () => {

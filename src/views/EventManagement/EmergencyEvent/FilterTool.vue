@@ -15,7 +15,7 @@
               </a-form-item>
             </a-col>
 
-            <a-col :span="5">
+            <a-col :span="6">
               <a-form-item name="eventType" label="事件类型">
                 <a-select
                   v-model:value="state.formData.eventType"
@@ -23,7 +23,7 @@
                   allow-clear
                 >
                   <a-select-option
-                    v-for="item in global.$store.state.dictionary.alarmType"
+                    v-for="item in eventList"
                     :value="item.value"
                   >
                     {{ item.label }}
@@ -42,7 +42,7 @@
               </a-form-item>
             </a-col>
 
-            <a-col :span="7">
+            <a-col :span="6">
               <a-form-item name="eventTime" label="时间">
                 <a-range-picker
                   v-model:value="state.eventTime"
@@ -98,7 +98,13 @@ const state = reactive({
     eventType: "",
     manageRegion: "",
   } as any,
-  eventTime: [],
+  eventTime: [] as any,
+});
+
+const eventList = computed(() => {
+  return global.$store.state.app.currentEventTypeList.find(
+    (item: any) => item.type === "突发事件处置"
+  )?.data;
 });
 
 const handleSearch = () => {

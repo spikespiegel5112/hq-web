@@ -55,7 +55,15 @@ const app = {
         (item: any) => item.type === payload.type
       );
       if (!isExist) {
-        state.currentEventTypeList.push(payload);
+        state.currentEventTypeList.push({
+          type: payload.type,
+          data: payload.data.map((item: any) => {
+            return {
+              label: item.eventType,
+              value: item.eventType,
+            };
+          }),
+        });
       }
     },
   },
