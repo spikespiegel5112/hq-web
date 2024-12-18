@@ -11,7 +11,7 @@
       autocomplete="off"
       :disabled="props.mode === 'review'"
       :rules="rules"
-      :label-col="{ style: { width: '130px' } }"
+      :label-col="{ style: { width: '150px' } }"
     >
       <a-row>
         <a-col :span="22">
@@ -23,6 +23,9 @@
               format="YYYY-MM-DD"
               valueFormat="YYYY-MM-DD"
             />
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.statisticalDate }}
+            </template>
           </a-form-item>
         </a-col>
       </a-row>
@@ -30,6 +33,7 @@
         <a-col :span="22">
           <a-form-item name="statisticalBeginHour" label="统计开始时间">
             <a-time-picker
+              v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.statisticalBeginHour"
               format="HH:mm:ss"
               value-format="HH:mm:ss"
@@ -38,6 +42,9 @@
               inputReadOnly
               @change="handleChangeStatisticalBeginHour"
             />
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.statisticalBeginHour }}
+            </template>
           </a-form-item>
         </a-col>
       </a-row>
@@ -45,11 +52,15 @@
         <a-col :span="22">
           <a-form-item name="dispersedHourlyPassengerCount" label="小时疏散数">
             <a-input-number
+              v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.dispersedHourlyPassengerCount"
               placeholder="请输入"
               :min="0"
             >
             </a-input-number>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.dispersedHourlyPassengerCount }}
+            </template>
           </a-form-item>
         </a-col>
       </a-row>
@@ -60,10 +71,14 @@
             label="预测小时到达数"
           >
             <a-input-number
+              v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
               placeholder="请输入"
             >
             </a-input-number>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.estimatedHourlyArrivePassengerCount }}
+            </template>
           </a-form-item>
         </a-col>
       </a-row>

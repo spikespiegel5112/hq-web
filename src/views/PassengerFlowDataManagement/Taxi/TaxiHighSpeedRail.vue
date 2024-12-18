@@ -1,5 +1,5 @@
 <template>
-  <div class="tabtable">
+  <div class="common_table_wrapper">
     <FilterTool @onSearch="handleSearch" @onReset="handleReset"></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
@@ -87,7 +87,11 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "操作",     name: "operationColumn",     tableVisible: true,     exportVisible: false,     fixed: "right",
+    label: "操作",
+    name: "operationColumn",
+    tableVisible: true,
+    exportVisible: false,
+    fixed: "right",
     actions: ["edit", "review", "delete"],
   },
 ]);

@@ -72,7 +72,7 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "时段",
+    label: "统计开始时间",
     name: "statisticalBeginHour",
     required: true,
     tableVisible: true,
@@ -96,15 +96,11 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "更新时间",
-    name: "updateTime",
-    required: true,
+    label: "操作",
+    name: "operationColumn",
     tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
-    label: "操作",     name: "operationColumn",     tableVisible: true,     exportVisible: false,     fixed: "right",
+    exportVisible: false,
+    fixed: "right",
     actions: ["edit", "review", "delete"],
   },
 ]);
@@ -183,7 +179,23 @@ const handleSubmit = (formData: any) => {
     });
 };
 
-const handleChangePage = (pagingData: any) => {   pagination.page = pagingData.current;   pagination.pageSize = pagingData.pageSize;   pagination.total = pagingData.total;   getData(); };  const handleDelete = (id: number) => {   infoManagementExternalInfoDeleteRequest({     id,   })     .then((response: any) => {       global.$message.success("删除成功");       getData();     })     .catch((error: any) => {       global.$message.error("删除失败");       console.log(error);     }); };
+const handleChangePage = (pagingData: any) => {
+  pagination.page = pagingData.current;
+  pagination.pageSize = pagingData.pageSize;
+  pagination.total = pagingData.total;
+  getData();
+};
+const handleDelete = (id: number) => {
+  infoManagementExternalInfoDeleteRequest({ id })
+    .then((response: any) => {
+      global.$message.success("删除成功");
+      getData();
+    })
+    .catch((error: any) => {
+      global.$message.error("删除失败");
+      console.log(error);
+    });
+};
 
 const handleUploaded = (response: any) => {
   getData();

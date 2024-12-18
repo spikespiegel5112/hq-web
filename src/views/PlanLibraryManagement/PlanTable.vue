@@ -35,7 +35,6 @@ import {
 } from "vue";
 
 import {
-
   preplanPreplanDeleteRequest,
   preplanPreplanSaveRequest,
   preplanPreplanGetStepPageRequest,
@@ -179,20 +178,6 @@ const handleChangePage = (pagingData: any) => {
 };
 
 const handleDelete = (id: number) => {
-  infoManagementExternalInfoDeleteRequest({
-    id,
-  })
-    .then((response: any) => {
-      global.$message.success("删除成功");
-      getData();
-    })
-    .catch((error: any) => {
-      global.$message.error("删除失败");
-      console.log(error);
-    });
-};
-
-const handleDelete = (id: number) => {
   preplanPreplanDeleteRequest({
     id,
   })
@@ -206,14 +191,7 @@ const handleDelete = (id: number) => {
     });
 };
 
-const handleChangePage = (pagingData: any) => {
-  pagination.page = pagingData.current;
-  pagination.pageSize = pagingData.pageSize;
-  pagination.total = pagingData.total;
-  getData();
-};
-
-const transformPageModel: any = () => {
+const transformPageModel = () => {
   // title: 'Name', dataIndex: 'name', key: 'name', fixed: true
   const result = pageModel.value.map((item: any) => {
     return {

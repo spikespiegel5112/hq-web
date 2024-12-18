@@ -22,9 +22,9 @@
         <a-col :span="22">
           <a-form-item name="eventType" label="事件类型">
             <a-select
+              v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.eventType"
               placeholder="请选择"
-              v-if="global.$checkEditable(props.mode)"
             >
               <a-select-option
                 v-for="item in global.$store.state.dictionary.alarmType"

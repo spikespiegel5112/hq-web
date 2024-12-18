@@ -135,14 +135,6 @@ const pageModel = ref([
     width: "2.5rem",
   },
   {
-    label: "更新时间",
-    name: "updateTime",
-    tableVisible: true,
-    formVisible: false,
-    exportVisible: false,
-    width: "2.5rem",
-  },
-  {
     label: "操作",
     name: "operationColumn",
     tableVisible: true,

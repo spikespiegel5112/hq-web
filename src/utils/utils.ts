@@ -246,7 +246,7 @@ const _utils = {
       const code = item1.code;
       let dictionaryData = result.filter((item2: any) => item2.code === code);
       dictionaryData = dictionaryData.map((item: any) => {
-        if (typeof Number(item.value) === "number") {
+        if (!isNaN(Number(item.value))) {
           item.value = Number(item.value);
         }
         return item;

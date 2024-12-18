@@ -2,7 +2,7 @@
   <a-modal
     class="common_dailog_wrapper"
     v-model:open="state.visible"
-    width="9rem"
+    width="6rem"
     @cancel="handleClose"
   >
     <template #title>
@@ -25,7 +25,6 @@
               v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.eventType"
               placeholder="请输入"
-              v-if="global.$checkEditable(props.mode)"
             >
             </a-input>
             <div v-if="props.mode === 'review'">

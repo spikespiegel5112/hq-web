@@ -70,15 +70,7 @@ const pageModel = ref([
     formVisible: true,
     exportVisible: false,
   },
-  {
-    label: "事件类型",
-    name: "eventType",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-    width: "1rem",
-  },
+
   {
     label: "事件发生地点",
     name: "eventLocation",
@@ -115,7 +107,15 @@ const pageModel = ref([
     exportVisible: true,
     width: "1.5rem",
   },
-
+  {
+    label: "事件类型",
+    name: "eventType",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+    width: "1.2rem",
+  },
   {
     label: "报警内容",
     name: "eventContent",
@@ -137,14 +137,6 @@ const pageModel = ref([
   {
     label: "数据时间",
     name: "createTime",
-    tableVisible: true,
-    formVisible: false,
-    exportVisible: false,
-    width: "2.5rem",
-  },
-  {
-    label: "更新时间",
-    name: "updateTime",
     tableVisible: true,
     formVisible: false,
     exportVisible: false,

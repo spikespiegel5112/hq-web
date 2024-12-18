@@ -15,7 +15,7 @@
               </a-form-item>
             </a-col>
 
-            <a-col :span="6">
+            <a-col :span="5">
               <a-form-item name="eventType" label="事件类型">
                 <a-select
                   v-model:value="state.formData.eventType"
@@ -42,8 +42,8 @@
               </a-form-item>
             </a-col>
 
-            <a-col :span="6">
-              <a-form-item name="eventTime" label="时间">
+            <a-col :span="7">
+              <a-form-item name="eventTime" label="接收时间">
                 <a-range-picker
                   v-model:value="state.eventTime"
                   format="YYYY-MM-DD"
