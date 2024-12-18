@@ -116,11 +116,15 @@
                 :key="item.value"
                 :value="item.value"
               >
-                {{ item.title }}
+                {{ item.label }}
               </a-select-option>
             </a-select>
             <template v-if="props.mode === 'review'">
-              {{ state.formData.eventStatus }}
+              {{
+                global.$store.state.dictionary.disposalStatus.find(
+                  (item:any) => item.value === state.formData.eventStatus
+                )?.label
+              }}
             </template>
           </a-form-item>
         </a-col>

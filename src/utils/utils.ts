@@ -289,7 +289,7 @@ const _utils = {
     return result;
   },
   $checkEditable: (mode: string) => {
-    return ["add", "edit"].some((item: string) => item === mode);
+    return ["add", "edit", 'disposal'].some((item: string) => item === mode);
   },
 } as any;
 
