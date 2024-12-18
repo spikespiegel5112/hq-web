@@ -120,6 +120,7 @@ const getData = () => {
 };
 
 onMounted(async () => {
+  console.log(global.$store.state.dictionary.disposalStatus);
   getData();
 });
 

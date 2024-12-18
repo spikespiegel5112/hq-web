@@ -13,10 +13,10 @@
     >
       <a-row>
         <a-col :span="22">
-          <a-form-item name="complaintRegion" label="投诉区域">
+          <a-form-item name="publicSentimentType" label="舆情类型">
             <a-input
               v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.complaintRegion"
+              v-model:value="state.formData.publicSentimentType"
               placeholder="请输入"
             >
             </a-input>
@@ -25,10 +25,10 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="complaintType" label="投诉类型">
+          <a-form-item name="publicSentimentSource" label="舆情来源">
             <a-select
               v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.complaintType"
+              v-model:value="state.formData.publicSentimentSource"
               placeholder="请选择"
             >
               <a-select-option
@@ -43,15 +43,14 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="complaintSensitive" label="敏感程度">
+          <a-form-item name="publicSentimentSensitive" label="敏感程度">
             <a-select
               v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.complaintSensitive"
+              v-model:value="state.formData.publicSentimentSensitive"
               placeholder="请选择"
             >
               <a-select-option
-                v-for="item in global.$store.state.dictionary
-                  .complaintSensitive"
+                v-for="item in global.$store.state.dictionary.sensitivity"
                 :value="item.value"
               >
                 {{ item.label }}
@@ -62,13 +61,43 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="complaintTime" label="投诉时间">
-            <!-- <a-date-picker
+          <a-form-item name="publicSentimentContent" label="舆情内容">
+            <a-textarea
               v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.complaintTime"
+              v-model:value="state.formData.publicSentimentContent"
+              placeholder="请输入"
+            >
+            </a-textarea>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="publicSentimentTime" label="舆情发生时间">
+            <a-date-picker
+              v-if="global.$checkEditable(props.mode)"
+              v-model:value="state.formData.publicSentimentTime"
               format="YYYY-MM-DD HH:mm:ss"
               @change="handleChangeInfoReportTime"
-            ></a-date-picker> -->
+            ></a-date-picker>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="keyword" label="关键词">
+            <a-select
+              v-if="global.$checkEditable(props.mode)"
+              v-model:value="state.formData.handlingStatus"
+              placeholder="请选择"
+            >
+              <a-select-option
+                v-for="item in global.$store.state.dictionary.disposalStatus"
+                :value="item.value"
+              >
+                {{ item.label }}
+              </a-select-option>
+            </a-select>
           </a-form-item>
         </a-col>
       </a-row>
@@ -123,7 +152,6 @@ import {
   ref,
   nextTick,
 } from "vue";
-import type { Dayjs } from "dayjs";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -145,11 +173,17 @@ const state = reactive({
   visible: false,
   formData: {
     id: null as number | null | undefined,
-    complaintRegion: "",
-    complaintType: "",
-    complaintSensitive: "",
-    complaintTime: "",
-    handlingStatus: "",
+    attachmentAssociationCode: "",
+    attachmentList: [] as any[],
+    handlingContent: "",
+    handlingStatus: null,
+    handlingTime: "",
+    keyword: "",
+    publicSentimentContent: "",
+    publicSentimentSensitive: null,
+    publicSentimentSource: "",
+    publicSentimentTime: "",
+    publicSentimentType: "",
   },
 });
 
@@ -169,8 +203,8 @@ watch(
         let rowData = JSON.parse(JSON.stringify(props.rowData));
         rowData = {
           ...rowData,
-          infoReportTime: global.$dayjs(
-            rowData.infoReportTime,
+          publicSentimentTime: global.$dayjs(
+            rowData.publicSentimentTime,
             "YYYY-MM-DD HH:mm:ss"
           ),
         };

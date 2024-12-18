@@ -4,7 +4,7 @@
     "last 2 versions",
     "not ie <= 8"
   ],
-  "name": "hq-screen",
+  "name": "hq-web",
   "private": true,
   "version": "0.0.0",
   "type": "module",

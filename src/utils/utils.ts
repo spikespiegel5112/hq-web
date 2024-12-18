@@ -237,11 +237,14 @@ const _utils = {
     let dictionaryNameList = [] as any[];
 
     let result = [] as any[];
-    const currentDictionaryData = store.state.dictionary[code];
+    let currentDictionaryData = !!code
+      ? store.state.dictionary[code]
+      : store.state.dictionary;
     if (
       currentDictionaryData instanceof Array &&
       currentDictionaryData.length > 0 &&
-      !force
+      !force &&
+      !!code
     ) {
       result = currentDictionaryData;
     } else {
@@ -251,21 +254,27 @@ const _utils = {
       result = response.data;
       if (!code) {
         result.forEach((item1: any) => {
-          if (!dictionaryNameList.some((item2: any) => item2 === item1.code)) {
+          if (
+            !dictionaryNameList.some((item2: any) => item2.code === item1.code)
+          ) {
             dictionaryNameList.push(item1);
           }
-
         });
       }
-      result = result.map((item: any) => {
-        if (typeof Number(item.value) === "number") {
-          item.value = Number(item.value);
-        }
-        return item;
-      });
-      store.commit("dictionary/addDictionary", {
-        code,
-        data: result,
+      dictionaryNameList.forEach((item1: any) => {
+        const code = item1.code;
+        let dictionaryData = result.filter((item2: any) => item2.code === code);
+        dictionaryData = dictionaryData.map((item: any) => {
+          if (typeof Number(item.value) === "number") {
+            item.value = Number(item.value);
+          }
+          return item;
+        });
+        store.commit("dictionary/addDictionary", {
+          code,
+          data: dictionaryData,
+        });
+        console.log(dictionaryData);
       });
     }
     return result;

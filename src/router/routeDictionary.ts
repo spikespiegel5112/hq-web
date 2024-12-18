@@ -35,7 +35,7 @@ const routerDictionary = [
           import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
         children: [
           {
-            title: "高铁",
+            title: "高铁客流",
             path: "HighSpeedRailArrivesWithinHours",
             name: "HighSpeedRailArrivesWithinHours",
             component: () =>
@@ -43,7 +43,7 @@ const routerDictionary = [
                 /* webpackChunkName: "HighSpeedRailArrivesWithinHours" */ "@/views/RegionalHourlyPassengerFlow/HighSpeedRailArrivesWithinHours/HighSpeedRailArrivesWithinHours.vue"
               ),
             meta: {
-              title: "高铁",
+              title: "高铁客流",
             },
           },
           {
@@ -82,18 +82,8 @@ const routerDictionary = [
               title: "车库流量信息",
             },
           },
-        ],
-      },
-      {
-        title: "区域实时客流",
-        path: "RegionalRealTimePassengerFlow",
-        name: "RegionalRealTimePassengerFlow",
-        icon: "/src/assets/menu_regionalreatimepassengerflow.png",
-        component: () =>
-          import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
-        children: [
           {
-            title: "出租车",
+            title: "区域人数统计",
             path: "Taxi",
             name: "RegionalRealTimePassengerFlowTaxi",
             component: () =>
@@ -101,11 +91,11 @@ const routerDictionary = [
                 /* webpackChunkName: "Texi" */ "@/views/RegionalRealTimePassengerFlow/Taxi/Taxi.vue"
               ),
             meta: {
-              title: "出租车",
+              title: "区域人数统计",
             },
           },
           {
-            title: "停车库",
+            title: "进出人数统计",
             path: "ParkingGarage",
             name: "ParkingGarage",
             component: () =>
@@ -113,7 +103,7 @@ const routerDictionary = [
                 /* webpackChunkName: "ParkingGarage" */ "@/views/RegionalRealTimePassengerFlow/ParkingGarage/ParkingGarage.vue"
               ),
             meta: {
-              title: "停车库",
+              title: "进出人数统计",
             },
           },
         ],

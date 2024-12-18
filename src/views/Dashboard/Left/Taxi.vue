@@ -129,7 +129,7 @@ const getData = () => {
     .then((response: any) => {
       Object.keys(state).forEach((item: any) => {
         response = response.data;
-        // state[item] = response[item];
+        state[item] = response[item];
       });
     })
     .catch((error: any) => {

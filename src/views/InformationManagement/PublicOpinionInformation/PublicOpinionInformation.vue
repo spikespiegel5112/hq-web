@@ -112,7 +112,7 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "状态",
+    label: "处置状态",
     name: "handlingStatus",
     required: true,
     tableVisible: true,
