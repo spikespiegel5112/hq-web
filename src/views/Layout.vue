@@ -48,15 +48,14 @@ const state = reactive({
 const init = () => {
   const lineScaleEl: HTMLElement = document.getElementById("line-scale");
   lineScaleEl.style.display = "none";
+  global.$getDictionary();
 
-  global.$getDictionary("externalDataSources");
-  global.$getDictionary("disposalStatus");
-  global.$getDictionary("alarmType");
-  global.$getDictionary("informationType");
-  global.$getDictionary("complaintType");
-  global.$getDictionary("complaintSensitive");
-
-  
+  // global.$getDictionary("externalDataSources");
+  // global.$getDictionary("disposalStatus");
+  // global.$getDictionary("alarmType");
+  // global.$getDictionary("informationType");
+  // global.$getDictionary("complaintType");
+  // global.$getDictionary("complaintSensitive");
 };
 
 const getEventTypeList = () => {

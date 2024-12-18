@@ -234,6 +234,8 @@ const _utils = {
     messageApi.success("导出成功!", 3000);
   },
   $getDictionary: async (code: string, force: boolean) => {
+    let dictionaryNameList = [] as any[];
+
     let result = [] as any[];
     const currentDictionaryData = store.state.dictionary[code];
     if (
@@ -247,6 +249,14 @@ const _utils = {
         code,
       });
       result = response.data;
+      if (!code) {
+        result.forEach((item1: any) => {
+          if (!dictionaryNameList.some((item2: any) => item2 === item1.code)) {
+            dictionaryNameList.push(item1);
+          }
+
+        });
+      }
       result = result.map((item: any) => {
         if (typeof Number(item.value) === "number") {
           item.value = Number(item.value);

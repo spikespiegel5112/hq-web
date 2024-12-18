@@ -335,15 +335,6 @@ export const infoManagementPublicSentimentInfoSaveRequest = (params: any) => {
   });
 };
 
-// 信息管理-舆情信息-修改
-export const infoManagementPublicSentimentInfoUpdateRequest = (params: any) => {
-  return service({
-    url: prefix + "/infoManagement/publicSentimentInfo/update",
-    method: "POST",
-    data: params,
-  });
-};
-
 // 信息管理-投诉信息
 
 // 删除
