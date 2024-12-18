@@ -25,10 +25,12 @@
               v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.eventType"
               placeholder="请选择"
+              @change="handleChangeEventType"
             >
               <a-select-option
-                v-for="item in global.$store.state.dictionary.alarmType"
-                :value="item.value"
+                v-for="item in eventList"
+                :value="item.label"
+                :key="item.value"
               >
                 {{ item.label }}
               </a-select-option>
@@ -199,22 +201,36 @@ const props = defineProps({
 
 let state = reactive({
   visible: false,
+
+  // attachmentPath: "string",
+  // createBy: "string",
+  // createTime: "2024-12-18T07:28:44.394Z",
+  // disposalCompletionTime: "2024-12-18T07:28:44.394Z",
+  // eventCode: "string",
+  // eventContent: "string",
+  // eventLevel: 0,
+  // eventLocation: "string",
+  // eventStatus: 0,
+  // eventTime: "2024-12-18T07:28:44.394Z",
+  // eventType: "string",
+  // id: 0,
   formData: {
     id: null as number | null | undefined,
     attachmentPath: "",
-    createBy: "",
-    createTime: "",
     eventCode: "",
     eventContent: "",
     eventLocation: "",
     eventStatus: null,
     eventTime: "",
     eventType: "",
-    manageRegion: "",
-    updateBy: "",
-    updateTime: "",
   } as any,
   fileList: [] as any,
+});
+
+const eventList = computed(() => {
+  return global.$store.state.app.currentEventTypeList.find(
+    (item: any) => item.type === "突发事件处置"
+  )?.data;
 });
 
 const dialogTitle: ComputedRef<string> = computed(() => {
@@ -271,6 +287,8 @@ watch(
   }
 );
 
+const getDetailData = () => {};
+
 const handleClose = () => {
   formDataRef.value.resetFields();
   emit("onClose");
@@ -300,6 +318,10 @@ const handleSubmit = () => {
 const handleChangeEventTime = (date: any) => {};
 
 const handleChangeAttachment = () => {};
+
+const handleChangeEventType = (value: any, event: any) => {
+  state.formData.prId = event.key;
+};
 
 onMounted(async () => {});
 

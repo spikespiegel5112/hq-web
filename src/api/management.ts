@@ -280,7 +280,43 @@ export const eventManageSuddenEventDeleteRequest = (params: any) => {
   return service({
     url: prefix + "/eventManage/suddenEvent/delete",
     method: "POST",
+    data: params,
+  });
+};
+
+// 事件管理-突发事件-删除突发事件处置
+export const eventManageSuddenEventDeleteDisposalRequest = (params: any) => {
+  return service({
+    url: prefix + "/eventManage/suddenEvent/deleteDisposal",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 事件管理-突发事件-报表导出
+export const eventManageSuddenEventExportRequest = (params: any) => {
+  return service({
+    url: prefix + "/eventManage/suddenEvent/export",
+    method: "POST",
     params,
+  });
+};
+
+// 事件管理-突发事件-事件记录报表导出
+export const eventManageSuddenEventExportRecordRequest = (params: any) => {
+  return service({
+    url: prefix + "/eventManage/suddenEvent/exportRecord",
+    method: "GET",
+    params,
+  });
+};
+
+// 事件管理-突发事件-查看突发事件处置
+export const eventManageSuddenEventGetDisposalRequest = (params: any) => {
+  return service({
+    url: prefix + "/eventManage/suddenEvent/getDisposal",
+    method: "POST",
+    data: params,
   });
 };
 

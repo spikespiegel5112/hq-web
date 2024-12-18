@@ -198,18 +198,6 @@ const handleClose = () => {
 
 const handleSubmit = () => {};
 
-const handleChangePage = (pagingData: any) => {
-  pagination.page = pagingData.current;
-  pagination.pageSize = pagingData.pageSize;
-  pagination.total = pagingData.total;
-  getData();
-};
-
-const handleDelete = (id: number) => {};
-onMounted(async () => {
-  getData();
-});
-
 const handleDelete = (id: number) => {
   eventManageSuddenEventDeleteRequest({
     id,
@@ -230,6 +218,10 @@ const handleChangePage = (pagingData: any) => {
   pagination.total = pagingData.total;
   getData();
 };
+
+onMounted(async () => {
+  getData();
+});
 
 onBeforeUnmount(() => {});
 </script>

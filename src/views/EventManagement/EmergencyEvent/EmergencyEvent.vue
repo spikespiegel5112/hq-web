@@ -30,6 +30,7 @@
     <HandlingDialog
       :visible="state.dialogHandlingVisible"
       :rowData="state.currentRowData"
+      mode="disposal"
       @onClose="handleCloseHandling"
       @onSubmit="handleSubmitHandling"
     ></HandlingDialog>

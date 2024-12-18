@@ -14,6 +14,7 @@
       :model="state.formData"
       ref="formDataRef"
       autocomplete="off"
+      :rule="rules"
       :label-col="{ style: { width: '120px' } }"
     >
       <a-row>
@@ -34,10 +35,9 @@
           </a-form-item>
         </a-col>
         <a-col :span="11">
-          <a-form-item name="eventType" label="时间">
+          <a-form-item name="disposalTime" label="时间">
             <a-date-picker
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.eventTime"
+              v-model:value="state.formData.disposalTime"
               format="YYYY-MM-DD HH:mm:ss"
             ></a-date-picker>
           </a-form-item>
@@ -53,8 +53,23 @@
           <a-form-item name="eventLocation" label="处置步骤">
             <a-radio-group
               v-model:value="state.formData.eventLocation"
-              :options="['Apple', 'Pear', 'Orange']"
-            />
+              class="plan"
+              @change="handleChangeDisposalStep"
+            >
+              <a-radio v-for="item in state.planInfo" :value="item.id">
+                <div class="step_wrapper">
+                  <span class="step">
+                    {{ item.stepName }}
+                  </span>
+                  <span class="stepname">
+                    {{ item.stepName }}
+                  </span>
+                  <span class="stepcontent">
+                    {{ item.stepContent }}
+                  </span>
+                </div>
+              </a-radio>
+            </a-radio-group>
           </a-form-item>
         </a-col>
       </a-row>
@@ -83,24 +98,6 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="eventStatus" label="事件状态">
-            <a-select
-              v-model:value="state.formData.eventStatus"
-              placeholder="请选择"
-            >
-              <a-select-option
-                v-for="item in global.$store.state.dictionary.disposalStatus"
-                :key="item.value"
-                :value="item.value"
-              >
-                {{ item.title }}
-              </a-select-option>
-            </a-select>
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="22">
           <a-form-item name="attachment" label="附件">
             <a-upload
               v-model:file-list="state.fileList"
@@ -122,6 +119,9 @@
       <a-row>
         <a-col :span="22">
           <a-button key="back" @click="handleClose">取消</a-button>
+          <a-button key="submit" type="primary" @click="handleSubmit">
+            确认
+          </a-button>
         </a-col>
       </a-row>
     </template>
@@ -146,8 +146,8 @@ import type { Rule, RuleObject } from "ant-design-vue/es/form";
 import { UploadOutlined } from "@ant-design/icons-vue";
 
 import {
-  preplanPreplanDeleteRequest,
-  preplanPreplanSaveRequest,
+  eventManageSuddenEventSaveRequest,
+  eventManageSuddenEventGetDisposalRequest,
   preplanPreplanGetStepPageRequest,
 } from "@/api/management";
 
@@ -169,12 +169,23 @@ const props = defineProps({
 
 let state = reactive({
   visible: false,
-  planInfo: [],
+  planInfo: [] as any[],
+  attachmentList: [
+    {
+      associationCode: "",
+      attachmentName: "",
+      attachmentPath: "",
+      createBy: "",
+      createTime: "2024-12-18T08:51:07.064Z",
+      id: 0,
+      updateBy: "",
+      updateTime: "2024-12-18T08:51:07.064Z",
+    },
+  ],
+
   formData: {
     id: null as number | null | undefined,
     attachmentPath: "",
-    createBy: "",
-    createTime: "",
     eventCode: "",
     eventContent: "",
     eventLocation: "",
@@ -184,39 +195,25 @@ let state = reactive({
     manageRegion: "",
     updateBy: "",
     updateTime: "",
+
+    disposalTime: "",
+    seId: null,
+    stepContent: "",
+    stepName: "",
+    stepOrder: "",
+    stepOrderDesc: "",
   } as any,
   fileList: [] as any,
 });
 
+const eventList = computed(() => {
+  return global.$store.state.app.currentEventTypeList.find(
+    (item: any) => item.type === "突发事件处置"
+  )?.data;
+});
+
 const rules: ComputedRef<RuleObject[]> = computed(() => {
-  const validateNumber = (rule: any, value: any, callback: any) => {
-    if (isNaN(Number(value))) {
-      callback(new Error("请输入数字值"));
-    } else {
-      callback();
-    }
-  };
-  const result: any = {};
-  Object.keys(state.formData).forEach((item) => {
-    const dataModelInfo = props.dataModel.find(
-      (item2: any) => item2.name === item
-    ) as any;
-    if (!!dataModelInfo) {
-      result[item] = [];
-      if (dataModelInfo.required) {
-        result[item].push({
-          required: true,
-          message: "请输入" + dataModelInfo.label,
-          trigger: "change",
-        });
-        if (props.mode === "review") result[item] = false;
-      }
-      if (dataModelInfo.dataType === "number") {
-        result[item].push({ validator: validateNumber, trigger: "change" });
-      }
-    }
-  });
-  return result;
+  return [];
 });
 
 watch(
@@ -225,6 +222,7 @@ watch(
     state.visible = newValue;
     if (!!newValue) {
       getData();
+      getPlanData();
 
       const formData = JSON.parse(JSON.stringify(props.rowData));
 
@@ -237,12 +235,33 @@ watch(
 );
 
 const getData = () => {
+  state.formData.eventType = props.rowData.eventType;
+  state.formData.seId = props.rowData.id;
+
+  // eventManageSuddenEventGetDisposalRequest({
+  //   seId: props.rowData.id,
+  // })
+  //   .then((response: any) => {
+  //     response = response.data;
+  //     console.log(response);
+  //   })
+  //   .catch((error: any) => {
+  //     console.log(error);
+  //   });
+};
+
+const getPlanData = () => {
+  console.log(props.rowData);
+  const planData: any = eventList.value.find(
+    (item: any) => Number(item.value) === props.rowData.prId
+  );
   preplanPreplanGetStepPageRequest({
     preplanType: "突发事件处置",
-    eventType: props.rowData.eventType,
+    eventType: planData.label,
   })
     .then((response: any) => {
-      state.planInfo = response;
+      response = response.data;
+      state.planInfo = response.list;
     })
     .catch((error: any) => {
       console.log(error);
@@ -254,7 +273,40 @@ const handleClose = () => {
   emit("onClose");
 };
 
-const handleChangeEventTime = (date: any) => {};
+const handleSubmit = () => {
+  const disposalTime = global
+    .$dayjs(state.formData.disposalTime)
+    .format("YYYY-MM-DD HH:mm:ss");
+  eventManageSuddenEventSaveRequest({
+    id: props.rowData.id,
+    seId: props.rowData.prId,
+    disposalTime: disposalTime,
+    stepContent: state.formData.stepContent,
+    stepName: state.formData.stepName,
+    stepOrder: state.formData.stepOrder,
+    stepOrderDesc: state.formData.stepOrderDesc,
+  })
+    .then((response: any) => {
+      console.log(response);
+      debugger;
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+};
+
+const handleChangeDisposalStep = (value: any) => {
+  const planInfo = state.planInfo.find(
+    (item: any) => item.id === value.target.value
+  );
+  state.formData = {
+    ...state.formData,
+    stepContent: planInfo.stepContent,
+    stepName: planInfo.stepName,
+    stepOrder: planInfo.stepOrder,
+    stepOrderDesc: planInfo.stepOrderDesc,
+  };
+};
 
 const handleChangeAttachment = () => {};
 
@@ -263,4 +315,43 @@ onMounted(async () => {});
 onBeforeUnmount(() => {});
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.plan {
+  display: block;
+  :deep(.ant-radio-wrapper) {
+    display: flex;
+    align-items: center;
+    > span {
+      display: inline-flex;
+      align-items: center;
+      align-content: center;
+    }
+    .step_wrapper {
+      display: flex;
+      margin: 0.05rem 0;
+      > span {
+        align-content: center;
+      }
+      .ant-radio {
+        display: inline-block;
+        padding: 0 0.1rem;
+      }
+      .step {
+        display: inline-block;
+        padding: 0 0.1rem;
+        width: 1.5rem;
+      }
+      .stepname {
+        display: inline-block;
+        padding: 0 0.1rem;
+        width: 1.5rem;
+      }
+      .stepcontent {
+        padding: 0.1rem;
+        flex: 1;
+        background-color: #001b4c;
+      }
+    }
+  }
+}
+</style>

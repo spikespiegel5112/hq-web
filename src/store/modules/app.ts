@@ -60,7 +60,7 @@ const app = {
           data: payload.data.map((item: any) => {
             return {
               label: item.eventType,
-              value: item.eventType,
+              value: item.id.toString(),
             };
           }),
         });
