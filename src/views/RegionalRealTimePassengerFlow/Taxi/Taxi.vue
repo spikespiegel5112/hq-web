@@ -8,7 +8,7 @@
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
-   a    <BaseTable
+    <BaseTable
       :tableData="state.tableData"
       :dataModel="pageModel"
       :pagination="pagination"
@@ -107,7 +107,11 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "操作",     name: "operationColumn",     tableVisible: true,     exportVisible: false,     fixed: "right",
+    label: "操作",
+    name: "operationColumn",
+    tableVisible: true,
+    exportVisible: false,
+    fixed: "right",
     actions: ["edit", "review", "delete"],
   },
 ]);

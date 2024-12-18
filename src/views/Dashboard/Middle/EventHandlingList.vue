@@ -46,9 +46,9 @@
                   <label>状态：</label>
                   <span>
                     {{
-                    global.$store.state.dictionary.disposalStatus.find(
+                      global.$store.state.dictionary.disposalStatus.find(
                           (item2:any) => item2.value === item.status
-                      )?.title
+                      )?.label
                     }}
                   </span>
                 </div>
