@@ -27,10 +27,10 @@ const routerDictionary = [
         },
       },
       {
-        title: "区域小时客流",
-        path: "RegionalHourlyPassengerFlow",
-        name: "RegionalHourlyPassengerFlow",
-        icon: "/src/assets/menu_regionalhourlypassengerflow.png",
+        title: "客流数据管理",
+        path: "PassengerFlowDataManagement",
+        name: "PassengerFlowDataManagement",
+        icon: "/src/assets/menu_passengerflowdatamanagement.png",
         component: () =>
           import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
         children: [
@@ -40,7 +40,7 @@ const routerDictionary = [
             name: "HighSpeedRailArrivesWithinHours",
             component: () =>
               import(
-                /* webpackChunkName: "HighSpeedRailArrivesWithinHours" */ "@/views/RegionalHourlyPassengerFlow/HighSpeedRailArrivesWithinHours/HighSpeedRailArrivesWithinHours.vue"
+                /* webpackChunkName: "HighSpeedRailArrivesWithinHours" */ "@/views/PassengerFlowDataManagement/HighSpeedRailArrivesWithinHours/HighSpeedRailArrivesWithinHours.vue"
               ),
             meta: {
               title: "高铁客流",
@@ -49,10 +49,10 @@ const routerDictionary = [
           {
             title: "出租车",
             path: "Taxi",
-            name: "RegionalHourlyPassengerFlowTaxi",
+            name: "PassengerFlowDataManagementTaxi",
             component: () =>
               import(
-                /* webpackChunkName: "Taxi" */ "@/views/RegionalHourlyPassengerFlow/Taxi/Taxi.vue"
+                /* webpackChunkName: "Taxi" */ "@/views/PassengerFlowDataManagement/Taxi/Taxi.vue"
               ),
             meta: {
               title: "出租车",
@@ -64,7 +64,7 @@ const routerDictionary = [
             name: "Subway",
             component: () =>
               import(
-                /* webpackChunkName: "HighSpeedRailArrivesWithinHours" */ "@/views/RegionalHourlyPassengerFlow/HighSpeedRailArrivesWithinHours/HighSpeedRailArrivesWithinHours.vue"
+                /* webpackChunkName: "Subway" */ "@/views/PassengerFlowDataManagement/Subway/Subway.vue"
               ),
             meta: {
               title: "地铁",
@@ -76,7 +76,7 @@ const routerDictionary = [
             name: "GarageTrafficInformation",
             component: () =>
               import(
-                /* webpackChunkName: "GarageTrafficInformation" */ "@/views/RegionalHourlyPassengerFlow/GarageTrafficInformation/GarageTrafficInformation.vue"
+                /* webpackChunkName: "GarageTrafficInformation" */ "@/views/PassengerFlowDataManagement/GarageTrafficInformation/GarageTrafficInformation.vue"
               ),
             meta: {
               title: "车库流量信息",

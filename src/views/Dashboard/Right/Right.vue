@@ -21,7 +21,7 @@
             <img
               :src="
                 global.$getImageUrl(
-                  '/src/assets/menu_regionalhourlypassengerflow.png'
+                  '/src/assets/menu_PassengerFlowDataManagement.png'
                 )
               "
               alt=""

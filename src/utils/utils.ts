@@ -233,9 +233,33 @@ const _utils = {
     URL.revokeObjectURL(link.href);
     messageApi.success("导出成功!", 3000);
   },
-  $getDictionary: async (code: string, force: boolean) => {
+  $getAllDictionary: async () => {
     let dictionaryNameList = [] as any[];
-
+    const response: any = await dictionaryManageGetDictListRequest({});
+    let result: any = response.data;
+    result.forEach((item1: any) => {
+      if (!dictionaryNameList.some((item2: any) => item2.code === item1.code)) {
+        dictionaryNameList.push(item1);
+      }
+    });
+    dictionaryNameList.forEach((item1: any) => {
+      const code = item1.code;
+      let dictionaryData = result.filter((item2: any) => item2.code === code);
+      dictionaryData = dictionaryData.map((item: any) => {
+        if (typeof Number(item.value) === "number") {
+          item.value = Number(item.value);
+        }
+        return item;
+      });
+      store.commit("dictionary/addDictionary", {
+        code,
+        data: dictionaryData,
+      });
+    });
+    store.commit("dictionary/setDictionaryReady");
+    // console.log(store.state.dictionary);
+  },
+  $getDictionary: async (code: string, force: boolean) => {
     let result = [] as any[];
     let currentDictionaryData = !!code
       ? store.state.dictionary[code]
@@ -243,8 +267,7 @@ const _utils = {
     if (
       currentDictionaryData instanceof Array &&
       currentDictionaryData.length > 0 &&
-      !force &&
-      !!code
+      !force
     ) {
       result = currentDictionaryData;
     } else {
@@ -252,29 +275,15 @@ const _utils = {
         code,
       });
       result = response.data;
-      if (!code) {
-        result.forEach((item1: any) => {
-          if (
-            !dictionaryNameList.some((item2: any) => item2.code === item1.code)
-          ) {
-            dictionaryNameList.push(item1);
-          }
-        });
-      }
-      dictionaryNameList.forEach((item1: any) => {
-        const code = item1.code;
-        let dictionaryData = result.filter((item2: any) => item2.code === code);
-        dictionaryData = dictionaryData.map((item: any) => {
-          if (typeof Number(item.value) === "number") {
-            item.value = Number(item.value);
-          }
-          return item;
-        });
-        store.commit("dictionary/addDictionary", {
-          code,
-          data: dictionaryData,
-        });
-        console.log(dictionaryData);
+      result = result.map((item: any) => {
+        if (typeof Number(item.value) === "number") {
+          item.value = Number(item.value);
+        }
+        return item;
+      });
+      store.commit("dictionary/addDictionary", {
+        code,
+        data: result,
       });
     }
     return result;
@@ -299,6 +308,8 @@ const result = {
       _utils["$orientationSensor"];
     app.config.globalProperties["$exportTable"] = _utils["$exportTable"];
     app.config.globalProperties["$getDictionary"] = _utils["$getDictionary"];
+    app.config.globalProperties["$getAllDictionary"] =
+      _utils["$getAllDictionary"];
     app.config.globalProperties["$checkEditable"] = _utils["$checkEditable"];
   },
 } as any;

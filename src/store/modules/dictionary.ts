@@ -3,6 +3,7 @@ import { color } from "echarts";
 const dictionary = {
   namespaced: true,
   state: () => ({
+    dictionaryReady: false,
     actionDictionary: [
       {
         label: "下载",
@@ -134,43 +135,7 @@ const dictionary = {
         value: 3,
       },
     ],
-    complaintArea: [
-      {
-        title: "中虹国际大厦",
-        value: 0,
-        color: "#00F0FF",
-      },
-      {
-        title: "出租车区域",
-        value: 1,
-        color: "#00FFB4",
-      },
-      {
-        title: "停车库区域",
-        value: 2,
-        color: "#FFEA00",
-      },
-      {
-        title: "停车库南区域",
-        value: 3,
-        color: "#00FF0C",
-      },
-      {
-        title: "B区南北通道",
-        value: 4,
-        color: "#C961FF",
-      },
-      {
-        title: "网约车上客点",
-        value: 5,
-        color: "#FF8A00",
-      },
-      {
-        title: "其他",
-        value: 6,
-        color: "red",
-      },
-    ],
+
     weather: [
       {
         fileName: "中雨@1x.png",
@@ -317,6 +282,9 @@ const dictionary = {
     },
     addDictionary: (state: any, payload: any) => {
       state[payload.code] = payload.data;
+    },
+    setDictionaryReady: (state: any) => {
+      state.dictionaryReady = true;
     },
   },
   actions: {},

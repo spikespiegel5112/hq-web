@@ -218,7 +218,7 @@ const handleDelete = (id: number, row: any) => {
     .then((response: any) => {
       global.$message.success("删除成功");
       getData();
-      global.$getDictionary(row.code, true);
+      global.$getAllDictionary(row.code, true);
     })
     .catch((error: any) => {
       global.$message.error("删除失败");

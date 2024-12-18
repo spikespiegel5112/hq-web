@@ -10,7 +10,7 @@
         </a-layout-sider>
         <a-layout-content>
           <AccessLog />
-          <router-view></router-view>
+          <router-view v-if="dictionaryReady"></router-view>
         </a-layout-content>
       </a-layout>
     </a-layout>
@@ -45,17 +45,21 @@ const state = reactive({
   bannerInfo: {},
 });
 
+const dictionaryReady = computed(() => {
+  return global.$store.state.dictionary.dictionaryReady;
+});
+
 const init = () => {
   const lineScaleEl: HTMLElement = document.getElementById("line-scale");
   lineScaleEl.style.display = "none";
-  global.$getDictionary();
+  global.$getAllDictionary();
 
-  // global.$getDictionary("externalDataSources");
-  // global.$getDictionary("disposalStatus");
-  // global.$getDictionary("alarmType");
-  // global.$getDictionary("informationType");
-  // global.$getDictionary("complaintType");
-  // global.$getDictionary("complaintSensitive");
+  // global.$getAllDictionary("externalDataSources");
+  // global.$getAllDictionary("disposalStatus");
+  // global.$getAllDictionary("alarmType");
+  // global.$getAllDictionary("informationType");
+  // global.$getAllDictionary("complaintType");
+  // global.$getAllDictionary("complaintSensitive");
 };
 
 const getEventTypeList = () => {
