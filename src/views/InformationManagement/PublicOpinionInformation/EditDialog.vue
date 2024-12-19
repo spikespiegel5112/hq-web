@@ -43,7 +43,7 @@
               v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.publicSentimentTime"
               format="YYYY-MM-DD HH:mm:ss"
-              @change="handleChangeInfoReportTime"
+              @change="handleChangeTime1"
             ></a-date-picker>
             <template v-if="props.mode === 'review'">
               {{
@@ -249,7 +249,7 @@ const handleSubmit = () => {
     });
 };
 
-const handleChangeInfoReportTime = () => {};
+const handleChangeTime1 = () => {};
 
 onBeforeUnmount(() => {});
 </script>

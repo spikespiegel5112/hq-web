@@ -22,7 +22,6 @@
               v-model:value="state.formData.dicId"
               placeholder="请输入"
               @change="hangleCHangeDictionaryNameList"
-              :disabled="props.mode === 'edit'"
             >
               <a-select-option
                 v-for="item in props.dictionaryNameList"
@@ -206,7 +205,7 @@ watch(
     state.visible = newValue;
     if (!!newValue) {
       await nextTick();
-      if (["edit", "review", 'disposal'].some((item) => item === props.mode)) {
+      if (["edit", "review", "disposal"].some((item) => item === props.mode)) {
         const formData = JSON.parse(JSON.stringify(props.rowData));
         state.formData = formData;
       }

@@ -4,7 +4,7 @@
       <a-row>
         <a-col :span="20">
           <a-row :gutter="20">
-            <a-col :span="6">
+            <a-col :span="8">
               <a-form-item name="dicName" label="字典名称">
                 <a-select
                   v-model:value="formData.dicName"
@@ -20,7 +20,7 @@
                 </a-select>
               </a-form-item>
             </a-col>
-            <a-col :span="6">
+            <a-col :span="8">
               <a-form-item name="code" label="字典编码">
                 <a-input
                   v-model:value="formData.code"

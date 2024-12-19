@@ -25,7 +25,7 @@
             <a-date-picker
               v-model:value="state.formData.handlingTime"
               format="YYYY-MM-DD HH:mm:ss"
-              @change="handleChangeInfoReportTime"
+              @change="handleChangeTime1"
             ></a-date-picker>
           </a-form-item>
         </a-col>
@@ -173,7 +173,7 @@ const handleSubmit = () => {
     });
 };
 
-const handleChangeInfoReportTime = () => {};
+const handleChangeTime1 = () => {};
 
 onBeforeUnmount(() => {});
 </script>

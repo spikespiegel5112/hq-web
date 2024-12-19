@@ -41,7 +41,7 @@
                 <a-range-picker
                   v-model:value="state.infoReportTime"
                   format="YYYY-MM-DD"
-                  @change="handleChangeInfoReportTime"
+                  @change="handleChangeTime1"
                 />
               </a-form-item>
             </a-col>
@@ -95,7 +95,7 @@ const state = reactive({
   },
 });
 
-const handleChangeInfoReportTime = (value: any) => {};
+const handleChangeTime1 = (value: any) => {};
 
 const handleSearch = () => {
   emit("onSearch", state.formData);
