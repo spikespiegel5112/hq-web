@@ -49,12 +49,20 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="eventLocation" label="管理区域">
-            <a-input
-              v-model:value="state.formData.eventLocation"
-              placeholder="请输入"
+          <a-form-item name="manageRegion" label="管理区域">
+            <a-select
+              v-if="global.$checkEditable(props.mode)"
+              v-model:value="state.formData.manageRegion"
+              placeholder="请选择"
             >
-            </a-input>
+              <a-select-option
+                v-for="item in global.$store.state.dictionary.manageRegion"
+                :key="item.value"
+                :value="item.value"
+              >
+                {{ item.label }}
+              </a-select-option>
+            </a-select>
           </a-form-item>
         </a-col>
       </a-row>

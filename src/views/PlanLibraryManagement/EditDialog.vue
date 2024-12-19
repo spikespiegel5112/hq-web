@@ -2,7 +2,7 @@
   <a-modal
     class="common_dailog_wrapper"
     v-model:open="state.visible"
-    width="6rem"
+    width="10rem"
     @cancel="handleClose"
   >
     <template #title>
@@ -34,6 +34,45 @@
           </a-form-item>
         </a-col>
       </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-table :columns="columns" :data-source="[]" bordered>
+            <template #bodyCell="{ column, text, record }">
+              <template
+                v-if="['name', 'age', 'address'].includes(column.dataIndex)"
+              >
+                <div>
+                  <a-input
+                    v-model:value="editableData[record.key][column.dataIndex]"
+                    style="margin: -5px 0"
+                  />
+                  <template>
+                    {{ text }}
+                  </template>
+                </div>
+              </template>
+              <template v-else-if="column.dataIndex === 'operation'">
+                <div class="editable-row-operations">
+                  <span v-if="editableData[record.key]">
+                    <a-typography-link @click="save(record.key)"
+                      >Save</a-typography-link
+                    >
+                    <a-popconfirm
+                      title="Sure to cancel?"
+                      @confirm="cancel(record.key)"
+                    >
+                      <a>Cancel</a>
+                    </a-popconfirm>
+                  </span>
+                  <span v-else>
+                    <a @click="edit(record.key)">Edit</a>
+                  </span>
+                </div>
+              </template>
+            </template>
+          </a-table>
+        </a-col>
+      </a-row>
     </a-form>
     <template #footer>
       <a-row>
@@ -63,8 +102,36 @@ import {
 } from "vue";
 
 import type { Rule, RuleObject } from "ant-design-vue/es/form";
-import { UploadOutlined } from "@ant-design/icons-vue";
+import type { UnwrapRef } from "vue";
 
+const columns = [
+  {
+    title: "name",
+    dataIndex: "name",
+    width: "25%",
+  },
+  {
+    title: "age",
+    dataIndex: "age",
+    width: "15%",
+  },
+  {
+    title: "address",
+    dataIndex: "address",
+    width: "40%",
+  },
+  {
+    title: "operation",
+    dataIndex: "operation",
+  },
+];
+
+interface DataItem {
+  key: string;
+  name: string;
+  age: number;
+  address: string;
+}
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
@@ -92,6 +159,8 @@ let state = reactive({
   } as any,
   fileList: [] as any,
 });
+
+const editableData: UnwrapRef<Record<string, DataItem>> = reactive({});
 
 const dialogTitle: ComputedRef<string> = computed(() => {
   return global.$store.state.dictionary.dialogMode.find(
@@ -136,7 +205,7 @@ watch(
     state.visible = newValue;
     if (!!newValue) {
       await nextTick();
-      if (["edit", "review", 'disposal'].some((item) => item === props.mode)) {
+      if (["edit", "review", "disposal"].some((item) => item === props.mode)) {
         const formData = JSON.parse(JSON.stringify(props.rowData));
         state.formData = {
           ...formData,
