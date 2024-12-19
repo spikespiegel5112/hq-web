@@ -43,8 +43,8 @@ import {
 } from "vue";
 
 import {
-  eventManageSuddenEventGetPageRequest,
-  eventManageSuddenEventDeleteRequest,
+  planManagementEmergencyPlanGetPageRequest,
+  planManagementEmergencyPlanDeleteRequest,
 } from "@/api/management";
 
 import FilterTool from "./FilterTool.vue";
@@ -151,7 +151,7 @@ const pagination = reactive({
 
 const getData = () => {
   pagination.total = undefined;
-  eventManageSuddenEventGetPageRequest({
+  planManagementEmergencyPlanGetPageRequest({
     ...queryFormData,
     ...pagination,
   })
@@ -199,7 +199,7 @@ const handleClose = () => {
 const handleSubmit = () => {};
 
 const handleDelete = (id: number) => {
-  eventManageSuddenEventDeleteRequest({
+  planManagementEmergencyPlanDeleteRequest({
     id,
   })
     .then((response: any) => {

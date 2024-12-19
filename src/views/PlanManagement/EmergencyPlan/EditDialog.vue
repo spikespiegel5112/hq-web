@@ -21,45 +21,107 @@
     >
       <a-row>
         <a-col :span="22">
-          <a-form-item name="eventType" label="事件类型">
+          <a-form-item name="manageRegion" label="管理区域">
             <a-select
-              v-model:value="state.formData.eventType"
+              v-if="global.$checkEditable(props.mode)"
+              v-model:value="state.formData.manageRegion"
               placeholder="请选择"
+              @change="handleChangeEventType"
             >
               <a-select-option
-                v-for="item in global.$store.state.dictionary.alarmType"
+                v-for="item in global.$store.state.dictionary.manageRegion"
+                :key="item.value"
                 :value="item.value"
               >
                 {{ item.label }}
               </a-select-option>
             </a-select>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.eventType }}
+            </template>
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="eventTime" label="报警日期">
-            <a-date-picker
+          <a-form-item name="eventType" label="事件类型">
+            <a-select
               v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.eventTime"
-              format="YYYY-MM-DD HH:mm:ss"
-            ></a-date-picker>
+              v-model:value="state.formData.eventType"
+              placeholder="请选择"
+              @change="handleChangeEventType"
+            >
+              <a-select-option
+                v-for="item in eventList"
+                :value="item.label"
+                :key="item.value"
+              >
+                {{ item.label }}
+              </a-select-option>
+            </a-select>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.eventType }}
+            </template>
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="eventLocation" label="管理区域">
+          <a-form-item name="eventLocation" label="具体地址">
             <a-input
               v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.eventLocation"
               placeholder="请输入"
             >
             </a-input>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.eventLocation }}
+            </template>
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
+        <a-col :span="22">
+          <a-form-item name="eventLevel" label="等级">
+            <a-select
+              v-if="global.$checkEditable(props.mode)"
+              v-model:value="state.formData.eventLevel"
+              placeholder="请选择"
+            >
+              <a-select-option
+                v-for="item in global.$store.state.dictionary.eventLevel"
+                :key="item.value"
+                :value="item.value"
+              >
+                {{ item.label }}
+              </a-select-option>
+            </a-select>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.eventLocation }}
+            </template>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="eventTime" label="发生时间">
+            <a-date-picker
+              v-if="global.$checkEditable(props.mode)"
+              v-model:value="state.formData.eventTime"
+              format="YYYY-MM-DD HH:mm:ss"
+            ></a-date-picker>
+            <template v-if="props.mode === 'review'">
+              {{
+                global
+                  .$dayjs(state.formData.eventTime)
+                  .format("YYYY-MM-DD HH:mm:ss")
+              }}
+            </template>
+          </a-form-item>
+        </a-col>
+      </a-row>
+
+      <!-- <a-row>
         <a-col :span="22">
           <a-form-item name="eventCode" label="事件编码">
             <a-input
@@ -68,25 +130,33 @@
               placeholder="请输入"
             >
             </a-input>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.eventLocation }}
+            </template>
           </a-form-item>
         </a-col>
-      </a-row>
+      </a-row> -->
       <a-row>
         <a-col :span="22">
           <a-form-item name="eventContent" label="事件内容">
             <a-textarea
+              v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.eventContent"
               placeholder="请输入"
               :rows="4"
             >
             </a-textarea>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.eventContent }}
+            </template>
           </a-form-item>
         </a-col>
       </a-row>
-      <a-row>
+      <!-- <a-row>
         <a-col :span="22">
           <a-form-item name="eventStatus" label="事件状态">
             <a-select
+              v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.eventStatus"
               placeholder="请选择"
             >
@@ -95,16 +165,24 @@
                 :key="item.value"
                 :value="item.value"
               >
-                {{ item.title }}
+                {{ item.label }}
               </a-select-option>
             </a-select>
+            <template v-if="props.mode === 'review'">
+              {{
+                global.$store.state.dictionary.disposalStatus.find(
+                  (item:any) => item.value === state.formData.eventStatus
+                )?.label
+              }}
+            </template>
           </a-form-item>
         </a-col>
-      </a-row>
+      </a-row> -->
       <a-row>
         <a-col :span="22">
           <a-form-item name="attachment" label="附件">
             <a-upload
+              v-if="global.$checkEditable(props.mode)"
               v-model:file-list="state.fileList"
               name="file"
               action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
@@ -170,22 +248,25 @@ const props = defineProps({
 
 let state = reactive({
   visible: false,
+
   formData: {
     id: null as number | null | undefined,
     attachmentPath: "",
-    createBy: "",
-    createTime: "",
     eventCode: "",
     eventContent: "",
     eventLocation: "",
     eventStatus: null,
     eventTime: "",
     eventType: "",
-    manageRegion: "",
-    updateBy: "",
-    updateTime: "",
+    eventLevel: null,
   } as any,
   fileList: [] as any,
+});
+
+const eventList = computed(() => {
+  return global.$store.state.app.currentEventTypeList.find(
+    (item: any) => item.type === "突发事件处置"
+  )?.data;
 });
 
 const dialogTitle: ComputedRef<string> = computed(() => {
@@ -235,12 +316,16 @@ watch(
         const formData = JSON.parse(JSON.stringify(props.rowData));
         state.formData = {
           ...formData,
-          eventTime: global.$dayjs(formData.eventTime),
+          eventTime: !!formData.eventTime
+            ? global.$dayjs(formData.eventTime)
+            : "",
         };
       }
     }
   }
 );
+
+const getDetailData = () => {};
 
 const handleClose = () => {
   formDataRef.value.resetFields();
@@ -271,6 +356,10 @@ const handleSubmit = () => {
 const handleChangeEventTime = (date: any) => {};
 
 const handleChangeAttachment = () => {};
+
+const handleChangeEventType = (value: any, event: any) => {
+  state.formData.prId = event.key;
+};
 
 onMounted(async () => {});
 

@@ -565,3 +565,77 @@ export const preplanPreplanSaveRequest = (params: any) => {
     data: params,
   });
 };
+
+// 预案管理-应急预案
+
+// 删除
+export const planManagementEmergencyPlanDeleteRequest = (params: any) => {
+  return service({
+    url: prefix + "/planManagement/emergencyPlan/delete",
+    method: "POST",
+    data: params,
+  });
+};
+
+// excel导出
+export const planManagementEmergencyPlanExportExcelRequest = (params: any) => {
+  return service({
+    url: prefix + "/planManagement/emergencyPlan/exportExcel",
+    method: "POST",
+    data: params,
+  });
+};
+
+// excel导出-记录
+export const planManagementEmergencyPlanExportRecordExcelRequest = (params: any) => {
+  return service({
+    url: prefix + "/planManagement/emergencyPlan/exportRecordExcel",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 根据Id查询
+export const planManagementEmergencyPlanGetOneByIdRequest = (params: any) => {
+  return service({
+    url: prefix + "/planManagement/emergencyPlan/getOneById",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 分页查询
+export const planManagementEmergencyPlanGetPageRequest = (params: any) => {
+  return service({
+    url: prefix + "/planManagement/emergencyPlan/getPage",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 分页查询-记录
+export const planManagementEmergencyPlanGetRecordPageRequest = (params: any) => {
+  return service({
+    url: prefix + "/planManagement/emergencyPlan/getRecordPage",
+    method: "POST",
+    data: params,
+  });
+};
+
+// excel导入
+export const planManagementEmergencyPlanImportExcelRequest = (params: any) => {
+  return service({
+    url: prefix + "/planManagement/emergencyPlan/importExcel",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 保存
+export const planManagementEmergencyPlanSaveRequest = (params: any) => {
+  return service({
+    url: prefix + "/planManagement/emergencyPlan/save",
+    method: "POST",
+    data: params,
+  });
+};

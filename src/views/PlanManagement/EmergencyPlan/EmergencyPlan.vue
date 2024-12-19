@@ -43,9 +43,9 @@ import {
 } from "vue";
 
 import {
-  eventManageSuddenEventGetPageRequest,
-  eventManageSuddenEventDeleteRequest,
-  eventManageSuddenEventSaveRequest,
+  planManagementEmergencyPlanGetPageRequest,
+  planManagementEmergencyPlanDeleteRequest,
+  planManagementEmergencyPlanSaveRequest,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
@@ -159,7 +159,7 @@ const pagination = reactive({
 
 const getData = () => {
   pagination.total = undefined;
-  eventManageSuddenEventGetPageRequest({
+  planManagementEmergencyPlanGetPageRequest({
     ...queryFormData,
     ...pagination,
   })
@@ -205,7 +205,7 @@ const handleClose = () => {
 };
 
 const handleSubmit = (formData: any) => {
-  eventManageSuddenEventSaveRequest(formData)
+  planManagementEmergencyPlanSaveRequest(formData)
     .then((response: any) => {
       global.$message.success("提交成功");
       getData();
@@ -224,7 +224,7 @@ const handleChangePage = (pagingData: any) => {
 };
 
 const handleDelete = (id: number) => {
-  eventManageSuddenEventDeleteRequest({
+  planManagementEmergencyPlanDeleteRequest({
     id,
   })
     .then((response: any) => {
