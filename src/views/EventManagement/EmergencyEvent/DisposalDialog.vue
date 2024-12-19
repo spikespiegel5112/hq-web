@@ -56,7 +56,11 @@
               class="plan"
               @change="handleChangeDisposalStep"
             >
-              <a-radio v-for="item in state.planInfo" :value="item.id">
+              <a-radio
+                v-for="(item, index) in state.planInfo"
+                :value="item.id"
+                :disabled="index < state.disposalData.lastStepOrder"
+              >
                 <div class="step_wrapper">
                   <span class="step">
                     {{ item.stepName }}
@@ -176,13 +180,12 @@ let state = reactive({
       attachmentName: "",
       attachmentPath: "",
       createBy: "",
-      createTime: "2024-12-18T08:51:07.064Z",
+      createTime: "",
       id: 0,
       updateBy: "",
-      updateTime: "2024-12-18T08:51:07.064Z",
+      updateTime: "",
     },
   ],
-
   formData: {
     id: null as number | null | undefined,
     attachmentPath: "",
@@ -204,6 +207,7 @@ let state = reactive({
     stepOrderDesc: "",
   } as any,
   fileList: [] as any,
+  disposalData: {} as any,
 });
 
 const eventList = computed(() => {
@@ -240,6 +244,7 @@ const getData = () => {
   })
     .then((response: any) => {
       response = response.data;
+      state.disposalData = response;
       console.log(response);
     })
     .catch((error: any) => {
