@@ -87,7 +87,11 @@
     <template #footer>
       <a-row>
         <a-col :span="22">
-          <template v-if="['edit', 'add'].some((item) => item === props.mode)">
+          <template
+            v-if="
+              ['edit', 'add', 'disposal'].some((item) => item === props.mode)
+            "
+          >
             <a-button
               v-if="props.mode === 'edit'"
               key="submit"

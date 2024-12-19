@@ -17,6 +17,7 @@
       @onReview="handleReview"
       @onChangePage="handleChangePage"
       @onDelete="handleDelete"
+      @onDisposal="handleDisposal"
     />
     <EditDialog
       :visible="state.dialogVisible"
@@ -26,6 +27,14 @@
       @onClose="handleClose"
       @onSubmit="handleSubmit"
     ></EditDialog>
+    <DisposalDialog
+      :visible="state.dialogDisposalVisible"
+      :mode="state.dialogMode"
+      :dataModel="pageModel"
+      :rowData="state.currentRowData"
+      @onClose="handleCloseDisposal"
+      @onSubmit="handleSubmitDisposal"
+    ></DisposalDialog>
   </div>
 </template>
 
@@ -48,6 +57,7 @@ import {
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
+import DisposalDialog from "./DisposalDialog.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -122,6 +132,7 @@ const pageModel = ref([
 const state = reactive({
   tableData: [] as any[],
   dialogVisible: false,
+  dialogDisposalVisible: false,
   dialogMode: "",
   currentRowData: {},
 });
@@ -199,6 +210,18 @@ const handleDelete = (id: number) => {
       console.log(error);
     });
 };
+
+const handleDisposal = (rowData: any) => {
+  state.dialogDisposalVisible = true;
+  state.currentRowData = rowData;
+  state.dialogMode = "disposal";
+};
+
+const handleCloseDisposal = () => {
+  state.dialogDisposalVisible = false;
+};
+
+const handleSubmitDisposal = () => {};
 
 onMounted(async () => {
   getData();
