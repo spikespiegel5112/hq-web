@@ -459,6 +459,35 @@ export const infoManagementComplaintInfoHandleRequest = (params: any) => {
   });
 };
 
+// 信息管理-天气信息
+
+// 根据Id查询
+export const infoManagementWeatherInfoGetOneByIdRequest = (params: any) => {
+  return service({
+    url: prefix + "/infoManagement/weatherInfo/getOneById",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 信息管理-天气信息-查看天气预警
+export const infoManagementWeatherInfoGetPageRequest = (params: any) => {
+  return service({
+    url: prefix + "/infoManagement/weatherInfo/getPage",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 发布预警
+export const infoManagementWeatherInfoPublishWarningRequest = (params: any) => {
+  return service({
+    url: prefix + "/infoManagement/weatherInfo/publishWarning",
+    method: "POST",
+    data: params,
+  });
+};
+
 // excel导出
 export const infoManagementComplaintInfoExportExcelRequest = (params: any) => {
   return service({
@@ -590,7 +619,9 @@ export const planManagementEmergencyPlanExportExcelRequest = (params: any) => {
 };
 
 // excel导出-记录
-export const planManagementEmergencyPlanExportRecordExcelRequest = (params: any) => {
+export const planManagementEmergencyPlanExportRecordExcelRequest = (
+  params: any
+) => {
   return service({
     url: prefix + "/planManagement/emergencyPlan/exportRecordExcel",
     method: "POST",
@@ -617,7 +648,9 @@ export const planManagementEmergencyPlanGetPageRequest = (params: any) => {
 };
 
 // 分页查询-记录
-export const planManagementEmergencyPlanGetRecordPageRequest = (params: any) => {
+export const planManagementEmergencyPlanGetRecordPageRequest = (
+  params: any
+) => {
   return service({
     url: prefix + "/planManagement/emergencyPlan/getRecordPage",
     method: "POST",

@@ -93,18 +93,7 @@
       <a-row>
         <a-col :span="22">
           <a-form-item name="attachment" label="附件">
-            <a-upload
-              v-model:file-list="state.fileList"
-              name="file"
-              action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-              :headers="{}"
-              @change="handleChangeAttachment"
-            >
-              <a-button type="primary">
-                <upload-outlined></upload-outlined>
-                上传
-              </a-button>
-            </a-upload>
+            <CommonUpload :attachmentList="state.formData.attachmentList" />
           </a-form-item>
         </a-col>
       </a-row>
@@ -178,6 +167,7 @@ let state = reactive({
   ],
   formData: {
     id: null as number | null | undefined,
+    attachmentList: [] as any[],
     attachmentPath: "",
     eventCode: "",
     eventContent: "",

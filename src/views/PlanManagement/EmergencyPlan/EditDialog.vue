@@ -181,19 +181,10 @@
       <a-row>
         <a-col :span="22">
           <a-form-item name="attachment" label="附件">
-            <a-upload
+            <CommonUpload
               v-if="global.$checkEditable(props.mode)"
-              v-model:file-list="state.fileList"
-              name="file"
-              action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-              :headers="{}"
-              @change="handleChangeAttachment"
-            >
-              <a-button type="primary">
-                <upload-outlined></upload-outlined>
-                上传
-              </a-button>
-            </a-upload>
+              :attachmentList="state.formData.attachmentList"
+            />
           </a-form-item>
         </a-col>
       </a-row>
@@ -226,7 +217,6 @@ import {
 } from "vue";
 
 import type { Rule, RuleObject } from "ant-design-vue/es/form";
-import { UploadOutlined } from "@ant-design/icons-vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -251,7 +241,7 @@ let state = reactive({
 
   formData: {
     id: null as number | null | undefined,
-    attachmentPath: "",
+    attachmentList: [] as any[],
     eventCode: "",
     eventContent: "",
     eventLocation: "",

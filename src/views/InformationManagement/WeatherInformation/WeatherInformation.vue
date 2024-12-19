@@ -52,10 +52,9 @@ import {
 } from "vue";
 
 import {
-  infoManagementExternalInfoGetPageRequest,
-  infoManagementExternalInfoSaveRequest,
-  infoManagementExternalInfoDeleteRequest,
-  infoManagementExternalInfoHandleRequest,
+  infoManagementWeatherInfoGetOneByIdRequest,
+  infoManagementWeatherInfoGetPageRequest,
+  infoManagementWeatherInfoPublishWarningRequest,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
@@ -155,7 +154,7 @@ const pagination = reactive({
 
 const getData = () => {
   pagination.total = undefined;
-  infoManagementExternalInfoGetPageRequest({
+  infoManagementWeatherInfoGetPageRequest({
     ...queryFormData,
     ...pagination,
   })
@@ -242,7 +241,6 @@ const handleCloseDisposal = () => {
 };
 
 const handleSubmitDisposal = (formData: any) => {
-  
   infoManagementExternalInfoHandleRequest(formData)
     .then((response: any) => {
       global.$message.success("删除成功");

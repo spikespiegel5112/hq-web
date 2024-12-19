@@ -130,6 +130,16 @@
           </a-form-item>
         </a-col>
       </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="externalContent" label="内容">
+            <CommonUpload
+              v-if="global.$checkEditable(props.mode)"
+              :attachmentList="state.formData.attachmentList"
+            />
+          </a-form-item>
+        </a-col>
+      </a-row>
     </a-form>
     <template #footer>
       <a-row>
@@ -188,6 +198,7 @@ const state = reactive({
   visible: false,
   formData: {
     id: null as number | null | undefined,
+    attachmentList: [] as any[],
     keyword: "",
     publicSentimentContent: "",
     publicSentimentSensitive: null,

@@ -92,6 +92,16 @@
           </a-form-item>
         </a-col>
       </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="externalContent" label="内容">
+            <CommonUpload
+              v-if="global.$checkEditable(props.mode)"
+              :attachmentList="state.formData.attachmentList"
+            />
+          </a-form-item>
+        </a-col>
+      </a-row>
     </a-form>
     <template #footer>
       <a-row>
@@ -150,6 +160,7 @@ const state = reactive({
   visible: false,
   formData: {
     id: null as number | null | undefined,
+    attachmentList: [] as any[],
     attachmentAssociationCode: "",
     externalContent: "",
     externalSource: "",
@@ -173,7 +184,7 @@ watch(
     state.visible = newValue;
     if (!!newValue) {
       await nextTick();
-      if (["edit", "review", 'disposal'].some((item) => item === props.mode)) {
+      if (["edit", "review", "disposal"].some((item) => item === props.mode)) {
         let rowData = JSON.parse(JSON.stringify(props.rowData));
         rowData = {
           ...rowData,

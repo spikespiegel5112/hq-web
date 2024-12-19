@@ -185,19 +185,6 @@
               v-if="global.$checkEditable(props.mode)"
               :attachmentList="state.formData.attachmentList"
             />
-            <!-- <a-upload
-              v-if="global.$checkEditable(props.mode)"
-              v-model:file-list="state.fileList"
-              name="file"
-              action="/api/manage/attachment/upload"
-              :headers="{}"
-              @change="handleChangeAttachment"
-            >
-              <a-button type="primary">
-                <upload-outlined></upload-outlined>
-                上传
-              </a-button>
-            </a-upload> -->
           </a-form-item>
         </a-col>
       </a-row>
@@ -330,8 +317,6 @@ watch(
   }
 );
 
-const getDetailData = () => {};
-
 const handleClose = () => {
   formDataRef.value.resetFields();
   emit("onClose");
@@ -360,16 +345,6 @@ const handleSubmit = () => {
 };
 
 const handleChangeEventTime = (date: any) => {};
-
-const handleChangeAttachment = (value: any) => {
-  if (!!value.file.response) {
-    const response: any = value.file.response.data;
-    if (!Array.isArray(state.formData.attachmentList)) {
-      state.formData.attachmentList = [];
-    }
-    state.formData.attachmentList.push(response);
-  }
-};
 
 const handleChangeEventType = (value: any, event: any) => {
   state.formData.prId = event.key;
