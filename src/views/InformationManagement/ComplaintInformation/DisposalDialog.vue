@@ -14,13 +14,6 @@
     >
       <a-row>
         <a-col :span="22">
-          <a-form-item name="externalSource" label="来源">
-            {{ global.$getDictionary("external_info_external_source").find((item:any)=>item.value===props.rowData.externalSource)?.label }}
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="22">
           <a-form-item name="externalTime" label="处置时间">
             <a-date-picker
               v-model:value="state.formData.handlingTime"
@@ -115,7 +108,7 @@ const state = reactive({
 
     handlingContent: "",
     handlingTime: "",
-  },
+  } as any,
 });
 
 const dialogTitle: ComputedRef<string> = computed(() => {
@@ -130,12 +123,12 @@ watch(
     state.visible = newValue;
     if (!!newValue) {
       await nextTick();
-      if (["edit", "review", 'disposal'].some((item) => item === props.mode)) {
+      if (["edit", "review", "disposal"].some((item) => item === props.mode)) {
         let rowData = JSON.parse(JSON.stringify(props.rowData));
         rowData = {
           ...rowData,
-          externalTime: global.$dayjs(
-            rowData.externalTime,
+          handlingTime: global.$dayjs(
+            rowData.handlingTime,
             "YYYY-MM-DD HH:mm:ss"
           ),
         };
@@ -159,12 +152,12 @@ const handleSubmit = () => {
       if (props.mode === "add") {
         state.formData.id = undefined;
       }
-      const externalTime = global
-        .$dayjs(state.formData.externalTime)
+      const handlingTime = global
+        .$dayjs(state.formData.handlingTime)
         .format("YYYY-MM-DD HH:mm:ss");
       emit("onSubmit", {
         ...state.formData,
-        externalTime,
+        handlingTime,
       });
       handleClose();
     })

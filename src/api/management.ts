@@ -438,6 +438,15 @@ export const infoManagementComplaintInfoDeleteRequest = (params: any) => {
   });
 };
 
+// 处置
+export const infoManagementComplaintInfoHandleRequest = (params: any) => {
+  return service({
+    url: prefix + "/infoManagement/complaintInfo/handle",
+    method: "POST",
+    data: params,
+  });
+};
+
 // excel导出
 export const infoManagementComplaintInfoExportExcelRequest = (params: any) => {
   return service({

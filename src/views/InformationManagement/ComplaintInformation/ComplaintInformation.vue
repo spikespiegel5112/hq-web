@@ -55,6 +55,7 @@ import {
   infoManagementComplaintInfoGetPageRequest,
   infoManagementComplaintInfoDeleteRequest,
   infoManagementComplaintInfoSaveRequest,
+  infoManagementComplaintInfoHandleRequest,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
@@ -232,7 +233,17 @@ const handleCloseDisposal = () => {
   state.dialogDisposalVisible = false;
 };
 
-const handleSubmitDisposal = (formData: any) => {};
+const handleSubmitDisposal = (formData: any) => {
+  infoManagementComplaintInfoHandleRequest(formData)
+    .then((response: any) => {
+      global.$message.success("操作成功");
+      getData();
+    })
+    .catch((error: any) => {
+      global.$message.error("操作失败");
+      console.log(error);
+    });
+};
 
 onMounted(async () => {
   getData();
