@@ -6,15 +6,10 @@
       :rowClassName="
         (_record, index) => (index % 2 === 1 ? 'table-striped' : undefined)
       "
-      :pagination="{
-        current: pagination.page,
-        total: pagination.total,
-        pageSize: pagination.pageSize,
-      }"
+      :pagination="false"
       :scroll="{
         y: tableBodyHeight,
       }"
-      @change="hangleChangePage"
     >
       <a-table-column
         v-for="(item, index) in innerDataModel.filter(
@@ -69,6 +64,15 @@
         </template>
       </a-table-column>
     </a-table>
+    <a-pagination
+      v-model:current="pagination.page"
+      show-quick-jumper
+      :total="pagination.total"
+      :page-size="pagination.pageSize"
+      :show-total="(total) => `共 ${total} 条`"
+      show-less-items
+      @change="hangleChangePage"
+    />
   </div>
 </template>
 
@@ -250,10 +254,10 @@ watch(
   }
 );
 
-const hangleChangePage = (pagin: any) => {
+const hangleChangePage = (current: number, pageSize: number) => {
   state.loading = true;
-  pagination.current = pagin.current;
-  pagination.pageSize = pagin.pageSize;
+  pagination.current = current;
+  pagination.pageSize = pageSize;
   emit("onChangePage", pagination);
 };
 
@@ -283,14 +287,18 @@ const handleAction = (action: any, scope: any) => {
       },
     });
   }
-  if (action === "disposal") {
+  if (action === "disposal" || action === "eventDisposal") {
     emit("onDisposal", row);
   }
 };
 
 const initPagination = () => {
-  pagination.total = props.pagination.total;
-  pagination.pageSize = props.pagination.pageSize;
+  pagination.total = global.$isNotEmpty(props.pagination.total)
+    ? props.pagination.total
+    : pagination.total;
+  pagination.pageSize = global.$isNotEmpty(props.pagination.pageSize)
+    ? props.pagination.pageSize
+    : pagination.pageSize;
 };
 
 onMounted(() => {});
@@ -369,6 +377,10 @@ onMounted(() => {});
         }
       }
     }
+  }
+  .ant-pagination {
+    margin: 0.2rem 0 0.1rem 0;
+    text-align: right;
   }
 }
 </style>

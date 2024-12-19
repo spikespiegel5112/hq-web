@@ -123,8 +123,8 @@ const pageModel = ref([
     tableVisible: true,
     exportVisible: false,
     fixed: "right",
-    width: "2.8rem",
-    actions: ["edit", "review", "delete"],
+    width: "2rem",
+    actions: ["edit", "delete"],
   },
 ]);
 

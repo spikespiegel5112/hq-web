@@ -1,10 +1,10 @@
 <template>
   <div class="common_tab_container">
     <a-tabs v-model:activeKey="state.activeKey">
-      <a-tab-pane key="TabEmergencyEventHandling" tab="突发事件处置">
+      <a-tab-pane key="TabEmergencyEventHandling" tab="非日常事件">
         <TabEmergencyEventHandling />
       </a-tab-pane>
-      <a-tab-pane key="TabEmergencyPlanHandling" tab="应急预案处置">
+      <a-tab-pane key="TabEmergencyPlanHandling" tab="应急预案">
         <TabEmergencyPlanHandling />
       </a-tab-pane>
     </a-tabs>

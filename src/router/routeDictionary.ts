@@ -186,6 +186,18 @@ const routerDictionary = [
               title: "投诉信息",
             },
           },
+          {
+            title: "天气信息",
+            path: "WeatherInformation",
+            name: "WeatherInformation",
+            component: () =>
+              import(
+                /* webpackChunkName: "WeatherInformation" */ "@/views/InformationManagement/WeatherInformation/WeatherInformation.vue"
+              ),
+            meta: {
+              title: "投诉信息",
+            },
+          },
         ],
       },
       {

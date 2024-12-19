@@ -1,22 +1,40 @@
 <template>
-  <div class="">
+  <div class="common_table_wrapper">
+    <FilterTool @onSearch="handleSearch" @onReset="handleReset"></FilterTool>
+    <div class="common_tableoperation_wrapper">
+      <a-space size="middle" wrap>
+        <a-button class="import">导入</a-button>
+        <a-button class="export">导出</a-button>
+        <a-button class="add" @click="handleAdd">新增</a-button>
+      </a-space>
+    </div>
     <BaseTable
       :tableData="state.tableData"
       :dataModel="pageModel"
-      height="100%"
-      tableBodyHeight="calc(100% - 0.4rem)"
+      :pagination="pagination"
+      tabTable
       @onEdit="handleEdit"
       @onReview="handleReview"
+      @onChangePage="handleChangePage"
       @onDelete="handleDelete"
+      @onDisposal="handleDisposal"
     />
-    <EditDialogPlan
+    <EditDialog
       :visible="state.dialogVisible"
       :mode="state.dialogMode"
       :dataModel="pageModel"
       :rowData="state.currentRowData"
       @onClose="handleClose"
       @onSubmit="handleSubmit"
-    ></EditDialogPlan>
+    ></EditDialog>
+    <DisposalDialog
+      :visible="state.dialogDisposalVisible"
+      :mode="state.dialogMode"
+      :dataModel="pageModel"
+      :rowData="state.currentRowData"
+      @onClose="handleCloseDisposal"
+      @onSubmit="handleSubmitDisposal"
+    ></DisposalDialog>
   </div>
 </template>
 
@@ -31,50 +49,85 @@ import {
   ComponentInternalInstance,
   ref,
   nextTick,
-  toRaw,
 } from "vue";
 
 import {
-  preplanPreplanDeleteRequest,
-  preplanPreplanSaveRequest,
-  preplanPreplanGetStepPageRequest,
+  infoManagementExternalInfoGetPageRequest,
+  infoManagementExternalInfoSaveRequest,
+  infoManagementExternalInfoDeleteRequest,
+  infoManagementExternalInfoHandleRequest,
 } from "@/api/management";
-import EditDialogPlan from "./EditDialogPlan.vue";
+import FilterTool from "./FilterTool.vue";
+import EditDialog from "./EditDialog.vue";
+import DisposalDialog from "./DisposalDialog.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
-const props = defineProps({
-  planId: { type: Number, required: true, default: null },
-});
-
 const pageModel = ref([
   {
-    label: "处置步骤",
-    name: "stepOrderDesc",
+    label: "序号",
+    name: "index",
     required: true,
     tableVisible: true,
     formVisible: true,
-    exportVisible: true,
-    width: "1rem",
+    exportVisible: false,
   },
   {
-    label: "步骤名称",
-    name: "stepName",
+    label: "来源",
+    name: "externalSource",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
-    width: "4rem",
   },
   {
-    label: "处置内容",
-    name: "stepContent",
+    label: "类型",
+    name: "externalType",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
-    align: "left",
+  },
+  {
+    label: "上报时间",
+    name: "externalTime",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "内容",
+    name: "externalContent",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "处置时间",
+    name: "handlingTime",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "处置状态",
+    name: "handlingStatus",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "附件",
+    name: "attachment",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
   },
   {
     label: "操作",
@@ -82,17 +135,16 @@ const pageModel = ref([
     tableVisible: true,
     exportVisible: false,
     fixed: "right",
-    width: "2.8rem",
-    actions: ["edit", "delete"],
+    actions: ["edit", "review", "delete", "disposal"],
   },
 ]);
 
 const state = reactive({
   tableData: [] as any[],
   dialogVisible: false,
+  dialogDisposalVisible: false,
   dialogMode: "",
   currentRowData: {},
-  tableData: [] as any[],
 });
 
 let queryFormData = reactive({} as any);
@@ -101,21 +153,11 @@ const pagination = reactive({
   ...global.$store.state.app.defaultPagination,
 });
 
-watch(
-  () => props.planId,
-  (newValue: any, oldValue: any) => {
-    if (global.$isNotEmpty(newValue)) {
-      queryFormData.id = newValue;
-      getData();
-    }
-  }
-);
-
 const getData = () => {
   pagination.total = undefined;
-  preplanPreplanGetStepPageRequest({
-    prId: props.planId,
-    pageSize: 1000,
+  infoManagementExternalInfoGetPageRequest({
+    ...queryFormData,
+    ...pagination,
   })
     .then((response: any) => {
       response = response.data;
@@ -159,7 +201,7 @@ const handleClose = () => {
 };
 
 const handleSubmit = (formData: any) => {
-  preplanPreplanSaveRequest(formData)
+  infoManagementExternalInfoSaveRequest(formData)
     .then((response: any) => {
       global.$message.success("提交成功");
       getData();
@@ -178,9 +220,7 @@ const handleChangePage = (pagingData: any) => {
 };
 
 const handleDelete = (id: number) => {
-  preplanPreplanDeleteRequest({
-    id,
-  })
+  infoManagementExternalInfoDeleteRequest({ id })
     .then((response: any) => {
       global.$message.success("删除成功");
       getData();
@@ -191,34 +231,30 @@ const handleDelete = (id: number) => {
     });
 };
 
-const transformPageModel = () => {
-  // title: 'Name', dataIndex: 'name', key: 'name', fixed: true
-  const result = pageModel.value.map((item: any) => {
-    return {
-      ...item,
-      title: item.label,
-      dataIndex: item.name,
-      key: item.name,
-    };
-  });
-  return result;
+const handleDisposal = (rowData: any) => {
+  state.dialogDisposalVisible = true;
+  state.currentRowData = rowData;
+  state.dialogMode = "disposal";
 };
 
-const handleExpand = (expand: boolean, row: any) => {
-  console.log(row);
-  if (!!expand) {
-    getData(row.id);
-  }
+const handleCloseDisposal = () => {
+  state.dialogDisposalVisible = false;
 };
 
-const handleExpandedRowsChange = (expandedRows: any) => {
-  console.log(expandedRows);
+const handleSubmitDisposal = (formData: any) => {
+  
+  infoManagementExternalInfoHandleRequest(formData)
+    .then((response: any) => {
+      global.$message.success("删除成功");
+      getData();
+    })
+    .catch((error: any) => {
+      global.$message.error("删除失败");
+      console.log(error);
+    });
 };
-
-const handleAction = (action: any, column: any) => {};
 
 onMounted(async () => {
-  transformPageModel();
   getData();
 });
 

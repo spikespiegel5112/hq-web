@@ -23,17 +23,17 @@
       :visible="state.dialogVisible"
       :mode="state.dialogMode"
       :dataModel="pageModel"
-      :rowData="state.currentRowData"
+      :rowData="state.currentRowData"1
       @onClose="handleClose"
       @onSubmit="handleSubmit"
     ></EditDialog>
-    <HandlingDialog
+    <DisposalDialog
       :visible="state.dialogDisposalVisible"
       :rowData="state.currentRowData"
       mode="disposal"
       @onClose="handleCloseHandling"
       @onSubmit="handleSubmitHandling"
-    ></HandlingDialog>
+    ></DisposalDialog>
   </div>
 </template>
 
@@ -57,7 +57,7 @@ import {
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
-import HandlingDialog from "./HandlingDialog.vue";
+import DisposalDialog from "./DisposalDialog.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
