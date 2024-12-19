@@ -46,6 +46,8 @@ declare module 'vue' {
     BaseTable: typeof import('./components/BaseTable.vue')['default']
     Block: typeof import('./components/Block.vue')['default']
     CommonTitle: typeof import('./components/CommonTitle.vue')['default']
+    CommonUpload: typeof import('./components/CommonUpload.vue')['default']
+    copy: typeof import('./components/Block copy.vue')['default']
     DigitFlipper: typeof import('./components/DigitFlipper.vue')['default']
     ElDatePicker: typeof import('element-plus/es')['ElDatePicker']
     Header: typeof import('./components/Header.vue')['default']
@@ -56,6 +58,7 @@ declare module 'vue' {
     RightLight: typeof import('./components/RightLight.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Upload: typeof import('./components/Upload.vue')['default']
     VideoPlayer: typeof import('./components/VideoPlayer.vue')['default']
   }
 }

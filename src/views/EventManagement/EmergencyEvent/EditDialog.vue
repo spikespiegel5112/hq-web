@@ -181,7 +181,11 @@
       <a-row>
         <a-col :span="22">
           <a-form-item name="attachment" label="附件">
-            <a-upload
+            <CommonUpload
+              v-if="global.$checkEditable(props.mode)"
+              :attachmentList="state.formData.attachmentList"
+            />
+            <!-- <a-upload
               v-if="global.$checkEditable(props.mode)"
               v-model:file-list="state.fileList"
               name="file"
@@ -193,7 +197,7 @@
                 <upload-outlined></upload-outlined>
                 上传
               </a-button>
-            </a-upload>
+            </a-upload> -->
           </a-form-item>
         </a-col>
       </a-row>
@@ -251,7 +255,7 @@ let state = reactive({
 
   formData: {
     id: null as number | null | undefined,
-    attachmentPath: "",
+    attachmentList: [] as any[],
     eventCode: "",
     eventContent: "",
     eventLocation: "",
@@ -320,6 +324,7 @@ watch(
             ? global.$dayjs(formData.eventTime)
             : "",
         };
+        const attachmentList = formData.attachmentList;
       }
     }
   }
@@ -330,6 +335,7 @@ const getDetailData = () => {};
 const handleClose = () => {
   formDataRef.value.resetFields();
   emit("onClose");
+  state.formData.attachmentList = [];
 };
 
 const handleSubmit = () => {
@@ -355,7 +361,15 @@ const handleSubmit = () => {
 
 const handleChangeEventTime = (date: any) => {};
 
-const handleChangeAttachment = () => {};
+const handleChangeAttachment = (value: any) => {
+  if (!!value.file.response) {
+    const response: any = value.file.response.data;
+    if (!Array.isArray(state.formData.attachmentList)) {
+      state.formData.attachmentList = [];
+    }
+    state.formData.attachmentList.push(response);
+  }
+};
 
 const handleChangeEventType = (value: any, event: any) => {
   state.formData.prId = event.key;
