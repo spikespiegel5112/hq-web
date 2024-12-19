@@ -115,7 +115,7 @@ const pageModel = ref([
     tableVisible: true,
     exportVisible: false,
     fixed: "right",
-    actions: ["edit", "review", "delete"],
+    actions: ["edit", "review", "delete", "disposal"],
   },
 ]);
 

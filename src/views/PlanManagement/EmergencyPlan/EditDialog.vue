@@ -6,9 +6,10 @@
     @cancel="handleClose"
   >
     <template #title>
-      <span class="square"></span>
-      <span></span>
-      {{ dialogTitle }}
+      <div class="common_dislogtitle_item">
+        <span class="sequre"></span>
+        <span class="text"> {{ dialogTitle }}</span>
+      </div>
     </template>
     <a-form
       :model="state.formData"

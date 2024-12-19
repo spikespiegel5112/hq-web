@@ -59,6 +59,10 @@ const dictionary = {
         title: "查看",
         value: "review",
       },
+      {
+        title: "处置",
+        value: "disposal",
+      },
     ],
     responseStatus: [
       {

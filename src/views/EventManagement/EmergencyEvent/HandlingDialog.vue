@@ -238,16 +238,16 @@ const getData = () => {
   state.formData.eventType = props.rowData.eventType;
   state.formData.seId = props.rowData.id;
 
-  // eventManageSuddenEventGetDisposalRequest({
-  //   seId: props.rowData.id,
-  // })
-  //   .then((response: any) => {
-  //     response = response.data;
-  //     console.log(response);
-  //   })
-  //   .catch((error: any) => {
-  //     console.log(error);
-  //   });
+  eventManageSuddenEventGetDisposalRequest({
+    seId: props.rowData.id,
+  })
+    .then((response: any) => {
+      response = response.data;
+      console.log(response);
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
 };
 
 const getPlanData = () => {

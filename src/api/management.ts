@@ -329,7 +329,56 @@ export const eventManageSuddenEventSaveRequest = (params: any) => {
   });
 };
 
+// 信息管理-外部信息
+
+// 信息管理-外部信息-删除
+export const infoManagementExternalInfoDeleteRequest = (params: any) => {
+  return service({
+    url: prefix + "/infoManagement/externalInfo/delete",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 信息管理-外部信息-根据Id查询
+export const infoManagementExternalInfoGetOneByIdRequest = (params: any) => {
+  return service({
+    url: prefix + "/infoManagement/externalInfo/getOneById",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 信息管理-外部信息-分页查询
+export const infoManagementExternalInfoGetPageRequest = (params: any) => {
+  return service({
+    url: prefix + "/infoManagement/externalInfo/getPage",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 信息管理-外部信息-保存
+export const infoManagementExternalInfoSaveRequest = (params: any) => {
+  return service({
+    url: prefix + "/infoManagement/externalInfo/save",
+    method: "POST",
+    data: params,
+  });
+};
+
 // 信息管理-舆情信息
+
+// 信息管理-舆情信息-分页查询
+export const infoManagementPublicSentimentInfoGetPageRequest = (
+  params: any
+) => {
+  return service({
+    url: prefix + "/infoManagement/publicSentimentInfo/getPage",
+    method: "POST",
+    data: params,
+  });
+};
 
 // 信息管理-舆情信息-删除
 export const infoManagementPublicSentimentInfoDeleteRequest = (params: any) => {
@@ -351,21 +400,19 @@ export const infoManagementPublicSentimentInfoGetOneByIdRequest = (
   });
 };
 
-// 信息管理-舆情信息-分页查询
-export const infoManagementPublicSentimentInfoGetPageRequest = (
-  params: any
-) => {
+// 信息管理-舆情信息-保存
+export const infoManagementPublicSentimentInfoSaveRequest = (params: any) => {
   return service({
-    url: prefix + "/infoManagement/publicSentimentInfo/getPage",
+    url: prefix + "/infoManagement/publicSentimentInfo/save",
     method: "POST",
     data: params,
   });
 };
 
-// 信息管理-舆情信息-保存
-export const infoManagementPublicSentimentInfoSaveRequest = (params: any) => {
+// 信息管理-舆情信息-处置
+export const infoManagementPublicSentimentInfoHandleRequest = (params: any) => {
   return service({
-    url: prefix + "/infoManagement/publicSentimentInfo/save",
+    url: prefix + "/infoManagement/publicSentimentInfo/handle",
     method: "POST",
     data: params,
   });

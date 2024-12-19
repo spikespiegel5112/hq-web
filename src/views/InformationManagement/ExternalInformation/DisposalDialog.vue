@@ -15,80 +15,42 @@
       <a-row>
         <a-col :span="22">
           <a-form-item name="externalSource" label="来源">
-            <a-select
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.externalSource"
-              placeholder="请输入"
-            >
-              <a-select-option
-                v-for="item in global.$getDictionary(
-                  'external_info_external_source'
-                )"
-                :value="item.value"
-              >
-                {{ item.label }}
-              </a-select-option>
-            </a-select>
-            <template v-if="props.mode === 'review'">
-              {{ global.$getDictionary('external_info_external_source').find((item:any)=>item.value===state.formData.externalSource)?.label }}
-            </template>
+            {{ global.$getDictionary("external_info_external_source").find((item:any)=>item.value===props.rowData.externalSource)?.label }}
           </a-form-item>
         </a-col>
       </a-row>
-
       <a-row>
         <a-col :span="22">
-          <a-form-item name="externalTime" label="上报时间">
+          <a-form-item name="externalTime" label="处置时间">
             <a-date-picker
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.externalTime"
+              v-model:value="state.formData.handlingTime"
               format="YYYY-MM-DD HH:mm:ss"
               @change="handleChangeInfoReportTime"
             ></a-date-picker>
-            <template v-if="props.mode === 'review'">
-              {{
-                global.$dayjs(state.formData.externalTime).format("YYYY-MM-DD")
-              }}
-            </template>
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="externalType" label="类型">
-            <a-select
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.externalType"
-              placeholder="请输入"
-            >
-              <a-select-option
-                v-for="item in global.$getDictionary(
-                  'external_info_external_type'
-                )"
-                :value="item.value"
-              >
-                {{ item.label }}
-              </a-select-option>
-            </a-select>
-            <template v-if="props.mode === 'review'">
-              {{ global.$getDictionary('external_info_external_type').find((item:any)=>item.value===state.formData.externalType)?.label }}
-            </template>
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="22">
-          <a-form-item name="externalContent" label="内容">
+          <a-form-item name="externalType" label="处置情况">
             <a-textarea
-              v-if="global.$checkEditable(props.mode)"
+              v-model:value="state.formData.handlingContent"
+              placeholder="请输入"
+              :rows="3"
+            >
+            </a-textarea>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="externalContent" label="附件">
+            <a-textarea
               v-model:value="state.formData.externalContent"
               placeholder="请输入"
               :rows="3"
             >
             </a-textarea>
-            <template v-if="props.mode === 'review'">
-              {{ state.formData.externalContent }}
-            </template>
           </a-form-item>
         </a-col>
       </a-row>
@@ -147,10 +109,7 @@ const state = reactive({
   formData: {
     id: null as number | null | undefined,
     attachmentAssociationCode: "",
-    externalContent: "",
-    externalSource: "",
-    externalTime: "",
-    externalType: "",
+
     handlingContent: "",
     handlingStatus: null,
     handlingTime: "",

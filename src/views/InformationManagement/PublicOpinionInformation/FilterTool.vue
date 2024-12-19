@@ -40,21 +40,13 @@
               </a-form-item>
             </a-col>
 
-            <a-col :span="5">
+            <a-col :span="6">
               <a-form-item name="keyword" label="关键词">
-                <a-select
+                <a-input
                   v-model:value="state.formData.keyword"
-                  placeholder="请选择"
+                  placeholder="请输入"
                 >
-                  <a-select-option
-                    v-for="item in global.$store.state.dictionary[
-                      'complaintType'
-                    ]"
-                    :value="item.value"
-                  >
-                    {{ item.label }}
-                  </a-select-option>
-                </a-select>
+                </a-input>
               </a-form-item>
             </a-col>
             <a-col :span="8">
@@ -114,7 +106,7 @@ const state = reactive({
     publicSentimentTimeStart: "",
     publicSentimentType: "",
   },
-  publicSentimentTime:[] as any[],
+  publicSentimentTime: [] as any[],
   dateRange: [],
 });
 

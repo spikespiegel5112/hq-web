@@ -133,7 +133,7 @@ const pageModel = ref([
     tableVisible: true,
     exportVisible: false,
     fixed: "right",
-    actions: ["edit", "review", "delete"],
+    actions: ["edit", "review", "delete", "disposal"],
   },
 ]);
 
@@ -195,7 +195,13 @@ const handleClose = () => {
   state.dialogVisible = false;
 };
 
-const handleSubmit = () => {};
+const handleSubmit = (formData: any) => {
+  infoManagementPublicSentimentInfoSaveRequest(formData)
+    .then((response: any) => {})
+    .catch((error: any) => {
+      console.log(error);
+    });
+};
 
 const handleChangePage = (pagingData: any) => {
   pagination.page = pagingData.current;

@@ -17,7 +17,7 @@
       @onReview="handleReview"
       @onChangePage="handleChangePage"
       @onDelete="handleDelete"
-      @onHandling="handleHandling"
+      @onDisposal="handleDisposal"
     />
     <EditDialog
       :visible="state.dialogVisible"
@@ -28,7 +28,7 @@
       @onSubmit="handleSubmit"
     ></EditDialog>
     <HandlingDialog
-      :visible="state.dialogHandlingVisible"
+      :visible="state.dialogDisposalVisible"
       :rowData="state.currentRowData"
       mode="disposal"
       @onClose="handleCloseHandling"
@@ -149,14 +149,14 @@ const pageModel = ref([
     tableVisible: true,
     exportVisible: false,
     fixed: "right",
-    actions: ["edit", "review", "delete", "disposal"],
+    actions: ["edit", "review", "delete", "eventDisposal"],
   },
 ]);
 
 const state = reactive({
   tableData: [] as any[],
   dialogVisible: false,
-  dialogHandlingVisible: false,
+  dialogDisposalVisible: false,
   dialogMode: "",
   currentRowData: {},
 });
@@ -247,13 +247,13 @@ const handleDelete = (id: number) => {
     });
 };
 
-const handleHandling = (rowData: any) => {
-  state.dialogHandlingVisible = true;
+const handleDisposal = (rowData: any) => {
+  state.dialogDisposalVisible = true;
   state.currentRowData = rowData;
 };
 
 const handleCloseHandling = () => {
-  state.dialogHandlingVisible = false;
+  state.dialogDisposalVisible = false;
 };
 
 const handleSubmitHandling = () => {};

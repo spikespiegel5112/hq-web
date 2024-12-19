@@ -259,37 +259,29 @@ const _utils = {
     store.commit("dictionary/setDictionaryReady");
     // console.log(store.state.dictionary);
   },
-  $getDictionary: async (code: string, force: boolean) => {
+  $getDictionary: (code: string, valueType: string) => {
     let result = [] as any[];
     let currentDictionaryData = !!code
       ? store.state.dictionary[code]
       : store.state.dictionary;
     if (
       currentDictionaryData instanceof Array &&
-      currentDictionaryData.length > 0 &&
-      !force
+      currentDictionaryData.length > 0
     ) {
       result = currentDictionaryData;
-    } else {
-      const response: any = await dictionaryManageGetDictListRequest({
-        code,
-      });
-      result = response.data;
+    }
+    if (valueType === "string") {
       result = result.map((item: any) => {
-        if (typeof Number(item.value) === "number") {
-          item.value = Number(item.value);
-        }
-        return item;
-      });
-      store.commit("dictionary/addDictionary", {
-        code,
-        data: result,
+        return {
+          ...item,
+          value: item.value.toString(),
+        };
       });
     }
     return result;
   },
   $checkEditable: (mode: string) => {
-    return ["add", "edit", 'disposal'].some((item: string) => item === mode);
+    return ["add", "edit", "disposal"].some((item: string) => item === mode);
   },
 } as any;
 

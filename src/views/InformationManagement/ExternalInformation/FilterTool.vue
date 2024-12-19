@@ -5,13 +5,15 @@
         <a-col :span="20">
           <a-row :gutter="20">
             <a-col :span="6">
-              <a-form-item name="infoReportUnit" label="信息上报单位">
-                <a-input
-                  v-model:value="state.formData.infoReportUnit"
-                  placeholder="请输入"
-                  allow-clear
-                >
-                </a-input>
+              <a-form-item name="infoReportUnit" label="外部信息来源">
+                <a-select v-model="state.formData.source" placeholder="情选择">
+                  <a-select-option
+                    v-for="item in global.$getDictionary('source', 'string')"
+                    :value="item.value"
+                  >
+                    {{ item.title }}
+                  </a-select-option>
+                </a-select>
               </a-form-item>
             </a-col>
 
