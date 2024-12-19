@@ -80,22 +80,11 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="eventCode" label="事件编码">
-            <a-input
-              v-model:value="state.formData.eventCode"
-              placeholder="请输入"
-            >
-            </a-input>
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="22">
-          <a-form-item name="eventContent" label="事件内容">
+          <a-form-item name="eventContent" label="处置内容">
             <a-textarea
               v-model:value="state.formData.eventContent"
               placeholder="请输入"
-              :rows="4"
+              :rows="3"
             >
             </a-textarea>
           </a-form-item>
