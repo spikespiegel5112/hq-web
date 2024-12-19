@@ -288,7 +288,7 @@ const handleSubmit = () => {
   })
     .then((response: any) => {
       console.log(response);
-      debugger;
+      ;
     })
     .catch((error: any) => {
       console.log(error);

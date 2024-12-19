@@ -21,7 +21,7 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="externalTime" label="处置时间">
+          <a-form-item name="handlingTime" label="处置时间">
             <a-date-picker
               v-model:value="state.formData.handlingTime"
               format="YYYY-MM-DD HH:mm:ss"
@@ -32,7 +32,7 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="externalType" label="处置情况">
+          <a-form-item name="handlingContent" label="处置情况">
             <a-textarea
               v-model:value="state.formData.handlingContent"
               placeholder="请输入"
@@ -130,16 +130,18 @@ watch(
     state.visible = newValue;
     if (!!newValue) {
       await nextTick();
-      if (["edit", "review", 'disposal'].some((item) => item === props.mode)) {
+      if (["edit", "review", "disposal"].some((item) => item === props.mode)) {
         let rowData = JSON.parse(JSON.stringify(props.rowData));
         rowData = {
           ...rowData,
-          externalTime: global.$dayjs(
-            rowData.externalTime,
+          handlingTime: global.$dayjs(
+            rowData.handlingTime,
             "YYYY-MM-DD HH:mm:ss"
           ),
         };
-        state.formData = rowData;
+        Object.keys(state.formData).forEach((item: string) => {
+          state.formData[item] = !!rowData[item] ? rowData[item] : undefined;
+        });
       }
     }
   }
@@ -157,12 +159,12 @@ const handleSubmit = () => {
       if (props.mode === "add") {
         state.formData.id = undefined;
       }
-      const externalTime = global
-        .$dayjs(state.formData.externalTime)
+      const handlingTime = global
+        .$dayjs(state.formData.handlingTime)
         .format("YYYY-MM-DD HH:mm:ss");
       emit("onSubmit", {
         ...state.formData,
-        externalTime,
+        handlingTime,
       });
       handleClose();
     })

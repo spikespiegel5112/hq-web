@@ -133,13 +133,13 @@ watch(
         let rowData = JSON.parse(JSON.stringify(props.rowData));
         rowData = {
           ...rowData,
-          handlingTime: global.$dayjs(
-            rowData.handlingTime,
-            "YYYY-MM-DD HH:mm:ss"
-          ),
+          handlingTime: !!rowData.handlingTime
+            ? global.$dayjs(rowData.handlingTime, "YYYY-MM-DD HH:mm:ss")
+            : null,
         };
-        state.formData = rowData;
-        debugger
+        Object.keys(state.formData).forEach((item: string) => {
+          state.formData[item] = !!rowData[item] ? rowData[item] : undefined;
+        });
       }
     }
   }

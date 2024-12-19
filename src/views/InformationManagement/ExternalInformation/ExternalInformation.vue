@@ -55,6 +55,7 @@ import {
   infoManagementExternalInfoGetPageRequest,
   infoManagementExternalInfoSaveRequest,
   infoManagementExternalInfoDeleteRequest,
+  infoManagementExternalInfoHandleRequest,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
@@ -240,7 +241,18 @@ const handleCloseDisposal = () => {
   state.dialogDisposalVisible = false;
 };
 
-const handleSubmitDisposal = () => {};
+const handleSubmitDisposal = (formData: any) => {
+  
+  infoManagementExternalInfoHandleRequest(formData)
+    .then((response: any) => {
+      global.$message.success("删除成功");
+      getData();
+    })
+    .catch((error: any) => {
+      global.$message.error("删除失败");
+      console.log(error);
+    });
+};
 
 onMounted(async () => {
   getData();

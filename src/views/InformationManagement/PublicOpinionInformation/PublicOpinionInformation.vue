@@ -33,7 +33,7 @@
       :dataModel="pageModel"
       :rowData="state.currentRowData"
       @onClose="handleCloseDisposal"
-      @onSubmit="handleSubmit"
+      @onSubmit="handleSubmitDisposal"
     ></DisposalDialog>
   </div>
 </template>
@@ -53,7 +53,7 @@ import {
 
 import {
   infoManagementPublicSentimentInfoDeleteRequest,
-  infoManagementPublicSentimentInfoGetOneByIdRequest,
+  infoManagementPublicSentimentInfoHandleRequest,
   infoManagementPublicSentimentInfoGetPageRequest,
   infoManagementPublicSentimentInfoSaveRequest,
 } from "@/api/management";
@@ -249,7 +249,17 @@ const handleCloseDisposal = () => {
   state.dialogDisposalVisible = false;
 };
 
-const handleSubmitDisposal = () => {};
+const handleSubmitDisposal = (formData: any) => {
+  infoManagementPublicSentimentInfoHandleRequest(formData)
+    .then((response: any) => {
+      global.$message.success(`操作成功`);
+      getData();
+    })
+    .catch((error: any) => {
+      console.log(error);
+      global.$message.error("操作失败");
+    });
+};
 
 onMounted(async () => {
   getData();

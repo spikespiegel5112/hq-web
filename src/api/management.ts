@@ -367,6 +367,15 @@ export const infoManagementExternalInfoSaveRequest = (params: any) => {
   });
 };
 
+// 信息管理-外部信息-处置
+export const infoManagementExternalInfoHandleRequest = (params: any) => {
+  return service({
+    url: prefix + "/infoManagement/externalInfo/handle",
+    method: "POST",
+    data: params,
+  });
+};
+
 // 信息管理-舆情信息
 
 // 信息管理-舆情信息-分页查询
@@ -385,7 +394,7 @@ export const infoManagementPublicSentimentInfoDeleteRequest = (params: any) => {
   return service({
     url: prefix + "/infoManagement/publicSentimentInfo/delete",
     method: "POST",
-    params,
+    data: params,
   });
 };
 

@@ -182,7 +182,9 @@ watch(
             "YYYY-MM-DD HH:mm:ss"
           ),
         };
-        state.formData = rowData;
+        Object.keys(state.formData).forEach((item: string) => {
+          state.formData[item] = !!rowData[item] ? rowData[item] : undefined;
+        });
       }
     }
   }
