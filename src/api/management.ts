@@ -329,6 +329,15 @@ export const eventManageSuddenEventSaveRequest = (params: any) => {
   });
 };
 
+// 事件管理-突发事件-保存突发事件处置
+export const eventManageSuddenEventSaveDisposalRequest = (params: any) => {
+  return service({
+    url: prefix + "/eventManage/suddenEvent/saveDisposal",
+    method: "POST",
+    data: params,
+  });
+};
+
 // 信息管理-外部信息
 
 // 信息管理-外部信息-删除
@@ -552,15 +561,6 @@ export const preplanPreplanGetStepPageRequest = (params: any) => {
 export const preplanPreplanSaveRequest = (params: any) => {
   return service({
     url: prefix + "/preplan/preplan/save",
-    method: "POST",
-    data: params,
-  });
-};
-
-// 预案库管理-预案库管理-保存预案库步骤
-export const preplanPreplanSaveStepRequest = (params: any) => {
-  return service({
-    url: prefix + "/preplan/preplan/saveStep",
     method: "POST",
     data: params,
   });

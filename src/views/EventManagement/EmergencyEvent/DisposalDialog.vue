@@ -223,9 +223,7 @@ watch(
     if (!!newValue) {
       getData();
       getPlanData();
-
       const formData = JSON.parse(JSON.stringify(props.rowData));
-
       state.formData = {
         ...formData,
         eventTime: global.$dayjs(formData.eventTime),
@@ -288,10 +286,12 @@ const handleSubmit = () => {
   })
     .then((response: any) => {
       console.log(response);
-      ;
+      global.$message.success("操作成功");
     })
     .catch((error: any) => {
+      debugger;
       console.log(error);
+      global.$message.success("操作失败");
     });
 };
 

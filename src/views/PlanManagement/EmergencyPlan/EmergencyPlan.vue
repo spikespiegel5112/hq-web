@@ -72,7 +72,7 @@ const pageModel = ref([
     width: "1rem",
   },
   {
-    label: "事件发生地点",
+    label: "管理区域",
     name: "eventLocation",
     required: true,
     tableVisible: true,

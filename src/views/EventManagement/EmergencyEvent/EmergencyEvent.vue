@@ -23,7 +23,8 @@
       :visible="state.dialogVisible"
       :mode="state.dialogMode"
       :dataModel="pageModel"
-      :rowData="state.currentRowData"1
+      :rowData="state.currentRowData"
+      1
       @onClose="handleClose"
       @onSubmit="handleSubmit"
     ></EditDialog>
@@ -32,7 +33,7 @@
       :rowData="state.currentRowData"
       mode="disposal"
       @onClose="handleCloseHandling"
-      @onSubmit="handleSubmitHandling"
+      @onSubmit="handleSubmitDisposal"
     ></DisposalDialog>
   </div>
 </template>
@@ -54,6 +55,7 @@ import {
   eventManageSuddenEventGetPageRequest,
   eventManageSuddenEventDeleteRequest,
   eventManageSuddenEventSaveRequest,
+  eventManageSuddenEventSaveDisposalRequest,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
@@ -71,42 +73,14 @@ const pageModel = ref([
     formVisible: true,
     exportVisible: false,
   },
-
   {
-    label: "事件发生地点",
-    name: "eventLocation",
+    label: "管理区域",
+    name: "manageRegion",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
-    width: "2rem",
-  },
-  {
-    label: "报警日期",
-    name: "eventTime",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-    width: "2.5rem",
-  },
-  {
-    label: "接收时间",
-    name: "eventTime",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-    width: "2.5rem",
-  },
-  {
-    label: "突发事件编码",
-    name: "eventType",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-    width: "1.5rem",
+    width: "1rem",
   },
   {
     label: "事件类型",
@@ -118,17 +92,25 @@ const pageModel = ref([
     width: "1.2rem",
   },
   {
-    label: "报警内容",
+    label: "详细地址",
+    name: "eventLocation",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+    width: "1.5rem",
+  },
+  {
+    label: "事件内容",
     name: "eventContent",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
-    width: "3rem",
   },
   {
-    label: "处置情况",
-    name: "eventStatus",
+    label: "等级",
+    name: "eventLevel",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -136,12 +118,31 @@ const pageModel = ref([
     width: "1rem",
   },
   {
-    label: "数据时间",
-    name: "createTime",
+    label: "突发事件编码",
+    name: "eventType",
+    required: true,
+    tableVisible: false,
+    formVisible: true,
+    exportVisible: true,
+    width: "1.5rem",
+  },
+  {
+    label: "发生时间",
+    name: "eventTime",
+    required: true,
     tableVisible: true,
     formVisible: false,
     exportVisible: false,
     width: "2.5rem",
+  },
+  {
+    label: "状态",
+    name: "eventStatus",
+    required: true,
+    tableVisible: true,
+    formVisible: false,
+    exportVisible: false,
+    width: "1rem",
   },
   {
     label: "操作",
@@ -256,7 +257,20 @@ const handleCloseHandling = () => {
   state.dialogDisposalVisible = false;
 };
 
-const handleSubmitHandling = () => {};
+const handleSubmitDisposal = (formData: any) => {
+  eventManageSuddenEventSaveDisposalRequest(formData)
+    .then((response: any) => {
+      global.$message.success("提交成功");
+      getData();
+      state.dialogDisposalVisible = false;
+      debugger
+    })
+    .catch((error: any) => {
+      console.log(error);
+      global.$message.error("提交失败");
+      state.dialogDisposalVisible = false;
+    });
+};
 
 onMounted(async () => {
   getData();

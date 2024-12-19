@@ -21,6 +21,29 @@
     >
       <a-row>
         <a-col :span="22">
+          <a-form-item name="manageRegion" label="管理区域">
+            <a-select
+              v-if="global.$checkEditable(props.mode)"
+              v-model:value="state.formData.manageRegion"
+              placeholder="请选择"
+              @change="handleChangeEventType"
+            >
+              <a-select-option
+                v-for="item in global.$store.state.dictionary.manageRegion"
+                :key="item.value"
+                :value="item.value"
+              >
+                {{ item.label }}
+              </a-select-option>
+            </a-select>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.eventType }}
+            </template>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
           <a-form-item name="eventType" label="事件类型">
             <a-select
               v-if="global.$checkEditable(props.mode)"
@@ -44,7 +67,44 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="eventTime" label="报警日期">
+          <a-form-item name="eventLocation" label="具体地址">
+            <a-input
+              v-if="global.$checkEditable(props.mode)"
+              v-model:value="state.formData.eventLocation"
+              placeholder="请输入"
+            >
+            </a-input>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.eventLocation }}
+            </template>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="eventLevel" label="等级">
+            <a-select
+              v-if="global.$checkEditable(props.mode)"
+              v-model:value="state.formData.eventLevel"
+              placeholder="请选择"
+            >
+              <a-select-option
+                v-for="item in global.$store.state.dictionary.eventLevel"
+                :key="item.value"
+                :value="item.value"
+              >
+                {{ item.label }}
+              </a-select-option>
+            </a-select>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.eventLocation }}
+            </template>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="eventTime" label="发生时间">
             <a-date-picker
               v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.eventTime"
@@ -60,22 +120,8 @@
           </a-form-item>
         </a-col>
       </a-row>
-      <a-row>
-        <a-col :span="22">
-          <a-form-item name="eventLocation" label="事件发生地点">
-            <a-input
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.eventLocation"
-              placeholder="请输入"
-            >
-            </a-input>
-            <template v-if="props.mode === 'review'">
-              {{ state.formData.eventLocation }}
-            </template>
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
+
+      <!-- <a-row>
         <a-col :span="22">
           <a-form-item name="eventCode" label="事件编码">
             <a-input
@@ -89,7 +135,7 @@
             </template>
           </a-form-item>
         </a-col>
-      </a-row>
+      </a-row> -->
       <a-row>
         <a-col :span="22">
           <a-form-item name="eventContent" label="事件内容">
@@ -106,7 +152,7 @@
           </a-form-item>
         </a-col>
       </a-row>
-      <a-row>
+      <!-- <a-row>
         <a-col :span="22">
           <a-form-item name="eventStatus" label="事件状态">
             <a-select
@@ -131,7 +177,7 @@
             </template>
           </a-form-item>
         </a-col>
-      </a-row>
+      </a-row> -->
       <a-row>
         <a-col :span="22">
           <a-form-item name="attachment" label="附件">
@@ -203,18 +249,6 @@ const props = defineProps({
 let state = reactive({
   visible: false,
 
-  // attachmentPath: "string",
-  // createBy: "string",
-  // createTime: "2024-12-18T07:28:44.394Z",
-  // disposalCompletionTime: "2024-12-18T07:28:44.394Z",
-  // eventCode: "string",
-  // eventContent: "string",
-  // eventLevel: 0,
-  // eventLocation: "string",
-  // eventStatus: 0,
-  // eventTime: "2024-12-18T07:28:44.394Z",
-  // eventType: "string",
-  // id: 0,
   formData: {
     id: null as number | null | undefined,
     attachmentPath: "",
@@ -224,6 +258,7 @@ let state = reactive({
     eventStatus: null,
     eventTime: "",
     eventType: "",
+    eventLevel: null,
   } as any,
   fileList: [] as any,
 });
@@ -277,11 +312,13 @@ watch(
     state.visible = newValue;
     if (!!newValue) {
       await nextTick();
-      if (["edit", "review", 'disposal'].some((item) => item === props.mode)) {
+      if (["edit", "review", "disposal"].some((item) => item === props.mode)) {
         const formData = JSON.parse(JSON.stringify(props.rowData));
         state.formData = {
           ...formData,
-          eventTime: global.$dayjs(formData.eventTime),
+          eventTime: !!formData.eventTime
+            ? global.$dayjs(formData.eventTime)
+            : "",
         };
       }
     }

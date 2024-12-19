@@ -6,12 +6,19 @@
           <a-row :gutter="20">
             <a-col :span="6">
               <a-form-item name="manageRegion" label="管理区域">
-                <a-input
+                <a-select
                   v-model:value="state.formData.manageRegion"
-                  placeholder="请输入"
+                  placeholder="请选择"
                   allow-clear
                 >
-                </a-input>
+                  <a-select-option
+                    v-for="item in global.$store.state.dictionary.manageRegion"
+                    :key="item.value"
+                    :value="item.value"
+                  >
+                    {{ item.label }}
+                  </a-select-option>
+                </a-select>
               </a-form-item>
             </a-col>
 
@@ -32,7 +39,7 @@
               </a-form-item>
             </a-col>
             <a-col :span="6">
-              <a-form-item name="eventLocation" label="事件发生地点">
+              <a-form-item name="eventLocation" label="地点">
                 <a-input
                   v-model:value="state.formData.eventLocation"
                   placeholder="请输入"
@@ -96,6 +103,7 @@ const state = reactive({
     eventTimeBegin: "",
     eventTimeEnd: "",
     eventType: "",
+    eventLocation: "",
     manageRegion: "",
   } as any,
   eventTime: [] as any,

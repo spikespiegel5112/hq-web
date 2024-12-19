@@ -49,7 +49,7 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="eventLocation" label="事件发生地点">
+          <a-form-item name="eventLocation" label="管理区域">
             <a-input
               v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.eventLocation"
