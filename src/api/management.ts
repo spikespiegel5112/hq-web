@@ -9,6 +9,9 @@ import { store } from "@/store";
 
 const prefix = "/manage";
 
+// 上传
+// /attachment/upload
+
 // 获取令牌
 export const authLoginRequest = (params: any) => {
   return service({

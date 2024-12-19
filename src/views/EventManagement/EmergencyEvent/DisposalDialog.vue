@@ -146,7 +146,7 @@ import type { Rule, RuleObject } from "ant-design-vue/es/form";
 import { UploadOutlined } from "@ant-design/icons-vue";
 
 import {
-  eventManageSuddenEventSaveRequest,
+  eventManageSuddenEventSaveDisposalRequest,
   eventManageSuddenEventGetDisposalRequest,
   preplanPreplanGetStepPageRequest,
 } from "@/api/management";
@@ -275,24 +275,7 @@ const handleSubmit = () => {
   const disposalTime = global
     .$dayjs(state.formData.disposalTime)
     .format("YYYY-MM-DD HH:mm:ss");
-  eventManageSuddenEventSaveRequest({
-    id: props.rowData.id,
-    seId: props.rowData.prId,
-    disposalTime: disposalTime,
-    stepContent: state.formData.stepContent,
-    stepName: state.formData.stepName,
-    stepOrder: state.formData.stepOrder,
-    stepOrderDesc: state.formData.stepOrderDesc,
-  })
-    .then((response: any) => {
-      console.log(response);
-      global.$message.success("操作成功");
-    })
-    .catch((error: any) => {
-      debugger;
-      console.log(error);
-      global.$message.success("操作失败");
-    });
+  emit("onSubmit", state.formData);
 };
 
 const handleChangeDisposalStep = (value: any) => {

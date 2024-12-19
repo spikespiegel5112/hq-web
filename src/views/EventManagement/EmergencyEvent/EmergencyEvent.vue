@@ -258,12 +258,17 @@ const handleCloseHandling = () => {
 };
 
 const handleSubmitDisposal = (formData: any) => {
-  eventManageSuddenEventSaveDisposalRequest(formData)
+  const disposalTime = global
+    .$dayjs(formData.disposalTime)
+    .format("YYYY-MM-DD HH:mm:ss");
+  eventManageSuddenEventSaveDisposalRequest({
+    formData,
+    disposalTime,
+  })
     .then((response: any) => {
       global.$message.success("提交成功");
       getData();
       state.dialogDisposalVisible = false;
-      debugger
     })
     .catch((error: any) => {
       console.log(error);
