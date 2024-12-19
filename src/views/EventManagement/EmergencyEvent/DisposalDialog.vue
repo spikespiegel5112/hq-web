@@ -60,6 +60,7 @@
                 v-for="(item, index) in state.planInfo"
                 :value="item.id"
                 :disabled="index < state.disposalData.lastStepOrder"
+                :class="{ active: state.formData.eventLocation === item.id }"
               >
                 <div class="step_wrapper">
                   <span class="step">
@@ -317,6 +318,7 @@ onBeforeUnmount(() => {});
     .step_wrapper {
       display: flex;
       margin: 0.05rem 0;
+      width: 100%;
       > span {
         align-content: center;
       }
@@ -338,6 +340,19 @@ onBeforeUnmount(() => {});
         padding: 0.1rem;
         flex: 1;
         background-color: #001b4c;
+      }
+    }
+  }
+  .ant-radio-wrapper-disabled {
+    color: #666;
+  }
+  .ant-radio-wrapper-checked {
+    color: #0096ff;
+    .step_wrapper {
+      .stepcontent {
+        width: 100%;
+        background-color: #0096ff;
+        color: #fff;
       }
     }
   }
