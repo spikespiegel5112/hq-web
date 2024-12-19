@@ -235,7 +235,6 @@ watch(
 const getData = () => {
   state.formData.eventType = props.rowData.eventType;
   state.formData.seId = props.rowData.id;
-
   eventManageSuddenEventGetDisposalRequest({
     seId: props.rowData.id,
   })
@@ -272,9 +271,7 @@ const handleClose = () => {
 };
 
 const handleSubmit = () => {
-  const disposalTime = global
-    .$dayjs(state.formData.disposalTime)
-    .format("YYYY-MM-DD HH:mm:ss");
+
   emit("onSubmit", state.formData);
 };
 
