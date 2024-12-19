@@ -20,11 +20,17 @@
           }"
         >
           <a-form-item name="userName" label="报警类型">
-            <a-input v-model:value="state.formData.userName" placeholder="请输入">
+            <a-input
+              v-model:value="state.formData.userName"
+              placeholder="请输入"
+            >
             </a-input>
           </a-form-item>
           <a-form-item name="password" label="报警内容">
-            <a-input v-model:value="state.formData.password" placeholder="请输入">
+            <a-input
+              v-model:value="state.formData.password"
+              placeholder="请输入"
+            >
             </a-input>
           </a-form-item>
         </a-space>
@@ -37,11 +43,17 @@
           }"
         >
           <a-form-item name="userName" label="报警类型">
-            <a-input v-model:value="state.formData.userName" placeholder="请输入">
+            <a-input
+              v-model:value="state.formData.userName"
+              placeholder="请输入"
+            >
             </a-input>
           </a-form-item>
           <a-form-item name="password" label="报警内容">
-            <a-input v-model:value="state.formData.password" placeholder="请输入">
+            <a-input
+              v-model:value="state.formData.password"
+              placeholder="请输入"
+            >
             </a-input>
           </a-form-item>
         </a-space>
@@ -101,7 +113,7 @@ watch(
     state.visible = newValue;
     if (!!newValue) {
       await nextTick();
-if (["edit", "review"].some((item) => item === props.mode)) {
+      if (["edit", "review", "disposal"].some((item) => item === props.mode)) {
         const formData = JSON.parse(JSON.stringify(props.rowData));
         state.formData = formData;
       }

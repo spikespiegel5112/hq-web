@@ -173,7 +173,7 @@ watch(
     state.visible = newValue;
     if (!!newValue) {
       await nextTick();
-      if (["edit", "review"].some((item) => item === props.mode)) {
+      if (["edit", "review", 'disposal'].some((item) => item === props.mode)) {
         let rowData = JSON.parse(JSON.stringify(props.rowData));
         rowData = {
           ...rowData,

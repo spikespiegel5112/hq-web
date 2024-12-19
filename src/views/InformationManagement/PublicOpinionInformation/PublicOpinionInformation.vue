@@ -33,7 +33,7 @@
       :dataModel="pageModel"
       :rowData="state.currentRowData"
       @onClose="handleCloseDisposal"
-      @onSubmit="handleSubmitDisposal"
+      @onSubmit="handleSubmit"
     ></DisposalDialog>
   </div>
 </template>
@@ -210,7 +210,7 @@ const handleSubmit = (formData: any) => {
   infoManagementPublicSentimentInfoSaveRequest(formData)
     .then((response: any) => {
       global.$message.success(`操作成功`);
-      getData()
+      getData();
     })
     .catch((error: any) => {
       console.log(error);

@@ -44,7 +44,7 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="externalContent" label="附件">
+          <a-form-item name="handlingContent" label="附件">
             <a-textarea
               v-model:value="state.formData.handlingContent"
               placeholder="请输入"
@@ -129,16 +129,17 @@ watch(
     state.visible = newValue;
     if (!!newValue) {
       await nextTick();
-      if (["edit", "review"].some((item) => item === props.mode)) {
+      if (["edit", "review", "disposal"].some((item) => item === props.mode)) {
         let rowData = JSON.parse(JSON.stringify(props.rowData));
         rowData = {
           ...rowData,
-          externalTime: global.$dayjs(
-            rowData.externalTime,
+          handlingTime: global.$dayjs(
+            rowData.handlingTime,
             "YYYY-MM-DD HH:mm:ss"
           ),
         };
         state.formData = rowData;
+        debugger
       }
     }
   }
