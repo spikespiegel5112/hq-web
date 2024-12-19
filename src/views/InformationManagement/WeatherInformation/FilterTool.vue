@@ -4,42 +4,6 @@
       <a-row>
         <a-col :span="20">
           <a-row :gutter="20">
-            <a-col :span="6">
-              <a-form-item name="externalSource" label="外部信息来源">
-                <a-select
-                  v-model="state.formData.externalSource"
-                  placeholder="情选择"
-                >
-                  <a-select-option
-                    v-for="item in global.$getDictionary(
-                      'external_info_external_source'
-                    )"
-                    :value="item.value"
-                  >
-                    {{ item.label }}
-                  </a-select-option>
-                </a-select>
-              </a-form-item>
-            </a-col>
-            <a-col :span="6">
-              <a-form-item name="externalType" label="信息类型">
-                <a-select
-                  v-model:value="state.formData.externalType"
-                  placeholder="请输入"
-                  allow-clear
-                >
-                  <a-select-option
-                    v-for="item in global.$getDictionary(
-                      'external_info_external_type'
-                    )"
-                    :value="item.value"
-                  >
-                    {{ item.label }}
-                  </a-select-option>
-                </a-select>
-              </a-form-item>
-            </a-col>
-
             <a-col :span="8">
               <a-form-item name="externalTime" label="信息上报时间">
                 <a-range-picker

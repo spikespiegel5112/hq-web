@@ -45,7 +45,15 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="eventTime" label="事件等级"> 红色 </a-form-item>
+          <a-form-item name="eventTime" label="事件等级">
+            <span
+              :style="{
+                color: getColor().color,
+              }"
+            >
+              {{ getColor().label }}
+            </span>
+          </a-form-item>
         </a-col>
       </a-row>
       <a-row>
@@ -133,6 +141,7 @@ import {
   eventManageSuddenEventGetDisposalRequest,
   preplanPreplanGetStepPageRequest,
 } from "@/api/management";
+import { color } from "echarts";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -189,6 +198,21 @@ let state = reactive({
   fileList: [] as any,
   disposalData: {} as any,
 });
+
+const colorList: any[] = [
+  {
+    label: "红色",
+    color: "red",
+  },
+  {
+    label: "黄色",
+    color: "yellow",
+  },
+  {
+    label: "绿色",
+    color: "green",
+  },
+];
 
 const eventList = computed(() => {
   return global.$store.state.app.currentEventTypeList.find(
@@ -277,6 +301,20 @@ const handleChangeDisposalStep = (value: any) => {
 };
 
 const handleChangeAttachment = () => {};
+
+const getColor = () => {
+  let eventLevel: any[] = global.$store.state.dictionary.eventLevel;
+  eventLevel = eventLevel.map((item: any) => {
+    return {
+      ...item,
+      color: colorList.find((item2: any) => item2.title === item.label),
+    };
+  });
+  const colorItem = global.$store.state.dictionary.eventLevel.find(
+    (item) => item.value === state.formData.eventLevel
+  );
+  return colorItem;
+};
 
 onMounted(async () => {});
 
