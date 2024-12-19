@@ -262,7 +262,7 @@ const handleSubmitDisposal = (formData: any) => {
     .$dayjs(formData.disposalTime)
     .format("YYYY-MM-DD HH:mm:ss");
   eventManageSuddenEventSaveDisposalRequest({
-    formData,
+    ...formData,
     disposalTime,
   })
     .then((response: any) => {

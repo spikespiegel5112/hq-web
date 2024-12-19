@@ -271,8 +271,11 @@ const handleClose = () => {
 };
 
 const handleSubmit = () => {
-
-  emit("onSubmit", state.formData);
+  state.formData.id = undefined;
+  emit("onSubmit", {
+    ...state.formData,
+    seId: props.rowData.id,
+  });
 };
 
 const handleChangeDisposalStep = (value: any) => {
