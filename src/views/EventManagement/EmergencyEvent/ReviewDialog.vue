@@ -63,10 +63,10 @@
           <a-row>
             <a-col :span="22">
               <a-form-item name="attachment" label="附件">
-                <!-- <CommonUpload
+                <CommonUpload
                   disabled
                   :attachmentList="state.formData.attachmentList"
-                /> -->
+                />
               </a-form-item>
             </a-col>
           </a-row>
@@ -109,6 +109,7 @@
                   class="attachment"
                 >
                   <CommonUpload
+                    disabled
                     :attachmentList="state.fileList[index].attachmentList"
                   />
                 </div>
@@ -236,6 +237,7 @@ const getData = () => {
 
 const handleClose = () => {
   formDataRef.value.resetFields();
+  state.fileList = [];
   emit("onClose");
 };
 
