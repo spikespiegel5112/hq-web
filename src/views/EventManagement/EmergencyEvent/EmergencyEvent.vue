@@ -236,6 +236,7 @@ const handleReset = (formData: object) => {
 
 const handleClose = () => {
   state.dialogVisible = false;
+  state.dialogReviewVisible = false;
 };
 
 const handleSubmit = (formData: any) => {

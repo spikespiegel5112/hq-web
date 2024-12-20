@@ -63,21 +63,20 @@
           <a-row>
             <a-col :span="22">
               <a-form-item name="attachment" label="附件">
-                <CommonUpload
+                <!-- <CommonUpload
                   disabled
                   :attachmentList="state.formData.attachmentList"
-                />
+                /> -->
               </a-form-item>
             </a-col>
           </a-row>
         </a-form>
       </div>
       <div class="right">
-        <!-- {{state.disposalData}} -->
         <div class="date"></div>
         <a-timeline mode="left">
           <a-timeline-item
-            v-for="(item, index) in state.disposalData.disposalList"
+            v-for="(item, index) in state.disposalData.preplanResourceStepList"
           >
             <template #dot>
               <span>{{ index + 1 }}</span>
@@ -91,15 +90,22 @@
                   <span class="stepname">
                     {{ item.stepName }}
                   </span>
-                  <span class="status">已完成</span>
+                  <span
+                    class="status"
+                    v-if="index < state.disposalData.lastStepOrder"
+                  >
+                    已完成
+                  </span>
                 </div>
                 <div class="stepcontent">
                   {{ item.stepContent }}
                 </div>
-                <div v-if="item.attachmentList.length > 0" class="attachment">
+                <div
+                  v-if="state.fileList[index].attachmentList.length > 0"
+                  class="attachment"
+                >
                   <CommonUpload
-                    disabled
-                    :attachmentList="item.attachmentList"
+                    :attachmentList="state.fileList[index].attachmentList"
                   />
                 </div>
               </div>
@@ -159,6 +165,7 @@ const props = defineProps({
 
 const state = reactive({
   visible: false,
+  preplanListReady: false,
   formData: {
     id: null as number | null | undefined,
     attachmentList: [] as any[],
@@ -172,6 +179,7 @@ const state = reactive({
   } as any,
   fileList: [] as any,
   disposalData: [] as any,
+  timer: false,
 });
 
 const dialogTitle: ComputedRef<string> = computed(() => {
@@ -205,10 +213,24 @@ const getData = () => {
   eventManageSuddenEventGetDisposalRequest({
     seId: props.rowData.id,
   })
-    .then((response: any) => {
+    .then(async (response: any) => {
       response = response.data;
       state.disposalData = response;
+      await nextTick();
+
+      setTimeout(() => {
+        response.preplanResourceStepList.forEach((item: any, index: number) => {
+          state.fileList.push({
+            ...item,
+            currentStepData: getCurrentStep(item),
+          });
+          debugger
+        });
+      }, 1000);
+
+      console.log(state.disposalData.preplanResourceStepList);
       console.log(response);
+      state.preplanListReady = true;
     })
     .catch((error: any) => {
       console.log(error);
@@ -221,6 +243,23 @@ const handleClose = () => {
 };
 
 const handleChangeTime1 = () => {};
+
+const getCurrentStep = (currentPreplanData: any) => {
+  const disposalList = state.disposalData.disposalList;
+  let result = {
+    attachmentList: [],
+  };
+  let _result = disposalList.find((item: any) => {
+    return currentPreplanData.stepOrder === item.stepOrder;
+  });
+  return _result || result;
+};
+
+onMounted(() => {
+  setTimeout(() => {
+    state.timer = true;
+  }, 2000);
+});
 
 onBeforeUnmount(() => {});
 </script>
@@ -246,13 +285,15 @@ onBeforeUnmount(() => {});
       }
       .content {
         display: inline-block;
-        padding: 0.1rem 0.15rem;
+        padding: 0.1rem 0.2rem;
         flex: 1;
         background-color: #0a1f44;
         .top {
           display: flex;
           .stepname {
             flex: 1;
+            font-size: 0.23rem;
+            color: #fff;
           }
           .status {
             display: inline-block;
@@ -262,7 +303,14 @@ onBeforeUnmount(() => {});
           }
         }
         .stepcontent {
+          margin: 0.1rem 0;
           width: 5.5rem;
+          color: #d6eaff;
+        }
+        .attachment {
+          margin: 0.1rem 0 0 0;
+          padding: 0.1rem 0 0 0;
+          border-top: 1px solid #01447c;
         }
       }
     }

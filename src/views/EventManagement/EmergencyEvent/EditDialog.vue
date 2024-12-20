@@ -317,7 +317,6 @@ watch(
             ? global.$dayjs(formData.eventTime)
             : "",
         };
-        const attachmentList = formData.attachmentList;
       }
     }
   }
