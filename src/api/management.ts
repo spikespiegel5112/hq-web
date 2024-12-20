@@ -675,3 +675,14 @@ export const planManagementEmergencyPlanSaveRequest = (params: any) => {
     data: params,
   });
 };
+
+// 保存
+export const planManagementEmergencyPlanSaveDisposalRequest = (params: any) => {
+  return service({
+    url: prefix + "/planManagement/emergencyPlan/saveDisposal",
+    method: "POST",
+    data: params,
+  });
+};
+
+

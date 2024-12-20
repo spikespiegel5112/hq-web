@@ -59,12 +59,11 @@ import {
   ref,
   nextTick,
 } from "vue";
-
 import {
-  eventManageSuddenEventGetPageRequest,
-  eventManageSuddenEventDeleteRequest,
-  eventManageSuddenEventSaveRequest,
-  eventManageSuddenEventSaveDisposalRequest,
+  planManagementEmergencyPlanGetPageRequest,
+  planManagementEmergencyPlanDeleteRequest,
+  planManagementEmergencyPlanSaveRequest,
+  planManagementEmergencyPlanSaveDisposalRequest,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
@@ -84,8 +83,8 @@ const pageModel = ref([
     exportVisible: false,
   },
   {
-    label: "管理区域",
-    name: "manageRegion",
+    label: "来源",
+    name: "planSource",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -93,8 +92,8 @@ const pageModel = ref([
     width: "1rem",
   },
   {
-    label: "事件类型",
-    name: "eventType",
+    label: "预案类型",
+    name: "preplanResourceId",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -102,8 +101,8 @@ const pageModel = ref([
     width: "1.2rem",
   },
   {
-    label: "详细地址",
-    name: "eventLocation",
+    label: "预案内容",
+    name: "planContent",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -111,48 +110,38 @@ const pageModel = ref([
     width: "1.5rem",
   },
   {
-    label: "事件内容",
-    name: "eventContent",
+    label: "预案等级",
+    name: "planLevel",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
-  },
-  {
-    label: "等级",
-    name: "eventLevel",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-    width: "1rem",
-  },
-  {
-    label: "突发事件编码",
-    name: "eventType",
-    required: true,
-    tableVisible: false,
-    formVisible: true,
-    exportVisible: true,
-    width: "1.5rem",
   },
   {
     label: "发生时间",
-    name: "eventTime",
+    name: "planTime",
     required: true,
     tableVisible: true,
-    formVisible: false,
-    exportVisible: false,
-    width: "2.5rem",
+    formVisible: true,
+    exportVisible: true,
+    width: "1rem",
   },
   {
     label: "状态",
-    name: "eventStatus",
+    name: "planStatus",
     required: true,
     tableVisible: true,
     formVisible: false,
     exportVisible: false,
     width: "1rem",
+  },
+  {
+    label: "附件",
+    name: "attachment",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
   },
   {
     label: "操作",
@@ -182,7 +171,7 @@ const pagination = reactive({
 
 const getData = () => {
   pagination.total = undefined;
-  eventManageSuddenEventGetPageRequest({
+  planManagementEmergencyPlanGetPageRequest({
     ...queryFormData,
     ...pagination,
   })
@@ -236,10 +225,11 @@ const handleReset = (formData: object) => {
 
 const handleClose = () => {
   state.dialogVisible = false;
+  state.dialogReviewVisible = false;
 };
 
 const handleSubmit = (formData: any) => {
-  eventManageSuddenEventSaveRequest(formData)
+  planManagementEmergencyPlanSaveRequest(formData)
     .then((response: any) => {
       global.$message.success("提交成功");
       getData();
@@ -258,7 +248,7 @@ const handleChangePage = (pagingData: any) => {
 };
 
 const handleDelete = (id: number) => {
-  eventManageSuddenEventDeleteRequest({
+  planManagementEmergencyPlanDeleteRequest({
     id,
   })
     .then((response: any) => {
@@ -284,7 +274,7 @@ const handleSubmitDisposal = (formData: any) => {
   const disposalTime = global
     .$dayjs(formData.disposalTime)
     .format("YYYY-MM-DD HH:mm:ss");
-  eventManageSuddenEventSaveDisposalRequest({
+  planManagementEmergencyPlanSaveDisposalRequest({
     ...formData,
     disposalTime,
   })

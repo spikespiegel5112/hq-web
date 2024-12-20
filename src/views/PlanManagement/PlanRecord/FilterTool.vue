@@ -1,25 +1,18 @@
 <template>
   <div class="common_filtertool_wrapper">
-    <a-form :model="formData" autocomplete="off" ref="formDataRef">
+    <a-form :model="state.formData" autocomplete="off" ref="formDataRef">
       <a-row>
         <a-col :span="20">
           <a-row :gutter="20">
             <a-col :span="6">
-              <a-form-item name="userName" label="报警类型">
-                <a-input v-model:value="formData.userName" placeholder="请输入">
-                  <template #prefix>
-                    <span class="username"></span>
-                  </template>
-                </a-input>
-              </a-form-item>
-            </a-col>
-
-            <a-col :span="6">
-              <a-form-item name="source" label="来源">
-                <a-select v-model="formData.source" placeholder="请输入">
+              <a-form-item name="manageRegion" label="管理区域">
+                <a-select
+                  v-model="state.formData.manageRegion"
+                  placeholder="请输入"
+                >
                   <a-select-option
                     v-for="item in global.$store.state.dictionary[
-                      'externalDataSources'
+                      'manageRegion'
                     ]"
                     :value="item.value"
                   >
@@ -28,12 +21,29 @@
                 </a-select>
               </a-form-item>
             </a-col>
-
             <a-col :span="6">
-              <a-form-item name="password" label="时间">
-                <a-input v-model:value="formData.password" placeholder="请输入">
-                  
-                </a-input>
+              <a-form-item name="eventType" label="事件类型">
+                <a-select
+                  v-model:value="state.formData.eventType"
+                  placeholder="请选择"
+                  allow-clear
+                >
+                  <a-select-option
+                    v-for="item in eventList"
+                    :value="item.value"
+                  >
+                    {{ item.label }}
+                  </a-select-option>
+                </a-select>
+              </a-form-item>
+            </a-col>
+            <a-col :span="8">
+              <a-form-item name="eventTime" label="时间">
+                <a-range-picker
+                  v-model="state.eventTime"
+                  format="YYYY-MM-DD"
+                  @change="handleChangeInfoEventTime"
+                />
               </a-form-item>
             </a-col>
           </a-row>
@@ -76,18 +86,42 @@ const emit = defineEmits<{
 
 const formDataRef: any = ref(null);
 
-const formData = reactive({
-  source: "",
+const state = reactive({
+  formData: {
+    eventType: "",
+    manageRegion: "",
+    eventTime: [] as any[],
+  },
+  eventTime: "",
+});
+
+const eventList = computed(() => {
+  return global.$store.state.app.currentEventTypeList.find(
+    (item: any) => item.type === "突发事件处置"
+  )?.data;
 });
 
 const handleSearch = () => {
-  emit("onSearch", formData);
+  const eventTimeBegin = state.formData.eventTime[0];
+  const eventTimeEnd = state.formData.eventTime[1];
+  emit("onSearch", {
+    ...state.formData,
+    eventTimeBegin,
+    eventTimeEnd,
+  });
 };
 
 const handleReset = () => {
   formDataRef.value.resetFields();
+  const formData: any = Object.keys(state.formData).forEach((item: any) => {
+    state.formData[item] = global.$isEmpty(state.formData[item])
+      ? undefined
+      : state.formData[item];
+  });
   emit("onReset", formData);
 };
+
+const handleChangeInfoEventTime = () => {};
 
 onMounted(async () => {});
 

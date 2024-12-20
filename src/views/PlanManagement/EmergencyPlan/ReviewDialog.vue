@@ -17,117 +17,46 @@
           <a-row>
             <a-col :span="22">
               <a-form-item name="manageRegion" label="管理区域">
-                <a-select
-                  v-if="global.$checkEditable(props.mode)"
-                  v-model:value="state.formData.manageRegion"
-                  placeholder="请选择"
-                  @change="handleChangeEventType"
-                >
-                  <a-select-option
-                    v-for="item in global.$store.state.dictionary.manageRegion"
-                    :key="item.value"
-                    :value="item.value"
-                  >
-                    {{ item.label }}
-                  </a-select-option>
-                </a-select>
-                <template v-if="props.mode === 'review'">
-                  {{ state.formData.eventType }}
-                </template>
+                {{ state.formData.eventType }}
               </a-form-item>
             </a-col>
           </a-row>
           <a-row>
             <a-col :span="22">
               <a-form-item name="eventType" label="事件类型">
-                <a-select
-                  v-if="global.$checkEditable(props.mode)"
-                  v-model:value="state.formData.eventType"
-                  placeholder="请选择"
-                  @change="handleChangeEventType"
-                >
-                  <a-select-option
-                    v-for="item in eventList"
-                    :value="item.label"
-                    :key="item.value"
-                  >
-                    {{ item.label }}
-                  </a-select-option>
-                </a-select>
-                <template v-if="props.mode === 'review'">
-                  {{ state.formData.eventType }}
-                </template>
+                {{ state.formData.eventType }}
               </a-form-item>
             </a-col>
           </a-row>
           <a-row>
             <a-col :span="22">
               <a-form-item name="eventLocation" label="具体地址">
-                <a-input
-                  v-if="global.$checkEditable(props.mode)"
-                  v-model:value="state.formData.eventLocation"
-                  placeholder="请输入"
-                >
-                </a-input>
-                <template v-if="props.mode === 'review'">
-                  {{ state.formData.eventLocation }}
-                </template>
+                {{ state.formData.eventLocation }}
               </a-form-item>
             </a-col>
           </a-row>
           <a-row>
             <a-col :span="22">
               <a-form-item name="eventLevel" label="等级">
-                <a-select
-                  v-if="global.$checkEditable(props.mode)"
-                  v-model:value="state.formData.eventLevel"
-                  placeholder="请选择"
-                >
-                  <a-select-option
-                    v-for="item in global.$store.state.dictionary.eventLevel"
-                    :key="item.value"
-                    :value="item.value"
-                  >
-                    {{ item.label }}
-                  </a-select-option>
-                </a-select>
-                <template v-if="props.mode === 'review'">
-                  {{ state.formData.eventLocation }}
-                </template>
+                {{ state.formData.eventLocation }}
               </a-form-item>
             </a-col>
           </a-row>
           <a-row>
             <a-col :span="22">
               <a-form-item name="eventTime" label="发生时间">
-                <a-date-picker
-                  v-if="global.$checkEditable(props.mode)"
-                  v-model:value="state.formData.eventTime"
-                  format="YYYY-MM-DD HH:mm:ss"
-                ></a-date-picker>
-                <template v-if="props.mode === 'review'">
-                  {{
-                    global
-                      .$dayjs(state.formData.eventTime)
-                      .format("YYYY-MM-DD HH:mm:ss")
-                  }}
-                </template>
+                {{
+                  global
+                    .$dayjs(state.formData.eventTime)
+                    .format("YYYY-MM-DD HH:mm:ss")
+                }}
               </a-form-item>
             </a-col>
           </a-row>
           <a-row>
             <a-col :span="22">
               <a-form-item name="eventContent" label="事件内容">
-                <a-textarea
-                  v-if="global.$checkEditable(props.mode)"
-                  v-model:value="state.formData.eventContent"
-                  placeholder="请输入"
-                  :rows="4"
-                >
-                </a-textarea>
-                <template v-if="props.mode === 'review'">
-                  {{ state.formData.eventContent }}
-                </template>
+                {{ state.formData.eventContent }}
               </a-form-item>
             </a-col>
           </a-row>
@@ -135,27 +64,19 @@
             <a-col :span="22">
               <a-form-item name="attachment" label="附件">
                 <CommonUpload
-                  v-if="global.$checkEditable(props.mode)"
+                  disabled
                   :attachmentList="state.formData.attachmentList"
                 />
-                <template v-if="props.mode === 'review'">
-                  <CommonUpload
-                    disabled
-                    :attachmentList="state.formData.attachmentList"
-                  />
-                </template>
               </a-form-item>
             </a-col>
           </a-row>
         </a-form>
       </div>
       <div class="right">
-        <!-- {{state.disposalData}} -->
-        <div class="date">
-        </div>
+        <div class="date"></div>
         <a-timeline mode="left">
           <a-timeline-item
-            v-for="(item, index) in state.disposalData.disposalList"
+            v-for="(item, index) in state.disposalData.preplanResourceStepList"
           >
             <template #dot>
               <span>{{ index + 1 }}</span>
@@ -165,23 +86,45 @@
                 {{ global.$dayjs(item.disposalTime).format("HH:mm") }}
               </div>
               <div class="content">
-                {{ item.stepContent }}
+                <div class="top">
+                  <span class="stepname">
+                    {{ item.stepName }}
+                  </span>
+                  <span
+                    class="status"
+                    v-if="index < state.disposalData.lastStepOrder"
+                  >
+                    已完成
+                  </span>
+                </div>
+                <div class="stepcontent">
+                  {{ item.stepContent }}
+                </div>
+                <div
+                  v-if="
+                    !!state.fileList[index] &&
+                    !!state.fileList[index].attachmentList &&
+                    state.fileList[index].attachmentList.length > 0
+                  "
+                  class="attachment"
+                >
+                  <CommonUpload
+                    disabled
+                    :attachmentList="state.fileList[index].attachmentList"
+                  />
+                </div>
               </div>
             </div>
           </a-timeline-item>
         </a-timeline>
       </div>
     </div>
-
     <template #footer>
       <a-row>
         <a-col :span="22">
           <template>
             <a-button key="submit" type="primary" @click="handleClose">
               关闭
-            </a-button>
-            <a-button key="submit" type="primary" @click="handleClose">
-              确认
             </a-button>
           </template>
         </a-col>
@@ -227,6 +170,7 @@ const props = defineProps({
 
 const state = reactive({
   visible: false,
+  preplanListReady: false,
   formData: {
     id: null as number | null | undefined,
     attachmentList: [] as any[],
@@ -240,6 +184,7 @@ const state = reactive({
   } as any,
   fileList: [] as any,
   disposalData: [] as any,
+  timer: false,
 });
 
 const dialogTitle: ComputedRef<string> = computed(() => {
@@ -273,10 +218,17 @@ const getData = () => {
   eventManageSuddenEventGetDisposalRequest({
     seId: props.rowData.id,
   })
-    .then((response: any) => {
+    .then(async (response: any) => {
       response = response.data;
       state.disposalData = response;
-      console.log(response);
+      await nextTick();
+
+      response.preplanResourceStepList.forEach((item: any, index: number) => {
+        state.fileList.push(getCurrentStep(item));
+      });
+
+      console.log(state.disposalData.preplanResourceStepList);
+      state.preplanListReady = true;
     })
     .catch((error: any) => {
       console.log(error);
@@ -285,10 +237,28 @@ const getData = () => {
 
 const handleClose = () => {
   formDataRef.value.resetFields();
+  state.fileList = [];
   emit("onClose");
 };
 
 const handleChangeTime1 = () => {};
+
+const getCurrentStep = (currentPreplanData: any) => {
+  const disposalList = state.disposalData.disposalList;
+  let result = {
+    attachmentList: [],
+  };
+  let _result = disposalList.find((item: any) => {
+    return currentPreplanData.stepOrder === item.stepOrder;
+  });
+  return _result || result;
+};
+
+onMounted(() => {
+  setTimeout(() => {
+    state.timer = true;
+  }, 2000);
+});
 
 onBeforeUnmount(() => {});
 </script>
@@ -296,7 +266,7 @@ onBeforeUnmount(() => {});
 <style scoped lang="scss">
 .maincontent {
   display: flex;
-  align-items: top;
+  align-items: start;
   .left {
     display: inline-block;
     width: 7rem;
@@ -304,16 +274,43 @@ onBeforeUnmount(() => {});
 
   .right {
     display: inline-block;
+    flex: 1;
     .node {
       display: flex;
-      width: 7rem;
+      width: 100%;
       .time {
         display: inline-block;
-        width: 2rem;
+        width: 1rem;
       }
       .content {
         display: inline-block;
+        padding: 0.1rem 0.2rem;
         flex: 1;
+        background-color: #0a1f44;
+        .top {
+          display: flex;
+          .stepname {
+            flex: 1;
+            font-size: 0.23rem;
+            color: #fff;
+          }
+          .status {
+            display: inline-block;
+            width: 1rem;
+            text-align: right;
+            color: #00ffa8;
+          }
+        }
+        .stepcontent {
+          margin: 0.1rem 0;
+          width: 5.5rem;
+          color: #d6eaff;
+        }
+        .attachment {
+          margin: 0.1rem 0 0 0;
+          padding: 0.1rem 0 0 0;
+          border-top: 1px solid #01447c;
+        }
       }
     }
   }

@@ -134,7 +134,7 @@ import {
 } from "vue";
 
 import type { Rule, RuleObject } from "ant-design-vue/es/form";
-import { UploadOutlined } from "@ant-design/icons-vue";
+
 
 import {
   eventManageSuddenEventSaveDisposalRequest,

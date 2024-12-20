@@ -43,8 +43,9 @@ import {
 } from "vue";
 
 import {
-  planManagementEmergencyPlanGetPageRequest,
-  planManagementEmergencyPlanDeleteRequest,
+  eventManageSuddenEventGetRecordPageRequest,
+  eventManageSuddenEventDeleteRequest,
+  eventManageSuddenEventSaveRequest,
 } from "@/api/management";
 
 import FilterTool from "./FilterTool.vue";
@@ -64,7 +65,7 @@ const pageModel = ref([
   },
   {
     label: "管理区域",
-    name: "eventType",
+    name: "manageRegion",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -72,7 +73,7 @@ const pageModel = ref([
   },
   {
     label: "事件类型",
-    name: "highwayName",
+    name: "eventType",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -80,7 +81,7 @@ const pageModel = ref([
   },
   {
     label: "详细地址",
-    name: "bridgeCode",
+    name: "eventLocation",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -88,7 +89,7 @@ const pageModel = ref([
   },
   {
     label: "事件内容",
-    name: "bridgeName",
+    name: "eventContent",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -96,7 +97,7 @@ const pageModel = ref([
   },
   {
     label: "发生时间",
-    name: "bridgeName",
+    name: "eventTime",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -104,15 +105,7 @@ const pageModel = ref([
   },
   {
     label: "处置完成时间",
-    name: "bridgeName",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
-    label: "处置完成时间",
-    name: "bridgeName",
+    name: "disposalCompletionTime",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -151,7 +144,7 @@ const pagination = reactive({
 
 const getData = () => {
   pagination.total = undefined;
-  planManagementEmergencyPlanGetPageRequest({
+  eventManageSuddenEventGetRecordPageRequest({
     ...queryFormData,
     ...pagination,
   })
@@ -196,19 +189,15 @@ const handleClose = () => {
   state.dialogVisible = false;
 };
 
-const handleSubmit = () => {};
-
-const handleDelete = (id: number) => {
-  planManagementEmergencyPlanDeleteRequest({
-    id,
-  })
+const handleSubmit = (formData: any) => {
+  eventManageSuddenEventSaveRequest(formData)
     .then((response: any) => {
-      global.$message.success("删除成功");
+      global.$message.success("提交成功");
       getData();
     })
     .catch((error: any) => {
-      global.$message.error("删除失败");
       console.log(error);
+      global.$message.error("提交失败");
     });
 };
 
@@ -222,6 +211,20 @@ const handleChangePage = (pagingData: any) => {
 onMounted(async () => {
   getData();
 });
+
+const handleDelete = (id: number) => {
+  eventManageSuddenEventDeleteRequest({
+    id,
+  })
+    .then((response: any) => {
+      global.$message.success("删除成功");
+      getData();
+    })
+    .catch((error: any) => {
+      global.$message.error("删除失败");
+      console.log(error);
+    });
+};
 
 onBeforeUnmount(() => {});
 </script>

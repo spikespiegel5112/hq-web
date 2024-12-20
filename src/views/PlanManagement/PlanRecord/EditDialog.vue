@@ -10,94 +10,133 @@
       :model="state.formData"
       ref="formDataRef"
       autocomplete="off"
-      :label-col="{ style: { width: '80px' } }"
+      :label-col="{ style: { width: '120px' } }"
     >
       <a-row>
-        <a-col :span="12">
-          <a-form-item name="userName" label="事件类型">
+        <a-col :span="22">
+          <a-form-item name="eventType" label="事件类型">
             <a-input
               v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.userName"
+              v-model:value="state.formData.eventType"
               placeholder="请输入"
             >
             </a-input>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.eventType }}
+            </template>
           </a-form-item>
         </a-col>
-        <a-col :span="12">
-          <a-form-item name="userName" label="时间">
+      </a-row>
+
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="manageRegion" label="管理区域">
             <a-input
               v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.userName"
+              v-model:value="state.formData.manageRegion"
               placeholder="请输入"
             >
             </a-input>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.manageRegion }}
+            </template>
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="password" label="事件等级">
+          <a-form-item name="eventLocation" label="详细地址">
             <a-input
               v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.password"
+              v-model:value="state.formData.eventLocation"
               placeholder="请输入"
             >
             </a-input>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.eventLocation }}
+            </template>
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="password" label="处置步骤">
-            <a-radio-group v-model:value="state.formData.password">
-              <a-radio :style="radioStyle" :value="1">
-                第一步<span>上报领导/部门/单位</span>
-              </a-radio>
-              <a-radio :style="radioStyle" :value="2">
-                第二步<span>上报领导/部门/单位</span>
-              </a-radio>
-              <a-radio :style="radioStyle" :value="3">
-                第三步<span>上报领导/部门/单位</span>
-              </a-radio>
-              <a-radio :style="radioStyle" :value="3">
-                第四步<span>上报领导/部门/单位</span>
-              </a-radio>
-              <a-radio :style="radioStyle" :value="4">
-                More...
-                <a-input
-                  v-if="state.formData.password === 4"
-                  style="width: 100px; margin-left: 10px"
-                />
-              </a-radio>
-            </a-radio-group>
+          <a-form-item name="eventContent" label="事件内容">
+            <a-textarea
+              v-if="global.$checkEditable(props.mode)"
+              v-model:value="state.formData.eventContent"
+              placeholder="请输入"
+              :rows="4"
+            >
+            </a-textarea>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.eventContent }}
+            </template>
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="password" label="事件描述">
-            <a-input
+          <a-form-item name="eventTime" label="发生时间">
+            <a-date-picker
               v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.password"
-              placeholder="请输入"
-            >
-            </a-input>
+              v-model:value="state.formData.eventTime"
+              format="YYYY-MM-DD HH:mm:ss"
+            ></a-date-picker>
+            <template v-if="props.mode === 'review'">
+              {{
+                global
+                  .$dayjs(state.formData.eventTime)
+                  .format("YYYY-MM-DD HH:mm:ss")
+              }}
+            </template>
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="password" label="附件">
-            <a-input
+          <a-form-item name="eventTime" label="处置完成时间">
+            <a-date-picker
               v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.password"
-              placeholder="请输入"
-            >
-            </a-input>
+              v-model:value="state.formData.eventTime"
+              format="YYYY-MM-DD HH:mm:ss"
+            ></a-date-picker>
+            <template v-if="props.mode === 'review'">
+              {{
+                global
+                  .$dayjs(state.formData.eventTime)
+                  .format("YYYY-MM-DD HH:mm:ss")
+              }}
+            </template>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="attachmentList" label="处置完成时间">
+            <CommonUpload
+              v-if="global.$checkEditable(props.mode)"
+              :attachmentList="state.formData.attachmentList"
+            />
+            <template v-if="props.mode === 'review'">
+              <CommonUpload
+                disabled
+                :attachmentList="state.formData.attachmentList"
+              />
+            </template>
           </a-form-item>
         </a-col>
       </a-row>
     </a-form>
+    <template #footer>
+      <a-row>
+        <a-col :span="22">
+          <a-button key="back" @click="handleClose">取消</a-button>
+          <a-button key="submit" type="primary" @click="handleSubmit">
+            确认
+          </a-button>
+        </a-col>
+      </a-row>
+    </template>
   </a-modal>
 </template>
 
@@ -135,17 +174,15 @@ const props = defineProps({
 const state = reactive({
   visible: false,
   formData: {
-    userName: "",
-    password: "",
+    id: null as number | null | undefined,
+    attachmentList: [] as any[],
+    manageRegion: "",
+    eventType: "",
+    eventLocation: "",
+    eventContent: "",
+    eventTime: "",
+    bridgeName: "",
   },
-});
-
-const radioStyle = computed(() => {
-  return {
-    display: "flex",
-    height: "30px",
-    lineHeight: "30px",
-  };
 });
 
 const dialogTitle: ComputedRef<string> = computed(() => {
@@ -161,8 +198,12 @@ watch(
     if (!!newValue) {
       await nextTick();
       if (["edit", "review", "disposal"].some((item) => item === props.mode)) {
-        const formData = JSON.parse(JSON.stringify(props.rowData));
-        state.formData = formData;
+        let rowData = JSON.parse(JSON.stringify(props.rowData));
+        rowData = {
+          ...rowData,
+          eventTime: global.$dayjs(rowData.eventTime, "YYYY-MM-DD HH:mm:ss"),
+        };
+        state.formData = rowData;
       }
     }
   }
@@ -174,13 +215,19 @@ const handleClose = () => {
 };
 
 const handleSubmit = () => {
+  const eventTime = global
+    .$dayjs(state.formData.eventTime)
+    .format("YYYY-MM-DD HH:mm:ss");
   if (props.mode === "add") {
     state.formData.id = undefined;
   }
   formDataRef.value
     .validate()
     .then(() => {
-      emit("onSubmit", state.formData);
+      emit("onSubmit", {
+        ...state.formData,
+        eventTime,
+      });
       handleClose();
     })
     .catch((error: any) => {
