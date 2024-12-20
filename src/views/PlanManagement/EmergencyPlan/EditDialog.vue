@@ -185,6 +185,12 @@
               v-if="global.$checkEditable(props.mode)"
               :attachmentList="state.formData.attachmentList"
             />
+            <template v-if="props.mode === 'review'">
+              <CommonUpload
+                disabled
+                :attachmentList="state.formData.attachmentList"
+              />
+            </template>
           </a-form-item>
         </a-col>
       </a-row>
@@ -217,6 +223,7 @@ import {
 } from "vue";
 
 import type { Rule, RuleObject } from "ant-design-vue/es/form";
+import { UploadOutlined } from "@ant-design/icons-vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -310,16 +317,16 @@ watch(
             ? global.$dayjs(formData.eventTime)
             : "",
         };
+        const attachmentList = formData.attachmentList;
       }
     }
   }
 );
 
-const getDetailData = () => {};
-
 const handleClose = () => {
   formDataRef.value.resetFields();
   emit("onClose");
+  state.formData.attachmentList = [];
 };
 
 const handleSubmit = () => {
@@ -344,8 +351,6 @@ const handleSubmit = () => {
 };
 
 const handleChangeEventTime = (date: any) => {};
-
-const handleChangeAttachment = () => {};
 
 const handleChangeEventType = (value: any, event: any) => {
   state.formData.prId = event.key;

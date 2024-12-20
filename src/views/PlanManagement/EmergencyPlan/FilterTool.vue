@@ -6,16 +6,23 @@
           <a-row :gutter="20">
             <a-col :span="6">
               <a-form-item name="manageRegion" label="管理区域">
-                <a-input
+                <a-select
                   v-model:value="state.formData.manageRegion"
-                  placeholder="请输入"
+                  placeholder="请选择"
                   allow-clear
                 >
-                </a-input>
+                  <a-select-option
+                    v-for="item in global.$store.state.dictionary.manageRegion"
+                    :key="item.value"
+                    :value="item.value"
+                  >
+                    {{ item.label }}
+                  </a-select-option>
+                </a-select>
               </a-form-item>
             </a-col>
 
-            <a-col :span="6">
+            <a-col :span="5">
               <a-form-item name="eventType" label="事件类型">
                 <a-select
                   v-model:value="state.formData.eventType"
@@ -32,7 +39,7 @@
               </a-form-item>
             </a-col>
             <a-col :span="6">
-              <a-form-item name="eventLocation" label="管理区域">
+              <a-form-item name="eventLocation" label="地点">
                 <a-input
                   v-model:value="state.formData.eventLocation"
                   placeholder="请输入"
@@ -42,8 +49,8 @@
               </a-form-item>
             </a-col>
 
-            <a-col :span="6">
-              <a-form-item name="eventTime" label="时间">
+            <a-col :span="7">
+              <a-form-item name="eventTime" label="接收时间">
                 <a-range-picker
                   v-model:value="state.eventTime"
                   format="YYYY-MM-DD"
@@ -96,14 +103,15 @@ const state = reactive({
     eventTimeBegin: "",
     eventTimeEnd: "",
     eventType: "",
+    eventLocation: "",
     manageRegion: "",
   } as any,
-  eventTime: [],
+  eventTime: [] as any,
 });
 
 const eventList = computed(() => {
   return global.$store.state.app.currentEventTypeList.find(
-    (item: any) => item.type === "应急预案处置"
+    (item: any) => item.type === "突发事件处置"
   )?.data;
 });
 

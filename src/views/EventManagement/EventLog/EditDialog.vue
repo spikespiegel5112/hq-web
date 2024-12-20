@@ -110,6 +110,22 @@
           </a-form-item>
         </a-col>
       </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="attachmentList" label="处置完成时间">
+            <CommonUpload
+              v-if="global.$checkEditable(props.mode)"
+              :attachmentList="state.formData.attachmentList"
+            />
+            <template v-if="props.mode === 'review'">
+              <CommonUpload
+                disabled
+                :attachmentList="state.formData.attachmentList"
+              />
+            </template>
+          </a-form-item>
+        </a-col>
+      </a-row>
     </a-form>
     <template #footer>
       <a-row>
@@ -159,6 +175,7 @@ const state = reactive({
   visible: false,
   formData: {
     id: null as number | null | undefined,
+    attachmentList: [] as any[],
     manageRegion: "",
     eventType: "",
     eventLocation: "",
@@ -180,7 +197,7 @@ watch(
     state.visible = newValue;
     if (!!newValue) {
       await nextTick();
-      if (["edit", "review", 'disposal'].some((item) => item === props.mode)) {
+      if (["edit", "review", "disposal"].some((item) => item === props.mode)) {
         let rowData = JSON.parse(JSON.stringify(props.rowData));
         rowData = {
           ...rowData,

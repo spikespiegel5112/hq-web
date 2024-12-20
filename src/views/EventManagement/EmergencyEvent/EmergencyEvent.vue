@@ -214,7 +214,7 @@ const handleEdit = (rowData: any) => {
 };
 
 const handleReview = (rowData: any) => {
-  state.dialogVisible = true;
+  state.dialogReviewVisible = true;
   state.dialogMode = "review";
   state.currentRowData = rowData;
 };

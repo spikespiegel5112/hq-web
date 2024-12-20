@@ -39,6 +39,8 @@ declare module 'vue' {
     ATabPane: typeof import('ant-design-vue/es')['TabPane']
     ATabs: typeof import('ant-design-vue/es')['Tabs']
     ATextarea: typeof import('ant-design-vue/es')['Textarea']
+    ATimeline: typeof import('ant-design-vue/es')['Timeline']
+    ATimelineItem: typeof import('ant-design-vue/es')['TimelineItem']
     ATimePicker: typeof import('ant-design-vue/es')['TimePicker']
     ATimeRangePicker: typeof import('ant-design-vue/es')['TimeRangePicker']
     ATypographyLink: typeof import('ant-design-vue/es')['TypographyLink']

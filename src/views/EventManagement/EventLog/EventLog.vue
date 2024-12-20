@@ -105,7 +105,7 @@ const pageModel = ref([
   },
   {
     label: "处置完成时间",
-    name: "bridgeName",
+    name: "disposalCompletionTime",
     required: true,
     tableVisible: true,
     formVisible: true,

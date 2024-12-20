@@ -12,7 +12,7 @@
                 >
                   <a-select-option
                     v-for="item in global.$store.state.dictionary[
-                      'externalDataSources'
+                      'manageRegion'
                     ]"
                     :value="item.value"
                   >

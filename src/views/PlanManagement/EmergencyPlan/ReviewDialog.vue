@@ -17,46 +17,117 @@
           <a-row>
             <a-col :span="22">
               <a-form-item name="manageRegion" label="管理区域">
-                {{ state.formData.eventType }}
+                <a-select
+                  v-if="global.$checkEditable(props.mode)"
+                  v-model:value="state.formData.manageRegion"
+                  placeholder="请选择"
+                  @change="handleChangeEventType"
+                >
+                  <a-select-option
+                    v-for="item in global.$store.state.dictionary.manageRegion"
+                    :key="item.value"
+                    :value="item.value"
+                  >
+                    {{ item.label }}
+                  </a-select-option>
+                </a-select>
+                <template v-if="props.mode === 'review'">
+                  {{ state.formData.eventType }}
+                </template>
               </a-form-item>
             </a-col>
           </a-row>
           <a-row>
             <a-col :span="22">
               <a-form-item name="eventType" label="事件类型">
-                {{ state.formData.eventType }}
+                <a-select
+                  v-if="global.$checkEditable(props.mode)"
+                  v-model:value="state.formData.eventType"
+                  placeholder="请选择"
+                  @change="handleChangeEventType"
+                >
+                  <a-select-option
+                    v-for="item in eventList"
+                    :value="item.label"
+                    :key="item.value"
+                  >
+                    {{ item.label }}
+                  </a-select-option>
+                </a-select>
+                <template v-if="props.mode === 'review'">
+                  {{ state.formData.eventType }}
+                </template>
               </a-form-item>
             </a-col>
           </a-row>
           <a-row>
             <a-col :span="22">
               <a-form-item name="eventLocation" label="具体地址">
-                {{ state.formData.eventLocation }}
+                <a-input
+                  v-if="global.$checkEditable(props.mode)"
+                  v-model:value="state.formData.eventLocation"
+                  placeholder="请输入"
+                >
+                </a-input>
+                <template v-if="props.mode === 'review'">
+                  {{ state.formData.eventLocation }}
+                </template>
               </a-form-item>
             </a-col>
           </a-row>
           <a-row>
             <a-col :span="22">
               <a-form-item name="eventLevel" label="等级">
-                {{ state.formData.eventLocation }}
+                <a-select
+                  v-if="global.$checkEditable(props.mode)"
+                  v-model:value="state.formData.eventLevel"
+                  placeholder="请选择"
+                >
+                  <a-select-option
+                    v-for="item in global.$store.state.dictionary.eventLevel"
+                    :key="item.value"
+                    :value="item.value"
+                  >
+                    {{ item.label }}
+                  </a-select-option>
+                </a-select>
+                <template v-if="props.mode === 'review'">
+                  {{ state.formData.eventLocation }}
+                </template>
               </a-form-item>
             </a-col>
           </a-row>
           <a-row>
             <a-col :span="22">
               <a-form-item name="eventTime" label="发生时间">
-                {{
-                  global
-                    .$dayjs(state.formData.eventTime)
-                    .format("YYYY-MM-DD HH:mm:ss")
-                }}
+                <a-date-picker
+                  v-if="global.$checkEditable(props.mode)"
+                  v-model:value="state.formData.eventTime"
+                  format="YYYY-MM-DD HH:mm:ss"
+                ></a-date-picker>
+                <template v-if="props.mode === 'review'">
+                  {{
+                    global
+                      .$dayjs(state.formData.eventTime)
+                      .format("YYYY-MM-DD HH:mm:ss")
+                  }}
+                </template>
               </a-form-item>
             </a-col>
           </a-row>
           <a-row>
             <a-col :span="22">
               <a-form-item name="eventContent" label="事件内容">
-                {{ state.formData.eventContent }}
+                <a-textarea
+                  v-if="global.$checkEditable(props.mode)"
+                  v-model:value="state.formData.eventContent"
+                  placeholder="请输入"
+                  :rows="4"
+                >
+                </a-textarea>
+                <template v-if="props.mode === 'review'">
+                  {{ state.formData.eventContent }}
+                </template>
               </a-form-item>
             </a-col>
           </a-row>
@@ -64,9 +135,15 @@
             <a-col :span="22">
               <a-form-item name="attachment" label="附件">
                 <CommonUpload
-                  disabled
+                  v-if="global.$checkEditable(props.mode)"
                   :attachmentList="state.formData.attachmentList"
                 />
+                <template v-if="props.mode === 'review'">
+                  <CommonUpload
+                    disabled
+                    :attachmentList="state.formData.attachmentList"
+                  />
+                </template>
               </a-form-item>
             </a-col>
           </a-row>
@@ -74,7 +151,8 @@
       </div>
       <div class="right">
         <!-- {{state.disposalData}} -->
-        <div class="date"></div>
+        <div class="date">
+        </div>
         <a-timeline mode="left">
           <a-timeline-item
             v-for="(item, index) in state.disposalData.disposalList"
@@ -87,33 +165,23 @@
                 {{ global.$dayjs(item.disposalTime).format("HH:mm") }}
               </div>
               <div class="content">
-                <div class="top">
-                  <span class="stepname">
-                    {{ item.stepName }}
-                  </span>
-                  <span class="status">已完成</span>
-                </div>
-                <div class="stepcontent">
-                  {{ item.stepContent }}
-                </div>
-                <div v-if="item.attachmentList.length > 0" class="attachment">
-                  <CommonUpload
-                    disabled
-                    :attachmentList="item.attachmentList"
-                  />
-                </div>
+                {{ item.stepContent }}
               </div>
             </div>
           </a-timeline-item>
         </a-timeline>
       </div>
     </div>
+
     <template #footer>
       <a-row>
         <a-col :span="22">
           <template>
             <a-button key="submit" type="primary" @click="handleClose">
               关闭
+            </a-button>
+            <a-button key="submit" type="primary" @click="handleClose">
+              确认
             </a-button>
           </template>
         </a-col>
@@ -228,7 +296,7 @@ onBeforeUnmount(() => {});
 <style scoped lang="scss">
 .maincontent {
   display: flex;
-  align-items: start;
+  align-items: top;
   .left {
     display: inline-block;
     width: 7rem;
@@ -236,34 +304,16 @@ onBeforeUnmount(() => {});
 
   .right {
     display: inline-block;
-    flex: 1;
     .node {
       display: flex;
-      width: 100%;
+      width: 7rem;
       .time {
         display: inline-block;
-        width: 1rem;
+        width: 2rem;
       }
       .content {
         display: inline-block;
-        padding: 0.1rem 0.15rem;
         flex: 1;
-        background-color: #0a1f44;
-        .top {
-          display: flex;
-          .stepname {
-            flex: 1;
-          }
-          .status {
-            display: inline-block;
-            width: 1rem;
-            text-align: right;
-            color: #00ffa8;
-          }
-        }
-        .stepcontent {
-          width: 5.5rem;
-        }
       }
     }
   }
