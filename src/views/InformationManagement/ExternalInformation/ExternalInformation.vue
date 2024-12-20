@@ -9,7 +9,7 @@
       </a-space>
     </div>
     <BaseTable
-      :tableData="state.tableData"
+      :tableData="state.processedTableData"
       :dataModel="pageModel"
       :pagination="pagination"
       tabTable
@@ -141,6 +141,7 @@ const pageModel = ref([
 
 const state = reactive({
   tableData: [] as any[],
+  processedTableData: [] as any[],
   dialogVisible: false,
   dialogDisposalVisible: false,
   dialogMode: "",
@@ -163,6 +164,14 @@ const getData = () => {
       response = response.data;
       state.tableData = response.list;
       pagination.total = response.total;
+      state.processedTableData = response.list.map((item: any) => {
+        return {
+          ...item,
+          handlingStatus: global
+            .$getDictionary("disposalStatus")
+            .find((item2: any) => item2.value === item.handlingStatus).label,
+        };
+      });
     })
     .catch((error: any) => {
       console.log(error);
@@ -242,7 +251,6 @@ const handleCloseDisposal = () => {
 };
 
 const handleSubmitDisposal = (formData: any) => {
-  
   infoManagementExternalInfoHandleRequest(formData)
     .then((response: any) => {
       global.$message.success("删除成功");

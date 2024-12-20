@@ -9,7 +9,7 @@
       </a-space>
     </div>
     <BaseTable
-      :tableData="state.tableData"
+      :tableData="state.processedTableData"
       :dataModel="pageModel"
       :pagination="pagination"
       tabTable
@@ -149,6 +149,7 @@ const pageModel = ref([
 
 const state = reactive({
   tableData: [] as any[],
+  processedTableData: [] as any[],
   dialogVisible: false,
   dialogDisposalVisible: false,
   dialogMode: "",
@@ -169,6 +170,18 @@ const getData = () => {
     .then((response: any) => {
       response = response.data;
       state.tableData = response.list;
+      state.processedTableData = response.list.map((item: any) => {
+        return {
+          ...item,
+          handlingStatus: global
+            .$getDictionary("disposalStatus")
+            .find((item2: any) => item2.value === item.handlingStatus).label,
+          publicSentimentSensitive: global
+            .$getDictionary("sensitivity")
+            .find((item2: any) => item2.value === item.publicSentimentSensitive)
+            .label,
+        };
+      });
     })
     .catch((error: any) => {
       console.log(error);
