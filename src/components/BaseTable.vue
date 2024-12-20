@@ -99,6 +99,7 @@ const emit = defineEmits<{
 
 const props = defineProps({
   tableData: { type: Array, required: true, default: () => [] },
+  originalTableData: { type: Array, required: false, default: () => [] },
   dataModel: { type: Array, required: true, default: () => [] },
   sortable: { type: Boolean, default: false },
   showLastColumn: { type: Boolean, default: false },
@@ -283,12 +284,12 @@ const handleAction = (action: any, scope: any) => {
       title: "提示",
       content: "确认删除？",
       onOk: () => {
-        emit("onDelete", row.id, row);
+        emit("onDelete", row.id, state.originalTableData[scope.index]);
       },
     });
   }
   if (action === "disposal" || action === "eventDisposal") {
-    emit("onDisposal", row);
+    emit("onDisposal", state.originalTableData[scope.index]);
   }
 };
 

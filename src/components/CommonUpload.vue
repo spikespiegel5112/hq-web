@@ -6,6 +6,7 @@
       name="file"
       action="/api/manage/attachment/upload"
       :headers="{}"
+      :disabled="props.disabled"
       @change="handleChangeAttachment"
       @remove="handleDeleteAttachment"
     >
@@ -38,6 +39,7 @@ const props = defineProps({
   mode: { type: String, default: "edit", required: false },
   title: { type: String, default: "", required: false },
   attachmentList: { type: Array, default: () => [] },
+  disabled: { type: Boolean, default: false },
 });
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;

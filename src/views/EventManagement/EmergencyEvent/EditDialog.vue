@@ -185,6 +185,12 @@
               v-if="global.$checkEditable(props.mode)"
               :attachmentList="state.formData.attachmentList"
             />
+            <template v-if="props.mode === 'review'">
+              <CommonUpload
+                disabled
+                :attachmentList="state.formData.attachmentList"
+              />
+            </template>
           </a-form-item>
         </a-col>
       </a-row>

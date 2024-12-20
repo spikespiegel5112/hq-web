@@ -9,7 +9,8 @@
       </a-space>
     </div>
     <BaseTable
-      :tableData="state.processedTableData"
+      :tableData="state.tableData"
+      :processedTableData="state.processedTableData"
       :dataModel="pageModel"
       :pagination="pagination"
       tabTable
@@ -24,7 +25,6 @@
       :mode="state.dialogMode"
       :dataModel="pageModel"
       :rowData="state.currentRowData"
-      1
       @onClose="handleClose"
       @onSubmit="handleSubmit"
     ></EditDialog>
