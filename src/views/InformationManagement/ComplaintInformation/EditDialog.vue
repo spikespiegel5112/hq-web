@@ -29,6 +29,9 @@
                 {{ item.label }}
               </a-select-option>
             </a-select>
+            <template v-if="props.mode === 'review'">
+              {{ global.$getDictionary('complaint_info_complaint_region').find((item:any)=>item.value===state.formData.complaintRegion)?.label }}
+            </template>
           </a-form-item>
         </a-col>
       </a-row>
@@ -47,6 +50,9 @@
                 {{ item.label }}
               </a-select-option>
             </a-select>
+            <template v-if="props.mode === 'review'">
+              {{ global.$getDictionary('complaintType').find((item:any)=>item.value===state.formData.complaintType)?.label }}
+            </template>
           </a-form-item>
         </a-col>
       </a-row>
@@ -59,12 +65,15 @@
               placeholder="请选择"
             >
               <a-select-option
-                v-for="item in global.$store.state.dictionary.sensitivity"
+                v-for="item in global.$getDictionary('sensitivity')"
                 :value="item.value"
               >
                 {{ item.label }}
               </a-select-option>
             </a-select>
+            <template v-if="props.mode === 'review'">
+              {{ global.$getDictionary('sensitivity').find((item:any)=>item.value===state.formData.complaintSensitive)?.label }}
+            </template>
           </a-form-item>
         </a-col>
       </a-row>
@@ -103,11 +112,17 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="externalContent" label="内容">
+          <a-form-item name="attachmentList" label="附件">
             <CommonUpload
               v-if="global.$checkEditable(props.mode)"
               :attachmentList="state.formData.attachmentList"
             />
+            <template v-if="props.mode === 'review'">
+              <CommonUpload
+                disabled
+                :attachmentList="state.formData.attachmentList"
+              />
+            </template>
           </a-form-item>
         </a-col>
       </a-row>
@@ -148,7 +163,6 @@ import {
   ref,
   nextTick,
 } from "vue";
-import type { Dayjs } from "dayjs";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -170,6 +184,7 @@ const state = reactive({
   visible: false,
   formData: {
     id: null as number | null | undefined,
+    attachmentList: [] as any[],
     complaintRegion: "",
     complaintType: null,
     complaintSensitive: "",

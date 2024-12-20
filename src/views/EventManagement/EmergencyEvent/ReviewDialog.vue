@@ -1,5 +1,5 @@
 <template>
-  <a-modal v-model:open="state.visible" @cancel="handleClose" width="9rem">
+  <a-modal v-model:open="state.visible" @cancel="handleClose" width="16rem">
     <template #title>
       <div class="common_dislogtitle_item">
         <span class="sequre"></span>
@@ -15,21 +15,7 @@
       <a-row>
         <a-col :span="22">
           <a-form-item name="publicSentimentSource" label="来源">
-            <a-select
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.publicSentimentSource"
-              placeholder="请输入"
-            >
-              <a-select-option
-                v-for="item in global.$getDictionary(
-                  'public_sentiment_info_public_sentiment_source'
-                )"
-                :value="item.value"
-              >
-                {{ item.label }}
-              </a-select-option>
-            </a-select>
-            <template v-if="props.mode === 'review'">
+            <template>
               {{ global.$getDictionary('public_sentiment_info_public_sentiment_source').find((item:any)=>item.value===state.formData.publicSentimentSource)?.label }}
             </template>
           </a-form-item>
@@ -39,13 +25,7 @@
       <a-row>
         <a-col :span="22">
           <a-form-item name="publicSentimentTime" label="上报时间">
-            <a-date-picker
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.publicSentimentTime"
-              format="YYYY-MM-DD HH:mm:ss"
-              @change="handleChangeTime1"
-            ></a-date-picker>
-            <template v-if="props.mode === 'review'">
+            <template>
               {{
                 global
                   .$dayjs(state.formData.publicSentimentTime)
@@ -58,21 +38,7 @@
       <a-row>
         <a-col :span="22">
           <a-form-item name="publicSentimentType" label="类型">
-            <a-select
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.publicSentimentType"
-              placeholder="请输入"
-            >
-              <a-select-option
-                v-for="item in global.$getDictionary(
-                  'public_sentiment_info_public_sentiment_type'
-                )"
-                :value="item.value"
-              >
-                {{ item.label }}
-              </a-select-option>
-            </a-select>
-            <template v-if="props.mode === 'review'">
+            <template>
               {{ global.$getDictionary('public_sentiment_info_public_sentiment_type').find((item:any)=>item.value===state.formData.publicSentimentType)?.label }}
             </template>
           </a-form-item>
@@ -81,14 +47,8 @@
       <a-row>
         <a-col :span="22">
           <a-form-item name="keyword" label="关键词">
-            <a-input
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.keyword"
-              placeholder="请输入"
-            >
-            </a-input>
-            <template v-if="props.mode === 'review'">
-              {{ state.formData.keyword }}
+            <template>
+              {{ global.$getDictionary('public_sentiment_info_public_sentiment_type').find((item:any)=>item.value===state.formData.keyword)?.label }}
             </template>
           </a-form-item>
         </a-col>
@@ -96,19 +56,7 @@
       <a-row>
         <a-col :span="22">
           <a-form-item name="publicSentimentSensitive" label="敏感度">
-            <a-select
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.publicSentimentSensitive"
-              placeholder="请输入"
-            >
-              <a-select-option
-                v-for="item in global.$getDictionary('sensitivity')"
-                :value="item.value"
-              >
-                {{ item.label }}
-              </a-select-option>
-            </a-select>
-            <template v-if="props.mode === 'review'">
+            <template>
               {{ global.$getDictionary('sensitivity').find((item:any)=>item.value===state.formData.publicSentimentSensitive)?.label }}
             </template>
           </a-form-item>
@@ -117,14 +65,7 @@
       <a-row>
         <a-col :span="22">
           <a-form-item name="publicSentimentContent" label="内容">
-            <a-textarea
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.publicSentimentContent"
-              placeholder="请输入"
-              :rows="3"
-            >
-            </a-textarea>
-            <template v-if="props.mode === 'review'">
+            <template>
               {{ state.formData.publicSentimentContent }}
             </template>
           </a-form-item>
@@ -132,17 +73,11 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="attachmentList" label="附件">
+          <a-form-item name="externalContent" label="内容">
             <CommonUpload
-              v-if="global.$checkEditable(props.mode)"
+              disabled
               :attachmentList="state.formData.attachmentList"
             />
-            <template v-if="props.mode === 'review'">
-              <CommonUpload
-                disabled
-                :attachmentList="state.formData.attachmentList"
-              />
-            </template>
           </a-form-item>
         </a-col>
       </a-row>
@@ -150,19 +85,12 @@
     <template #footer>
       <a-row>
         <a-col :span="22">
-          <template
-            v-if="
-              ['edit', 'add', 'disposal'].some((item) => item === props.mode)
-            "
-          >
-            <a-button key="back" @click="handleClose">取消</a-button>
-            <a-button key="submit" type="primary" @click="handleSubmit">
-              确认
-            </a-button>
-          </template>
-          <template v-else-if="props.mode === 'review'">
+          <template>
             <a-button key="submit" type="primary" @click="handleClose">
               关闭
+            </a-button>
+            <a-button key="submit" type="primary" @click="handleClose">
+              确认
             </a-button>
           </template>
         </a-col>

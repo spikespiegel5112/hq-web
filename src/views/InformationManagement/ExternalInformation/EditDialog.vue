@@ -94,11 +94,17 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="externalContent" label="内容">
+          <a-form-item name="attachmentList" label="附件">
             <CommonUpload
               v-if="global.$checkEditable(props.mode)"
               :attachmentList="state.formData.attachmentList"
             />
+            <template v-if="props.mode === 'review'">
+              <CommonUpload
+                disabled
+                :attachmentList="state.formData.attachmentList"
+              />
+            </template>
           </a-form-item>
         </a-col>
       </a-row>

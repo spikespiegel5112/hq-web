@@ -28,6 +28,15 @@
       @onClose="handleClose"
       @onSubmit="handleSubmit"
     ></EditDialog>
+    <ReviewDialog
+      :visible="state.dialogReviewVisible"
+      :mode="state.dialogMode"
+      :dataModel="pageModel"
+      :rowData="state.currentRowData"
+      @onClose="handleClose"
+      @onSubmit="handleSubmit"
+    >
+    </ReviewDialog>
     <DisposalDialog
       :visible="state.dialogDisposalVisible"
       :rowData="state.currentRowData"
@@ -60,6 +69,7 @@ import {
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
 import DisposalDialog from "./DisposalDialog.vue";
+import ReviewDialog from "./ReviewDialog.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -159,6 +169,7 @@ const state = reactive({
   processedTableData: [] as any[],
   dialogVisible: false,
   dialogDisposalVisible: false,
+  dialogReviewVisible: false,
   dialogMode: "",
   currentRowData: {},
 });
