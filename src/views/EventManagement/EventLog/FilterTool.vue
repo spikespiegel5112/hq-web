@@ -91,7 +91,7 @@ const state = reactive({
     eventType: "",
     manageRegion: "",
     eventTime: [] as any[],
-  },
+  } as any,
   eventTime: "",
 });
 

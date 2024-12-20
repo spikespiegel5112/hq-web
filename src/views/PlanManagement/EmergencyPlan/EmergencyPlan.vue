@@ -235,7 +235,6 @@ const handleSubmit = (formData: any) => {
       getData();
     })
     .catch((error: any) => {
-      debugger
       console.log(error);
       global.$message.error("提交失败");
     });

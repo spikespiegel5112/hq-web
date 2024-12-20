@@ -43,9 +43,9 @@ import {
 } from "vue";
 
 import {
-  eventManageSuddenEventGetRecordPageRequest,
-  eventManageSuddenEventDeleteRequest,
-  eventManageSuddenEventSaveRequest,
+  planManagementEmergencyPlanGetPageRequest,
+  planManagementEmergencyPlanDeleteRequest,
+  planManagementEmergencyPlanSaveRequest,
 } from "@/api/management";
 
 import FilterTool from "./FilterTool.vue";
@@ -144,11 +144,12 @@ const pagination = reactive({
 
 const getData = () => {
   pagination.total = undefined;
-  eventManageSuddenEventGetRecordPageRequest({
+  planManagementEmergencyPlanGetPageRequest({
     ...queryFormData,
     ...pagination,
   })
     .then((response: any) => {
+      debugger
       response = response.data;
       state.tableData = response.list;
       pagination.total = response.total;
@@ -190,7 +191,7 @@ const handleClose = () => {
 };
 
 const handleSubmit = (formData: any) => {
-  eventManageSuddenEventSaveRequest(formData)
+  planManagementEmergencyPlanSaveRequest(formData)
     .then((response: any) => {
       global.$message.success("提交成功");
       getData();
@@ -213,7 +214,7 @@ onMounted(async () => {
 });
 
 const handleDelete = (id: number) => {
-  eventManageSuddenEventDeleteRequest({
+  planManagementEmergencyPlanDeleteRequest({
     id,
   })
     .then((response: any) => {
