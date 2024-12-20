@@ -138,7 +138,7 @@ const pageModel = ref([
   {
     label: "附件",
     name: "attachment",
-    required: true,
+    required: false,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
@@ -182,12 +182,12 @@ const getData = () => {
       state.processedTableData = response.list.map((item: any) => {
         return {
           ...item,
-          eventStatus: global
-            .$getDictionary("eventStatus")
-            .find((item2: any) => item2.value === item.eventStatus).label,
-          eventLevel: global
-            .$getDictionary("eventLevel")
-            .find((item2: any) => item2.value === item.eventLevel).label,
+          planStatus: global
+            .$getDictionary("planStatus")
+            .find((item2: any) => item2.value === item.planStatus).label,
+          planLevel: global
+            .$getDictionary("planLevel")
+            .find((item2: any) => item2.value === item.planLevel).label,
         };
       });
     })
@@ -235,6 +235,7 @@ const handleSubmit = (formData: any) => {
       getData();
     })
     .catch((error: any) => {
+      debugger
       console.log(error);
       global.$message.error("提交失败");
     });

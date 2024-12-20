@@ -28,7 +28,9 @@
               placeholder="请选择"
             >
               <a-select-option
-                v-for="item in global.$store.state.dictionary.manageRegion"
+                v-for="item in global.$getDictionary(
+                  'emergency_plan_plan_source'
+                )"
                 :key="item.value"
                 :value="item.value"
               >
@@ -48,11 +50,10 @@
               v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.preplanResourceId"
               placeholder="请选择"
-              @change="handleChangeEventType"
             >
               <a-select-option
                 v-for="item in eventList"
-                :value="item.label"
+                :value="item.value"
                 :key="item.value"
               >
                 {{ item.label }}
@@ -128,7 +129,6 @@
               v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.planStatus"
               placeholder="请选择"
-              @change="handleChangeEventType"
             >
               <a-select-option
                 v-for="item in global.$getDictionary('planStatus')"
@@ -228,9 +228,16 @@ let state = reactive({
 });
 
 const eventList = computed(() => {
-  return global.$store.state.app.currentEventTypeList.find(
+  let result = global.$store.state.app.currentEventTypeList.find(
     (item: any) => item.type === "应急预案处置"
   )?.data;
+  result = result.map((item: any) => {
+    return {
+      ...item,
+      value: Number(item.value),
+    };
+  });
+  return result;
 });
 
 const dialogTitle: ComputedRef<string> = computed(() => {
@@ -280,9 +287,7 @@ watch(
         const formData = JSON.parse(JSON.stringify(props.rowData));
         state.formData = {
           ...formData,
-          planTime: !!formData.planTime
-            ? global.$dayjs(formData.planTime)
-            : "",
+          planTime: !!formData.planTime ? global.$dayjs(formData.planTime) : "",
         };
       }
     }
@@ -296,8 +301,8 @@ const handleClose = () => {
 };
 
 const handleSubmit = () => {
-  const eventTime = global
-    .$dayjs(state.formData.eventTime)
+  const planTime = global
+    .$dayjs(state.formData.planTime)
     .format("YYYY-MM-DD HH:mm:ss");
   if (props.mode === "add") {
     state.formData.id = undefined;
@@ -307,7 +312,7 @@ const handleSubmit = () => {
     .then(() => {
       emit("onSubmit", {
         ...state.formData,
-        eventTime,
+        planTime,
       });
       handleClose();
     })
