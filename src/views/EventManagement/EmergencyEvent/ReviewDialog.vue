@@ -101,7 +101,11 @@
                   {{ item.stepContent }}
                 </div>
                 <div
-                  v-if="state.fileList[index].attachmentList.length > 0"
+                  v-if="
+                    !!state.fileList[index] &&
+                    !!state.fileList[index].attachmentList &&
+                    state.fileList[index].attachmentList.length > 0
+                  "
                   class="attachment"
                 >
                   <CommonUpload
@@ -218,18 +222,11 @@ const getData = () => {
       state.disposalData = response;
       await nextTick();
 
-      setTimeout(() => {
-        response.preplanResourceStepList.forEach((item: any, index: number) => {
-          state.fileList.push({
-            ...item,
-            currentStepData: getCurrentStep(item),
-          });
-          debugger
-        });
-      }, 1000);
+      response.preplanResourceStepList.forEach((item: any, index: number) => {
+        state.fileList.push(getCurrentStep(item));
+      });
 
       console.log(state.disposalData.preplanResourceStepList);
-      console.log(response);
       state.preplanListReady = true;
     })
     .catch((error: any) => {

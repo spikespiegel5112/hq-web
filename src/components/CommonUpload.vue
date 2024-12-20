@@ -1,6 +1,5 @@
 <template>
   <div class="common_upload_item">
-    {{ state.fileList }}
     <a-upload
       v-if="global.$checkEditable(props.mode)"
       v-model:file-list="state.fileList"
@@ -100,7 +99,21 @@ const handleDeleteAttachment = (value: any) => {
   props.attachmentList.splice(sliceIndex, 1);
 };
 
-onMounted(() => {});
+const initFileList = () => {
+  state.fileList = [];
+  props.attachmentList.forEach((item: any, index: number) => {
+    state.fileList.push({
+      uid: index,
+      name: item.attachmentName,
+      status: "done",
+      url: item.attachmentPath,
+    });
+  });
+};
+
+onMounted(() => {
+  initFileList();
+});
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
