@@ -8,7 +8,7 @@
     <template #title>
       <span class="square"></span>
       <span></span>
-      事件处置
+      预案处置
     </template>
     <a-form
       :model="state.formData"
@@ -19,19 +19,8 @@
     >
       <a-row>
         <a-col :span="11">
-          <a-form-item name="eventType" label="事件类型">
-            <!-- <a-select
-              v-model:value="state.formData.eventType"
-              placeholder="请选择"
-            >
-              <a-select-option
-                v-for="item in global.$store.state.dictionary.alarmType"
-                :value="item.value"
-              >
-                {{ item.label }}
-              </a-select-option>
-            </a-select> -->
-            {{ state.formData.eventType }}
+          <a-form-item name="preplanResourceId" label="预案类型">
+            {{ eventList.find((item:any)=>Number(item.value)===props.rowData.preplanResourceId)?.label }}
           </a-form-item>
         </a-col>
         <a-col :span="11">
@@ -45,14 +34,12 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="eventTime" label="事件等级">
-            <span
-              :style="{
-                color: getColor().color,
-              }"
-            >
-              {{ getColor().label }}
-            </span>
+          <a-form-item name="eventTime" label="预案等级">
+            {{
+              global
+                .$getDictionary("planLevel")
+                .find((item) => item.value === props.rowData.planLevel)?.label
+            }}
           </a-form-item>
         </a-col>
       </a-row>
@@ -67,7 +54,7 @@
               <a-radio
                 v-for="(item, index) in state.planInfo"
                 :value="item.id"
-                :disabled="index < state.disposalData.lastStepOrder"
+                :disabled="index < currentStepOrder"
                 :class="{ active: state.formData.eventLocation === item.id }"
               >
                 <div class="step_wrapper">
@@ -88,9 +75,9 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="eventContent" label="处置内容">
+          <a-form-item name="stepContent" label="处置内容">
             <a-textarea
-              v-model:value="state.formData.eventContent"
+              v-model:value="state.formData.stepContent"
               placeholder="请输入"
               :rows="3"
             >
@@ -135,8 +122,8 @@ import {
 
 import type { Rule, RuleObject } from "ant-design-vue/es/form";
 
-
 import {
+  planManagementEmergencyPlanGetDisposalRequest,
   eventManageSuddenEventSaveDisposalRequest,
   eventManageSuddenEventGetDisposalRequest,
   preplanPreplanGetStepPageRequest,
@@ -168,31 +155,26 @@ let state = reactive({
       attachmentPath: "",
       createBy: "",
       createTime: "",
-      id: 0,
+      id: null,
       updateBy: "",
       updateTime: "",
     },
   ],
+
   formData: {
     id: null as number | null | undefined,
     attachmentList: [] as any[],
     attachmentPath: "",
-    eventCode: "",
-    eventContent: "",
-    eventLocation: "",
-    eventStatus: null,
-    eventTime: "",
-    eventType: "",
-    manageRegion: "",
-    updateBy: "",
-    updateTime: "",
+
+    emergencyPlanId: null,
+    disposalResponseTime: null,
 
     disposalTime: "",
-    seId: null,
     stepContent: "",
     stepName: "",
     stepOrder: "",
     stepOrderDesc: "",
+    attachmentAssociationCode: "",
   } as any,
   fileList: [] as any,
   disposalData: {} as any,
@@ -215,8 +197,17 @@ const colorList: any[] = [
 
 const eventList = computed(() => {
   return global.$store.state.app.currentEventTypeList.find(
-    (item: any) => item.type === "突发事件处置"
+    (item: any) => item.type === "应急预案处置"
   )?.data;
+});
+
+const currentStepOrder = computed(() => {
+  console.log(state.disposalData);
+  const disposalList = state.disposalData.disposalList;
+  let orderList = disposalList.map((item: any) => item.stepOrder);
+  orderList = Array.from(new Set(orderList));
+  const result = Math.max(...orderList);
+  return result;
 });
 
 const rules: ComputedRef<RuleObject[]> = computed(() => {
@@ -230,10 +221,11 @@ watch(
     if (!!newValue) {
       getData();
       getPlanData();
-      const formData = JSON.parse(JSON.stringify(props.rowData));
       state.formData = {
-        ...formData,
-        eventTime: global.$dayjs(formData.eventTime),
+        ...state.formData,
+        id: props.rowData.id,
+        emergencyPlanId: props.rowData.id,
+        eventTime: global.$dayjs(props.rowData.eventTime),
       };
     }
   }
@@ -241,9 +233,9 @@ watch(
 
 const getData = () => {
   state.formData.eventType = props.rowData.eventType;
-  state.formData.seId = props.rowData.id;
-  eventManageSuddenEventGetDisposalRequest({
-    seId: props.rowData.id,
+  state.formData.id = props.rowData.id;
+  planManagementEmergencyPlanGetDisposalRequest({
+    id: props.rowData.id,
   })
     .then((response: any) => {
       response = response.data;
@@ -257,11 +249,14 @@ const getData = () => {
 
 const getPlanData = () => {
   console.log(props.rowData);
-  const planData: any = eventList.value.find(
-    (item: any) => Number(item.value) === props.rowData.prId
-  );
+  console.log(eventList.value);
+  console.log(global.$store.state.app.currentEventTypeList);
+
+  const planData: any = eventList.value.find((item: any) => {
+    return Number(item.value) === props.rowData.preplanResourceId;
+  });
   preplanPreplanGetStepPageRequest({
-    preplanType: "突发事件处置",
+    preplanType: "应急预案处置",
     eventType: planData.label,
   })
     .then((response: any) => {
@@ -282,8 +277,8 @@ const handleSubmit = () => {
   state.formData.id = undefined;
   emit("onSubmit", {
     ...state.formData,
-    seId: props.rowData.id,
   });
+  handleClose();
 };
 
 const handleChangeDisposalStep = (value: any) => {

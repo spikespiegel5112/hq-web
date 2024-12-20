@@ -65,13 +65,6 @@
       <a-row>
         <a-col :span="22">
           <a-form-item name="planLevel" label="预案等级">
-            <a-textarea
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.planLevel"
-              placeholder="请输入"
-              :rows="4"
-            >
-            </a-textarea>
             <template v-if="props.mode === 'review'">
               {{
                 global

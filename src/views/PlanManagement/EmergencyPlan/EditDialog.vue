@@ -24,7 +24,7 @@
           <a-form-item name="planSource" label="来源">
             <a-select
               v-if="global.$checkEditable(props.mode)"
-              v-model="state.formData.planSource"
+              v-model:value="state.formData.planSource"
               placeholder="请选择"
             >
               <a-select-option
@@ -48,7 +48,7 @@
           <a-form-item name="preplanResourceId" label="预案类型">
             <a-select
               v-if="global.$checkEditable(props.mode)"
-              v-model="state.formData.preplanResourceId"
+              v-model:value="state.formData.preplanResourceId"
               placeholder="请选择"
             >
               <a-select-option
@@ -86,7 +86,7 @@
           <a-form-item name="planLevel" label="预案等级">
             <a-select
               v-if="global.$checkEditable(props.mode)"
-              v-model="state.formData.planLevel"
+              v-model:value="state.formData.planLevel"
               placeholder="请选择"
             >
               <a-select-option
@@ -127,8 +127,9 @@
           <a-form-item name="planStatus" label="状态">
             <a-select
               v-if="global.$checkEditable(props.mode)"
-              v-model="state.formData.planStatus"
+              v-model:value="state.formData.planStatus"
               placeholder="请选择"
+              :disabled="props.mode === 'add'"
             >
               <a-select-option
                 v-for="item in global.$getDictionary('planStatus')"
@@ -290,6 +291,7 @@ watch(
           planTime: !!formData.planTime ? global.$dayjs(formData.planTime) : "",
         };
       }
+      setUndeal();
     }
   }
 );
@@ -319,6 +321,13 @@ const handleSubmit = () => {
     .catch((error: any) => {
       console.log("error", error);
     });
+};
+
+const setUndeal = () => {
+  if (props.mode === "add") {
+    const planStatusList = global.$getDictionary("planStatus");
+    state.formData.planStatus = planStatusList[0].value;
+  }
 };
 
 const handleChangeEventTime = (date: any) => {};

@@ -685,4 +685,17 @@ export const planManagementEmergencyPlanSaveDisposalRequest = (params: any) => {
   });
 };
 
+// 查看处置
+export const planManagementEmergencyPlanGetDisposalRequest = (params: any) => {
+  return service({
+    url: prefix + "/planManagement/emergencyPlan/getDisposal",
+    method: "POST",
+    data: params,
+  });
+};
+
+
+
+
+
 

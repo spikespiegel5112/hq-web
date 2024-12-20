@@ -101,6 +101,7 @@
               format="YYYY-MM-DD HH:mm:ss"
             ></a-date-picker>
             <template v-if="props.mode === 'review'">
+              {{state.formData.eventTime}}
               {{
                 global
                   .$dayjs(state.formData.eventTime)

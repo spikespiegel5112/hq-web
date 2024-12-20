@@ -17,7 +17,7 @@ const app = {
     currentPeriod: "",
     defaultPagination: {
       page: 1,
-      pageSize: 30,
+      pageSize: 20,
       total: 0 as number | undefined,
     },
     currentEventTypeList: [] as any,

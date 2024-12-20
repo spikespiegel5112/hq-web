@@ -183,7 +183,7 @@ const state = reactive({
     eventLevel: null,
   } as any,
   fileList: [] as any,
-  disposalData: [] as any,
+  disposalData: {},
   timer: false,
 });
 
