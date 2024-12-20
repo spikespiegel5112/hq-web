@@ -2,34 +2,18 @@
   <div class="common_filtertool_wrapper">
     <a-form :model="state.formData" autocomplete="off" ref="formDataRef">
       <a-row>
-        <a-col :span="20">
+        <a-col :span="21">
           <a-row :gutter="20">
             <a-col :span="6">
-              <a-form-item name="manageRegion" label="管理区域">
+              <a-form-item name="preplanResourceId" label="预案类型">
                 <a-select
-                  v-model="state.formData.manageRegion"
-                  placeholder="请输入"
-                >
-                  <a-select-option
-                    v-for="item in global.$store.state.dictionary[
-                      'manageRegion'
-                    ]"
-                    :value="item.value"
-                  >
-                    {{ item.label }}
-                  </a-select-option>
-                </a-select>
-              </a-form-item>
-            </a-col>
-            <a-col :span="6">
-              <a-form-item name="eventType" label="事件类型">
-                <a-select
-                  v-model:value="state.formData.eventType"
+                  v-model:value="state.formData.preplanResourceId"
                   placeholder="请选择"
                   allow-clear
                 >
                   <a-select-option
                     v-for="item in eventList"
+                    :key="item.value"
                     :value="item.value"
                   >
                     {{ item.label }}
@@ -37,18 +21,19 @@
                 </a-select>
               </a-form-item>
             </a-col>
-            <a-col :span="8">
-              <a-form-item name="eventTime" label="时间">
+
+            <a-col :span="10">
+              <a-form-item name="planTime" label="查询时间">
                 <a-range-picker
-                  v-model="state.eventTime"
+                  v-model:value="state.planTime"
                   format="YYYY-MM-DD"
-                  @change="handleChangeInfoEventTime"
+                  @change="handleChangePlanTime"
                 />
               </a-form-item>
             </a-col>
           </a-row>
         </a-col>
-        <a-col :span="4" class="operation">
+        <a-col :span="3" class="operation">
           <a-space>
             <a-button class="submitbutton" @click="handleReset">
               重置
@@ -88,40 +73,46 @@ const formDataRef: any = ref(null);
 
 const state = reactive({
   formData: {
-    eventType: "",
-    manageRegion: "",
-    eventTime: [] as any[],
-  },
-  eventTime: "",
+    preplanResourceId: null,
+    planTimeStart: "",
+    planTimeEnd: "",
+  } as any,
+  planTime: [] as any,
 });
 
 const eventList = computed(() => {
-  return global.$store.state.app.currentEventTypeList.find(
-    (item: any) => item.type === "突发事件处置"
+  let result = global.$store.state.app.currentEventTypeList.find(
+    (item: any) => item.type === "应急预案处置"
   )?.data;
+  result = result.map((item: any) => {
+    return {
+      ...item,
+      value: Number(item.value),
+    };
+  });
+  return result;
 });
 
 const handleSearch = () => {
-  const eventTimeBegin = state.formData.eventTime[0];
-  const eventTimeEnd = state.formData.eventTime[1];
-  emit("onSearch", {
-    ...state.formData,
-    eventTimeBegin,
-    eventTimeEnd,
-  });
+  emit("onSearch", state.formData);
 };
 
 const handleReset = () => {
   formDataRef.value.resetFields();
-  const formData: any = Object.keys(state.formData).forEach((item: any) => {
-    state.formData[item] = global.$isEmpty(state.formData[item])
-      ? undefined
-      : state.formData[item];
-  });
-  emit("onReset", formData);
+  state.formData.planTimeStart = "";
+  state.formData.planTimeEnd = "";
+  state.planTime = [];
+  emit("onReset", state.formData);
 };
 
-const handleChangeInfoEventTime = () => {};
+const handleChangePlanTime = (value: any) => {
+  state.formData.planTimeStart = global
+    .$dayjs(value[0])
+    .format("YYYY-MM-DD HH:mm:ss");
+  state.formData.planTimeEnd = global
+    .$dayjs(value[1])
+    .format("YYYY-MM-DD HH:mm:ss");
+};
 
 onMounted(async () => {});
 

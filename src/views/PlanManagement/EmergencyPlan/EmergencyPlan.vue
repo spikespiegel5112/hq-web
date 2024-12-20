@@ -98,7 +98,6 @@ const pageModel = ref([
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
-    width: "1.2rem",
   },
   {
     label: "预案内容",
@@ -124,7 +123,6 @@ const pageModel = ref([
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
-    width: "1rem",
   },
   {
     label: "状态",
@@ -133,7 +131,6 @@ const pageModel = ref([
     tableVisible: true,
     formVisible: false,
     exportVisible: false,
-    width: "1rem",
   },
   {
     label: "附件",
@@ -142,6 +139,7 @@ const pageModel = ref([
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
+    width: "1.5rem",
   },
   {
     label: "操作",

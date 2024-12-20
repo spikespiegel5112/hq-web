@@ -3,12 +3,13 @@
     <FilterTool @onSearch="handleSearch" @onReset="handleReset"></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
+        <a-button class="import">导入</a-button>
         <a-button class="export">导出</a-button>
+        <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
     <BaseTable
       :tableData="state.tableData"
-      :processedTableData="state.processedTableData"
       :dataModel="pageModel"
       :pagination="pagination"
       tabTable
@@ -42,9 +43,9 @@ import {
 } from "vue";
 
 import {
-  planManagementEmergencyPlanGetPageRequest,
-  planManagementEmergencyPlanDeleteRequest,
-  planManagementEmergencyPlanSaveRequest,
+  eventManageSuddenEventGetRecordPageRequest,
+  eventManageSuddenEventDeleteRequest,
+  eventManageSuddenEventSaveRequest,
 } from "@/api/management";
 
 import FilterTool from "./FilterTool.vue";
@@ -63,32 +64,32 @@ const pageModel = ref([
     exportVisible: false,
   },
   {
-    label: "来源",
-    name: "planSource",
+    label: "管理区域",
+    name: "manageRegion",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "预案类型",
-    name: "preplanResourceId",
+    label: "事件类型",
+    name: "eventType",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "预案内容",
-    name: "planContent",
+    label: "详细地址",
+    name: "eventLocation",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "预案等级",
-    name: "planLevel",
+    label: "事件内容",
+    name: "eventContent",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -96,7 +97,7 @@ const pageModel = ref([
   },
   {
     label: "发生时间",
-    name: "planTime",
+    name: "eventTime",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -130,7 +131,6 @@ const pageModel = ref([
 
 const state = reactive({
   tableData: [] as any[],
-  processedTableData: [] as any[],
   dialogVisible: false,
   dialogMode: "",
   currentRowData: {},
@@ -142,22 +142,9 @@ const pagination = reactive({
   ...global.$store.state.app.defaultPagination,
 });
 
-const eventList = computed(() => {
-  let result = global.$store.state.app.currentEventTypeList.find(
-    (item: any) => item.type === "应急预案处置"
-  )?.data;
-  result = result.map((item: any) => {
-    return {
-      ...item,
-      value: Number(item.value),
-    };
-  });
-  return result;
-});
-
 const getData = () => {
   pagination.total = undefined;
-  planManagementEmergencyPlanGetPageRequest({
+  eventManageSuddenEventGetRecordPageRequest({
     ...queryFormData,
     ...pagination,
   })
@@ -165,17 +152,6 @@ const getData = () => {
       response = response.data;
       state.tableData = response.list;
       pagination.total = response.total;
-      state.processedTableData = response.list.map((item: any) => {
-        return {
-          ...item,
-          preplanResourceId: eventList.value.find(
-            (item2: any) => item2.value === item.preplanResourceId
-          ).label,
-          planLevel: global
-            .$getDictionary("planLevel")
-            .find((item2: any) => item2.value === item.planLevel).label,
-        };
-      });
     })
     .catch((error: any) => {
       console.log(error);
@@ -214,7 +190,7 @@ const handleClose = () => {
 };
 
 const handleSubmit = (formData: any) => {
-  planManagementEmergencyPlanSaveRequest(formData)
+  eventManageSuddenEventSaveRequest(formData)
     .then((response: any) => {
       global.$message.success("提交成功");
       getData();
@@ -237,7 +213,7 @@ onMounted(async () => {
 });
 
 const handleDelete = (id: number) => {
-  planManagementEmergencyPlanDeleteRequest({
+  eventManageSuddenEventDeleteRequest({
     id,
   })
     .then((response: any) => {

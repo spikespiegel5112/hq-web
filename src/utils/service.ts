@@ -11,7 +11,7 @@ console.log(_baseURL);
 const service: any = axios.create({
   baseURL: _baseURL,
   // 超时
-  timeout: 10000,
+  timeout: 30000,
   withCredentials: false,
   headers: {
     "Content-Type": "application/json",
