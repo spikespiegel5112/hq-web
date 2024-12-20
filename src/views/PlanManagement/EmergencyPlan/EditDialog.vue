@@ -24,7 +24,7 @@
           <a-form-item name="planSource" label="来源">
             <a-select
               v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.planSource"
+              v-model="state.formData.planSource"
               placeholder="请选择"
             >
               <a-select-option
@@ -48,7 +48,7 @@
           <a-form-item name="preplanResourceId" label="预案类型">
             <a-select
               v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.preplanResourceId"
+              v-model="state.formData.preplanResourceId"
               placeholder="请选择"
             >
               <a-select-option
@@ -86,7 +86,7 @@
           <a-form-item name="planLevel" label="预案等级">
             <a-select
               v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.planLevel"
+              v-model="state.formData.planLevel"
               placeholder="请选择"
             >
               <a-select-option
@@ -127,7 +127,7 @@
           <a-form-item name="planStatus" label="状态">
             <a-select
               v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.planStatus"
+              v-model="state.formData.planStatus"
               placeholder="请选择"
             >
               <a-select-option

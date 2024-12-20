@@ -24,8 +24,8 @@
             <a-col :span="6">
               <a-form-item name="externalType" label="信息类型">
                 <a-select
-                  v-model:value="state.formData.externalType"
-                  placeholder="请输入"
+                  v-model="state.formData.externalType"
+                  placeholder="情选择"
                   allow-clear
                 >
                   <a-select-option

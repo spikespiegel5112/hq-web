@@ -24,7 +24,7 @@
             <a-col :span="6">
               <a-form-item name="eventType" label="事件类型">
                 <a-select
-                  v-model:value="state.formData.eventType"
+                  v-model="state.formData.eventType"
                   placeholder="请选择"
                   allow-clear
                 >

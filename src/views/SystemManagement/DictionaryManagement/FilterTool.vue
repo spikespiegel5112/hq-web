@@ -7,7 +7,7 @@
             <a-col :span="8">
               <a-form-item name="dicName" label="字典名称">
                 <a-select
-                  v-model:value="formData.dicName"
+                  v-model="formData.dicName"
                   placeholder="请输入"
                   allowClear
                   show-search

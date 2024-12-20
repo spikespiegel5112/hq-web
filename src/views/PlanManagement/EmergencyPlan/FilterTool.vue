@@ -7,7 +7,7 @@
             <a-col :span="6">
               <a-form-item name="preplanResourceId" label="类型">
                 <a-select
-                  v-model:value="state.formData.preplanResourceId"
+                  v-model="state.formData.preplanResourceId"
                   placeholder="请选择"
                   allow-clear
                 >

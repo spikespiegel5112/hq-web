@@ -7,7 +7,7 @@
             <a-col :span="5">
               <a-form-item name="publicSentimentType" label="舆情类型">
                 <a-select
-                  v-model:value="state.formData.publicSentimentType"
+                  v-model="state.formData.publicSentimentType"
                   placeholder="请输入"
                 >
                   <a-select-option
@@ -25,7 +25,7 @@
             <a-col :span="5">
               <a-form-item name="publicSentimentSource" label="舆情来源">
                 <a-select
-                  v-model:value="state.formData.publicSentimentSource"
+                  v-model="state.formData.publicSentimentSource"
                   placeholder="请输入"
                 >
                   <a-select-option

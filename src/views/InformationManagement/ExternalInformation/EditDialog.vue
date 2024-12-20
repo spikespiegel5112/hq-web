@@ -17,8 +17,8 @@
           <a-form-item name="externalSource" label="来源">
             <a-select
               v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.externalSource"
-              placeholder="请输入"
+              v-model="state.formData.externalSource"
+              placeholder="请选择"
             >
               <a-select-option
                 v-for="item in global.$getDictionary(
@@ -58,8 +58,8 @@
           <a-form-item name="externalType" label="类型">
             <a-select
               v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.externalType"
-              placeholder="请输入"
+              v-model="state.formData.externalType"
+              placeholder="请选择"
             >
               <a-select-option
                 v-for="item in global.$getDictionary(
