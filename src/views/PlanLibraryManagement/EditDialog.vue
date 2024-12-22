@@ -2,7 +2,7 @@
   <a-modal
     class="common_dailog_wrapper"
     v-model:open="state.visible"
-    width="10rem"
+    width="14rem"
     @cancel="handleClose"
   >
     <template #title>
@@ -15,14 +15,13 @@
       :model="state.formData"
       ref="formDataRef"
       autocomplete="off"
-      :rules="rules"
       :label-col="{ style: { width: '120px' } }"
     >
       <a-row>
         <a-col :span="22">
           <a-form-item name="eventType" label="事件类型">
             <a-input
-              v-model:value="state.formData.eventType"
+              v-model:value="state.formData.preplanResource.eventType"
               placeholder="请输入"
             >
             </a-input>
@@ -50,7 +49,7 @@
           <a-col :span="22">
             <a-table
               :columns="columns"
-              :data-source="editableData.formData"
+              :data-source="state.formData.stepList"
               bordered
               :pagination="false"
             >
@@ -60,9 +59,17 @@
                 </template>
                 <template v-else>
                   <a-input
+                    v-if="column.formType === 'input'"
                     v-model:value="
-                      editableData.formData[index][column.dataIndex]
+                      state.formData.stepList[index][column.dataIndex]
                     "
+                  />
+                  <a-textarea
+                    v-if="column.formType === 'textarea'"
+                    v-model:value="
+                      state.formData.stepList[index][column.dataIndex]
+                    "
+                    :rows="3"
                   />
                 </template>
               </template>
@@ -101,25 +108,31 @@ import {
 import type { Rule, RuleObject } from "ant-design-vue/es/form";
 import { PlusCircleOutlined, MinusCircleOutlined } from "@ant-design/icons-vue";
 
+import { preplanPreplanSaveWithPreplanStepRequest } from "@/api/management";
+
 const columns = [
   {
     title: "序号",
     dataIndex: "index",
     width: "80px",
+    formType: "input",
   },
   {
     title: "处置步骤",
     dataIndex: "stepOrderDesc",
     width: "20%",
+    formType: "input",
   },
   {
     title: "步骤名称",
     dataIndex: "stepName",
+    formType: "input",
   },
   {
     title: "处置内容",
     dataIndex: "stepContent",
     width: "40%",
+    formType: "textarea",
   },
 ];
 
@@ -140,30 +153,32 @@ const props = defineProps({
   rowData: { type: Object, required: true, default: () => {} },
   tableData: { type: Object, required: true, default: () => [] },
   dataModel: { type: Array, required: true, default: () => [] },
+  preplanType: { type: String, required: true, default: "" },
 });
 
 let state = reactive({
   visible: false,
   formData: {
-    eventType: "",
-    id: null as number | null | undefined,
-    preplanType: "",
+    preplanResource: {
+      eventType: "",
+      id: null as number | null | undefined,
+      preplanType: "",
+    },
+    stepList: [
+      {
+        eventType: "",
+        id: null as number | null | undefined,
+        prId: null,
+        preplanType: "",
+        stepContent: "",
+        stepName: "",
+        stepOrder: null,
+        stepOrderDesc: "",
+      },
+    ],
   } as any,
   fileList: [] as any,
   tableData: [] as any[],
-});
-
-const editableData = reactive({
-  formData: [
-    {
-      eventType: "",
-      preplanType: "",
-      stepContent: "",
-      stepName: "",
-      stepOrder: null,
-      stepOrderDesc: "",
-    },
-  ] as any[],
 });
 
 const dialogTitle: ComputedRef<string> = computed(() => {
@@ -174,7 +189,7 @@ const dialogTitle: ComputedRef<string> = computed(() => {
   if (["editPlan", "editPlanName"].includes(props.mode)) {
     result = "编辑";
   }
-  return result
+  return result;
 });
 
 const rules: ComputedRef<RuleObject[]> = computed(() => {
@@ -214,13 +229,12 @@ watch(
     state.visible = newValue;
     if (!!newValue) {
       await nextTick();
-      if (["edit", "review"].some((item) => item === props.mode)) {
-        const formData = JSON.parse(JSON.stringify(props.rowData));
-        state.formData = {
-          ...formData,
-        };
 
-        editableData.formData = props.tableData;
+      if (["editPlan", "editPlanName"].some((item) => item === props.mode)) {
+        const rowData = JSON.parse(JSON.stringify(props.rowData));
+
+        state.formData.stepList = props.tableData;
+        state.formData.preplanResource.eventType = rowData.eventType;
       }
     }
   }
@@ -229,16 +243,33 @@ watch(
 const handleClose = () => {
   formDataRef.value.resetFields();
   emit("onClose");
+  state.formData.stepList = [];
+  state.formData.preplanResource.eventType = "";
 };
 
 const handleSubmit = () => {
   if (props.mode === "add") {
-    editableData.formData.forEach((item: any) => {
+    state.formData.preplanResource.id = undefined;
+    state.formData.stepList.forEach((item: any) => {
       item.id = undefined;
     });
   }
-  console.log(editableData);
-  emit("onSubmit", editableData);
+  state.formData.preplanResource.preplanType = props.preplanType;
+  preplanPreplanSaveWithPreplanStepRequest({
+    ...state.formData,
+  })
+    .then((response: any) => {
+      console.log(response);
+      global.$message.success("提交成功");
+      emit("onClose");
+    })
+    .catch((error: any) => {
+      console.log(error);
+      global.$message.error("提交失败");
+      emit("onClose");
+    });
+  console.log(state.formData);
+  // emit("onSubmit", state.formData);
 };
 
 const save = (value: any) => {
@@ -255,7 +286,7 @@ const handleAdd = (value: any) => {
   console.log(value);
   const tableDataLength = state.tableData.length;
 
-  editableData.formData.push({
+  state.formData.stepList.push({
     eventType: "",
     preplanType: "",
     stepContent: "",
@@ -266,8 +297,12 @@ const handleAdd = (value: any) => {
 };
 const handleMinus = (value: any) => {
   console.log(value);
-  if (editableData.formData.length > 1) {
-    editableData.formData.shift();
+  const currentStepListData = JSON.parse(
+    JSON.stringify(state.formData.stepList)
+  );
+  if (currentStepListData.length > 1) {
+    currentStepListData.shift();
+    state.formData.stepList = currentStepListData;
   }
 };
 

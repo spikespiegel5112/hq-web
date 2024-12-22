@@ -1,15 +1,13 @@
 <template>
-  <div class="">
-    <BaseTable
-      :tableData="state.tableData"
-      :dataModel="pageModel"
-      height="100%"
-      tableBodyHeight="calc(100% - 0.4rem)"
-      @onEdit="handleEdit"
-      @onReview="handleReview"
-      @onDelete="handleDelete"
-    />
-  </div>
+  <BaseTable
+    :tableData="state.tableData"
+    :dataModel="pageModel"
+    height="100%"
+    tableBodyHeight="calc(100% - 0.4rem)"
+    @onEdit="handleEdit"
+    @onReview="handleReview"
+    @onDelete="handleDelete"
+  />
 </template>
 
 <script lang="tsx" setup>

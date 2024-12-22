@@ -56,7 +56,10 @@
         </template>
       </template>
       <template #expandedRowRender="{ record, index, indent, expanded }">
-        <PlanTable :planId="record.id" @onEdit="handleEditPlan" />
+        <PlanTable
+          :planId="record.id"
+          @onEdit="handleEditPlan($event, record)"
+        />
       </template>
       <template #expandColumnTitle>
         <span></span>
@@ -66,7 +69,8 @@
       :visible="state.dialogVisible"
       :mode="state.dialogMode"
       :dataModel="pageModel"
-      :rowData="state.currentRowData"
+      :preplanType="queryFormData.preplanType"
+      :rowData="state.currentEventTypeData"
       :tableData="state.planTableData"
       @onClose="handleClose"
       @onSubmit="handleSubmit"
@@ -139,7 +143,7 @@ const state = reactive({
   planTableData: [] as any[],
   dialogVisible: false,
   dialogMode: "",
-  currentRowData: {},
+  currentEventTypeData: {},
   tableDataPlan: [] as any[],
   rowData: {},
 });
@@ -168,11 +172,11 @@ const getData = () => {
     });
 };
 
-const handleEditPlan = (tableData: any) => {
+const handleEditPlan = (tableData: any, record: any) => {
   state.dialogVisible = true;
   state.dialogMode = "editPlan";
   state.planTableData = tableData;
-  
+  state.currentEventTypeData = record;
 };
 
 const handleEdit = (rowData: any) => {
@@ -198,6 +202,7 @@ const handleReset = (formData: object) => {
 
 const handleClose = () => {
   state.dialogVisible = false;
+  getData();
 };
 
 const handleSubmit = (formData: any) => {
@@ -273,7 +278,7 @@ const handleAction = (action: any, record: any) => {
     case "review":
       state.dialogVisible = true;
       state.dialogMode = "review";
-      state.currentRowData = record;
+      state.currentEventTypeData = record;
       break;
     case "delete":
       global.$confirm({
@@ -285,6 +290,7 @@ const handleAction = (action: any, record: any) => {
           })
             .then((response: any) => {
               getData();
+              global.$message.success("删除成功");
             })
             .catch((error: any) => {
               console.log(error);
