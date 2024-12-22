@@ -7,7 +7,7 @@
       </div>
     </template>
     <div class="maincontent">
-      <a-row>
+      <a-row :gutter="30">
         <a-col :span="10">
           <div class="left">
             <a-form
@@ -299,7 +299,6 @@ const handleChangeTime1 = () => {};
 
 const getCurrentStep = (currentPreplanData: any) => {
   const disposalList = state.disposalList;
-
   let result = {
     attachmentList: [],
   };
