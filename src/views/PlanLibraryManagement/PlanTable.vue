@@ -9,7 +9,6 @@
       @onReview="handleReview"
       @onDelete="handleDelete"
     />
-  
   </div>
 </template>
 
@@ -25,6 +24,7 @@ import {
   ref,
   nextTick,
   toRaw,
+  defineEmits,
 } from "vue";
 
 import {
@@ -35,6 +35,10 @@ import {
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
+
+const emit = defineEmits<{
+  (e: "onEdit", tableData: any): void;
+}>();
 
 const props = defineProps({
   planId: { type: Number, required: true, default: null },
@@ -84,7 +88,6 @@ const state = reactive({
   dialogVisible: false,
   dialogMode: "",
   currentRowData: {},
-  tableData: [] as any[],
 });
 
 let queryFormData = reactive({} as any);
@@ -123,6 +126,7 @@ const handleEdit = (rowData: any) => {
   state.dialogVisible = true;
   state.dialogMode = "edit";
   state.currentRowData = rowData;
+  emit("onEdit", state.tableData);
 };
 
 const handleReview = (rowData: any) => {

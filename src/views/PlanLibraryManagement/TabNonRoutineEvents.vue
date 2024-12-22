@@ -56,7 +56,7 @@
         </template>
       </template>
       <template #expandedRowRender="{ record, index, indent, expanded }">
-        <PlanTable :planId="record.id" />
+        <PlanTable :planId="record.id" @onEdit="handleEdit" />
       </template>
       <template #expandColumnTitle>
         <span></span>
@@ -67,6 +67,7 @@
       :mode="state.dialogMode"
       :dataModel="pageModel"
       :rowData="state.currentRowData"
+      :tableData="state.planTableData"
       @onClose="handleClose"
       @onSubmit="handleSubmit"
     ></EditDialog>
@@ -99,6 +100,11 @@ import PlanTable from "./PlanTable.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
+
+const emit = defineEmits<{
+  (e: "onClose"): void;
+  (e: "onSubmit", formData: any): void;
+}>();
 
 const pageModel = ref([
   // {
@@ -161,10 +167,10 @@ const getData = () => {
     });
 };
 
-const handleEdit = (rowData: any) => {
+const handleEdit = (tableData: any) => {
   state.dialogVisible = true;
   state.dialogMode = "edit";
-  state.currentRowData = rowData;
+  state.planTableData = tableData;
 };
 
 const handleReview = (rowData: any) => {
@@ -257,13 +263,10 @@ const handleExpandedRowsChange = (expandedRows: any) => {
 const handleAction = (action: any, record: any) => {
   switch (action) {
     case "add":
-      state.dialogVisible = true;
-      state.dialogMode = "add";
+      handleAdd();
       break;
     case "edit":
-      state.dialogVisible = true;
-      state.dialogMode = "edit";
-      state.currentRowData = record;
+      handleEdit(record);
       break;
     case "review":
       state.dialogVisible = true;

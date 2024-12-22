@@ -1,11 +1,11 @@
 <template>
   <div class="common_tab_container">
     <a-tabs v-model:activeKey="state.activeKey">
-      <a-tab-pane key="TabEmergencyEventHandling" tab="非日常事件">
-        <TabEmergencyEventHandling />
+      <a-tab-pane key="TabNonRoutineEvents" tab="非日常事件">
+        <TabNonRoutineEvents />
       </a-tab-pane>
-      <a-tab-pane key="TabEmergencyPlanHandling" tab="应急预案">
-        <TabEmergencyPlanHandling />
+      <a-tab-pane key="TabEmergencyPlan" tab="应急预案">
+        <TabEmergencyPlan />
       </a-tab-pane>
     </a-tabs>
   </div>
@@ -25,8 +25,8 @@ import {
   toRaw,
 } from "vue";
 
-import TabEmergencyEventHandling from "./TabEmergencyEventHandling.vue";
-import TabEmergencyPlanHandling from "./TabEmergencyPlanHandling.vue";
+import TabNonRoutineEvents from "./TabNonRoutineEvents.vue";
+import TabEmergencyPlan from "./TabEmergencyPlan.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -34,7 +34,7 @@ const global = currentInstance.appContext.config.globalProperties;
 const props = defineProps({});
 
 const state = reactive({
-  activeKey: "TabEmergencyEventHandling",
+  activeKey: "TabNonRoutineEvents",
 });
 
 let queryFormData = reactive({} as any);

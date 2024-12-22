@@ -52,29 +52,35 @@
               </a-space>
             </a-col>
           </a-row>
-          <a-table
-            :columns="columns"
-            :data-source="editableData.formData"
-            bordered
-            :pagination="false"
-          >
-            <template #bodyCell="{ text, record, index, column }">
-              <template v-if="column.dataIndex === 'index'">
-                {{ index + 1 }}
-              </template>
-              <template v-else>
-                <a-input
-                  v-model:value="editableData.formData[index][column.dataIndex]"
-                />
-              </template>
-            </template>
-          </a-table>
+          <a-row justify="center">
+            <a-col :span="22">
+              <a-table
+                :columns="columns"
+                :data-source="editableData.formData"
+                bordered
+                :pagination="false"
+              >
+                <template #bodyCell="{ text, record, index, column }">
+                  <template v-if="column.dataIndex === 'index'">
+                    {{ index + 1 }}
+                  </template>
+                  <template v-else>
+                    <a-input
+                      v-model:value="
+                        editableData.formData[index][column.dataIndex]
+                      "
+                    />
+                  </template>
+                </template>
+              </a-table>
+            </a-col>
+          </a-row>
         </a-col>
       </a-row>
     </a-form>
     <template #footer>
       <a-row>
-        <a-col :span="22">
+        <a-col :span="23">
           <a-button key="back" @click="handleClose">取消</a-button>
           <a-button key="submit" type="primary" @click="handleSubmit">
             确认
@@ -124,12 +130,6 @@ const columns = [
   },
 ];
 
-interface DataItem {
-  key: string;
-  name: string;
-  age: number;
-  address: string;
-}
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
@@ -145,6 +145,7 @@ const props = defineProps({
   visible: { type: Boolean, required: true, default: false },
   mode: { type: String, required: true, default: "" },
   rowData: { type: Object, required: true, default: () => {} },
+  tableData: { type: Object, required: true, default: () => [] },
   dataModel: { type: Array, required: true, default: () => [] },
 });
 
@@ -220,6 +221,8 @@ watch(
         state.formData = {
           ...formData,
         };
+
+        editableData.formData = props.tableData;
       }
     }
   }
@@ -235,9 +238,9 @@ const handleSubmit = () => {
     editableData.formData.forEach((item: any) => {
       item.id = undefined;
     });
-    console.log(editableData);
-    emit("onSubmit", editableData);
   }
+  console.log(editableData);
+  emit("onSubmit", editableData);
 };
 
 const save = (value: any) => {
