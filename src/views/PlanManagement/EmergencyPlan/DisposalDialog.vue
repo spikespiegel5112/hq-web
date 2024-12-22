@@ -204,10 +204,13 @@ const eventList = computed(() => {
 
 const currentStepOrder = computed(() => {
   console.log(state.disposalData);
-  const disposalList = state.disposalData.disposalList;
-  let orderList = disposalList.map((item: any) => item.stepOrder);
-  orderList = Array.from(new Set(orderList));
-  const result = Math.max(...orderList);
+  let result = 0;
+  if (state.disposalData.disposalList) {
+    const disposalList = state.disposalData.disposalList;
+    let orderList = disposalList.map((item: any) => item.stepOrder);
+    orderList = Array.from(new Set(orderList));
+    result = Math.max(...orderList);
+  }
   return result;
 });
 

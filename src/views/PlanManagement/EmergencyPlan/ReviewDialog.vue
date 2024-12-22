@@ -102,7 +102,13 @@
                 </template>
                 <div class="node">
                   <div class="time">
-                    {{ global.$dayjs(item.disposalTime).format("HH:mm") }}
+                    {{
+                      !!state.disposalList[index]
+                        ? global
+                            .$dayjs(state.disposalList[index]?.disposalTime)
+                            .format("HH:mm")
+                        : ""
+                    }}
                   </div>
                   <div class="content">
                     <div class="top">
@@ -114,7 +120,7 @@
                       </span>
                     </div>
                     <div class="stepcontent">
-                      {{ item.stepContent }}
+                      {{ state.disposalList[index]?.stepContent }}
                     </div>
                     <div
                       v-if="
@@ -199,6 +205,7 @@ const state = reactive({
     preplanResourceId: null,
   } as any,
   fileList: [] as any,
+  disposalList: [] as any[],
   disposalData: {} as any,
   timer: false,
   planInfo: [] as any,
@@ -213,8 +220,8 @@ const dialogTitle: ComputedRef<string> = computed(() => {
 const currentStepOrder = computed(() => {
   console.log(state.disposalData);
   let result = 0;
-  if (!!state.disposalData.disposalList) {
-    const disposalList = state.disposalData.disposalList;
+  if (!!state.disposalList) {
+    const disposalList = state.disposalList;
     let orderList = disposalList.map((item: any) => item.stepOrder);
     orderList = Array.from(new Set(orderList));
     result = Math.max(...orderList);
@@ -254,6 +261,7 @@ const getData = () => {
     .then(async (response: any) => {
       response = response.data;
       state.disposalData = response;
+      state.disposalList = response.disposalList;
       response.preplanResourceStepList.forEach((item: any, index: number) => {
         state.fileList.push(getCurrentStep(item));
       });
@@ -290,7 +298,7 @@ const handleClose = () => {
 const handleChangeTime1 = () => {};
 
 const getCurrentStep = (currentPreplanData: any) => {
-  const disposalList = state.disposalData.disposalList;
+  const disposalList = state.disposalList;
 
   let result = {
     attachmentList: [],

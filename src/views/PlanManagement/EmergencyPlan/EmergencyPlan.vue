@@ -276,7 +276,6 @@ const handleSubmitDisposal = (formData: any) => {
   const disposalTime = global
     .$dayjs(formData.disposalTime)
     .format("YYYY-MM-DD HH:mm:ss");
-  debugger;
   planManagementEmergencyPlanSaveDisposalRequest({
     ...formData,
     disposalTime,
@@ -288,7 +287,6 @@ const handleSubmitDisposal = (formData: any) => {
     })
     .catch((error: any) => {
       console.log(error);
-      debugger;
       global.$message.error("提交失败");
       state.dialogDisposalVisible = false;
     });
