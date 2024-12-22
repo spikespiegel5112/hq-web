@@ -20,24 +20,14 @@
       <a-row>
         <a-col :span="11">
           <a-form-item name="eventType" label="事件类型">
-            <!-- <a-select
-              v-model:value="state.formData.eventType"
-              placeholder="请选择"
-            >
-              <a-select-option
-                v-for="item in global.$store.state.dictionary.alarmType"
-                :value="item.value"
-              >
-                {{ item.label }}
-              </a-select-option>
-            </a-select> -->
-            {{ state.formData.eventType }}
+            {{ state.eventType }}
           </a-form-item>
         </a-col>
         <a-col :span="11">
           <a-form-item name="disposalTime" label="时间">
             <a-date-picker
               v-model:value="state.formData.disposalTime"
+              :show-time="{ format: 'HH:mm' }"
               format="YYYY-MM-DD HH:mm:ss"
             ></a-date-picker>
           </a-form-item>
@@ -58,9 +48,9 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="eventLocation" label="处置步骤">
+          <a-form-item name="stepOrder" label="处置步骤">
             <a-radio-group
-              v-model:value="state.formData.eventLocation"
+              v-model:value="state.formData.stepOrder"
               class="plan"
               @change="handleChangeDisposalStep"
             >
@@ -68,7 +58,7 @@
                 v-for="(item, index) in state.planInfo"
                 :value="item.id"
                 :disabled="index < state.disposalData.lastStepOrder"
-                :class="{ active: state.formData.eventLocation === item.id }"
+                :class="{ active: state.formData.stepOrder === item.id }"
               >
                 <div class="step_wrapper">
                   <span class="step">
@@ -88,9 +78,9 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="eventContent" label="处置内容">
+          <a-form-item name="stepContent" label="处置内容">
             <a-textarea
-              v-model:value="state.formData.eventContent"
+              v-model:value="state.formData.stepContent"
               placeholder="请输入"
               :rows="3"
             >
@@ -135,7 +125,6 @@ import {
 
 import type { Rule, RuleObject } from "ant-design-vue/es/form";
 
-
 import {
   eventManageSuddenEventSaveDisposalRequest,
   eventManageSuddenEventGetDisposalRequest,
@@ -161,6 +150,7 @@ const props = defineProps({
 let state = reactive({
   visible: false,
   planInfo: [] as any[],
+  eventType: "",
   attachmentList: [
     {
       associationCode: "",
@@ -176,16 +166,6 @@ let state = reactive({
   formData: {
     id: null as number | null | undefined,
     attachmentList: [] as any[],
-    attachmentPath: "",
-    eventCode: "",
-    eventContent: "",
-    eventLocation: "",
-    eventStatus: null,
-    eventTime: "",
-    eventType: "",
-    manageRegion: "",
-    updateBy: "",
-    updateTime: "",
 
     disposalTime: "",
     seId: null,
@@ -234,13 +214,15 @@ watch(
       state.formData = {
         ...formData,
         eventTime: global.$dayjs(formData.eventTime),
+        attachmentList: [],
+        stepContent: "",
       };
     }
   }
 );
 
 const getData = () => {
-  state.formData.eventType = props.rowData.eventType;
+  state.eventType = props.rowData.eventType;
   state.formData.seId = props.rowData.id;
   eventManageSuddenEventGetDisposalRequest({
     seId: props.rowData.id,

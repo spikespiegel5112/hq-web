@@ -76,10 +76,8 @@
           </div>
         </a-col>
         <a-col :span="14">
-          <div class="right">
-            <div class="date"></div>
-            {{state.disposalData
-                  .preplanResourceStepList}}
+          <div class="date"></div>
+          <vue-scroll class="right">
             <a-timeline mode="left">
               <a-timeline-item
                 v-for="(item, index) in state.disposalData
@@ -121,13 +119,13 @@
                 </div>
               </a-timeline-item>
             </a-timeline>
-          </div>
+          </vue-scroll>
         </a-col>
       </a-row>
     </div>
     <template #footer>
       <a-row>
-        <a-col :span="22">
+        <a-col :span="24">
           <a-button key="submit" type="primary" @click="handleClose">
             关闭
           </a-button>
@@ -304,49 +302,55 @@ onBeforeUnmount(() => {});
 .maincontent {
   display: flex;
   align-items: start;
-  .left {
-    display: inline-block;
-    width: 7rem;
-  }
-
-  .right {
-    display: inline-block;
-    flex: 1;
-    .node {
-      display: flex;
-      width: 100%;
-      .time {
-        display: inline-block;
-        width: 1rem;
-      }
-      .content {
-        display: inline-block;
-        padding: 0.1rem 0.2rem;
-        flex: 1;
-        background-color: #0a1f44;
-        .top {
+  .ant-row {
+    width: 100%;
+    .left {
+      display: inline-block;
+      width: 7rem;
+    }
+    .right {
+      display: inline-block;
+      flex: 1;
+      max-height: 9rem !important;
+      overflow-y: auto;
+      .ant-timeline {
+        .node {
           display: flex;
-          .stepname {
-            flex: 1;
-            font-size: 0.23rem;
-            color: #fff;
-          }
-          .status {
+          width: 100%;
+          .time {
             display: inline-block;
             width: 1rem;
-            text-align: right;
-            color: #00ffa8;
           }
-        }
-        .stepcontent {
-          margin: 0.1rem 0;
-          width: 5.5rem;
-          color: #d6eaff;
-        }
-        .attachment {
-          margin: 0.1rem 0 0 0;
-          padding: 0.1rem 0 0 0;
-          border-top: 1px solid #01447c;
+          .content {
+            display: inline-block;
+            padding: 0.1rem 0.2rem;
+            flex: 1;
+            background-color: #0a1f44;
+            .top {
+              display: flex;
+              .stepname {
+                flex: 1;
+                font-size: 0.23rem;
+                color: #fff;
+              }
+              .status {
+                display: inline-block;
+                width: 1rem;
+                text-align: right;
+                color: #00ffa8;
+              }
+            }
+            .stepcontent {
+              margin: 0.1rem 0;
+              width: 5.5rem;
+              color: #d6eaff;
+            }
+            .attachment {
+              margin: 0.1rem 0 0 0;
+              padding: 0.1rem 0 0 0;
+              border-top: 1px solid #01447c;
+            }
+          }
         }
       }
     }

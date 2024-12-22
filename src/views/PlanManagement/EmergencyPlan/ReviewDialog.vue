@@ -139,7 +139,7 @@
     </div>
     <template #footer>
       <a-row>
-        <a-col :span="22">
+        <a-col :span="24">
           <a-button key="submit" type="primary" @click="handleClose">
             关闭
           </a-button>

@@ -151,6 +151,7 @@ const props = defineProps({
 let state = reactive({
   visible: false,
   planInfo: [] as any[],
+  eventType: "",
   attachmentList: [
     {
       associationCode: "",
@@ -163,14 +164,11 @@ let state = reactive({
       updateTime: "",
     },
   ],
-
   formData: {
     id: null as number | null | undefined,
     attachmentList: [] as any[],
-    attachmentPath: "",
 
     emergencyPlanId: null,
-    disposalResponseTime: null,
 
     disposalTime: "",
     stepContent: "",
@@ -251,10 +249,12 @@ watch(
     if (!!newValue) {
       getData();
       getPlanData();
+      const formData = JSON.parse(JSON.stringify(props.rowData));
       state.formData = {
-        ...state.formData,
-        id: props.rowData.id,
+        ...formData,
         emergencyPlanId: props.rowData.id,
+        attachmentList: [],
+        stepContent: "",
         // eventTime: global.$dayjs(props.rowData.eventTime),
       };
     }
@@ -262,7 +262,7 @@ watch(
 );
 
 const getData = () => {
-  state.formData.eventType = props.rowData.eventType;
+  state.eventType = props.rowData.eventType;
   state.formData.id = props.rowData.id;
   planManagementEmergencyPlanGetDisposalRequest({
     id: props.rowData.id,
