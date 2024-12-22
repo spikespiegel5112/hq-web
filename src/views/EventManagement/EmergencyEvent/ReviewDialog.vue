@@ -18,49 +18,38 @@
             >
               <a-row>
                 <a-col :span="22">
-                  <a-form-item label="来源">
-                    {{ state.formData.planSource }}
+                  <a-form-item name="manageRegion" label="管理区域">
+                    {{ state.formData.eventType }}
                   </a-form-item>
                 </a-col>
               </a-row>
               <a-row>
                 <a-col :span="22">
-                  <a-form-item label="预案类型">
-                    {{
-                      eventList.find(
-                        (item) =>
-                          Number(item.value) ===
-                          state.formData.preplanResourceId
-                      )?.label
-                    }}
+                  <a-form-item name="eventType" label="事件类型">
+                    {{ state.formData.eventType }}
                   </a-form-item>
                 </a-col>
               </a-row>
               <a-row>
                 <a-col :span="22">
-                  <a-form-item label="预案内容">
-                    {{ state.formData.planContent }}
+                  <a-form-item name="eventLocation" label="具体地址">
+                    {{ state.formData.eventLocation }}
                   </a-form-item>
                 </a-col>
               </a-row>
               <a-row>
                 <a-col :span="22">
-                  <a-form-item label="预案等级">
-                    {{
-                      global
-                        .$getDictionary("planLevel")
-                        .find((item) => item.value === state.formData.planLevel)
-                        ?.label
-                    }}
+                  <a-form-item name="eventLevel" label="等级">
+                    {{ state.formData.eventLocation }}
                   </a-form-item>
                 </a-col>
               </a-row>
               <a-row>
                 <a-col :span="22">
-                  <a-form-item label="发生时间">
+                  <a-form-item name="eventTime" label="发生时间">
                     {{
                       global
-                        .$dayjs(state.formData.planTime)
+                        .$dayjs(state.formData.eventTime)
                         .format("YYYY-MM-DD HH:mm:ss")
                     }}
                   </a-form-item>
@@ -68,20 +57,14 @@
               </a-row>
               <a-row>
                 <a-col :span="22">
-                  <a-form-item label="状态">
-                    {{
-                      global
-                        .$getDictionary("planStatus")
-                        .find(
-                          (item) => item.value === state.formData.planStatus
-                        )?.label
-                    }}
+                  <a-form-item name="eventContent" label="事件内容">
+                    {{ state.formData.eventContent }}
                   </a-form-item>
                 </a-col>
               </a-row>
               <a-row>
                 <a-col :span="22">
-                  <a-form-item label="附件">
+                  <a-form-item name="attachment" label="附件">
                     <CommonUpload
                       disabled
                       :attachmentList="state.formData.attachmentList"
@@ -93,10 +76,15 @@
           </div>
         </a-col>
         <a-col :span="14">
-          <div class="date"></div>
-          <vue-scroll class="right">
+          <div class="right">
+            <div class="date"></div>
+            {{state.disposalData
+                  .preplanResourceStepList}}
             <a-timeline mode="left">
-              <a-timeline-item v-for="(item, index) in state.planInfo">
+              <a-timeline-item
+                v-for="(item, index) in state.disposalData
+                  .preplanResourceStepList"
+              >
                 <template #dot>
                   <span>{{ index + 1 }}</span>
                 </template>
@@ -133,7 +121,7 @@
                 </div>
               </a-timeline-item>
             </a-timeline>
-          </vue-scroll>
+          </div>
         </a-col>
       </a-row>
     </div>
@@ -163,6 +151,7 @@ import {
 } from "vue";
 
 import {
+  eventManageSuddenEventSaveDisposalRequest,
   eventManageSuddenEventGetDisposalRequest,
   preplanPreplanGetStepPageRequest,
 } from "@/api/management";
@@ -198,7 +187,7 @@ const state = reactive({
     eventLevel: null,
   } as any,
   fileList: [] as any,
-  disposalData: {},
+  disposalData: {} as any,
   timer: false,
   planInfo: [] as any,
 });
@@ -223,7 +212,7 @@ const currentStepOrder = computed(() => {
 
 const eventList = computed(() => {
   return global.$store.state.app.currentEventTypeList.find(
-    (item: any) => item.type === "应急预案处置"
+    (item: any) => item.type === "突发事件处置"
   )?.data;
 });
 
@@ -236,6 +225,9 @@ watch(
       let rowData = JSON.parse(JSON.stringify(props.rowData));
       rowData = {
         ...rowData,
+        eventTime: !!rowData.eventTime
+          ? global.$dayjs(rowData.eventTime, "YYYY-MM-DD HH:mm:ss")
+          : null,
       };
       state.formData = rowData;
       getData();
@@ -248,7 +240,7 @@ const getData = () => {
   state.formData.eventType = props.rowData.eventType;
   state.formData.seId = props.rowData.id;
   eventManageSuddenEventGetDisposalRequest({
-    id: props.rowData.id,
+    seId: props.rowData.seId,
   })
     .then(async (response: any) => {
       response = response.data;
@@ -264,11 +256,11 @@ const getData = () => {
 
 const getStepData = () => {
   const planData: any = eventList.value.find((item: any) => {
-    return Number(item.value) === props.rowData.preplanResourceId;
+    return Number(item.value) === props.rowData.prId;
   });
 
   preplanPreplanGetStepPageRequest({
-    preplanType: "应急预案处置",
+    preplanType: "突发事件处置",
     eventType: planData.label,
   })
     .then((response: any) => {
@@ -290,7 +282,6 @@ const handleChangeTime1 = () => {};
 
 const getCurrentStep = (currentPreplanData: any) => {
   const disposalList = state.disposalData.disposalList;
-
   let result = {
     attachmentList: [],
   };
@@ -312,58 +303,50 @@ onBeforeUnmount(() => {});
 <style scoped lang="scss">
 .maincontent {
   display: flex;
-  width: 100%;
   align-items: start;
-  box-sizing: border-box;
-  .ant-row {
-    width: 100%;
-    .left {
-      display: inline-block;
-      width: 7rem;
-    }
-    .right {
-      display: inline-block;
-      flex: 1;
-      max-height: 9rem !important;
-      overflow-y: auto;
-      .ant-timeline {
-        // width: calc(100% - 1rem);
-        .node {
+  .left {
+    display: inline-block;
+    width: 7rem;
+  }
+
+  .right {
+    display: inline-block;
+    flex: 1;
+    .node {
+      display: flex;
+      width: 100%;
+      .time {
+        display: inline-block;
+        width: 1rem;
+      }
+      .content {
+        display: inline-block;
+        padding: 0.1rem 0.2rem;
+        flex: 1;
+        background-color: #0a1f44;
+        .top {
           display: flex;
-          .time {
+          .stepname {
+            flex: 1;
+            font-size: 0.23rem;
+            color: #fff;
+          }
+          .status {
             display: inline-block;
             width: 1rem;
+            text-align: right;
+            color: #00ffa8;
           }
-          .content {
-            display: inline-block;
-            padding: 0.1rem 0.2rem;
-            flex: 1;
-            background-color: #0a1f44;
-            .top {
-              display: flex;
-              .stepname {
-                flex: 1;
-                font-size: 0.23rem;
-                color: #fff;
-              }
-              .status {
-                display: inline-block;
-                width: 1rem;
-                text-align: right;
-                color: #00ffa8;
-              }
-            }
-            .stepcontent {
-              margin: 0.1rem 0;
-              width: 5.5rem;
-              color: #d6eaff;
-            }
-            .attachment {
-              margin: 0.1rem 0 0 0;
-              padding: 0.1rem 0 0 0;
-              border-top: 1px solid #01447c;
-            }
-          }
+        }
+        .stepcontent {
+          margin: 0.1rem 0;
+          width: 5.5rem;
+          color: #d6eaff;
+        }
+        .attachment {
+          margin: 0.1rem 0 0 0;
+          padding: 0.1rem 0 0 0;
+          border-top: 1px solid #01447c;
         }
       }
     }
