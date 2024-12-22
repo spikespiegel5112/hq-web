@@ -20,10 +20,10 @@
 
       <a-row>
         <a-col :span="22">
-          <a-form-item name="externalType" label="类型">
+          <a-form-item name="warningType" label="类型">
             <a-select
               v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.externalType"
+              v-model:value="state.formData.warningType"
               placeholder="请选择"
             >
               <a-select-option
@@ -36,7 +36,7 @@
               </a-select-option>
             </a-select>
             <template v-if="props.mode === 'review'">
-              {{ global.$getDictionary('external_info_external_type').find((item:any)=>item.value===state.formData.externalType)?.label }}
+              {{ global.$getDictionary('weather_warning_warning_type_enum').find((item:any)=>item.value===state.formData.warningType)?.label }}
             </template>
           </a-form-item>
         </a-col>
@@ -59,7 +59,7 @@
               </a-select-option>
             </a-select>
             <template v-if="props.mode === 'review'">
-              {{ global.$getDictionary('weather_warning_warning_level').find((item:any)=>item.value===state.formData.externalType)?.label }}
+              {{ global.$getDictionary('weather_warning_warning_level').find((item:any)=>item.value===state.formData.warningLevel)?.label }}
             </template>
           </a-form-item>
         </a-col>
@@ -141,7 +141,7 @@ const state = reactive({
     dataTime: "",
     temperature: "",
     warningContent: "",
-    warningLevel: "",
+    warningLevel: null,
     warningType: "",
     weather: "",
     weatherId: "",
@@ -163,9 +163,10 @@ watch(
       await nextTick();
       if (["edit", "review", "disposal"].some((item) => item === props.mode)) {
         let rowData = JSON.parse(JSON.stringify(props.rowData));
+        debugger;
         rowData = {
           ...rowData,
-          dataTime: global.$dayjs(rowData.dataTime, "YYYY-MM-DD"),
+          dataTime: global.$dayjs(rowData.dataTime, "YYYY-MM-DD HH:mm:ss"),
         };
         Object.keys(state.formData).forEach((item: string) => {
           state.formData[item] = !!rowData[item] ? rowData[item] : undefined;
@@ -192,7 +193,7 @@ const handleSubmit = () => {
         .format("YYYY-MM-DD HH:mm:ss");
       emit("onSubmit", {
         ...state.formData,
-        dataTime:props.rowData.dataTime,
+        dataTime: props.rowData.dataTime,
         temperature: props.rowData.temperature,
         weather: props.rowData.weather,
         weatherId: props.rowData.weatherId,

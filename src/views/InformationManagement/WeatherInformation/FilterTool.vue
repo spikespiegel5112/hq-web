@@ -5,7 +5,7 @@
         <a-col :span="20">
           <a-row :gutter="20">
             <a-col :span="8">
-              <a-form-item name="dataTime" label="信息上报时间">
+              <a-form-item name="dataTime" label="时间s">
                 <a-range-picker
                   v-model:value="state.dataTime"
                   format="YYYY-MM-DD"
@@ -14,12 +14,20 @@
               </a-form-item>
             </a-col>
             <a-col :span="8">
-              <a-form-item name="dataTime" label="信息上报时间">
-                <a-range-picker
-                  v-model:value="state.dataTime"
-                  format="YYYY-MM-DD"
-                  @change="handleChangeTime1"
-                />
+              <a-form-item name="warningType" label="预警类型">
+                <a-select
+                  v-model:value="state.formData.warningType"
+                  placeholder="请选择"
+                >
+                  <a-select-option
+                    v-for="item in global.$getDictionary(
+                      'weather_warning_warning_type_enum'
+                    )"
+                    :value="item.value"
+                  >
+                    {{ item.label }}
+                  </a-select-option>
+                </a-select>
               </a-form-item>
             </a-col>
           </a-row>
@@ -65,14 +73,14 @@ const formDataRef: any = ref(null);
 const state = reactive({
   formData: {
     dataTimeEnd: "",
-    dataTimeStart: "",
+    dataTimeBegin: "",
     warningType: "",
   },
   dataTime: [] as any[],
 });
 
 const handleChangeTime1 = (value: any) => {
-  state.formData.dataTimeStart = global
+  state.formData.dataTimeBegin = global
     .$dayjs(value[0])
     .format("YYYY-MM-DD HH:mm:ss");
 
