@@ -56,7 +56,7 @@
             >
               <a-radio
                 v-for="(item, index) in state.planInfo"
-                :value="item.id"
+                :value="item.stepOrder"
                 :disabled="index < state.disposalData.lastStepOrder"
                 :class="{ active: state.formData.stepOrder === item.id }"
               >
@@ -270,7 +270,7 @@ const handleSubmit = () => {
 
 const handleChangeDisposalStep = (value: any) => {
   const planInfo = state.planInfo.find(
-    (item: any) => item.id === value.target.value
+    (item: any) => item.stepOrder === value.target.value
   );
   state.formData = {
     ...state.formData,
