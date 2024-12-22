@@ -36,38 +36,36 @@
       </a-row>
       <a-row>
         <a-col :span="24">
-          <a-table :columns="columns" :data-source="[]" bordered>
-            <template #bodyCell="{ column, text, record }">
-              <template
-                v-if="['name', 'age', 'address'].includes(column.dataIndex)"
-              >
-                <div>
-                  <a-input
-                    v-model:value="editableData[record.key][column.dataIndex]"
-                    style="margin: -5px 0"
-                  />
-                  <template>
-                    {{ text }}
+          <a-row justify="end">
+            <a-col :span="3">
+              <a-space>
+                <a-button type="text" size="small" @click="handleAdd">
+                  <template #icon>
+                    <PlusCircleOutlined />
                   </template>
-                </div>
+                </a-button>
+                <a-button type="text" size="small" @click="handleMinus">
+                  <template #icon>
+                    <MinusCircleOutlined />
+                  </template>
+                </a-button>
+              </a-space>
+            </a-col>
+          </a-row>
+          <a-table
+            :columns="columns"
+            :data-source="editableData.formData"
+            bordered
+            :pagination="false"
+          >
+            <template #bodyCell="{ text, record, index, column }">
+              <template v-if="column.dataIndex === 'index'">
+                {{ index + 1 }}
               </template>
-              <template v-else-if="column.dataIndex === 'operation'">
-                <div class="editable-row-operations">
-                  <span v-if="editableData[record.key]">
-                    <a-typography-link @click="save(record.key)"
-                      >Save</a-typography-link
-                    >
-                    <a-popconfirm
-                      title="Sure to cancel?"
-                      @confirm="cancel(record.key)"
-                    >
-                      <a>Cancel</a>
-                    </a-popconfirm>
-                  </span>
-                  <span v-else>
-                    <a @click="edit(record.key)">Edit</a>
-                  </span>
-                </div>
+              <template v-else>
+                <a-input
+                  v-model:value="editableData.formData[index][column.dataIndex]"
+                />
               </template>
             </template>
           </a-table>
@@ -102,27 +100,27 @@ import {
 } from "vue";
 
 import type { Rule, RuleObject } from "ant-design-vue/es/form";
-import type { UnwrapRef } from "vue";
+import { PlusCircleOutlined, MinusCircleOutlined } from "@ant-design/icons-vue";
 
 const columns = [
   {
-    title: "name",
-    dataIndex: "name",
-    width: "25%",
+    title: "序号",
+    dataIndex: "index",
+    width: "80px",
   },
   {
-    title: "age",
-    dataIndex: "age",
-    width: "15%",
+    title: "处置步骤",
+    dataIndex: "stepOrderDesc",
+    width: "20%",
   },
   {
-    title: "address",
-    dataIndex: "address",
+    title: "步骤名称",
+    dataIndex: "stepName",
+  },
+  {
+    title: "处置内容",
+    dataIndex: "stepContent",
     width: "40%",
-  },
-  {
-    title: "operation",
-    dataIndex: "operation",
   },
 ];
 
@@ -158,9 +156,21 @@ let state = reactive({
     preplanType: "",
   } as any,
   fileList: [] as any,
+  tableData: [] as any[],
 });
 
-const editableData: UnwrapRef<Record<string, DataItem>> = reactive({});
+const editableData = reactive({
+  formData: [
+    {
+      eventType: "",
+      preplanType: "",
+      stepContent: "",
+      stepName: "",
+      stepOrder: null,
+      stepOrderDesc: "",
+    },
+  ],
+});
 
 const dialogTitle: ComputedRef<string> = computed(() => {
   return global.$store.state.dictionary.dialogMode.find(
@@ -205,11 +215,10 @@ watch(
     state.visible = newValue;
     if (!!newValue) {
       await nextTick();
-      if (["edit", "review", "disposal"].some((item) => item === props.mode)) {
+      if (["edit", "review"].some((item) => item === props.mode)) {
         const formData = JSON.parse(JSON.stringify(props.rowData));
         state.formData = {
           ...formData,
-          eventTime: global.$dayjs(formData.eventTime),
         };
       }
     }
@@ -223,19 +232,42 @@ const handleClose = () => {
 
 const handleSubmit = () => {
   if (props.mode === "add") {
-    state.formData.id = undefined;
-  }
-  formDataRef.value
-    .validate()
-    .then(() => {
-      emit("onSubmit", {
-        ...state.formData,
-      });
-      handleClose();
-    })
-    .catch((error: any) => {
-      console.log("error", error);
+    editableData.formData.forEach((item: any) => {
+      item.id = undefined;
     });
+    console.log(editableData);
+    emit("onSubmit", editableData);
+  }
+};
+
+const save = (value: any) => {
+  console.log(value);
+};
+const cancel = (value: any) => {
+  console.log(value);
+};
+const edit = (value: any) => {
+  console.log(value);
+};
+
+const handleAdd = (value: any) => {
+  console.log(value);
+  const tableDataLength = state.tableData.length;
+
+  editableData.formData.push({
+    eventType: "",
+    preplanType: "",
+    stepContent: "",
+    stepName: "",
+    stepOrder: tableDataLength,
+    stepOrderDesc: "",
+  });
+};
+const handleMinus = (value: any) => {
+  console.log(value);
+  if (editableData.formData.length > 1) {
+    editableData.formData.shift();
+  }
 };
 
 const handleChangeEventTime = (date: any) => {};

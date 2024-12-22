@@ -4,6 +4,7 @@
       v-if="global.$checkEditable(props.mode)"
       v-model:file-list="state.fileList"
       name="file"
+      :list-type="listType"
       action="/api/manage/attachment/upload"
       :headers="{}"
       :disabled="props.disabled"
@@ -56,6 +57,14 @@ const _modelValue = computed({
   set: (val) => {
     emit("update:attachmentList", val);
   },
+});
+
+const listType = computed(() => {
+  if (props.mode === "review") {
+    return "picture-card";
+  } else {
+    return "";
+  }
 });
 
 watch(
