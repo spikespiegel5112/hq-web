@@ -44,7 +44,8 @@
               <a-form-item name="keyword" label="关键词">
                 <a-input
                   v-model:value="state.formData.keyword"
-                  placeholder="请输入"
+                   placeholder="请输入"
+                  allow-clear
                 >
                 </a-input>
               </a-form-item>

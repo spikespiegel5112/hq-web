@@ -71,8 +71,9 @@
             <a-textarea
               v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.planContent"
-              placeholder="请输入"
+             placeholder="请输入"
               :rows="3"
+              allow-clear
             >
             </a-textarea>
             <template v-if="props.mode === 'review'">

@@ -25,6 +25,7 @@
               v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.warningType"
               placeholder="请选择"
+              allow-clear
             >
               <a-select-option
                 v-for="item in global.$getDictionary(
@@ -48,11 +49,10 @@
               v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.warningLevel"
               placeholder="请选择"
+              allow-clear
             >
               <a-select-option
-                v-for="item in global.$getDictionary(
-                  'weather_warning_warning_level'
-                )"
+                v-for="item in global.$getDictionary('planLevel')"
                 :value="item.value"
               >
                 {{ item.label }}
@@ -72,6 +72,7 @@
               v-model:value="state.formData.warningContent"
               placeholder="请输入"
               :rows="3"
+              allow-clear
             >
             </a-textarea>
             <template v-if="props.mode === 'review'">
@@ -163,7 +164,6 @@ watch(
       await nextTick();
       if (["edit", "review", "disposal"].some((item) => item === props.mode)) {
         let rowData = JSON.parse(JSON.stringify(props.rowData));
-        debugger;
         rowData = {
           ...rowData,
           dataTime: global.$dayjs(rowData.dataTime, "YYYY-MM-DD HH:mm:ss"),

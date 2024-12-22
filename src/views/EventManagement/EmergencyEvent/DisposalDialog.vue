@@ -81,8 +81,9 @@
           <a-form-item name="stepContent" label="处置内容">
             <a-textarea
               v-model:value="state.formData.stepContent"
-              placeholder="请输入"
+             placeholder="请输入"
               :rows="3"
+              allow-clear
             >
             </a-textarea>
           </a-form-item>

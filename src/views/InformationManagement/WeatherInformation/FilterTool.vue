@@ -5,11 +5,12 @@
         <a-col :span="20">
           <a-row :gutter="20">
             <a-col :span="8">
-              <a-form-item name="dataTime" label="时间s">
+              <a-form-item name="dataTime" label="时间">
                 <a-range-picker
                   v-model:value="state.dataTime"
                   format="YYYY-MM-DD"
                   @change="handleChangeTime1"
+                  allow-clear
                 />
               </a-form-item>
             </a-col>
@@ -18,6 +19,7 @@
                 <a-select
                   v-model:value="state.formData.warningType"
                   placeholder="请选择"
+                  allow-clear
                 >
                   <a-select-option
                     v-for="item in global.$getDictionary(

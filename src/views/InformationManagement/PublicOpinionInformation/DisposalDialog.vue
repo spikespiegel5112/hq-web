@@ -35,8 +35,9 @@
           <a-form-item name="handlingContent" label="处置情况">
             <a-textarea
               v-model:value="state.formData.handlingContent"
-              placeholder="请输入"
+             placeholder="请输入"
               :rows="3"
+              allow-clear
             >
             </a-textarea>
           </a-form-item>
@@ -47,8 +48,9 @@
           <a-form-item name="handlingContent" label="附件">
             <a-textarea
               v-model:value="state.formData.handlingContent"
-              placeholder="请输入"
+             placeholder="请输入"
               :rows="3"
+              allow-clear
             >
             </a-textarea>
           </a-form-item>

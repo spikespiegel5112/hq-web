@@ -132,6 +132,16 @@ const pageModel = ref([
     tableVisible: true,
     formVisible: false,
     exportVisible: false,
+    tagConfig: {
+      val: "label",
+      dictionary: global.$store.state.dictionary.eventStatus,
+      colorList: [
+        { value: "未处理", color: "error" },
+        { value: "处理中", color: "warning" },
+        { value: "已处置", color: "success" },
+      ],
+    },
+    width: "1rem",
   },
   {
     label: "附件",
