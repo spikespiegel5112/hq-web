@@ -52,7 +52,7 @@
           <a-form-item name="manageRegion" label="管理区域">
             <a-select
               v-if="global.$checkEditable(props.mode)"
-              v-model="state.formData.manageRegion"
+              v-model:value="state.formData.manageRegion"
               placeholder="请选择"
             >
               <a-select-option

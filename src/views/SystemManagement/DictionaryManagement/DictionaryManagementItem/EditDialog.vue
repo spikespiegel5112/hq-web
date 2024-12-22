@@ -19,7 +19,7 @@
           <a-form-item name="dicId" label="字典名称">
             <a-select
               v-if="global.$checkEditable(props.mode)"
-              v-model="state.formData.dicId"
+              v-model:value="state.formData.dicId"
               placeholder="请输入"
               @change="hangleCHangeDictionaryNameList"
             >

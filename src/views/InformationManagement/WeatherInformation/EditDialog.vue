@@ -23,7 +23,7 @@
           <a-form-item name="externalType" label="类型">
             <a-select
               v-if="global.$checkEditable(props.mode)"
-              v-model="state.formData.externalType"
+              v-model:value="state.formData.externalType"
               placeholder="请选择"
             >
               <a-select-option
@@ -46,7 +46,7 @@
           <a-form-item name="warningLevel" label="级别">
             <a-select
               v-if="global.$checkEditable(props.mode)"
-              v-model="state.formData.warningLevel"
+              v-model:value="state.formData.warningLevel"
               placeholder="请选择"
             >
               <a-select-option

@@ -17,7 +17,7 @@
           <a-form-item name="complaintRegion" label="投诉区域">
             <a-select
               v-if="global.$checkEditable(props.mode)"
-              v-model="state.formData.complaintRegion"
+              v-model:value="state.formData.complaintRegion"
               placeholder="请选择"
             >
               <a-select-option
@@ -40,7 +40,7 @@
           <a-form-item name="complaintType" label="投诉类型">
             <a-select
               v-if="global.$checkEditable(props.mode)"
-              v-model="state.formData.complaintType"
+              v-model:value="state.formData.complaintType"
               placeholder="请选择"
             >
               <a-select-option
@@ -61,7 +61,7 @@
           <a-form-item name="complaintSensitive" label="敏感程度">
             <a-select
               v-if="global.$checkEditable(props.mode)"
-              v-model="state.formData.complaintSensitive"
+              v-model:value="state.formData.complaintSensitive"
               placeholder="请选择"
             >
               <a-select-option

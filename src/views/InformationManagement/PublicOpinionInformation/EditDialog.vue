@@ -17,7 +17,7 @@
           <a-form-item name="publicSentimentSource" label="来源">
             <a-select
               v-if="global.$checkEditable(props.mode)"
-              v-model="state.formData.publicSentimentSource"
+              v-model:value="state.formData.publicSentimentSource"
               placeholder="请选择"
             >
               <a-select-option
@@ -60,7 +60,7 @@
           <a-form-item name="publicSentimentType" label="类型">
             <a-select
               v-if="global.$checkEditable(props.mode)"
-              v-model="state.formData.publicSentimentType"
+              v-model:value="state.formData.publicSentimentType"
               placeholder="请选择"
             >
               <a-select-option
@@ -98,7 +98,7 @@
           <a-form-item name="publicSentimentSensitive" label="敏感度">
             <a-select
               v-if="global.$checkEditable(props.mode)"
-              v-model="state.formData.publicSentimentSensitive"
+              v-model:value="state.formData.publicSentimentSensitive"
               placeholder="请选择"
             >
               <a-select-option

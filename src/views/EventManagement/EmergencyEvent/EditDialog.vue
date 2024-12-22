@@ -24,7 +24,7 @@
           <a-form-item name="manageRegion" label="管理区域">
             <a-select
               v-if="global.$checkEditable(props.mode)"
-              v-model="state.formData.manageRegion"
+              v-model:value="state.formData.manageRegion"
               placeholder="请选择"
               @change="handleChangeEventType"
             >
@@ -47,7 +47,7 @@
           <a-form-item name="eventType" label="事件类型">
             <a-select
               v-if="global.$checkEditable(props.mode)"
-              v-model="state.formData.eventType"
+              v-model:value="state.formData.eventType"
               placeholder="请选择"
               @change="handleChangeEventType"
             >
@@ -85,7 +85,7 @@
           <a-form-item name="eventLevel" label="等级">
             <a-select
               v-if="global.$checkEditable(props.mode)"
-              v-model="state.formData.eventLevel"
+              v-model:value="state.formData.eventLevel"
               placeholder="请选择"
             >
               <a-select-option
@@ -121,21 +121,6 @@
         </a-col>
       </a-row>
 
-      <!-- <a-row>
-        <a-col :span="22">
-          <a-form-item name="eventCode" label="事件编码">
-            <a-input
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.eventCode"
-              placeholder="请输入"
-            >
-            </a-input>
-            <template v-if="props.mode === 'review'">
-              {{ state.formData.eventLocation }}
-            </template>
-          </a-form-item>
-        </a-col>
-      </a-row> -->
       <a-row>
         <a-col :span="22">
           <a-form-item name="eventContent" label="事件内容">
@@ -157,7 +142,7 @@
           <a-form-item name="eventStatus" label="事件状态">
             <a-select
               v-if="global.$checkEditable(props.mode)"
-              v-model="state.formData.eventStatus"
+              v-model:value="state.formData.eventStatus"
               placeholder="请选择"
             >
               <a-select-option
@@ -224,7 +209,6 @@ import {
 
 import type { Rule, RuleObject } from "ant-design-vue/es/form";
 
-
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
@@ -249,7 +233,7 @@ let state = reactive({
   formData: {
     id: null as number | null | undefined,
     attachmentList: [] as any[],
-    eventCode: "",
+    manageRegion: "",
     eventContent: "",
     eventLocation: "",
     eventStatus: null,

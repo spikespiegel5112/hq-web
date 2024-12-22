@@ -92,7 +92,7 @@
             </a-form>
           </div>
         </a-col>
-        <a-col :span="14">
+        <a-col :span="24">
           <div class="date"></div>
           <vue-scroll class="right">
             <a-timeline mode="left">
@@ -163,6 +163,7 @@ import {
 } from "vue";
 
 import {
+  eventManageSuddenEventSaveDisposalRequest,
   eventManageSuddenEventGetDisposalRequest,
   preplanPreplanGetStepPageRequest,
 } from "@/api/management";
@@ -200,31 +201,12 @@ const state = reactive({
   fileList: [] as any,
   disposalData: {},
   timer: false,
-  planInfo: [] as any,
 });
 
 const dialogTitle: ComputedRef<string> = computed(() => {
   return global.$store.state.dictionary.dialogMode.find(
     (item: any) => item.value === props.mode
   )?.title;
-});
-
-const currentStepOrder = computed(() => {
-  console.log(state.disposalData);
-  let result = 0;
-  if (!!state.disposalData.disposalList) {
-    const disposalList = state.disposalData.disposalList;
-    let orderList = disposalList.map((item: any) => item.stepOrder);
-    orderList = Array.from(new Set(orderList));
-    result = Math.max(...orderList);
-  }
-  return result;
-});
-
-const eventList = computed(() => {
-  return global.$store.state.app.currentEventTypeList.find(
-    (item: any) => item.type === "应急预案处置"
-  )?.data;
 });
 
 watch(
@@ -236,10 +218,12 @@ watch(
       let rowData = JSON.parse(JSON.stringify(props.rowData));
       rowData = {
         ...rowData,
+        eventTime: !!rowData.eventTime
+          ? global.$dayjs(rowData.eventTime, "YYYY-MM-DD HH:mm:ss")
+          : null,
       };
       state.formData = rowData;
       getData();
-      getStepData();
     }
   }
 );
@@ -248,32 +232,19 @@ const getData = () => {
   state.formData.eventType = props.rowData.eventType;
   state.formData.seId = props.rowData.id;
   eventManageSuddenEventGetDisposalRequest({
-    id: props.rowData.id,
+    seId: props.rowData.id,
   })
     .then(async (response: any) => {
       response = response.data;
       state.disposalData = response;
+      await nextTick();
+
       response.preplanResourceStepList.forEach((item: any, index: number) => {
         state.fileList.push(getCurrentStep(item));
       });
-    })
-    .catch((error: any) => {
-      console.log(error);
-    });
-};
 
-const getStepData = () => {
-  const planData: any = eventList.value.find((item: any) => {
-    return Number(item.value) === props.rowData.preplanResourceId;
-  });
-
-  preplanPreplanGetStepPageRequest({
-    preplanType: "应急预案处置",
-    eventType: planData.label,
-  })
-    .then((response: any) => {
-      response = response.data;
-      state.planInfo = response.list;
+      console.log(state.disposalData.preplanResourceStepList);
+      state.preplanListReady = true;
     })
     .catch((error: any) => {
       console.log(error);
@@ -290,7 +261,6 @@ const handleChangeTime1 = () => {};
 
 const getCurrentStep = (currentPreplanData: any) => {
   const disposalList = state.disposalData.disposalList;
-
   let result = {
     attachmentList: [],
   };
@@ -312,58 +282,50 @@ onBeforeUnmount(() => {});
 <style scoped lang="scss">
 .maincontent {
   display: flex;
-  width: 100%;
   align-items: start;
-  box-sizing: border-box;
-  .ant-row {
-    width: 100%;
-    .left {
-      display: inline-block;
-      width: 7rem;
-    }
-    .right {
-      display: inline-block;
-      flex: 1;
-      max-height: 9rem !important;
-      overflow-y: auto;
-      .ant-timeline {
-        // width: calc(100% - 1rem);
-        .node {
+  .left {
+    display: inline-block;
+    width: 7rem;
+  }
+
+  .right {
+    display: inline-block;
+    flex: 1;
+    .node {
+      display: flex;
+      width: 100%;
+      .time {
+        display: inline-block;
+        width: 1rem;
+      }
+      .content {
+        display: inline-block;
+        padding: 0.1rem 0.2rem;
+        flex: 1;
+        background-color: #0a1f44;
+        .top {
           display: flex;
-          .time {
+          .stepname {
+            flex: 1;
+            font-size: 0.23rem;
+            color: #fff;
+          }
+          .status {
             display: inline-block;
             width: 1rem;
+            text-align: right;
+            color: #00ffa8;
           }
-          .content {
-            display: inline-block;
-            padding: 0.1rem 0.2rem;
-            flex: 1;
-            background-color: #0a1f44;
-            .top {
-              display: flex;
-              .stepname {
-                flex: 1;
-                font-size: 0.23rem;
-                color: #fff;
-              }
-              .status {
-                display: inline-block;
-                width: 1rem;
-                text-align: right;
-                color: #00ffa8;
-              }
-            }
-            .stepcontent {
-              margin: 0.1rem 0;
-              width: 5.5rem;
-              color: #d6eaff;
-            }
-            .attachment {
-              margin: 0.1rem 0 0 0;
-              padding: 0.1rem 0 0 0;
-              border-top: 1px solid #01447c;
-            }
-          }
+        }
+        .stepcontent {
+          margin: 0.1rem 0;
+          width: 5.5rem;
+          color: #d6eaff;
+        }
+        .attachment {
+          margin: 0.1rem 0 0 0;
+          padding: 0.1rem 0 0 0;
+          border-top: 1px solid #01447c;
         }
       }
     }
