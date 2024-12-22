@@ -7,136 +7,142 @@
       </div>
     </template>
     <div class="maincontent">
-      <div class="left">
-        <a-form
-          :model="state.formData"
-          ref="formDataRef"
-          autocomplete="off"
-          :label-col="{ style: { width: '130px' } }"
-        >
-          <a-row>
-            <a-col :span="22">
-              <a-form-item label="来源">
-                {{ state.formData.planSource }}
-              </a-form-item>
-            </a-col>
-          </a-row>
-          <a-row>
-            <a-col :span="22">
-              <a-form-item label="预案类型">
-                {{
-                  eventList.find(
-                    (item) =>
-                      Number(item.value) === state.formData.preplanResourceId
-                  )?.label
-                }}
-              </a-form-item>
-            </a-col>
-          </a-row>
-          <a-row>
-            <a-col :span="22">
-              <a-form-item label="预案内容">
-                {{ state.formData.planContent }}
-              </a-form-item>
-            </a-col>
-          </a-row>
-          <a-row>
-            <a-col :span="22">
-              <a-form-item label="预案等级">
-                {{
-                  global
-                    .$getDictionary("planLevel")
-                    .find((item) => item.value === state.formData.planLevel)
-                    ?.label
-                }}
-              </a-form-item>
-            </a-col>
-          </a-row>
-          <a-row>
-            <a-col :span="22">
-              <a-form-item label="发生时间">
-                {{
-                  global
-                    .$dayjs(state.formData.planTime)
-                    .format("YYYY-MM-DD HH:mm:ss")
-                }}
-              </a-form-item>
-            </a-col>
-          </a-row>
-          <a-row>
-            <a-col :span="22">
-              <a-form-item label="状态">
-                {{
-                  global
-                    .$getDictionary("planStatus")
-                    .find((item) => item.value === state.formData.planStatus)
-                    ?.label
-                }}
-              </a-form-item>
-            </a-col>
-          </a-row>
-          <a-row>
-            <a-col :span="22">
-              <a-form-item label="附件">
-                <CommonUpload
-                  disabled
-                  :attachmentList="state.formData.attachmentList"
-                />
-              </a-form-item>
-            </a-col>
-          </a-row>
-        </a-form>
-      </div>
-      <div class="right">
-        <div class="date"></div>
-        <a-timeline mode="left">
-          <a-timeline-item v-for="(item, index) in state.planInfo">
-            <template #dot>
-              <span>{{ index + 1 }}</span>
-            </template>
-            <div class="node">
-              <div class="time">
-                {{ global.$dayjs(item.disposalTime).format("HH:mm") }}
-              </div>
-              <div class="content">
-                <div class="top">
-                  <span class="stepname">
-                    {{ item.stepName }}
-                  </span>
-                  <span class="status" v-if="index < currentStepOrder">
-                    已完成
-                  </span>
+      <a-row>
+        <a-col :span="10">
+          <div class="left">
+            <a-form
+              :model="state.formData"
+              ref="formDataRef"
+              autocomplete="off"
+              :label-col="{ style: { width: '130px' } }"
+            >
+              <a-row>
+                <a-col :span="22">
+                  <a-form-item label="来源">
+                    {{ state.formData.planSource }}
+                  </a-form-item>
+                </a-col>
+              </a-row>
+              <a-row>
+                <a-col :span="22">
+                  <a-form-item label="预案类型">
+                    {{
+                      eventList.find(
+                        (item) =>
+                          Number(item.value) ===
+                          state.formData.preplanResourceId
+                      )?.label
+                    }}
+                  </a-form-item>
+                </a-col>
+              </a-row>
+              <a-row>
+                <a-col :span="22">
+                  <a-form-item label="预案内容">
+                    {{ state.formData.planContent }}
+                  </a-form-item>
+                </a-col>
+              </a-row>
+              <a-row>
+                <a-col :span="22">
+                  <a-form-item label="预案等级">
+                    {{
+                      global
+                        .$getDictionary("planLevel")
+                        .find((item) => item.value === state.formData.planLevel)
+                        ?.label
+                    }}
+                  </a-form-item>
+                </a-col>
+              </a-row>
+              <a-row>
+                <a-col :span="22">
+                  <a-form-item label="发生时间">
+                    {{
+                      global
+                        .$dayjs(state.formData.planTime)
+                        .format("YYYY-MM-DD HH:mm:ss")
+                    }}
+                  </a-form-item>
+                </a-col>
+              </a-row>
+              <a-row>
+                <a-col :span="22">
+                  <a-form-item label="状态">
+                    {{
+                      global
+                        .$getDictionary("planStatus")
+                        .find(
+                          (item) => item.value === state.formData.planStatus
+                        )?.label
+                    }}
+                  </a-form-item>
+                </a-col>
+              </a-row>
+              <a-row>
+                <a-col :span="22">
+                  <a-form-item label="附件">
+                    <CommonUpload
+                      disabled
+                      :attachmentList="state.formData.attachmentList"
+                    />
+                  </a-form-item>
+                </a-col>
+              </a-row>
+            </a-form>
+          </div>
+        </a-col>
+        <a-col :span="14">
+          <div class="date"></div>
+          <vue-scroll class="right">
+            <a-timeline mode="left">
+              <a-timeline-item v-for="(item, index) in state.planInfo">
+                <template #dot>
+                  <span>{{ index + 1 }}</span>
+                </template>
+                <div class="node">
+                  <div class="time">
+                    {{ global.$dayjs(item.disposalTime).format("HH:mm") }}
+                  </div>
+                  <div class="content">
+                    <div class="top">
+                      <span class="stepname">
+                        {{ item.stepName }}
+                      </span>
+                      <span class="status" v-if="index < currentStepOrder">
+                        已完成
+                      </span>
+                    </div>
+                    <div class="stepcontent">
+                      {{ item.stepContent }}
+                    </div>
+                    <div
+                      v-if="
+                        !!state.fileList[index] &&
+                        !!state.fileList[index].attachmentList &&
+                        state.fileList[index].attachmentList.length > 0
+                      "
+                      class="attachment"
+                    >
+                      <CommonUpload
+                        disabled
+                        :attachmentList="state.fileList[index].attachmentList"
+                      />
+                    </div>
+                  </div>
                 </div>
-                <div class="stepcontent">
-                  {{ item.stepContent }}
-                </div>
-                <div
-                  v-if="
-                    !!state.fileList[index] &&
-                    !!state.fileList[index].attachmentList &&
-                    state.fileList[index].attachmentList.length > 0
-                  "
-                  class="attachment"
-                >
-                  <CommonUpload
-                    disabled
-                    :attachmentList="state.fileList[index].attachmentList"
-                  />
-                </div>
-              </div>
-            </div>
-          </a-timeline-item>
-        </a-timeline>
-      </div>
+              </a-timeline-item>
+            </a-timeline>
+          </vue-scroll>
+        </a-col>
+      </a-row>
     </div>
     <template #footer>
       <a-row>
         <a-col :span="22">
-          <template>
-            <a-button key="submit" type="primary" @click="handleClose">
-              关闭
-            </a-button>
-          </template>
+          <a-button key="submit" type="primary" @click="handleClose">
+            关闭
+          </a-button>
         </a-col>
       </a-row>
     </template>
@@ -261,6 +267,7 @@ const getStepData = () => {
   const planData: any = eventList.value.find((item: any) => {
     return Number(item.value) === props.rowData.preplanResourceId;
   });
+
   preplanPreplanGetStepPageRequest({
     preplanType: "应急预案处置",
     eventType: planData.label,
@@ -306,50 +313,58 @@ onBeforeUnmount(() => {});
 <style scoped lang="scss">
 .maincontent {
   display: flex;
+  width: 100%;
   align-items: start;
-  .left {
-    display: inline-block;
-    width: 7rem;
-  }
-
-  .right {
-    display: inline-block;
-    flex: 1;
-    .node {
-      display: flex;
-      width: 100%;
-      .time {
-        display: inline-block;
-        width: 1rem;
-      }
-      .content {
-        display: inline-block;
-        padding: 0.1rem 0.2rem;
-        flex: 1;
-        background-color: #0a1f44;
-        .top {
+  box-sizing: border-box;
+  .ant-row {
+    width: 100%;
+    .left {
+      display: inline-block;
+      width: 7rem;
+    }
+    .right {
+      display: inline-block;
+      flex: 1;
+      max-height: 9rem !important;
+      overflow-y: auto;
+      .ant-timeline {
+        // width: calc(100% - 1rem);
+        .node {
           display: flex;
-          .stepname {
-            flex: 1;
-            font-size: 0.23rem;
-            color: #fff;
-          }
-          .status {
+          .time {
             display: inline-block;
             width: 1rem;
-            text-align: right;
-            color: #00ffa8;
           }
-        }
-        .stepcontent {
-          margin: 0.1rem 0;
-          width: 5.5rem;
-          color: #d6eaff;
-        }
-        .attachment {
-          margin: 0.1rem 0 0 0;
-          padding: 0.1rem 0 0 0;
-          border-top: 1px solid #01447c;
+          .content {
+            display: inline-block;
+            padding: 0.1rem 0.2rem;
+            flex: 1;
+            background-color: #0a1f44;
+            .top {
+              display: flex;
+              .stepname {
+                flex: 1;
+                font-size: 0.23rem;
+                color: #fff;
+              }
+              .status {
+                display: inline-block;
+                width: 1rem;
+                text-align: right;
+                color: #00ffa8;
+              }
+            }
+            .stepcontent {
+              margin: 0.1rem 0;
+              width: 5.5rem;
+              color: #d6eaff;
+            }
+            .attachment {
+              margin: 0.1rem 0 0 0;
+              padding: 0.1rem 0 0 0;
+              border-top: 1px solid #01447c;
+            }
+          }
         }
       }
     }

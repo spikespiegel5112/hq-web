@@ -40,6 +40,7 @@
     <DisposalDialog
       :visible="state.dialogDisposalVisible"
       :rowData="state.currentRowData"
+      :dataModel="pageModel"
       mode="disposal"
       @onClose="handleCloseHandling"
       @onSubmit="handleSubmitDisposal"
@@ -234,7 +235,10 @@ const handleSubmit = (formData: any) => {
     })
     .catch((error: any) => {
       console.log(error);
-      global.$message.error("提交失败");
+      const message = global.$isNotEmpty(error.message)
+        ? error.message
+        : "提交失败";
+      global.$message.error(message);
     });
 };
 
@@ -283,6 +287,7 @@ const handleSubmitDisposal = (formData: any) => {
     })
     .catch((error: any) => {
       console.log(error);
+      debugger;
       global.$message.error("提交失败");
       state.dialogDisposalVisible = false;
     });
