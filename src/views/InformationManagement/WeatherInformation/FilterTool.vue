@@ -97,7 +97,7 @@ const handleSearch = () => {
 
 const handleReset = () => {
   formDataRef.value.resetFields();
-  emit("onReset", state.formData);
+  emit("onReset", {});
   state.dataTime = [];
 };
 

@@ -3,13 +3,12 @@
     <FilterTool @onSearch="handleSearch" @onReset="handleReset"></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
-        <a-button class="import">导入</a-button>
-        <a-button class="export">导出</a-button>
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
     <BaseTable
       :tableData="state.tableData"
+      :processedTableData="state.processedTableData"
       :dataModel="pageModel"
       :pagination="pagination"
       tabTable
@@ -150,6 +149,7 @@ const pageModel = ref([
 
 const state = reactive({
   tableData: [] as any[],
+  processedTableData: [] as any[],
   dialogVisible: false,
   dialogDisposalVisible: false,
   dialogMode: "",
@@ -172,6 +172,14 @@ const getData = () => {
       response = response.data;
       state.tableData = response.list;
       pagination.total = response.total;
+      state.processedTableData = response.list.map((item: any) => {
+        return {
+          ...item,
+          warningLevel: global
+            .$getDictionary("planLevel")
+            .find((item2: any) => item2.value === item.warningLevel)?.label,
+        };
+      });
     })
     .catch((error: any) => {
       console.log(error);
