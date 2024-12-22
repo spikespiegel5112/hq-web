@@ -56,7 +56,7 @@
         </template>
       </template>
       <template #expandedRowRender="{ record, index, indent, expanded }">
-        <PlanTable :planId="record.id" @onEdit="handleEdit" />
+        <PlanTable :planId="record.id" @onEdit="handleEditPlan" />
       </template>
       <template #expandColumnTitle>
         <span></span>
@@ -141,6 +141,7 @@ const state = reactive({
   dialogMode: "",
   currentRowData: {},
   tableDataPlan: [] as any[],
+  rowData: {},
 });
 
 let queryFormData = reactive({
@@ -167,16 +168,17 @@ const getData = () => {
     });
 };
 
-const handleEdit = (tableData: any) => {
+const handleEditPlan = (tableData: any) => {
   state.dialogVisible = true;
-  state.dialogMode = "edit";
+  state.dialogMode = "editPlan";
   state.planTableData = tableData;
+  
 };
 
-const handleReview = (rowData: any) => {
+const handleEdit = (rowData: any) => {
   state.dialogVisible = true;
-  state.dialogMode = "review";
-  state.currentRowData = rowData;
+  state.dialogMode = "editPlanName";
+  state.rowData = rowData;
 };
 
 const handleAdd = () => {

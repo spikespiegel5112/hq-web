@@ -15,7 +15,6 @@
       :model="state.formData"
       ref="formDataRef"
       autocomplete="off"
-      :disabled="props.mode === 'review'"
       :rules="rules"
       :label-col="{ style: { width: '120px' } }"
     >
@@ -23,60 +22,54 @@
         <a-col :span="22">
           <a-form-item name="eventType" label="事件类型">
             <a-input
-              v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.eventType"
               placeholder="请输入"
             >
             </a-input>
-            <div v-if="props.mode === 'review'">
-              {{ state.formData.eventType }}
-            </div>
           </a-form-item>
         </a-col>
       </a-row>
-      <a-row>
-        <a-col :span="24">
-          <a-row justify="end">
-            <a-col :span="3">
-              <a-space>
-                <a-button type="text" size="small" @click="handleAdd">
-                  <template #icon>
-                    <PlusCircleOutlined />
-                  </template>
-                </a-button>
-                <a-button type="text" size="small" @click="handleMinus">
-                  <template #icon>
-                    <MinusCircleOutlined />
-                  </template>
-                </a-button>
-              </a-space>
-            </a-col>
-          </a-row>
-          <a-row justify="center">
-            <a-col :span="22">
-              <a-table
-                :columns="columns"
-                :data-source="editableData.formData"
-                bordered
-                :pagination="false"
-              >
-                <template #bodyCell="{ text, record, index, column }">
-                  <template v-if="column.dataIndex === 'index'">
-                    {{ index + 1 }}
-                  </template>
-                  <template v-else>
-                    <a-input
-                      v-model:value="
-                        editableData.formData[index][column.dataIndex]
-                      "
-                    />
-                  </template>
+      <div v-if="['editPlan', 'add'].includes(props.mode)">
+        <a-row justify="end">
+          <a-col :span="3">
+            <a-space>
+              <a-button type="text" size="small" @click="handleAdd">
+                <template #icon>
+                  <PlusCircleOutlined />
                 </template>
-              </a-table>
-            </a-col>
-          </a-row>
-        </a-col>
-      </a-row>
+              </a-button>
+              <a-button type="text" size="small" @click="handleMinus">
+                <template #icon>
+                  <MinusCircleOutlined />
+                </template>
+              </a-button>
+            </a-space>
+          </a-col>
+        </a-row>
+        <a-row v-if="['editPlan', 'add'].includes(props.mode)" justify="center">
+          <a-col :span="22">
+            <a-table
+              :columns="columns"
+              :data-source="editableData.formData"
+              bordered
+              :pagination="false"
+            >
+              <template #bodyCell="{ text, record, index, column }">
+                <template v-if="column.dataIndex === 'index'">
+                  {{ index + 1 }}
+                </template>
+                <template v-else>
+                  <a-input
+                    v-model:value="
+                      editableData.formData[index][column.dataIndex]
+                    "
+                  />
+                </template>
+              </template>
+            </a-table>
+          </a-col>
+        </a-row>
+      </div>
     </a-form>
     <template #footer>
       <a-row>
@@ -170,13 +163,18 @@ const editableData = reactive({
       stepOrder: null,
       stepOrderDesc: "",
     },
-  ],
+  ] as any[],
 });
 
 const dialogTitle: ComputedRef<string> = computed(() => {
-  return global.$store.state.dictionary.dialogMode.find(
-    (item: any) => item.value === props.mode
-  )?.title;
+  let result = "";
+  if (props.mode === "add") {
+    result = "新增";
+  }
+  if (["editPlan", "editPlanName"].includes(props.mode)) {
+    result = "编辑";
+  }
+  return result
 });
 
 const rules: ComputedRef<RuleObject[]> = computed(() => {
