@@ -71,7 +71,7 @@
               v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.warningContent"
               placeholder="请输入"
-              :rows="3"
+              :rows="5"
               allow-clear
             >
             </a-textarea>
