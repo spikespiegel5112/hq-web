@@ -34,7 +34,7 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="eventTime" label="预案等级">
+          <a-form-item label="预案等级">
             {{
               global
                 .$getDictionary("planLevel")
@@ -225,7 +225,7 @@ watch(
         ...state.formData,
         id: props.rowData.id,
         emergencyPlanId: props.rowData.id,
-        eventTime: global.$dayjs(props.rowData.eventTime),
+        // eventTime: global.$dayjs(props.rowData.eventTime),
       };
     }
   }

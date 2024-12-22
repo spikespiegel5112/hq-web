@@ -13,11 +13,7 @@
       :dataModel="pageModel"
       :pagination="pagination"
       tabTable
-      @onEdit="handleEdit"
-      @onReview="handleReview"
-      @onChangePage="handleChangePage"
-      @onDelete="handleDelete"
-      @onDisposal="handleDisposal"
+      @onIssueWarning="handleEdit"
     />
     <EditDialog
       :visible="state.dialogVisible"
@@ -73,52 +69,65 @@ const pageModel = ref([
     exportVisible: false,
   },
   {
-    label: "来源",
-    name: "externalSource",
+    label: "日期",
+    name: "dataTime",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+    width: "1rem",
+  },
+  {
+    label: "天气来源",
+    name: "weatherSource",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+    width: "2rem",
+  },
+  {
+    label: "温度（℃）",
+    name: "temperature",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+    width: "1rem",
+  },
+  {
+    label: "天气",
+    name: "weather",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+    width: "1rem",
+  },
+  {
+    label: "预警类型",
+    name: "warningType",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "类型",
-    name: "externalType",
+    label: "预警内容",
+    name: "warningContent",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "上报时间",
-    name: "externalTime",
+    label: "级别",
+    name: "warningLevel",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
-  },
-  {
-    label: "内容",
-    name: "externalContent",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
-    label: "处置时间",
-    name: "handlingTime",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
-    label: "处置状态",
-    name: "handlingStatus",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
+    width: "1rem",
   },
   {
     label: "附件",
@@ -127,6 +136,7 @@ const pageModel = ref([
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
+    width: "1rem",
   },
   {
     label: "操作",
@@ -134,7 +144,7 @@ const pageModel = ref([
     tableVisible: true,
     exportVisible: false,
     fixed: "right",
-    actions: ["edit", "review", "delete", "disposal"],
+    actions: ["issueWarning"],
   },
 ]);
 
@@ -200,7 +210,7 @@ const handleClose = () => {
 };
 
 const handleSubmit = (formData: any) => {
-  infoManagementExternalInfoSaveRequest(formData)
+  infoManagementWeatherInfoPublishWarningRequest(formData)
     .then((response: any) => {
       global.$message.success("提交成功");
       getData();

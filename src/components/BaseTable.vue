@@ -39,7 +39,7 @@
             <span
               v-for="(action, index) in item.actions"
               :class="
-                state.actionDictionary.find((item2:any) => item2.name === action).color
+                state.actionDictionary.find((item2:any) => item2.name === action)?.color
               "
             >
               <a-divider
@@ -57,6 +57,18 @@
                 }}
               </a-button>
             </span>
+          </div>
+          <div v-else-if="!!item.tagConfig" class="taglist">
+            <!-- {{ item.tagConfig.colorList }} -->
+            <a-tag
+              :color="
+                item.tagConfig.colorList.find(
+                  (item2) => item2.value === scope.record[item.name]
+                )?.color
+              "
+            >
+              {{ scope.record[item.name] }}
+            </a-tag>
           </div>
           <div v-else>
             {{ scope.record[item.name] }}
@@ -89,12 +101,13 @@ import {
   nextTick,
 } from "vue";
 
-const emit = defineEmits<{
+let emit = defineEmits<{
   (e: "onEdit", rowData: any): void;
   (e: "onReview", rowData: any): void;
   (e: "onChangePage", pagination: object): void;
   (e: "onDelete", id: number, row: object): void;
   (e: "onDisposal", row: object): void;
+  (e: "onIssueWarning", row: object): void;
 }>();
 
 const props = defineProps({
@@ -169,6 +182,11 @@ const state = reactive({
     {
       label: "处置",
       name: "disposal",
+      color: "",
+    },
+    {
+      label: "发布预警",
+      name: "issueWarning",
       color: "",
     },
     {
@@ -267,19 +285,14 @@ const handleAction = (action: any, scope: any) => {
   if (action === "download") {
     // this.$emit("onDownload", row);
     return;
-  }
-  if (action === "preview") {
+  } else if (action === "preview") {
     // this.$emit("onPreview", row);
     return;
-  }
-
-  if (action === "review") {
+  } else if (action === "review") {
     emit("onReview", state.originalTableData[scope.index]);
-  }
-  if (action === "edit") {
+  } else if (action === "edit") {
     emit("onEdit", state.originalTableData[scope.index]);
-  }
-  if (action === "delete") {
+  } else if (action === "delete") {
     global.$confirm({
       title: "提示",
       content: "确认删除？",
@@ -287,9 +300,10 @@ const handleAction = (action: any, scope: any) => {
         emit("onDelete", row.id, state.originalTableData[scope.index]);
       },
     });
-  }
-  if (action === "disposal" || action === "eventDisposal") {
+  } else if (action === "disposal" || action === "eventDisposal") {
     emit("onDisposal", state.originalTableData[scope.index]);
+  } else if (action === "issueWarning") {
+    emit("onIssueWarning", state.originalTableData[scope.index]);
   }
 };
 
@@ -309,6 +323,7 @@ onMounted(() => {});
 <style scoped lang="scss">
 .common_basetable_wrapper {
   height: 100%;
+  // height: tableBodyHeight;
   background-size: 100%;
   background-repeat: no-repeat;
   background-position: 0 0.1rem;
@@ -346,6 +361,12 @@ onMounted(() => {});
                 width: 0.3rem;
               }
             }
+            .taglist {
+            }
+            .operation {
+              span {
+              }
+            }
           }
 
           &.table-striped,
@@ -362,11 +383,6 @@ onMounted(() => {});
           }
           &.table-striped {
           }
-          .ant-table-cell {
-            padding: 0.05rem;
-            .operation {
-            }
-          }
         }
       }
       .ant-table-thead {
@@ -382,6 +398,24 @@ onMounted(() => {});
   .ant-pagination {
     margin: 0.2rem 0 0.1rem 0;
     text-align: right;
+  }
+  .taglist {
+    .ant-tag {
+      color: #fff;
+      font-size: 0.19rem;
+      &.ant-tag-warning {
+        border-color: #f5a96c;
+        background-color: rgb(245, 169, 108, 0.2);
+      }
+      &.ant-tag-error {
+        border-color: #f56c6c;
+        background-color: rgb(245, 108, 108, 0.2);
+      }
+      &.ant-tag-error {
+        border-color: green;
+        background-color: rgb(0, 128, 0, 0.2);
+      }
+    }
   }
 }
 </style>

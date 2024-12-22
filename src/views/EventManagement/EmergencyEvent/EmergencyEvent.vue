@@ -70,6 +70,7 @@ import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
 import DisposalDialog from "./DisposalDialog.vue";
 import ReviewDialog from "./ReviewDialog.vue";
+import dictionary from "../../../store/modules/dictionary";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -152,6 +153,15 @@ const pageModel = ref([
     tableVisible: true,
     formVisible: false,
     exportVisible: false,
+    tagConfig: {
+      val: "label",
+      dictionary: global.$store.state.dictionary.eventStatus,
+      colorList: [
+        { value: "未处理", color: "error" },
+        { value: "处理中", color: "warning" },
+        { value: "已处置", color: "success" },
+      ],
+    },
     width: "1rem",
   },
   {

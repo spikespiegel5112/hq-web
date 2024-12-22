@@ -274,7 +274,7 @@ const handleSubmitDisposal = (formData: any) => {
     .format("YYYY-MM-DD HH:mm:ss");
   planManagementEmergencyPlanSaveDisposalRequest({
     ...formData,
-    // disposalTime,
+    disposalTime,
   })
     .then((response: any) => {
       global.$message.success("提交成功");

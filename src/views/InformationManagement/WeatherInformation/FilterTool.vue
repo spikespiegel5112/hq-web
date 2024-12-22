@@ -5,9 +5,18 @@
         <a-col :span="20">
           <a-row :gutter="20">
             <a-col :span="8">
-              <a-form-item name="externalTime" label="信息上报时间">
+              <a-form-item name="dataTime" label="信息上报时间">
                 <a-range-picker
-                  v-model:value="state.externalTime"
+                  v-model:value="state.dataTime"
+                  format="YYYY-MM-DD"
+                  @change="handleChangeTime1"
+                />
+              </a-form-item>
+            </a-col>
+            <a-col :span="8">
+              <a-form-item name="dataTime" label="信息上报时间">
+                <a-range-picker
+                  v-model:value="state.dataTime"
                   format="YYYY-MM-DD"
                   @change="handleChangeTime1"
                 />
@@ -55,20 +64,19 @@ const formDataRef: any = ref(null);
 
 const state = reactive({
   formData: {
-    externalSource: "",
-    externalTimeEnd: "",
-    externalTimeStart: "",
-    externalType: "",
+    dataTimeEnd: "",
+    dataTimeStart: "",
+    warningType: "",
   },
-  externalTime: [] as any[],
+  dataTime: [] as any[],
 });
 
 const handleChangeTime1 = (value: any) => {
-  state.formData.externalTimeStart = global
+  state.formData.dataTimeStart = global
     .$dayjs(value[0])
     .format("YYYY-MM-DD HH:mm:ss");
 
-  state.formData.externalTimeEnd = global
+  state.formData.dataTimeEnd = global
     .$dayjs(value[1])
     .format("YYYY-MM-DD HH:mm:ss");
 };
@@ -80,7 +88,7 @@ const handleSearch = () => {
 const handleReset = () => {
   formDataRef.value.resetFields();
   emit("onReset", state.formData);
-  state.externalTime = [];
+  state.dataTime = [];
 };
 
 onMounted(async () => {});

@@ -12,47 +12,12 @@
       autocomplete="off"
       :label-col="{ style: { width: '130px' } }"
     >
-      <a-row>
-        <a-col :span="22">
-          <a-form-item name="externalSource" label="来源">
-            <a-select
-              v-if="global.$checkEditable(props.mode)"
-              v-model="state.formData.externalSource"
-              placeholder="请选择"
-            >
-              <a-select-option
-                v-for="item in global.$getDictionary(
-                  'external_info_external_source'
-                )"
-                :value="item.value"
-              >
-                {{ item.label }}
-              </a-select-option>
-            </a-select>
-            <template v-if="props.mode === 'review'">
-              {{ global.$getDictionary('external_info_external_source').find((item:any)=>item.value===state.formData.externalSource)?.label }}
-            </template>
-          </a-form-item>
-        </a-col>
-      </a-row>
+      <!-- temperature: "",
+    warningType: "",
+    weather: "",
+    weatherId: "",
+    weatherSource: "", -->
 
-      <a-row>
-        <a-col :span="22">
-          <a-form-item name="externalTime" label="上报时间">
-            <a-date-picker
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.externalTime"
-              format="YYYY-MM-DD HH:mm:ss"
-              @change="handleChangeTime1"
-            ></a-date-picker>
-            <template v-if="props.mode === 'review'">
-              {{
-                global.$dayjs(state.formData.externalTime).format("YYYY-MM-DD")
-              }}
-            </template>
-          </a-form-item>
-        </a-col>
-      </a-row>
       <a-row>
         <a-col :span="22">
           <a-form-item name="externalType" label="类型">
@@ -63,7 +28,7 @@
             >
               <a-select-option
                 v-for="item in global.$getDictionary(
-                  'external_info_external_type'
+                  'weather_warning_warning_type_enum'
                 )"
                 :value="item.value"
               >
@@ -78,16 +43,39 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="externalContent" label="内容">
+          <a-form-item name="warningLevel" label="级别">
+            <a-select
+              v-if="global.$checkEditable(props.mode)"
+              v-model="state.formData.warningLevel"
+              placeholder="请选择"
+            >
+              <a-select-option
+                v-for="item in global.$getDictionary(
+                  'weather_warning_warning_level'
+                )"
+                :value="item.value"
+              >
+                {{ item.label }}
+              </a-select-option>
+            </a-select>
+            <template v-if="props.mode === 'review'">
+              {{ global.$getDictionary('weather_warning_warning_level').find((item:any)=>item.value===state.formData.externalType)?.label }}
+            </template>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="warningContent" label="内容">
             <a-textarea
               v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.externalContent"
+              v-model:value="state.formData.warningContent"
               placeholder="请输入"
               :rows="3"
             >
             </a-textarea>
             <template v-if="props.mode === 'review'">
-              {{ state.formData.externalContent }}
+              {{ state.formData.warningContent }}
             </template>
           </a-form-item>
         </a-col>
@@ -150,15 +138,15 @@ const state = reactive({
   visible: false,
   formData: {
     id: null as number | null | undefined,
-    attachmentAssociationCode: "",
-    externalContent: "",
-    externalSource: "",
-    externalTime: "",
-    externalType: "",
-    handlingContent: "",
-    handlingStatus: null,
-    handlingTime: "",
-  },
+    dataTime: "",
+    temperature: "",
+    warningContent: "",
+    warningLevel: "",
+    warningType: "",
+    weather: "",
+    weatherId: "",
+    weatherSource: "",
+  } as any,
 });
 
 const dialogTitle: ComputedRef<string> = computed(() => {
@@ -173,14 +161,11 @@ watch(
     state.visible = newValue;
     if (!!newValue) {
       await nextTick();
-      if (["edit", "review", 'disposal'].some((item) => item === props.mode)) {
+      if (["edit", "review", "disposal"].some((item) => item === props.mode)) {
         let rowData = JSON.parse(JSON.stringify(props.rowData));
         rowData = {
           ...rowData,
-          externalTime: global.$dayjs(
-            rowData.externalTime,
-            "YYYY-MM-DD HH:mm:ss"
-          ),
+          dataTime: global.$dayjs(rowData.dataTime, "YYYY-MM-DD"),
         };
         Object.keys(state.formData).forEach((item: string) => {
           state.formData[item] = !!rowData[item] ? rowData[item] : undefined;
@@ -202,12 +187,16 @@ const handleSubmit = () => {
       if (props.mode === "add") {
         state.formData.id = undefined;
       }
-      const externalTime = global
-        .$dayjs(state.formData.externalTime)
+      const dataTime = global
+        .$dayjs(props.rowData.dataTime)
         .format("YYYY-MM-DD HH:mm:ss");
       emit("onSubmit", {
         ...state.formData,
-        externalTime,
+        dataTime:props.rowData.dataTime,
+        temperature: props.rowData.temperature,
+        weather: props.rowData.weather,
+        weatherId: props.rowData.weatherId,
+        weatherSource: props.rowData.weatherSource,
       });
       handleClose();
     })

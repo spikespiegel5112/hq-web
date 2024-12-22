@@ -42,7 +42,7 @@ import {
 } from "vue";
 
 import {
-  planManagementEmergencyPlanGetPageRequest,
+  planManagementEmergencyPlanGetRecordPageRequest,
   planManagementEmergencyPlanDeleteRequest,
   planManagementEmergencyPlanSaveRequest,
 } from "@/api/management";
@@ -157,7 +157,7 @@ const eventList = computed(() => {
 
 const getData = () => {
   pagination.total = undefined;
-  planManagementEmergencyPlanGetPageRequest({
+  planManagementEmergencyPlanGetRecordPageRequest({
     ...queryFormData,
     ...pagination,
   })
