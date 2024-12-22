@@ -21,7 +21,7 @@
             <a-col :span="6">
               <a-form-item name="complaintType" label="投诉类型">
                 <a-select
-                  v-model="state.formData.complaintType"
+                  v-model:value="state.formData.complaintType"
                   placeholder="请输入"
                 >
                   <a-select-option

@@ -7,7 +7,7 @@
             <a-col :span="6">
               <a-form-item name="externalSource" label="外部信息来源">
                 <a-select
-                  v-model="state.formData.externalSource"
+                  v-model:value="state.formData.externalSource"
                   placeholder="情选择"
                 >
                   <a-select-option
@@ -24,7 +24,7 @@
             <a-col :span="6">
               <a-form-item name="externalType" label="信息类型">
                 <a-select
-                  v-model="state.formData.externalType"
+                  v-model:value="state.formData.externalType"
                   placeholder="情选择"
                   allow-clear
                 >

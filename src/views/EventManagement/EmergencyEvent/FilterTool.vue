@@ -7,7 +7,7 @@
             <a-col :span="6">
               <a-form-item name="manageRegion" label="管理区域">
                 <a-select
-                  v-model="state.formData.manageRegion"
+                  v-model:value="state.formData.manageRegion"
                   placeholder="请选择"
                   allow-clear
                 >
@@ -23,14 +23,17 @@
             </a-col>
 
             <a-col :span="5">
-              <a-form-item name="eventType" label="事件类型">
+              <a-form-item name="eventType" label="事件状态">
                 <a-select
-                  v-model="state.formData.eventType"
+                  v-model:value="state.formData.eventType"
                   placeholder="请选择"
                   allow-clear
                 >
                   <a-select-option
-                    v-for="item in eventList"
+                    v-for="item in global.$getDictionary(
+                      'disposalStatus',
+                      'string'
+                    )"
                     :value="item.value"
                   >
                     {{ item.label }}

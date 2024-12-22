@@ -7,7 +7,7 @@
             <a-col :span="6">
               <a-form-item name="manageRegion" label="管理区域">
                 <a-select
-                  v-model="state.formData.manageRegion"
+                  v-model:value="state.formData.manageRegion"
                   placeholder="请输入"
                 >
                   <a-select-option
@@ -24,7 +24,7 @@
             <a-col :span="6">
               <a-form-item name="eventType" label="事件类型">
                 <a-select
-                  v-model="state.formData.eventType"
+                  v-model:value="state.formData.eventType"
                   placeholder="请选择"
                   allow-clear
                 >
