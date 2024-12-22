@@ -229,12 +229,21 @@ watch(
     state.visible = newValue;
     if (!!newValue) {
       await nextTick();
+      const rowData = JSON.parse(JSON.stringify(props.rowData));
 
-      if (["editPlan", "editPlanName"].some((item) => item === props.mode)) {
-        const rowData = JSON.parse(JSON.stringify(props.rowData));
-
+      if (["editPlan", "editPlanName"].includes(props.mode)) {
+        state.formData.preplanResource = {
+          eventType: rowData.eventType,
+          preplanType: rowData.preplanType,
+          id: rowData.id,
+        };
         state.formData.stepList = props.tableData;
-        state.formData.preplanResource.eventType = rowData.eventType;
+      }
+
+      if (props.mode === "add") {
+        state.formData.preplanResource = {
+          preplanType: props.preplanType,
+        };
       }
     }
   }
@@ -254,7 +263,7 @@ const handleSubmit = () => {
       item.id = undefined;
     });
   }
-  state.formData.preplanResource.preplanType = props.preplanType;
+
   preplanPreplanSaveWithPreplanStepRequest({
     ...state.formData,
   })

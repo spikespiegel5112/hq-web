@@ -56,7 +56,10 @@
         </template>
       </template>
       <template #expandedRowRender="{ record, index, indent, expanded }">
-        <PlanTable :planId="record.id" />
+        <PlanTable
+          :planId="record.id"
+          @onEdit="handleEditPlan($event, record)"
+        />
       </template>
       <template #expandColumnTitle>
         <span></span>
@@ -66,7 +69,9 @@
       :visible="state.dialogVisible"
       :mode="state.dialogMode"
       :dataModel="pageModel"
-      :rowData="state.currentRowData"
+      :preplanType="queryFormData.preplanType"
+      :rowData="state.currentEventTypeData"
+      :tableData="state.planTableData"
       @onClose="handleClose"
       @onSubmit="handleSubmit"
     ></EditDialog>
@@ -99,6 +104,11 @@ import PlanTable from "./PlanTable.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
+
+const emit = defineEmits<{
+  (e: "onClose"): void;
+  (e: "onSubmit", formData: any): void;
+}>();
 
 const pageModel = ref([
   // {
@@ -133,8 +143,9 @@ const state = reactive({
   planTableData: [] as any[],
   dialogVisible: false,
   dialogMode: "",
-  currentRowData: {},
+  currentEventTypeData: {},
   tableDataPlan: [] as any[],
+  rowData: {},
 });
 
 let queryFormData = reactive({
@@ -161,16 +172,17 @@ const getData = () => {
     });
 };
 
-const handleEdit = (rowData: any) => {
+const handleEditPlan = (tableData: any, record: any) => {
   state.dialogVisible = true;
-  state.dialogMode = "edit";
-  state.currentRowData = rowData;
+  state.dialogMode = "editPlan";
+  state.planTableData = tableData;
+  state.currentEventTypeData = record;
 };
 
-const handleReview = (rowData: any) => {
+const handleEdit = (rowData: any) => {
   state.dialogVisible = true;
-  state.dialogMode = "review";
-  state.currentRowData = rowData;
+  state.dialogMode = "editPlanName";
+  state.rowData = rowData;
 };
 
 const handleAdd = () => {
@@ -190,6 +202,7 @@ const handleReset = (formData: object) => {
 
 const handleClose = () => {
   state.dialogVisible = false;
+  getData();
 };
 
 const handleSubmit = (formData: any) => {
@@ -257,18 +270,15 @@ const handleExpandedRowsChange = (expandedRows: any) => {
 const handleAction = (action: any, record: any) => {
   switch (action) {
     case "add":
-      state.dialogVisible = true;
-      state.dialogMode = "add";
+      handleAdd();
       break;
     case "edit":
-      state.dialogVisible = true;
-      state.dialogMode = "edit";
-      state.currentRowData = record;
+      handleEdit(record);
       break;
     case "review":
       state.dialogVisible = true;
       state.dialogMode = "review";
-      state.currentRowData = record;
+      state.currentEventTypeData = record;
       break;
     case "delete":
       global.$confirm({
@@ -280,6 +290,7 @@ const handleAction = (action: any, record: any) => {
           })
             .then((response: any) => {
               getData();
+              global.$message.success("删除成功");
             })
             .catch((error: any) => {
               console.log(error);
