@@ -240,7 +240,7 @@ const getData = () => {
   state.formData.eventType = props.rowData.eventType;
   state.formData.seId = props.rowData.id;
   eventManageSuddenEventGetDisposalRequest({
-    seId: props.rowData.seId,
+    seId: props.rowData.id,
   })
     .then(async (response: any) => {
       response = response.data;
