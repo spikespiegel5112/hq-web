@@ -89,7 +89,7 @@ const emit = defineEmits<{
 
 const props = defineProps({
   visible: { type: Boolean, required: true, default: false },
-  mode: { type: String, required: true, default: "" },
+  mode: { type: [String, null], required: true, default: null },
   dataModel: { type: Array, required: true, default: () => [] as any[] },
 });
 
@@ -97,11 +97,11 @@ const state: UnwrapRef<any> = reactive({
   visible: false,
   formData: {
     id: null as number | null | undefined,
-    code: "",
-    dicName: "",
-    label: "",
-    remark: "",
-    value: "",
+    code: null,
+    dicName: null,
+    label: null,
+    remark: null,
+    value: null,
   },
 });
 

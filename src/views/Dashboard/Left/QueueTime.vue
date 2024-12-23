@@ -37,7 +37,7 @@ for (let index = 0; index < 4; index++) {
 const props = defineProps({
   text: {
     type: String,
-    default: "",
+    default: null,
     required: false,
   },
 });
@@ -58,7 +58,7 @@ const initChart = () => {
 const setOption: EChartsOption = () => {
   const option = {
     title: {
-      text: "",
+      text: null,
     },
     tooltip: {
       trigger: "axis",

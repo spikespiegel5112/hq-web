@@ -62,7 +62,7 @@ const props = defineProps({
 
   title: {
     type: String,
-    default: "",
+    default: null,
     required: false,
   },
 });
@@ -71,8 +71,8 @@ const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
 const state = reactive({
-  currentTime: "",
-  currentDate: "",
+  currentTime: null,
+  currentDate: null,
   clientWidth: 0,
   bannerInfo: {} as any,
 });

@@ -144,7 +144,7 @@ const emit = defineEmits<{
 
 const props = defineProps({
   visible: { type: Boolean, required: true, default: false },
-  mode: { type: String, required: true, default: "" },
+  mode: { type: [String, null], required: true, default: null },
   rowData: { type: Object, required: true, default: () => {} },
   dataModel: { type: Array, required: true, default: () => [] },
 });
@@ -152,17 +152,17 @@ const props = defineProps({
 let state = reactive({
   visible: false,
   planInfo: [] as any[],
-  eventType: "",
+  eventType: null,
   attachmentList: [
     {
-      associationCode: "",
-      attachmentName: "",
-      attachmentPath: "",
-      createBy: "",
-      createTime: "",
+      associationCode: null,
+      attachmentName: null,
+      attachmentPath: null,
+      createBy: null,
+      createTime: null,
       id: null,
-      updateBy: "",
-      updateTime: "",
+      updateBy: null,
+      updateTime: null,
     },
   ],
   formData: {
@@ -171,12 +171,12 @@ let state = reactive({
 
     emergencyPlanId: null,
 
-    disposalTime: "",
-    stepContent: "",
-    stepName: "",
-    stepOrder: "",
-    stepOrderDesc: "",
-    attachmentAssociationCode: "",
+    disposalTime: null,
+    stepContent: null,
+    stepName: null,
+    stepOrder: null,
+    stepOrderDesc: null,
+    attachmentAssociationCode: null,
   } as any,
   fileList: [] as any,
   disposalData: {} as any,
@@ -258,7 +258,7 @@ watch(
         ...formData,
         emergencyPlanId: props.rowData.id,
         attachmentList: [],
-        stepContent: "",
+        stepContent: null,
         // eventTime: global.$dayjs(props.rowData.eventTime),
       };
     }

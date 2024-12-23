@@ -180,7 +180,7 @@ const emit = defineEmits<{
 
 const props = defineProps({
   visible: { type: Boolean, required: true, default: false },
-  mode: { type: String, required: true, default: "" },
+  mode: { type: [String, null], required: true, default: null },
   rowData: { type: Object, required: true, default: () => {} },
 });
 
@@ -190,12 +190,12 @@ const state = reactive({
   formData: {
     id: null as number | null | undefined,
     attachmentList: [] as any[],
-    eventCode: "",
-    eventContent: "",
-    eventLocation: "",
+    eventCode: null,
+    eventContent: null,
+    eventLocation: null,
     eventStatus: null,
-    eventTime: "",
-    eventType: "",
+    eventTime: null,
+    eventType: null,
     eventLevel: null,
   } as any,
   fileList: [] as any,

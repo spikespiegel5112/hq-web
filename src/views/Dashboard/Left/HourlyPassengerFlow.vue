@@ -41,7 +41,7 @@ let dataDictionary = [
 const props = defineProps({
   text: {
     type: String,
-    default: "",
+    default: null,
     required: false,
   },
 });
@@ -52,7 +52,7 @@ const state = reactive({
   dispersedParkingPassengerCount: null,
   dispersedMetroPassengerCount: null,
   dispersedOthersPassengerCount: null,
-  statisticalDate: "",
+  statisticalDate: null,
   statisticalBeginHour: null,
 });
 

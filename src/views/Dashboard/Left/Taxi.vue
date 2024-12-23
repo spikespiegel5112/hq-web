@@ -99,7 +99,7 @@ type EChartsOption = global.$echarts.EChartsOption;
 const props = defineProps({
   text: {
     type: String,
-    default: "",
+    default: null,
     required: false,
   },
 });
@@ -109,13 +109,13 @@ const state = reactive({
   northFirstTaxiBoardingPointWaitingTime: null,
   northSecondTaxiBoardingPointWaitingCount: null,
   northSecondTaxiBoardingPointWaitingTime: null,
-  northTaxiParkingLotArrivalSituation: "",
+  northTaxiParkingLotArrivalSituation: null,
   northTaxiParkingLotParkingCount: null,
   southFirstTaxiBoardingPointWaitingCount: null,
   southFirstTaxiBoardingPointWaitingTime: null,
   southSecondTaxiBoardingPointWaitingCount: null,
   southSecondTaxiBoardingPointWaitingTime: null,
-  southTaxiParkingLotArrivalSituation: "",
+  southTaxiParkingLotArrivalSituation: null,
   southTaxiParkingLotParkingCount: null,
 }) as any;
 

@@ -104,11 +104,11 @@ const formDataRef: any = ref(null);
 
 const state = reactive({
   formData: {
-    eventTimeBegin: "",
-    eventTimeEnd: "",
-    eventType: "",
-    eventLocation: "",
-    manageRegion: "",
+    eventTimeBegin: null,
+    eventTimeEnd: null,
+    eventType: null,
+    eventLocation: null,
+    manageRegion: null,
   } as any,
   eventTime: [] as any,
 });

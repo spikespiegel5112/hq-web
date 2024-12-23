@@ -151,29 +151,29 @@ const props = defineProps({
 let state = reactive({
   visible: false,
   planInfo: [] as any[],
-  eventType: "",
+  eventType: null,
   attachmentList: [
     {
-      associationCode: "",
-      attachmentName: "",
-      attachmentPath: "",
-      createBy: "",
-      createTime: "",
+      associationCode: null,
+      attachmentName: null,
+      attachmentPath: null,
+      createBy: null,
+      createTime: null,
       id: 0,
-      updateBy: "",
-      updateTime: "",
+      updateBy: null,
+      updateTime: null,
     },
   ],
   formData: {
     id: null as number | null | undefined,
     attachmentList: [] as any[],
 
-    disposalTime: "",
+    disposalTime: null,
     seId: null,
-    stepContent: "",
-    stepName: "",
-    stepOrder: "",
-    stepOrderDesc: "",
+    stepContent: null,
+    stepName: null,
+    stepOrder: null,
+    stepOrderDesc: null,
   } as any,
   fileList: [] as any,
   disposalData: {} as any,
@@ -216,7 +216,7 @@ watch(
         ...formData,
         eventTime: global.$dayjs(formData.eventTime),
         attachmentList: [],
-        stepContent: "",
+        stepContent: null,
       };
     }
   }

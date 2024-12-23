@@ -141,7 +141,7 @@ const emit = defineEmits<{
 
 const props = defineProps({
   visible: { type: Boolean, required: true, default: false },
-  mode: { type: String, required: true, default: "" },
+  mode: { type: [String, null], required: true, default: null },
   dataModel: { type: Array, required: true, default: () => [] as any[] },
   rowData: { type: Object, required: true, default: () => {} },
   dictionaryNameList: {
@@ -156,9 +156,9 @@ const state: UnwrapRef<any> = reactive({
   formData: {
     id: null as number | null | undefined,
     dicid: null as number | null | undefined,
-    label: "",
-    remark: "",
-    value: "",
+    label: null,
+    remark: null,
+    value: null,
   },
 });
 

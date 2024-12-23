@@ -12,11 +12,11 @@
       autocomplete="off"
       :label-col="{ style: { width: '130px' } }"
     >
-      <!-- temperature: "",
-    warningType: "",
-    weather: "",
-    weatherId: "",
-    weatherSource: "", -->
+      <!-- temperature: null,
+    warningType: null,
+    weather: null,
+    weatherId: null,
+    weatherSource: null, -->
 
       <a-row>
         <a-col :span="22">
@@ -131,7 +131,7 @@ const emit = defineEmits<{
 
 const props = defineProps({
   visible: { type: Boolean, required: true, default: false },
-  mode: { type: String, required: true, default: "" },
+  mode: { type: [String, null], required: true, default: null },
   rowData: { type: Object, required: true, default: () => {} },
 });
 
@@ -139,14 +139,14 @@ const state = reactive({
   visible: false,
   formData: {
     id: null as number | null | undefined,
-    dataTime: "",
-    temperature: "",
-    warningContent: "",
+    dataTime: null,
+    temperature: null,
+    warningContent: null,
     warningLevel: null,
-    warningType: "",
-    weather: "",
-    weatherId: "",
-    weatherSource: "",
+    warningType: null,
+    weather: null,
+    weatherId: null,
+    weatherSource: null,
   } as any,
 });
 

@@ -147,47 +147,47 @@ const state = reactive({
     {
       label: "下载",
       name: "download",
-      color: "",
+      color: null,
     },
     {
       label: "预览",
       name: "preview",
-      color: "",
+      color: null,
     },
     {
       label: "定位",
       name: "locate",
-      color: "",
+      color: null,
     },
     {
       label: "详情",
       name: "review",
-      color: "",
+      color: null,
     },
     {
       label: "详情",
       name: "detail",
-      color: "",
+      color: null,
     },
     {
       label: "编辑",
       name: "edit",
-      color: "",
+      color: null,
     },
     {
       label: "事件处置",
       name: "eventDisposal",
-      color: "",
+      color: null,
     },
     {
       label: "处置",
       name: "disposal",
-      color: "",
+      color: null,
     },
     {
       label: "发布预警",
       name: "issueWarning",
-      color: "",
+      color: null,
     },
     {
       label: "删除",

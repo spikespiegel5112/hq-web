@@ -27,7 +27,7 @@ import {
 const props = defineProps({
   title: {
     type: String,
-    default: "",
+    default: null,
     required: false,
   },
   attachmentList: { type: Array, required: true, default: () => [] as any[] },

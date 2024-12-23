@@ -34,7 +34,7 @@ const dataDictionary = [] as any[];
 const props = defineProps({
   text: {
     type: String,
-    default: "",
+    default: null,
     required: false,
   },
 });

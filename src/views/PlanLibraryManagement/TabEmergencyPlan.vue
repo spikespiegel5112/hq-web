@@ -25,6 +25,25 @@
       @expandedRowsChange="handleExpandedRowsChange"
       @change="handleChangePage"
     >
+      <template v-slot:expandIcon="props">
+        <a-button type="link">
+          <CaretRightOutlined
+            :style="
+              props.record.expand
+                ? {
+                    transform: 'rotateZ(90deg)',
+                    transition: 'all 0.2s',
+                    color: '#fff',
+                  }
+                : {
+                    transform: 'rotateZ(0deg)',
+                    transition: 'all 0.2s',
+                    color: '#fff',
+                  }
+            "
+          />
+        </a-button>
+      </template>
       <template
         #bodyCell="{ text, record, index, column }"
         :style="{
@@ -98,6 +117,9 @@ import {
   preplanPreplanSaveRequest,
   preplanPreplanGetStepPageRequest,
 } from "@/api/management";
+
+import { CaretRightOutlined } from "@ant-design/icons-vue";
+
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
 import PlanTable from "./PlanTable.vue";
@@ -142,7 +164,7 @@ const state = reactive({
   tableData: [] as any[],
   planTableData: [] as any[],
   dialogVisible: false,
-  dialogMode: "",
+  dialogMode: null,
   currentEventTypeData: {},
   tableDataPlan: [] as any[],
   rowData: {},
@@ -238,10 +260,7 @@ const transformPageModel: any = () => {
 };
 
 const handleExpand = (expand: boolean, row: any) => {
-  console.log(row);
-  if (!!expand) {
-    // getDataPlan(row.id);
-  }
+  row.expand = expand;
 };
 
 const getDataPlan = (planId: number) => {

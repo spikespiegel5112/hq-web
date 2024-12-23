@@ -20,7 +20,7 @@ import {
 const props = defineProps({
   title: {
     type: String,
-    default: "",
+    default: null,
     required: false,
   },
 });

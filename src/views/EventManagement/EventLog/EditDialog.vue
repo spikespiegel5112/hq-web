@@ -168,7 +168,7 @@ const emit = defineEmits<{
 
 const props = defineProps({
   visible: { type: Boolean, required: true, default: false },
-  mode: { type: String, required: true, default: "" },
+  mode: { type: [String, null], required: true, default: null },
   rowData: { type: Object, required: true, default: () => {} },
 });
 
@@ -177,12 +177,12 @@ const state = reactive({
   formData: {
     id: null as number | null | undefined,
     attachmentList: [] as any[],
-    manageRegion: "",
-    eventType: "",
-    eventLocation: "",
-    eventContent: "",
-    eventTime: "",
-    bridgeName: "",
+    manageRegion: null,
+    eventType: null,
+    eventLocation: null,
+    eventContent: null,
+    eventTime: null,
+    bridgeName: null,
   },
 });
 

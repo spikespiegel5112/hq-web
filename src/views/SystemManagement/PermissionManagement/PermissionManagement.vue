@@ -120,7 +120,7 @@ const pageModel = ref([
 const state = reactive({
   tableData: [] as any[],
   dialogVisible: false,
-  dialogMode: "",
+  dialogMode: null,
   currentRowData: {},
 });
 

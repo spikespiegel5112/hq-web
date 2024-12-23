@@ -205,7 +205,7 @@ const emit = defineEmits<{
 
 const props = defineProps({
   visible: { type: Boolean, required: true, default: false },
-  mode: { type: String, required: true, default: "" },
+  mode: { type: [String, null], required: true, default: null },
   rowData: { type: Object, required: true, default: () => {} },
   dataModel: { type: Array, required: true, default: () => [] },
 });
@@ -217,13 +217,13 @@ let state = reactive({
   formData: {
     id: null as number | null | undefined,
     attachmentList: [] as any[],
-    planCode: "",
-    planContent: "",
+    planCode: null,
+    planContent: null,
     planLevel: null,
-    planLocation: "",
+    planLocation: null,
     planSource: null,
     planStatus: null,
-    planTime: "",
+    planTime: null,
     preplanResourceId: null,
   } as any,
   fileList: [] as any,
@@ -289,7 +289,7 @@ watch(
         const formData = JSON.parse(JSON.stringify(props.rowData));
         state.formData = {
           ...formData,
-          planTime: !!formData.planTime ? global.$dayjs(formData.planTime) : "",
+          planTime: !!formData.planTime ? global.$dayjs(formData.planTime) : null,
         };
       }
       setUndeal();

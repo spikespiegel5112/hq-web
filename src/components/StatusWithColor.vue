@@ -20,7 +20,7 @@ import {
 } from "vue";
 
 const props = defineProps({
-  text: { type: String, default: "", required: false },
+  text: { type: String, default: null, required: false },
 });
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;

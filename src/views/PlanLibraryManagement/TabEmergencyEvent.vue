@@ -111,7 +111,7 @@ import {
   nextTick,
   toRaw,
 } from "vue";
-import { CaretRightOutlined, CaretDownOutlined } from "@ant-design/icons-vue";
+import { CaretRightOutlined } from "@ant-design/icons-vue";
 
 import {
   preplanPreplanGetPageRequest,
@@ -163,7 +163,7 @@ const state = reactive({
   tableData: [] as any[],
   planTableData: [] as any[],
   dialogVisible: false,
-  dialogMode: "",
+  dialogMode: null,
   currentEventTypeData: {},
   tableDataPlan: [] as any[],
   rowData: {},
@@ -259,7 +259,6 @@ const transformPageModel: any = () => {
 };
 
 const handleExpand = (expand: boolean, row: any) => {
-  console.log(row);
   row.expand = expand;
 };
 

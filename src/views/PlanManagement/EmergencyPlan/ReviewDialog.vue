@@ -185,7 +185,7 @@ const emit = defineEmits<{
 
 const props = defineProps({
   visible: { type: Boolean, required: true, default: false },
-  mode: { type: String, required: true, default: "" },
+  mode: { type: [String, null], required: true, default: null },
   rowData: { type: Object, required: true, default: () => {} },
 });
 
@@ -195,13 +195,13 @@ const state = reactive({
   formData: {
     id: null as number | null | undefined,
     attachmentList: [] as any[],
-    planCode: "",
-    planContent: "",
+    planCode: null,
+    planContent: null,
     planLevel: null,
-    planLocation: "",
+    planLocation: null,
     planSource: null,
     planStatus: null,
-    planTime: "",
+    planTime: null,
     preplanResourceId: null,
   } as any,
   fileList: [] as any,

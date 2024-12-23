@@ -149,7 +149,7 @@ const emit = defineEmits<{
 
 const props = defineProps({
   visible: { type: Boolean, required: true, default: false },
-  mode: { type: String, required: true, default: "" },
+  mode: { type: [String, null], required: true, default: null },
   rowData: { type: Object, required: true, default: () => {} },
   tableData: { type: Object, required: true, default: () => [] },
   dataModel: { type: Array, required: true, default: () => [] },
@@ -160,20 +160,20 @@ let state = reactive({
   visible: false,
   formData: {
     preplanResource: {
-      eventType: "",
+      eventType: null,
       id: null as number | null | undefined,
-      preplanType: "",
+      preplanType: null,
     },
     stepList: [
       {
-        eventType: "",
+        eventType: null,
         id: null as number | null | undefined,
         prId: null,
-        preplanType: "",
-        stepContent: "",
-        stepName: "",
+        preplanType: null,
+        stepContent: null,
+        stepName: null,
         stepOrder: null,
-        stepOrderDesc: "",
+        stepOrderDesc: null,
       },
     ],
   } as any,
@@ -296,12 +296,12 @@ const handleAdd = (value: any) => {
   const tableDataLength = state.tableData.length;
 
   state.formData.stepList.push({
-    eventType: "",
-    preplanType: "",
-    stepContent: "",
-    stepName: "",
+    eventType: null,
+    preplanType: null,
+    stepContent: null,
+    stepName: null,
     stepOrder: tableDataLength,
-    stepOrderDesc: "",
+    stepOrderDesc: null,
   });
 };
 const handleMinus = (value: any) => {

@@ -7,14 +7,14 @@ const app = {
     currentQueryDateParams: {
       queryDate: "2024-09-11 09:00:00",
     },
-    currentDate: "",
+    currentDate: null,
     currentQueryHourParams: {
       hour: 0,
     },
     envMode: import.meta.env,
-    lastOneHourDate: "",
+    lastOneHourDate: null,
     bannerInfo: {},
-    currentPeriod: "",
+    currentPeriod: null,
     defaultPagination: {
       page: 1,
       pageSize: 20,
