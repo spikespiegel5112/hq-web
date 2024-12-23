@@ -65,8 +65,7 @@
               <a-row>
                 <a-col :span="22">
                   <a-form-item name="attachment" label="附件">
-                    <CommonUpload
-                      disabled
+                    <AttachmentReview
                       :attachmentList="state.formData.attachmentList"
                     />
                   </a-form-item>
@@ -116,12 +115,19 @@
                       "
                       class="attachment"
                     >
-                      <a-image
-                        v-for="item in state.fileList[index].attachmentList"
-                        :width="100"
-                        :height="100"
-                        :src="`${global.$getBaseUrl()}/attachment/download?id=${item.id}`"
+                      <AttachmentReview
+                        :attachmentList="state.fileList[index].attachmentList"
                       />
+
+                      <!-- <template
+                        v-for="item in state.fileList[index].attachmentList"
+                      >
+                        <a-image
+                          :width="100"
+                          :height="100"
+                          :src="`${global.$getBaseUrl()}/attachment/download?id=${item.id}`"
+                        />
+                      </template> -->
                     </div>
                   </div>
                 </div>
