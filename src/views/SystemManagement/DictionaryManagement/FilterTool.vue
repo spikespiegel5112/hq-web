@@ -82,8 +82,8 @@ const emit = defineEmits<{
 const formDataRef: any = ref(null);
 
 const formData = reactive({
-  dicName: "",
-  code: "",
+  dicName: null,
+  code: null,
 });
 
 const state = reactive({

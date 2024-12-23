@@ -56,7 +56,7 @@ const formDataRef: any = ref(null);
 
 const state = reactive({
   formData: {
-    eventType: "",
+    eventType: null,
   } as any,
   eventTime: [],
 });

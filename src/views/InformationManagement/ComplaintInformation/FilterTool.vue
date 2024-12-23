@@ -87,10 +87,10 @@ const formDataRef: any = ref(null);
 
 const state = reactive({
   formData: {
-    complaintRegion: "",
-    complaintType: "",
-    complaintTimeStart: "",
-    complaintTimeEnd: "",
+    complaintRegion: null,
+    complaintType: null,
+    complaintTimeStart: null,
+    complaintTimeEnd: null,
   },
   dateRange: [],
 });

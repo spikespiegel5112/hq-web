@@ -712,3 +712,59 @@ export const planManagementEmergencyPlanGetDisposalRequest = (params: any) => {
     data: params,
   });
 };
+
+// 运行管理-值班人员  Duty Staff Controller
+
+// 删除
+export const operationManagementDutyStaffDeleteRequest = (params: any) => {
+  return service({
+    url: prefix + "/operationManagement/dutyStaff/delete",
+    method: "GET",
+    data: params,
+  });
+};
+
+// excel导出
+export const operationManagementDutyStaffExportExcelRequest = (params: any) => {
+  return service({
+    url: prefix + "/operationManagement/dutyStaff/exportExcel",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 根据Id查询
+export const operationManagementDutyStaffGetOneByIdRequest = (params: any) => {
+  return service({
+    url: prefix + "/operationManagement/dutyStaff/getOneById",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 分页查询
+export const operationManagementDutyStaffGetPageRequest = (params: any) => {
+  return service({
+    url: prefix + "/operationManagement/dutyStaff/getPage",
+    method: "POST",
+    data: params,
+  });
+};
+
+// excel导入
+export const operationManagementDutyStaffImportExcelRequest = (params: any) => {
+  return service({
+    url: prefix + "/operationManagement/dutyStaff/importExcel",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 保存
+export const operationManagementDutyStaffSaveRequest = (params: any) => {
+  return service({
+    url: prefix + "/operationManagement/dutyStaff/save",
+    method: "POST",
+    data: params,
+  });
+};

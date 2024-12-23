@@ -91,10 +91,10 @@ const formDataRef: any = ref(null);
 
 const state = reactive({
   formData: {
-    externalSource: "",
-    externalTimeEnd: "",
-    externalTimeStart: "",
-    externalType: "",
+    externalSource: null,
+    externalTimeEnd: null,
+    externalTimeStart: null,
+    externalType: null,
   },
   externalTime: [] as any[],
 });

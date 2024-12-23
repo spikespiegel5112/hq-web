@@ -63,7 +63,7 @@ const formDataRef: any = ref(null);
 const state = reactive({
   visible: false,
   formData: {
-    statisticalBeginHour: "",
+    statisticalBeginHour: null,
   },
 });
 

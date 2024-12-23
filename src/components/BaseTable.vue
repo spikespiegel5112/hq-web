@@ -299,7 +299,6 @@ watch(
 );
 
 const checkFileType = (file: any) => {
-  console.log(file);
   let result = "";
   const attachmentName = file.attachmentName;
   const fileSufix = attachmentName.split(".")[1];
@@ -394,7 +393,7 @@ onMounted(() => {});
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .common_basetable_wrapper {
-  height: 100%;
+  // height: 100%;
   // height: tableBodyHeight;
   background-size: 100%;
   background-repeat: no-repeat;
@@ -403,9 +402,16 @@ onMounted(() => {});
   text-align: left;
   position: relative;
   background-color: transparent;
-
+  :deep(.ant-tabs) {
+    background-color: red;
+    .ant-tabs-content-holder {
+      .ant-table-wrapper {
+        height: 4rem;
+      }
+    }
+  }
   :deep(.ant-table-wrapper) {
-    height: 100%;
+    height: 8.6rem;
     background-color: transparent;
 
     .ant-table {

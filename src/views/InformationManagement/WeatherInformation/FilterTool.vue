@@ -74,9 +74,9 @@ const formDataRef: any = ref(null);
 
 const state = reactive({
   formData: {
-    dataTimeEnd: "",
-    dataTimeBegin: "",
-    warningType: "",
+    dataTimeEnd: null,
+    dataTimeBegin: null,
+    warningType: null,
   },
   dataTime: [] as any[],
 });

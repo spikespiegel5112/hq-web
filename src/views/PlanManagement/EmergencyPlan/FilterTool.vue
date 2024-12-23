@@ -74,8 +74,8 @@ const formDataRef: any = ref(null);
 const state = reactive({
   formData: {
     preplanResourceId: null,
-    planTimeStart: "",
-    planTimeEnd: "",
+    planTimeStart: null,
+    planTimeEnd: null,
   } as any,
   planTime: [] as any,
 });

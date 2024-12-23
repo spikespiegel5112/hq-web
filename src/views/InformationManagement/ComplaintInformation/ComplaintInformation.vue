@@ -13,7 +13,6 @@
       :processedTableData="state.processedTableData"
       :dataModel="pageModel"
       :pagination="pagination"
-      tabTable
       @onEdit="handleEdit"
       @onReview="handleReview"
       @onChangePage="handleChangePage"
@@ -146,6 +145,7 @@ const getData = () => {
     .then((response: any) => {
       response = response.data;
       state.tableData = response.list;
+      pagination.total = response.total;
       state.processedTableData = response.list.map((item: any) => {
         return {
           ...item,

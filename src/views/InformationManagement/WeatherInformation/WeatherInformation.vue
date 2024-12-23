@@ -11,7 +11,6 @@
       :processedTableData="state.processedTableData"
       :dataModel="pageModel"
       :pagination="pagination"
-      tabTable
       @onIssueWarning="handleEdit"
     />
     <EditDialog

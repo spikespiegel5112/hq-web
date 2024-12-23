@@ -68,8 +68,8 @@ const state = reactive({
   visible: false,
   formData: {
     statisticalBeginHour: null,
-    statisticalDateBegin: "",
-    statisticalDateEnd: "",
+    statisticalDateBegin: null,
+    statisticalDateEnd: null,
   },
   statisticalDate: [],
 });

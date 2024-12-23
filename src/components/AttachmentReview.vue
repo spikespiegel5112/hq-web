@@ -55,7 +55,7 @@ const global = currentInstance.appContext.config.globalProperties;
 const state = reactive({
   attachmentList: [] as any[],
   previewVisible: false,
-  attachmentType: "",
+  attachmentType: null,
   currentAttachmentData: {},
 });
 

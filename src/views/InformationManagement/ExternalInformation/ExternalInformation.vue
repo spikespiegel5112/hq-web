@@ -13,7 +13,6 @@
       :processedTableData="state.processedTableData"
       :dataModel="pageModel"
       :pagination="pagination"
-      tabTable
       @onEdit="handleEdit"
       @onReview="handleReview"
       @onChangePage="handleChangePage"

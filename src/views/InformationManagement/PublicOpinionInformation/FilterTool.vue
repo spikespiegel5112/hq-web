@@ -101,11 +101,11 @@ const formDataRef: any = ref(null);
 
 const state = reactive({
   formData: {
-    keyword: "",
-    publicSentimentSource: "",
-    publicSentimentTimeEnd: "",
-    publicSentimentTimeStart: "",
-    publicSentimentType: "",
+    keyword: null,
+    publicSentimentSource: null,
+    publicSentimentTimeEnd: null,
+    publicSentimentTimeStart: null,
+    publicSentimentType: null,
   },
   publicSentimentTime: [] as any[],
   dateRange: [],

@@ -255,15 +255,15 @@ const routerDictionary = [
             },
           },
           {
-            title: "指示灯",
-            path: "IndicatorLights",
-            name: "IndicatorLights",
+            title: "告警信息管理",
+            path: "AlarmInformationManagement",
+            name: "AlarmInformationManagement",
             component: () =>
               import(
-                /* webpackChunkName: "IndicatorLights" */ "@/views/OperationManagement/IndicatorLights/IndicatorLights.vue"
+                /* webpackChunkName: "AlarmInformationManagement" */ "@/views/OperationManagement/AlarmInformationManagement/AlarmInformationManagement.vue"
               ),
             meta: {
-              title: "指示灯",
+              title: "告警信息管理",
             },
           },
           {
@@ -275,7 +275,7 @@ const routerDictionary = [
                 /* webpackChunkName: "OperationManagementConfiguration" */ "@/views/OperationManagement/OperationManagementConfiguration/OperationManagementConfiguration.vue"
               ),
             meta: {
-              title: "指示灯",
+              title: "告警信息管理",
             },
           },
         ],

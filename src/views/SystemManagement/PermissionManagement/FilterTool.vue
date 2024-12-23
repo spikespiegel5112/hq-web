@@ -69,8 +69,8 @@ const emit = defineEmits<{
 const formDataRef: any = ref(null);
 
 const formData = reactive({
-  userName: "",
-  password: "",
+  userName: null,
+  password: null,
 });
 
 const handleSearch = () => {

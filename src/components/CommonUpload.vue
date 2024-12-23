@@ -38,7 +38,7 @@ const emit: any = defineEmits(["update:attachmentList"]);
 
 const props = defineProps({
   mode: { type: String, default: "edit", required: false },
-  title: { type: String, default: "", required: false },
+  title: { type: String, default: null, required: false },
   attachmentList: { type: Array, default: () => [] },
   disabled: { type: Boolean, default: false },
 });
