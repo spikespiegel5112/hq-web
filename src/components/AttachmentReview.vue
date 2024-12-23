@@ -1,13 +1,26 @@
 <template>
   <div class="common_attachmentreview_item">
-    <div v-for="item in props.attachmentList">
-      <a-image
-        v-if="checkFileType(item) === 'image'"
-        :width="100"
-        :height="100"
-        :src="`${global.$getBaseUrl()}/attachment/download?id=${item.id}`"
-      />
-    </div>
+    <a-upload
+      v-model:file-list="state.attachmentList"
+      list-type="picture-card"
+      :showUploadList="{
+        showPreviewIcon: true,
+        showRemoveIcon: false,
+        showDownloadIcon: true,
+      }"
+      @preview="handlePreview"
+    >
+    </a-upload>
+    <a-image
+      style="display: none"
+      :width="100"
+      :height="100"
+      :src="`${global.$getBaseUrl()}/attachment/download?id=${state.currentAttachmentData.id}`"
+      :preview="{
+        visible: state.previewVisible,
+        onVisibleChange: () => (state.previewVisible = false),
+      }"
+    />
   </div>
 </template>
 
@@ -36,6 +49,25 @@ const props = defineProps({
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
+// const attachmentList = computed(() => {
+//   return props.attachmentList.map((item: any, index: number) => {
+//     return {
+//       ...item,
+//       uid: index,
+//       name: item.attachemtnName,
+//       status: "done",
+//       url: `${global.$getBaseUrl()}/attachment/download?id=${item.id}`,
+//     };
+//   });
+// });
+
+const state = reactive({
+  attachmentList: [] as any[],
+  previewVisible: false,
+  attachmentType: "",
+  currentAttachmentData: {},
+});
+
 const checkFileType = (file: any) => {
   console.log(file);
   let result = "";
@@ -49,22 +81,34 @@ const checkFileType = (file: any) => {
 
   return result;
 };
+
+const handlePreview = (value: any) => {
+  console.log(value);
+  state.previewVisible = true;
+  state.currentAttachmentData = value;
+};
+
+onMounted(() => {
+  state.attachmentList = props.attachmentList.map(
+    (item: any, index: number) => {
+      return {
+        ...item,
+        uid: index,
+        name: item.attachemtnName,
+        status: "done",
+        url: `${global.$getBaseUrl()}/attachment/download?id=${item.id}`,
+      };
+    }
+  );
+});
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .common_attachmentreview_item {
   display: flex;
-
   position: relative;
   align-items: center;
-  &:before {
-    content: "";
-    display: inline-block;
-    width: 3px;
-    height: 100%;
-    background-color: #fff;
-  }
 
   .title {
     display: inline-block;

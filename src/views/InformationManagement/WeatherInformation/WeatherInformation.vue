@@ -152,7 +152,7 @@ const state = reactive({
   processedTableData: [] as any[],
   dialogVisible: false,
   dialogDisposalVisible: false,
-  dialogMode: null,
+  dialogMode: null as string | null,
   currentRowData: {},
 });
 

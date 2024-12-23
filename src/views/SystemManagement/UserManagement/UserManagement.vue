@@ -12,7 +12,7 @@
       :tableData="state.tableData"
       :dataModel="pageModel"
       :pagination="pagination"
-@onEdit="handleEdit"
+      @onEdit="handleEdit"
       @onReview="handleReview"
       @onChangePage="handleChangePage"
     />
@@ -95,7 +95,11 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "操作",     name: "operationColumn",     tableVisible: true,     exportVisible: false,     fixed: "right",
+    label: "操作",
+    name: "operationColumn",
+    tableVisible: true,
+    exportVisible: false,
+    fixed: "right",
     actions: ["edit"],
   },
 ]);
@@ -103,7 +107,7 @@ const pageModel = ref([
 const state = reactive({
   tableData: [] as any[],
   dialogVisible: false,
-  dialogMode: null,
+  dialogMode: null as string | null,
   currentRowData: {},
 });
 
@@ -170,13 +174,6 @@ const handleChangePage = (pagingData: any) => {
 };
 
 const handleDelete = (id: number) => {};
-
-const handleChangePage = (pagingData: any) => {
-  pagination.page = pagingData.current;
-  pagination.pageSize = pagingData.pageSize;
-  pagination.total = pagingData.total;
-  getData();
-};
 
 onMounted(async () => {
   getData();

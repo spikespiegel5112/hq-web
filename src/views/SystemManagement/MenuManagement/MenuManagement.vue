@@ -140,7 +140,7 @@ const columns = ref([] as any[]);
 const state = reactive({
   tableData: [] as any[],
   dialogVisible: false,
-  dialogMode: null,
+  dialogMode: null as string | null,
   currentRowData: {},
 });
 

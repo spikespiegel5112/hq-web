@@ -130,6 +130,7 @@ const handleReset = () => {
       ? undefined
       : state.formData[item];
   });
+  state.eventTime = [];
   emit("onReset", formData);
 };
 

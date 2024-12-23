@@ -63,7 +63,7 @@
                 </a-col>
               </a-row>
               <a-row>
-                <a-col :span="22">
+                <a-col :span="24">
                   <a-form-item name="attachment" label="附件">
                     <AttachmentReview
                       :attachmentList="state.formData.attachmentList"
@@ -74,7 +74,7 @@
             </a-form>
           </div>
         </a-col>
-        <a-col :span="14">
+        <a-col :span="13">
           <div class="date"></div>
           <vue-scroll class="right">
             <a-timeline mode="left">
@@ -118,16 +118,6 @@
                       <AttachmentReview
                         :attachmentList="state.fileList[index].attachmentList"
                       />
-
-                      <!-- <template
-                        v-for="item in state.fileList[index].attachmentList"
-                      >
-                        <a-image
-                          :width="100"
-                          :height="100"
-                          :src="`${global.$getBaseUrl()}/attachment/download?id=${item.id}`"
-                        />
-                      </template> -->
                     </div>
                   </div>
                 </div>
@@ -139,7 +129,7 @@
     </div>
     <template #footer>
       <a-row>
-        <a-col :span="24">
+        <a-col :span="23">
           <a-button key="submit" type="primary" @click="handleClose">
             关闭
           </a-button>

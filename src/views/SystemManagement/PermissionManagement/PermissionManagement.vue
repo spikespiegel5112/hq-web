@@ -8,7 +8,6 @@
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
-    a
     <BaseTable
       :tableData="state.tableData"
       :dataModel="pageModel"
@@ -120,7 +119,7 @@ const pageModel = ref([
 const state = reactive({
   tableData: [] as any[],
   dialogVisible: false,
-  dialogMode: null,
+  dialogMode: null as string | null,
   currentRowData: {},
 });
 

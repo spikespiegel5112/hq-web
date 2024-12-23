@@ -163,7 +163,7 @@ const state = reactive({
   tableData: [] as any[],
   planTableData: [] as any[],
   dialogVisible: false,
-  dialogMode: null,
+  dialogMode: null as string | null,
   currentEventTypeData: {},
   tableDataPlan: [] as any[],
   rowData: {},

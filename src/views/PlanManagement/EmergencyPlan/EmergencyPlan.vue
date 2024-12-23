@@ -168,7 +168,7 @@ const state = reactive({
   dialogVisible: false,
   dialogDisposalVisible: false,
   dialogReviewVisible: false,
-  dialogMode: null,
+  dialogMode: null as string | null,
   currentRowData: {},
 });
 
