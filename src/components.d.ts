@@ -61,6 +61,7 @@ declare module 'vue' {
     RightLight: typeof import('./components/RightLight.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    StatusWithColor: typeof import('./components/StatusWithColor.vue')['default']
     Upload: typeof import('./components/Upload.vue')['default']
     VideoPlayer: typeof import('./components/VideoPlayer.vue')['default']
   }

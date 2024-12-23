@@ -8,6 +8,7 @@
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
+
     <a-table
       :columns="transformPageModel()"
       :data-source="state.tableData"
@@ -25,6 +26,25 @@
       @expandedRowsChange="handleExpandedRowsChange"
       @change="handleChangePage"
     >
+      <template v-slot:expandIcon="props">
+        <a-button type="link">
+          <CaretRightOutlined
+            :style="
+              props.record.expand
+                ? {
+                    transform: 'rotateZ(90deg)',
+                    transition: 'all 0.2s',
+                    color: '#fff',
+                  }
+                : {
+                    transform: 'rotateZ(0deg)',
+                    transition: 'all 0.2s',
+                    color: '#fff',
+                  }
+            "
+          />
+        </a-button>
+      </template>
       <template
         #bodyCell="{ text, record, index, column }"
         :style="{
@@ -91,6 +111,7 @@ import {
   nextTick,
   toRaw,
 } from "vue";
+import { CaretRightOutlined, CaretDownOutlined } from "@ant-design/icons-vue";
 
 import {
   preplanPreplanGetPageRequest,
@@ -239,9 +260,7 @@ const transformPageModel: any = () => {
 
 const handleExpand = (expand: boolean, row: any) => {
   console.log(row);
-  if (!!expand) {
-    // getDataPlan(row.id);
-  }
+  row.expand = expand;
 };
 
 const getDataPlan = (planId: number) => {
