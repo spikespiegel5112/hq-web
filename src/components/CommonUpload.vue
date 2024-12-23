@@ -1,5 +1,6 @@
 <template>
   <div class="common_upload_item">
+    {{listType}}
     <a-upload
       v-if="global.$checkEditable(props.mode)"
       v-model:file-list="state.fileList"
@@ -63,7 +64,7 @@ const listType = computed(() => {
   if (props.mode === "review") {
     return "picture-card";
   } else {
-    return "";
+    return undefined;
   }
 });
 
@@ -71,12 +72,17 @@ watch(
   () => props.attachmentList,
   (newValue: any, oldValue: any) => {
     state.fileList = [];
+    const baseUrl =
+      global.$store.state.app.envMode.MODE === "test"
+        ? "http://localhost:9009/manage"
+        : "";
+
     newValue.forEach((item: any, index: number) => {
       state.fileList.push({
         uid: index,
         name: item.attachmentName,
         status: "done",
-        url: item.attachmentPath,
+        url: `${baseUrl}/attachment/download?id=${item.id}`,
       });
     });
   },

@@ -36,9 +36,6 @@
                 {{ item.label }}
               </a-select-option>
             </a-select>
-            <template v-if="props.mode === 'review'">
-              {{ state.formData.eventType }}
-            </template>
           </a-form-item>
         </a-col>
       </a-row>
@@ -59,9 +56,6 @@
                 {{ item.label }}
               </a-select-option>
             </a-select>
-            <template v-if="props.mode === 'review'">
-              {{ state.formData.eventType }}
-            </template>
           </a-form-item>
         </a-col>
       </a-row>
@@ -74,9 +68,6 @@
               placeholder="请输入"
             >
             </a-input>
-            <template v-if="props.mode === 'review'">
-              {{ state.formData.eventLocation }}
-            </template>
           </a-form-item>
         </a-col>
       </a-row>
@@ -96,9 +87,6 @@
                 {{ item.label }}
               </a-select-option>
             </a-select>
-            <template v-if="props.mode === 'review'">
-              {{ state.formData.eventLocation }}
-            </template>
           </a-form-item>
         </a-col>
       </a-row>
@@ -110,13 +98,6 @@
               v-model:value="state.formData.eventTime"
               format="YYYY-MM-DD HH:mm:ss"
             ></a-date-picker>
-            <template v-if="props.mode === 'review'">
-              {{
-                global
-                  .$dayjs(state.formData.eventTime)
-                  .format("YYYY-MM-DD HH:mm:ss")
-              }}
-            </template>
           </a-form-item>
         </a-col>
       </a-row>
@@ -131,9 +112,6 @@
               :rows="4"
             >
             </a-textarea>
-            <template v-if="props.mode === 'review'">
-              {{ state.formData.eventContent }}
-            </template>
           </a-form-item>
         </a-col>
       </a-row>
@@ -170,12 +148,6 @@
               v-if="global.$checkEditable(props.mode)"
               :attachmentList="state.formData.attachmentList"
             />
-            <template v-if="props.mode === 'review'">
-              <CommonUpload
-                disabled
-                :attachmentList="state.formData.attachmentList"
-              />
-            </template>
           </a-form-item>
         </a-col>
       </a-row>

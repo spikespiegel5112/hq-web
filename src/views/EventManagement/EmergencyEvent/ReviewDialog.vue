@@ -116,9 +116,11 @@
                       "
                       class="attachment"
                     >
-                      <CommonUpload
-                        disabled
-                        :attachmentList="state.fileList[index].attachmentList"
+                      <a-image
+                        v-for="item in state.fileList[index].attachmentList"
+                        :width="100"
+                        :height="100"
+                        :src="`${global.$getBaseUrl()}/attachment/download?id=${item.id}`"
                       />
                     </div>
                   </div>

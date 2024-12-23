@@ -9,6 +9,16 @@ import { store } from "@/store";
 
 const prefix = "/manage";
 
+// 附件
+// 下载
+export const attachmentDownloadRequest = (params: any) => {
+  return service({
+    url: prefix + "/attachment/download",
+    method: "GET",
+    data: params,
+  });
+};
+
 // 上传
 // /attachment/upload
 
@@ -607,7 +617,6 @@ export const preplanPreplanSaveWithPreplanStepRequest = (params: any) => {
   });
 };
 
-
 // 预案管理-应急预案
 
 // 删除
@@ -703,9 +712,3 @@ export const planManagementEmergencyPlanGetDisposalRequest = (params: any) => {
     data: params,
   });
 };
-
-
-
-
-
-

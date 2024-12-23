@@ -283,6 +283,10 @@ const _utils = {
   $checkEditable: (mode: string) => {
     return ["add", "edit", "disposal"].some((item: string) => item === mode);
   },
+  $getBaseUrl: (mode: string) => {
+    const env = import.meta.env;
+    return env.VITE_BASE_URL + "/manage";
+  },
 } as any;
 
 const result = {
@@ -303,6 +307,7 @@ const result = {
     app.config.globalProperties["$getAllDictionary"] =
       _utils["$getAllDictionary"];
     app.config.globalProperties["$checkEditable"] = _utils["$checkEditable"];
+    app.config.globalProperties["$getBaseUrl"] = _utils["$getBaseUrl"];
   },
 } as any;
 
