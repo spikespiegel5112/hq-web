@@ -3,7 +3,9 @@
     <a-upload
       v-if="global.$checkEditable(props.mode)"
       v-model:file-list="state.fileList"
+      name="file"
       :list-type="listType"
+      action="/api/manage/attachment/upload"
       :headers="{}"
       :disabled="props.disabled"
       @change="handleChangeAttachment"
@@ -36,7 +38,7 @@ const emit: any = defineEmits(["update:attachmentList"]);
 
 const props = defineProps({
   mode: { type: String, default: "edit", required: false },
-  title: { type: String, default: null, required: false },
+  title: { type: String, default: "", required: false },
   attachmentList: { type: Array, default: () => [] },
   disabled: { type: Boolean, default: false },
 });
