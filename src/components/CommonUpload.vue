@@ -1,12 +1,9 @@
 <template>
   <div class="common_upload_item">
-    {{listType}}
     <a-upload
       v-if="global.$checkEditable(props.mode)"
       v-model:file-list="state.fileList"
-      name="file"
       :list-type="listType"
-      action="/api/manage/attachment/upload"
       :headers="{}"
       :disabled="props.disabled"
       @change="handleChangeAttachment"

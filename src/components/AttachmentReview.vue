@@ -9,7 +9,10 @@
         showDownloadIcon: true,
       }"
       @preview="handlePreview"
+      @download="handleDownload"
     >
+      <template #slot:itemRender> aaa </template>
+      <!-- http://localhost:9009/manage/attachment/download?id=191 -->
     </a-upload>
     <a-image
       style="display: none"
@@ -59,15 +62,10 @@ const state = reactive({
 watch(
   () => props.attachmentList,
   (newVal) => {
-    state.attachmentList = newVal.map((item: any, index: number) => {
-      return {
-        ...item,
-        uid: index,
-        name: item.attachmentName,
-        status: "done",
-        url: `${global.$getBaseUrl()}/attachment/download?id=${item.id}`,
-      };
-    });
+    parseAttachmentList();
+  },
+  {
+    deep: true,
   }
 );
 
@@ -78,10 +76,14 @@ const checkFileType = (file: any) => {
   const fileType = attachmentName.split(".")[1];
 
   const imageType = ["png", "jpg", "jpeg", "gif", "bmp"];
+  const videoType = ["mp4", "avi", "mov", "rmvb", "rm", "flv", "3gp", "mkv"];
   if (imageType.includes(fileType)) {
     result = "image";
+  } else if (videoType.includes(fileType)) {
+    result = "video";
+  } else {
+    result = "file";
   }
-
   return result;
 };
 
@@ -91,18 +93,41 @@ const handlePreview = (value: any) => {
   state.currentAttachmentData = value;
 };
 
-onMounted(() => {
+const handleDownload = (value: any) => {
+  console.log(value);
+  location.href = value.attachmentPath;
+};
+
+const parseAttachmentList = () => {
   state.attachmentList = props.attachmentList.map(
     (item: any, index: number) => {
+      const fileType = checkFileType(item);
+      let previewImagePath = "";
+      switch (fileType) {
+        case "file":
+          previewImagePath = global.$getImageUrl("/src/assets/file_icon.png");
+          break;
+        case "video":
+          previewImagePath = global.$getImageUrl("@/assets/file_icon.png");
+          break;
+        default:
+          previewImagePath = `${global.$getBaseUrl()}/attachment/download?id=${item.id}`;
+          break;
+      }
+
       return {
         ...item,
         uid: index,
         name: item.attachemtnName,
         status: "done",
-        url: `${global.$getBaseUrl()}/attachment/download?id=${item.id}`,
+        url: previewImagePath,
       };
     }
   );
+};
+
+onMounted(() => {
+  parseAttachmentList();
 });
 </script>
 

@@ -84,7 +84,6 @@
             </span>
           </div>
           <div v-else-if="!!item.tagConfig" class="taglist">
-            <!-- {{ item.tagConfig.colorList }} -->
             <a-tag
               :color="
                 item.tagConfig.colorList.find(

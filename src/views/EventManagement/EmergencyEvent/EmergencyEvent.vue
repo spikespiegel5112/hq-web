@@ -164,6 +164,14 @@ const pageModel = ref([
     width: "1rem",
   },
   {
+    label: "附件",
+    name: "attachment",
+    required: false,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
     label: "操作",
     name: "operationColumn",
     tableVisible: true,
