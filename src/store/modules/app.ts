@@ -20,7 +20,7 @@ const app = {
       pageSize: 20,
       total: 0 as number | undefined,
     },
-    currentEventTypeList: [] as any,
+    currentEventTypeList: [] as any[],
   }),
   mutations: {
     updateBannerInfo: (state: any, payload: any) => {

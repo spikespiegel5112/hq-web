@@ -28,12 +28,37 @@
           </div>
 
           <div v-if="item.name === 'attachment'" class="attachment">
-            <a href="javascript:;">
-              <img
-                :src="global.$getImageUrl('/src/assets/camera.png')"
-                alt=""
-              />
-            </a>
+            <a-space>
+              <a
+                href="javascript:;"
+                v-for="item in actualTableData[scope.index].attachmentList"
+              >
+                <template v-if="checkFileType(item) === 'image'">
+                  <PictureOutlined
+                    :style="{
+                      color: '#8EE1F9',
+                      fontSize: '0.3rem',
+                    }"
+                  />
+                </template>
+                <template v-else-if="checkFileType(item) === 'file'">
+                  <PaperClipOutlined
+                    :style="{
+                      color: '#8EE1F9',
+                      fontSize: '0.3rem',
+                    }"
+                  />
+                </template>
+                <template v-else-if="checkFileType(item) === 'video'">
+                  <PaperClipOutlined
+                    :style="{
+                      color: '#8EE1F9',
+                      fontSize: '0.3rem',
+                    }"
+                  />
+                </template>
+              </a>
+            </a-space>
           </div>
           <div v-if="item.name === 'operationColumn'" class="operation">
             <span
@@ -100,6 +125,7 @@ import {
   ref,
   nextTick,
 } from "vue";
+import { PaperClipOutlined, PictureOutlined } from "@ant-design/icons-vue";
 
 let emit = defineEmits<{
   (e: "onEdit", rowData: any): void;
@@ -273,6 +299,27 @@ watch(
   }
 );
 
+const checkFileType = (file: any) => {
+  console.log(file);
+  let result = "";
+  const attachmentName = file.attachmentName;
+  const fileSufix = attachmentName.split(".")[1];
+
+  const imageType = ["png", "jpg", "jpeg", "gif", "bmp"];
+  const videoType = ["mp4", "avi", "mov", "wmv", "flv", "rmvb", "3gp"];
+  const fileType = ["xls", "xlsx"];
+  if (imageType.includes(fileSufix)) {
+    result = "image";
+  }
+  if (videoType.includes(fileSufix)) {
+    result = "video";
+  }
+  if (fileType.includes(fileSufix)) {
+    result = "file";
+  }
+  return result;
+};
+
 const hangleChangePage = (current: number, pageSize: number) => {
   state.loading = true;
   pagination.current = current;
@@ -314,6 +361,32 @@ const initPagination = () => {
   pagination.pageSize = global.$isNotEmpty(props.pagination.pageSize)
     ? props.pagination.pageSize
     : pagination.pageSize;
+};
+
+const checkAtttachmentIcon = (attachmentName: string) => {
+  console.log(attachmentName);
+  const attachmentType = attachmentName.split(".").pop();
+  switch (attachmentType) {
+    case "pdf":
+      return <PaperClipOutlined />;
+    case "doc":
+    case "docx":
+      return <PaperClipOutlined />;
+    case "xls":
+    case "xlsx":
+      return <PaperClipOutlined />;
+    case "ppt":
+    case "pptx":
+      return <PaperClipOutlined />;
+    case "jpg":
+      return <PaperClipOutlined />;
+    case "jpeg":
+    case "png":
+    case "gif":
+      return <PaperClipOutlined />;
+    default:
+      return <PaperClipOutlined />;
+  }
 };
 
 onMounted(() => {});

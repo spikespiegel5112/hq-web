@@ -178,7 +178,7 @@ let state = reactive({
     stepOrderDesc: null,
     attachmentAssociationCode: null,
   } as any,
-  fileList: [] as any,
+  fileList: [] as any[],
   disposalData: {} as any,
 });
 

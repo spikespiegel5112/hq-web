@@ -177,7 +177,7 @@ let state = reactive({
       },
     ],
   } as any,
-  fileList: [] as any,
+  fileList: [] as any[],
   tableData: [] as any[],
 });
 

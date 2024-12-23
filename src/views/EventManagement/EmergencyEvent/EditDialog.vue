@@ -213,7 +213,7 @@ let state = reactive({
     eventType: null,
     eventLevel: null,
   } as any,
-  fileList: [] as any,
+  fileList: [] as any[],
 });
 
 const eventList = computed(() => {

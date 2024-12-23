@@ -7,7 +7,7 @@
       </div>
     </template>
     <div class="maincontent">
-      <a-row>
+      <a-row :gutter="30">
         <a-col :span="10">
           <div class="left">
             <a-form
@@ -18,35 +18,35 @@
             >
               <a-row>
                 <a-col :span="22">
-                  <a-form-item name="manageRegion" label="管理区域">
+                  <a-form-item label="管理区域">
                     {{ state.formData.eventType }}
                   </a-form-item>
                 </a-col>
               </a-row>
               <a-row>
                 <a-col :span="22">
-                  <a-form-item name="eventType" label="事件类型">
+                  <a-form-item label="事件类型">
                     {{ state.formData.eventType }}
                   </a-form-item>
                 </a-col>
               </a-row>
               <a-row>
                 <a-col :span="22">
-                  <a-form-item name="eventLocation" label="具体地址">
+                  <a-form-item label="具体地址">
                     {{ state.formData.eventLocation }}
                   </a-form-item>
                 </a-col>
               </a-row>
               <a-row>
                 <a-col :span="22">
-                  <a-form-item name="eventLevel" label="等级">
+                  <a-form-item label="等级">
                     {{ state.formData.eventLocation }}
                   </a-form-item>
                 </a-col>
               </a-row>
               <a-row>
                 <a-col :span="22">
-                  <a-form-item name="eventTime" label="发生时间">
+                  <a-form-item label="发生时间">
                     {{
                       global
                         .$dayjs(state.formData.eventTime)
@@ -57,14 +57,14 @@
               </a-row>
               <a-row>
                 <a-col :span="22">
-                  <a-form-item name="eventContent" label="事件内容">
+                  <a-form-item label="事件内容">
                     {{ state.formData.eventContent }}
                   </a-form-item>
                 </a-col>
               </a-row>
               <a-row>
                 <a-col :span="24">
-                  <a-form-item name="attachment" label="附件">
+                  <a-form-item label="附件">
                     <AttachmentReview
                       :attachmentList="state.formData.attachmentList"
                     />
@@ -188,11 +188,11 @@ const state = reactive({
     eventType: null,
     eventLevel: null,
   } as any,
-  fileList: [] as any,
-  disposalList: [] as any,
+  fileList: [] as any[],
+  disposalList: [] as any[],
   disposalData: {} as any,
   timer: false,
-  planInfo: [] as any,
+  planInfo: [] as any[],
 });
 
 const dialogTitle: ComputedRef<string> = computed(() => {

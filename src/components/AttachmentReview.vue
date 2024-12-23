@@ -49,24 +49,27 @@ const props = defineProps({
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
-// const attachmentList = computed(() => {
-//   return props.attachmentList.map((item: any, index: number) => {
-//     return {
-//       ...item,
-//       uid: index,
-//       name: item.attachemtnName,
-//       status: "done",
-//       url: `${global.$getBaseUrl()}/attachment/download?id=${item.id}`,
-//     };
-//   });
-// });
-
 const state = reactive({
   attachmentList: [] as any[],
   previewVisible: false,
   attachmentType: "",
   currentAttachmentData: {},
 });
+
+watch(
+  () => props.attachmentList,
+  (newVal) => {
+    state.attachmentList = newVal.map((item: any, index: number) => {
+      return {
+        ...item,
+        uid: index,
+        name: item.attachmentName,
+        status: "done",
+        url: `${global.$getBaseUrl()}/attachment/download?id=${item.id}`,
+      };
+    });
+  }
+);
 
 const checkFileType = (file: any) => {
   console.log(file);

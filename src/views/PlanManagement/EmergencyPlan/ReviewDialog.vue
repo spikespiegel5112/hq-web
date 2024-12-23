@@ -82,8 +82,7 @@
               <a-row>
                 <a-col :span="22">
                   <a-form-item label="附件">
-                    <CommonUpload
-                      disabled
+                    <AttachmentReview
                       :attachmentList="state.formData.attachmentList"
                     />
                   </a-form-item>
@@ -92,7 +91,7 @@
             </a-form>
           </div>
         </a-col>
-        <a-col :span="14">
+        <a-col :span="13">
           <div class="date"></div>
           <vue-scroll class="right">
             <a-timeline mode="left">
@@ -130,8 +129,7 @@
                       "
                       class="attachment"
                     >
-                      <CommonUpload
-                        disabled
+                      <AttachmentReview
                         :attachmentList="state.fileList[index].attachmentList"
                       />
                     </div>
@@ -145,7 +143,7 @@
     </div>
     <template #footer>
       <a-row>
-        <a-col :span="24">
+        <a-col :span="23">
           <a-button key="submit" type="primary" @click="handleClose">
             关闭
           </a-button>
@@ -204,11 +202,11 @@ const state = reactive({
     planTime: null,
     preplanResourceId: null,
   } as any,
-  fileList: [] as any,
+  fileList: [] as any[],
   disposalList: [] as any[],
   disposalData: {} as any,
   timer: false,
-  planInfo: [] as any,
+  planInfo: [] as any[],
 });
 
 const dialogTitle: ComputedRef<string> = computed(() => {
@@ -320,9 +318,7 @@ onBeforeUnmount(() => {});
 <style scoped lang="scss">
 .maincontent {
   display: flex;
-  width: 100%;
   align-items: start;
-  box-sizing: border-box;
   .ant-row {
     width: 100%;
     .left {
@@ -335,9 +331,9 @@ onBeforeUnmount(() => {});
       max-height: 9rem !important;
       overflow-y: auto;
       .ant-timeline {
-        // width: calc(100% - 1rem);
         .node {
           display: flex;
+          width: 100%;
           .time {
             display: inline-block;
             width: 1rem;

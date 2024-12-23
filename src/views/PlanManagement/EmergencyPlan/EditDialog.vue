@@ -226,7 +226,7 @@ let state = reactive({
     planTime: null,
     preplanResourceId: null,
   } as any,
-  fileList: [] as any,
+  fileList: [] as any[],
 });
 
 const eventList = computed(() => {
