@@ -40,8 +40,9 @@
             <a-col :span="10">
               <a-form-item name="eventTime" label="时间">
                 <a-range-picker
-                  v-model="state.eventTime"
+                  v-model:value="state.eventTime"
                   format="YYYY-MM-DD HH:mm:ss"
+                  allow-clear
                   @change="handleChangeInfoEventTime"
                 />
               </a-form-item>
@@ -103,19 +104,18 @@ const eventList = computed(() => {
 });
 
 const handleSearch = () => {
-  emit("onSearch", {
-    ...state.formData,
-  });
+  emit("onSearch", state.formData);
 };
 
 const handleReset = () => {
   formDataRef.value.resetFields();
-  const formData: any = Object.keys(state.formData).forEach((item: any) => {
-    state.formData[item] = global.$isEmpty(state.formData[item])
-      ? undefined
-      : state.formData[item];
-  });
-  emit("onReset", formData);
+  state.formData = {
+    ...state.formData,
+    eventTimeBegin: null,
+    eventTimeEnd: null,
+  };
+  state.eventTime = [];
+  emit("onReset", state.formData);
 };
 
 const handleChangeInfoEventTime = (value: any[]) => {

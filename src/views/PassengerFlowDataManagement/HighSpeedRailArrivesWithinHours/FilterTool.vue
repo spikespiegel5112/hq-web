@@ -80,8 +80,8 @@ const handleSearch = () => {
 
 const handleReset = () => {
   formDataRef.value.resetFields();
-  state.formData.statisticalDateBegin = "";
-  state.formData.statisticalDateEnd = "";
+  state.formData.statisticalDateBegin = null;
+  state.formData.statisticalDateEnd = null;
   state.statisticalDate = [];
   emit("onReset", state.formData);
 };
