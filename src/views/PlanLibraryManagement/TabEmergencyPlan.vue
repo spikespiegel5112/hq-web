@@ -171,7 +171,7 @@ const state = reactive({
 });
 
 let queryFormData = reactive({
-  preplanType: "应急预案处置",
+  preplanType: 1,
 } as any);
 
 const pagination = reactive({
