@@ -37,11 +37,11 @@
                 </a-select>
               </a-form-item>
             </a-col>
-            <a-col :span="8">
+            <a-col :span="10">
               <a-form-item name="eventTime" label="时间">
                 <a-range-picker
                   v-model="state.eventTime"
-                  format="YYYY-MM-DD"
+                  format="YYYY-MM-DD HH:mm:ss"
                   @change="handleChangeInfoEventTime"
                 />
               </a-form-item>
@@ -88,9 +88,10 @@ const formDataRef: any = ref(null);
 
 const state = reactive({
   formData: {
+    eventTimeBegin: null,
+    eventTimeEnd: null,
     eventType: null,
     manageRegion: null,
-    eventTime: [] as any[],
   } as any,
   eventTime: null,
 });
@@ -102,12 +103,8 @@ const eventList = computed(() => {
 });
 
 const handleSearch = () => {
-  const eventTimeBegin = state.formData.eventTime[0];
-  const eventTimeEnd = state.formData.eventTime[1];
   emit("onSearch", {
     ...state.formData,
-    eventTimeBegin,
-    eventTimeEnd,
   });
 };
 
@@ -121,7 +118,15 @@ const handleReset = () => {
   emit("onReset", formData);
 };
 
-const handleChangeInfoEventTime = () => {};
+const handleChangeInfoEventTime = (value: any[]) => {
+  state.formData.eventTimeBegin = global
+    .$dayjs(value[0])
+    .format("YYYY-MM-DD HH:mm:ss");
+
+  state.formData.eventTimeEnd = global
+    .$dayjs(value[1])
+    .format("YYYY-MM-DD HH:mm:ss");
+};
 
 onMounted(async () => {});
 
