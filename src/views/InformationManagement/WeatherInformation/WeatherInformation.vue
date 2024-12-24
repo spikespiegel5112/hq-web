@@ -118,7 +118,7 @@ const pageModel = ref([
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
-    width: "1rem",
+    width: "1.5rem",
   },
   {
     label: "操作",

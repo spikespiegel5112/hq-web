@@ -94,17 +94,16 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="eventTime" label="处置完成时间">
+          <a-form-item name="disposalCompletionTime" label="处置完成时间">
             <a-date-picker
               v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.eventTime"
+              v-model:value="state.formData.disposalCompletionTime"
               format="YYYY-MM-DD HH:mm:ss"
             ></a-date-picker>
             <template v-if="props.mode === 'review'">
-              {{state.formData.eventTime}}
               {{
                 global
-                  .$dayjs(state.formData.eventTime)
+                  .$dayjs(state.formData.disposalCompletionTime)
                   .format("YYYY-MM-DD HH:mm:ss")
               }}
             </template>
@@ -113,14 +112,13 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="attachmentList" label="处置完成时间">
+          <a-form-item name="attachmentList" label="附件">
             <CommonUpload
               v-if="global.$checkEditable(props.mode)"
               :attachmentList="state.formData.attachmentList"
             />
             <template v-if="props.mode === 'review'">
-              <CommonUpload
-                disabled
+              <AttachmentReview
                 :attachmentList="state.formData.attachmentList"
               />
             </template>
@@ -183,6 +181,7 @@ const state = reactive({
     eventContent: null,
     eventTime: null,
     bridgeName: null,
+    disposalCompletionTime: null,
   },
 });
 
@@ -203,6 +202,7 @@ watch(
         rowData = {
           ...rowData,
           eventTime: global.$dayjs(rowData.eventTime, "YYYY-MM-DD HH:mm:ss"),
+          disposalCompletionTime: global.$dayjs(rowData.disposalCompletionTime, "YYYY-MM-DD HH:mm:ss"),
         };
         state.formData = rowData;
       }

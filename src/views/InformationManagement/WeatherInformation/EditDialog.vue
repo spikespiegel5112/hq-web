@@ -77,7 +77,7 @@
           </a-form-item>
         </a-col>
       </a-row>
-      <a-row v-if="props.mode === 'edit'">
+      <a-row v-if="props.mode === 'review'">
         <a-col :span="22">
           <a-form-item name="attachmentList" label="附件">
             <CommonUpload :attachmentList="state.formData.attachmentList" />
@@ -86,12 +86,17 @@
       </a-row>
     </a-form>
     <template #footer>
-      <a-row>
+      <a-row v-if="props.mode === 'edit'">
         <a-col :span="22">
           <a-button key="back" @click="handleClose">取消</a-button>
           <a-button key="submit" type="primary" @click="handleSubmit">
             确认
           </a-button>
+        </a-col>
+      </a-row>
+      <a-row v-else>
+        <a-col :span="22">
+          <a-button key="back" @click="handleClose">关闭</a-button>
         </a-col>
       </a-row>
     </template>
