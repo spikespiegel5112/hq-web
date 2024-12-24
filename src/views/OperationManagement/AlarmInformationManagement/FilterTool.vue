@@ -5,7 +5,7 @@
         <a-col :span="20">
           <a-row :gutter="20">
             <a-col :span="6">
-              <a-form-item name="staffName" label="人员姓名">
+              <a-form-item name="staffName" label="预警类型">
                 <a-input
                   v-model:value="state.formData.staffName"
                   placeholder="请输入"
@@ -14,9 +14,28 @@
                 </a-input>
               </a-form-item>
             </a-col>
-
-            <a-col :span="10">
-              <a-form-item name="password" label="值班时间">
+            <a-col :span="6">
+              <a-form-item name="password" label="日期">
+                <a-range-picker
+                  v-model:value="state.formData.dutyTime"
+                  format="YYYY-MM-DD"
+                  @change="handleChangeDutyTime"
+                  allow-clear
+                />
+              </a-form-item>
+            </a-col>
+            <a-col :span="6">
+              <a-form-item name="password" label="日期类型">
+                <a-range-picker
+                  v-model:value="state.formData.dutyTime"
+                  format="YYYY-MM-DD"
+                  @change="handleChangeDutyTime"
+                  allow-clear
+                />
+              </a-form-item>
+            </a-col>
+            <a-col :span="6">
+              <a-form-item name="password" label="级别">
                 <a-range-picker
                   v-model:value="state.formData.dutyTime"
                   format="YYYY-MM-DD"

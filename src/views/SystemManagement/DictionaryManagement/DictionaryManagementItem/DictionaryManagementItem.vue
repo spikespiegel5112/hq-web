@@ -186,6 +186,7 @@ const handleAdd = () => {
 
 const handleSearch = (formData: object) => {
   queryFormData = formData;
+  
   getData();
 };
 

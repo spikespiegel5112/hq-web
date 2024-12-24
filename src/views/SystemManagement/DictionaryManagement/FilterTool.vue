@@ -1,13 +1,13 @@
 <template>
   <div class="common_filtertool_wrapper">
-    <a-form :model="formData" autocomplete="off" ref="formDataRef">
+    <a-form :model="state.formData" ref="formDataRef" autocomplete="off">
       <a-row>
         <a-col :span="20">
           <a-row :gutter="20">
             <a-col :span="8">
               <a-form-item name="dicName" label="字典名称">
                 <a-select
-                  v-model="formData.dicName"
+                  v-model:value="state.formData.dicName"
                   placeholder="请输入"
                   allowClear
                   show-search
@@ -23,7 +23,7 @@
             <a-col :span="8">
               <a-form-item name="code" label="字典编码">
                 <a-input
-                  v-model:value="formData.code"
+                  v-model:value="state.formData.code"
                   placeholder="请输入"
                   allowClear
                 ></a-input>
@@ -81,12 +81,11 @@ const emit = defineEmits<{
 
 const formDataRef: any = ref(null);
 
-const formData = reactive({
-  dicName: null,
-  code: null,
-});
-
 const state = reactive({
+  formData: {
+    dicName: null,
+    code: null,
+  },
   dictionaryNameList: [] as DefaultOptionType[],
 });
 
@@ -98,12 +97,12 @@ watch(
 );
 
 const handleSearch = () => {
-  emit("onSearch", formData);
+  emit("onSearch", state.formData);
 };
 
 const handleReset = () => {
   formDataRef.value.resetFields();
-  emit("onReset", formData);
+  emit("onReset", state.formData);
 };
 
 const filterOption = (input: string, option: any) => {
