@@ -134,22 +134,22 @@ const pageModel = ref([
     tableVisible: true,
     formVisible: false,
     exportVisible: false,
-    tagConfig: {
-      colorList: [
-        { value: "未处理", color: "error" },
-        { value: "处理中", color: "warning" },
-        { value: "未处理", color: "success" },
-      ],
-    },
     // tagConfig: {
-    //   val: "planStatus",
-    //   dictionary: global.$store.state.dictionary.eventStatus,
     //   colorList: [
-    //     { value: 0, color: "error" },
-    //     { value: 1, color: "warning" },
-    //     { value: 2, color: "success" },
+    //     { value: "未处理", color: "error" },
+    //     { value: "处理中", color: "warning" },
+    //     { value: "未处理", color: "success" },
     //   ],
     // },
+    tagConfig: {
+      val: "planStatus",
+      dictionary: global.$store.state.dictionary.eventStatus,
+      colorList: [
+        { value: 0, color: "error" },
+        { value: 1, color: "warning" },
+        { value: 2, color: "success" },
+      ],
+    },
     width: "1rem",
   },
   {
@@ -212,9 +212,9 @@ const getData = () => {
           planLevel: global
             .$getDictionary("planLevel")
             .find((item2: any) => item2.value === item.planLevel)?.label,
-          planStatus: global
-            .$getDictionary("planStatus")
-            .find((item2: any) => item2.value === item.planStatus)?.label,
+          // planStatus: global
+          //   .$getDictionary("planStatus")
+          //   .find((item2: any) => item2.value === item.planStatus)?.label,
           planTime: global.$dayjs(item.planTime).format("YYYY-MM-DD"),
         };
       });

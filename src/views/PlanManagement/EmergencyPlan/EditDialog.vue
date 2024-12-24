@@ -71,7 +71,7 @@
             <a-textarea
               v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.planContent"
-             placeholder="请输入"
+              placeholder="请输入"
               :rows="3"
               allow-clear
             >
@@ -110,14 +110,10 @@
             <a-date-picker
               v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.planTime"
-              format="YYYY-MM-DD HH:mm:ss"
+              format="YYYY-MM-DD"
             ></a-date-picker>
             <template v-if="props.mode === 'review'">
-              {{
-                global
-                  .$dayjs(state.formData.planTime)
-                  .format("YYYY-MM-DD HH:mm:ss")
-              }}
+              {{ global.$dayjs(state.formData.planTime).format("YYYY-MM-DD") }}
             </template>
           </a-form-item>
         </a-col>
@@ -289,7 +285,9 @@ watch(
         const formData = JSON.parse(JSON.stringify(props.rowData));
         state.formData = {
           ...formData,
-          planTime: !!formData.planTime ? global.$dayjs(formData.planTime) : null,
+          planTime: !!formData.planTime
+            ? global.$dayjs(formData.planTime)
+            : null,
         };
       }
       setUndeal();
@@ -304,7 +302,6 @@ const handleClose = () => {
 };
 
 const handleSubmit = () => {
-
   const planTime = global
     .$dayjs(state.formData.planTime)
     .format("YYYY-MM-DD HH:mm:ss");
