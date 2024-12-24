@@ -768,3 +768,59 @@ export const operationManagementDutyStaffSaveRequest = (params: any) => {
     data: params,
   });
 };
+
+// 运行管理-告警信息 Alarm Info Controller
+
+// 删除
+export const operationManagementAlarmInfoDeleteRequest = (params: any) => {
+  return service({
+    url: prefix + "/operationManagement/alarmInfo/delete",
+    method: "POST",
+    data: params,
+  });
+};
+
+// excel导出
+export const operationManagementAlarmInfoExportExcelRequest = (params: any) => {
+  return service({
+    url: prefix + "/operationManagement/alarmInfo/exportExcel",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 根据Id查询
+export const operationManagementAlarmInfoGetOneByIdRequest = (params: any) => {
+  return service({
+    url: prefix + "/operationManagement/alarmInfo/getOneById",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 分页查询
+export const operationManagementAlarmInfoGetPageRequest = (params: any) => {
+  return service({
+    url: prefix + "/operationManagement/alarmInfo/getPage",
+    method: "POST",
+    data: params,
+  });
+};
+
+// excel导入
+export const operationManagementAlarmInfoImportExcelRequest = (params: any) => {
+  return service({
+    url: prefix + "/operationManagement/alarmInfo/importExcel",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 保存
+export const operationManagementAlarmInfoSaveRequest = (params: any) => {
+  return service({
+    url: prefix + "/operationManagement/alarmInfo/save",
+    method: "POST",
+    data: params,
+  });
+};
