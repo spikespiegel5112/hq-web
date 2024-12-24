@@ -133,12 +133,12 @@ const pageModel = ref([
     formVisible: false,
     exportVisible: false,
     tagConfig: {
-      val: "label",
+      val: "planStatus",
       dictionary: global.$store.state.dictionary.eventStatus,
       colorList: [
-        { value: "未处理", color: "error" },
-        { value: "处理中", color: "warning" },
-        { value: "已处置", color: "success" },
+        { value: 0, color: "error" },
+        { value: 1, color: "warning" },
+        { value: 2, color: "success" },
       ],
     },
     width: "1rem",
@@ -304,6 +304,7 @@ const handleSubmitDisposal = (formData: any) => {
 
 onMounted(async () => {
   getData();
+  console.log(global.$store.state.dictionary.eventStatus);
 });
 
 onBeforeUnmount(() => {});

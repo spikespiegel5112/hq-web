@@ -91,7 +91,15 @@
                 )?.color
               "
             >
-              {{ scope.record[item.name] }}
+              {{
+                !!item.tagConfig.val
+                  ? item.tagConfig.dictionary.find((item2) => {
+                      const result =
+                        item2.value === scope.record[item.tagConfig.val];
+                      return result;
+                    })?.label
+                  : scope.record[item.name]
+              }}
             </a-tag>
           </div>
           <div v-else>

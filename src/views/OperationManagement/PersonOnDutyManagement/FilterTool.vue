@@ -17,12 +17,7 @@
 
             <a-col :span="10">
               <a-form-item name="password" label="值班时间">
-                <a-range-picker
-                  v-model:value="state.formData.dutyTime"
-                  format="YYYY-MM-DD"
-                  @change="handleChangeDutyTime"
-                  allow-clear
-                />
+                <a-range-picker v-model:value="state.dutyTime" show-time />
               </a-form-item>
             </a-col>
           </a-row>
@@ -67,22 +62,24 @@ const formDataRef: any = ref(null);
 
 const state = reactive({
   formData: {
+    dutyStartTime: null,
+    dutyEndTime: null,
     staffName: null,
-    dutyTime: [] as any[],
   },
-  dutyStartTime: "",
-  dutyEndTime: "",
+  dutyTime: [] as any[],
 });
 
 const handleSearch = () => {
-  const dutyStartTime = global
-    .$dayjs(state.formData.dutyTime[0])
-    .format("YYYY-MM-DD HH:mm:ss");
-  const dutyEndTime = global
-    .$dayjs(state.formData.dutyTime[1])
-    .format("YYYY-MM-DD HH:mm:ss");
+  const dutyStartTime = !!state.dutyTime[0]
+    ? global.$dayjs(state.dutyTime[0]).format("YYYY-MM-DD HH:mm:ss")
+    : null;
+  const dutyEndTime = !!state.dutyTime[1]
+    ? global.$dayjs(state.dutyTime[1]).format("YYYY-MM-DD HH:mm:ss")
+    : null;
+
   const formData: any = JSON.parse(JSON.stringify(state.formData));
   formData.dutyTime = undefined;
+  debugger;
   emit("onSearch", {
     ...formData,
     dutyStartTime,
@@ -93,14 +90,7 @@ const handleSearch = () => {
 const handleReset = () => {
   formDataRef.value.resetFields();
   emit("onReset", state.formData);
-  state.formData.dutyTime = [];
-};
-
-const handleChangeDutyTime = (value: any) => {
-  const dutyStartTime = global.$dayjs(value[0]).format("YYYY-MM-DD");
-  const dutyEndTime = global.$dayjs(value[1]).format("YYYY-MM-DD");
-  state.dutyStartTime = dutyStartTime;
-  state.dutyEndTime = dutyEndTime;
+  state.dutyTime = [];
 };
 
 onMounted(async () => {});
