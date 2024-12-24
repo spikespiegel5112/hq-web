@@ -18,14 +18,15 @@
       @onChangePage="handleChangePage"
       @onDelete="handleDelete"
     />
-    <EditDialog
-      :visible="state.dialogVisible"
+    <ReviewDialog
+      :visible="state.dialogReviewVisible"
       :mode="state.dialogMode"
       :dataModel="pageModel"
       :rowData="state.currentRowData"
       @onClose="handleClose"
       @onSubmit="handleSubmit"
-    ></EditDialog>
+    >
+    </ReviewDialog>
   </div>
 </template>
 
@@ -48,7 +49,7 @@ import {
   operationManagementAlarmInfoSaveRequest,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
-import EditDialog from "./EditDialog.vue";
+import ReviewDialog from "./ReviewDialog.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -123,27 +124,19 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "日期",
-    name: "alarmTime",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
     label: "操作",
     name: "operationColumn",
     tableVisible: true,
     exportVisible: false,
     fixed: "right",
-    actions: ["edit", "review", "delete"],
+    actions: ["review"],
   },
 ]);
 
 const state = reactive({
   tableData: [] as any[],
   processedTableData: [] as any[],
-  dialogVisible: false,
+  dialogReviewVisible: false,
   dialogMode: null as string | null,
   currentRowData: {},
 });
@@ -152,6 +145,13 @@ let queryFormData = reactive({} as any);
 
 const pagination = reactive({
   ...global.$store.state.app.defaultPagination,
+});
+
+const eventAllList = computed(() => {
+  return [
+    ...global.$store.state.app.currentEventTypeList[0].data,
+    ...global.$store.state.app.currentEventTypeList[1].data,
+  ];
 });
 
 const getData = () => {
@@ -169,6 +169,19 @@ const getData = () => {
           ...item,
           dutyStartTime: global.$dayjs(item.dutyStartTime).format("YYYY-MM-DD"),
           dutyEndTime: global.$dayjs(item.dutyEndTime).format("YYYY-MM-DD"),
+          preplanResourceId: eventAllList.value.find(
+            (item2: any) => item2.value === item.preplanResourceId.toString()
+          )?.label,
+          alarmTime: global.$dayjs(item.alarmTime).format("YYYY-MM-DD"),
+          alarmLevel: global
+            .$getDictionary("alarmLevel")
+            .find((item2: any) => item2.value === item.alarmLevel)?.label,
+          dateType: global
+            .$getDictionary("dateType")
+            .find((item2: any) => item2.value === item.dateType)?.label,
+          alarmStatus: global
+            .$getDictionary("alarmStatus")
+            .find((item2: any) => item2.value === item.alarmStatus)?.label,
         };
       });
     })
@@ -178,19 +191,19 @@ const getData = () => {
 };
 
 const handleEdit = (rowData: any) => {
-  state.dialogVisible = true;
+  state.dialogReviewVisible = true;
   state.dialogMode = "edit";
   state.currentRowData = rowData;
 };
 
 const handleReview = (rowData: any) => {
-  state.dialogVisible = true;
+  state.dialogReviewVisible = true;
   state.dialogMode = "review";
   state.currentRowData = rowData;
 };
 
 const handleAdd = () => {
-  state.dialogVisible = true;
+  state.dialogReviewVisible = true;
   state.dialogMode = "add";
 };
 
@@ -205,7 +218,7 @@ const handleReset = (formData: object) => {
 };
 
 const handleClose = () => {
-  state.dialogVisible = false;
+  state.dialogReviewVisible = false;
 };
 
 const handleSubmit = (formData: any) => {

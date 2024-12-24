@@ -5,43 +5,60 @@
         <a-col :span="20">
           <a-row :gutter="20">
             <a-col :span="6">
-              <a-form-item name="staffName" label="预警类型">
-                <a-input
-                  v-model:value="state.formData.staffName"
-                  placeholder="请输入"
-                  allow-clear
+              <a-form-item name="preplanResourceId" label="预警类型">
+                <a-select
+                  v-model="state.formData.preplanResourceId"
+                  placeholder="请选择"
                 >
-                </a-input>
+                  <a-select-option
+                    v-for="item in eventAllList"
+                    :key="item.value"
+                    :value="item.value"
+                  >
+                    {{ item.label }}
+                  </a-select-option>
+                </a-select>
               </a-form-item>
             </a-col>
-            <a-col :span="6">
-              <a-form-item name="password" label="日期">
+            <a-col :span="7">
+              <a-form-item name="alarmTime" label="日期">
                 <a-range-picker
-                  v-model:value="state.formData.dutyTime"
+                  v-model:value="state.alarmTime"
                   format="YYYY-MM-DD"
-                  @change="handleChangeDutyTime"
                   allow-clear
                 />
               </a-form-item>
             </a-col>
-            <a-col :span="6">
-              <a-form-item name="password" label="日期类型">
-                <a-range-picker
-                  v-model:value="state.formData.dutyTime"
-                  format="YYYY-MM-DD"
-                  @change="handleChangeDutyTime"
-                  allow-clear
-                />
+            <a-col :span="5">
+              <a-form-item name="dateType" label="日期类型">
+                <a-select
+                  v-model="state.formData.dateType"
+                  placeholder="请选择"
+                >
+                  <a-select-option
+                    v-for="item in global.$getDictionary('dateType')"
+                    :key="item.value"
+                    :value="item.value"
+                  >
+                    {{ item.label }}
+                  </a-select-option>
+                </a-select>
               </a-form-item>
             </a-col>
-            <a-col :span="6">
-              <a-form-item name="password" label="级别">
-                <a-range-picker
-                  v-model:value="state.formData.dutyTime"
-                  format="YYYY-MM-DD"
-                  @change="handleChangeDutyTime"
-                  allow-clear
-                />
+            <a-col :span="5">
+              <a-form-item name="alarmLevel" label="级别">
+                <a-select
+                  v-model="state.formData.alarmLevel"
+                  placeholder="请选择"
+                >
+                  <a-select-option
+                    v-for="item in global.$getDictionary('alarmLevel')"
+                    :key="item.value"
+                    :value="item.value"
+                  >
+                    {{ item.label }}
+                  </a-select-option>
+                </a-select>
               </a-form-item>
             </a-col>
           </a-row>
@@ -86,41 +103,50 @@ const formDataRef: any = ref(null);
 
 const state = reactive({
   formData: {
-    staffName: null,
-    dutyTime: [] as any[],
+    alarmLevel: null,
+    dateType: null,
+    preplanResourceId: null,
+    alarmTimeStart: null,
+    alarmTimeEnd: null,
   },
-  dutyStartTime: "",
-  dutyEndTime: "",
+  alarmTime: [],
+});
+
+const eventAllList = computed(() => {
+  return [
+    ...global.$store.state.app.currentEventTypeList[0].data,
+    ...global.$store.state.app.currentEventTypeList[1].data,
+  ];
 });
 
 const handleSearch = () => {
-  const dutyStartTime = global
-    .$dayjs(state.formData.dutyTime[0])
+  const alarmTimeStart = global
+    .$dayjs(state.alarmTime[0])
     .format("YYYY-MM-DD HH:mm:ss");
-  const dutyEndTime = global
-    .$dayjs(state.formData.dutyTime[1])
+  const alarmTimeEnd = global
+    .$dayjs(state.alarmTime[1])
     .format("YYYY-MM-DD HH:mm:ss");
   const formData: any = JSON.parse(JSON.stringify(state.formData));
-  formData.dutyTime = undefined;
+  formData.alarmTime = undefined;
   emit("onSearch", {
     ...formData,
-    dutyStartTime,
-    dutyEndTime,
+    alarmTimeStart,
+    alarmTimeEnd,
   });
 };
 
 const handleReset = () => {
   formDataRef.value.resetFields();
   emit("onReset", state.formData);
-  state.formData.dutyTime = [];
+  state.alarmTime = [];
 };
 
-const handleChangeDutyTime = (value: any) => {
-  const dutyStartTime = global.$dayjs(value[0]).format("YYYY-MM-DD");
-  const dutyEndTime = global.$dayjs(value[1]).format("YYYY-MM-DD");
-  state.dutyStartTime = dutyStartTime;
-  state.dutyEndTime = dutyEndTime;
-};
+// const handleChangealarmTime = (value: any) => {
+//   const alarmTimeStart = global.$dayjs(value[0]).format("YYYY-MM-DD");
+//   const alarmTimeEnd = global.$dayjs(value[1]).format("YYYY-MM-DD");
+//   state.alarmTimeStart = alarmTimeStart;
+//   state.alarmTimeEnd = alarmTimeEnd;
+// };
 
 onMounted(async () => {});
 
