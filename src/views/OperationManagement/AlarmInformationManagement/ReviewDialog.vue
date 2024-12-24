@@ -275,7 +275,7 @@ const getStepData = () => {
   });
 
   preplanPreplanGetStepPageRequest({
-    preplanType: "应急预案处置",
+    preplanType: 1,
     eventType: planData.label,
   })
     .then((response: any) => {

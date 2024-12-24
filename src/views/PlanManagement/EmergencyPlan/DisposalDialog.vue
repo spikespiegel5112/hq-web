@@ -126,8 +126,6 @@ import type { Rule, RuleObject } from "ant-design-vue/es/form";
 
 import {
   planManagementEmergencyPlanGetDisposalRequest,
-  eventManageSuddenEventSaveDisposalRequest,
-  eventManageSuddenEventGetDisposalRequest,
   preplanPreplanGetStepPageRequest,
 } from "@/api/management";
 
@@ -290,7 +288,7 @@ const getPlanData = () => {
     return Number(item.value) === props.rowData.preplanResourceId;
   });
   preplanPreplanGetStepPageRequest({
-    preplanType: "应急预案处置",
+    preplanType: 1,
     eventType: planData.label,
   })
     .then((response: any) => {

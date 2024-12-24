@@ -272,7 +272,7 @@ const getPlanData = () => {
     (item: any) => Number(item.value) === props.rowData.prId
   );
   preplanPreplanGetStepPageRequest({
-    preplanType: "突发事件处置",
+    preplanType: 0,
     eventType: planData.label,
   })
     .then((response: any) => {
