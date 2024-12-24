@@ -12,12 +12,6 @@
       autocomplete="off"
       :label-col="{ style: { width: '130px' } }"
     >
-      <!-- temperature: null,
-    warningType: null,
-    weather: null,
-    weatherId: null,
-    weatherSource: null, -->
-
       <a-row>
         <a-col :span="22">
           <a-form-item name="warningType" label="类型">
@@ -36,9 +30,6 @@
                 {{ item.label }}
               </a-select-option>
             </a-select>
-            <template v-if="props.mode === 'review'">
-              {{ global.$getDictionary('weather_warning_warning_type_enum').find((item:any)=>item.value===state.formData.warningType)?.label }}
-            </template>
           </a-form-item>
         </a-col>
       </a-row>
@@ -58,9 +49,6 @@
                 {{ item.label }}
               </a-select-option>
             </a-select>
-            <template v-if="props.mode === 'review'">
-              {{ global.$getDictionary('weather_warning_warning_level').find((item:any)=>item.value===state.formData.warningLevel)?.label }}
-            </template>
           </a-form-item>
         </a-col>
       </a-row>
@@ -75,9 +63,13 @@
               allow-clear
             >
             </a-textarea>
-            <template v-if="props.mode === 'review'">
-              {{ state.formData.warningContent }}
-            </template>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="attachmentList" label="附件">
+            <CommonUpload :attachmentList="state.formData.attachmentList" />
           </a-form-item>
         </a-col>
       </a-row>
@@ -85,21 +77,10 @@
     <template #footer>
       <a-row>
         <a-col :span="22">
-          <template
-            v-if="
-              ['edit', 'add', 'disposal'].some((item) => item === props.mode)
-            "
-          >
-            <a-button key="back" @click="handleClose">取消</a-button>
-            <a-button key="submit" type="primary" @click="handleSubmit">
-              确认
-            </a-button>
-          </template>
-          <template v-else-if="props.mode === 'review'">
-            <a-button key="submit" type="primary" @click="handleClose">
-              关闭
-            </a-button>
-          </template>
+          <a-button key="back" @click="handleClose">取消</a-button>
+          <a-button key="submit" type="primary" @click="handleSubmit">
+            确认
+          </a-button>
         </a-col>
       </a-row>
     </template>
@@ -147,6 +128,7 @@ const state = reactive({
     weather: null,
     weatherId: null,
     weatherSource: null,
+    attachmentList: [] as any[],
   } as any,
 });
 
@@ -169,8 +151,11 @@ watch(
           dataTime: global.$dayjs(rowData.dataTime, "YYYY-MM-DD HH:mm:ss"),
         };
         Object.keys(state.formData).forEach((item: string) => {
-          state.formData[item] = !!rowData[item] ? rowData[item] : undefined;
+          state.formData[item] = global.$isNotEmpty(rowData[item])
+            ? rowData[item]
+            : undefined;
         });
+        console.log(state.formData);
       }
     }
   }
@@ -188,9 +173,6 @@ const handleSubmit = () => {
       if (props.mode === "add") {
         state.formData.id = undefined;
       }
-      const dataTime = global
-        .$dayjs(props.rowData.dataTime)
-        .format("YYYY-MM-DD HH:mm:ss");
       emit("onSubmit", {
         ...state.formData,
         dataTime: props.rowData.dataTime,

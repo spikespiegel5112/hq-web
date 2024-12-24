@@ -146,6 +146,7 @@ const emit = defineEmits<{
 const props = defineProps({
   visible: { type: Boolean, required: true, default: false },
   rowData: { type: Object, required: true, default: () => {} },
+  dataModel: { type: Array, required: true, default: () => [] },
 });
 
 let state = reactive({

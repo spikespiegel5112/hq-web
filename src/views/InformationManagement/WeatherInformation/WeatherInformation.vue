@@ -12,6 +12,7 @@
       :dataModel="pageModel"
       :pagination="pagination"
       @onIssueWarning="handleEdit"
+      @onChangePage="handleChangePage"
     />
     <EditDialog
       :visible="state.dialogVisible"
@@ -21,14 +22,6 @@
       @onClose="handleClose"
       @onSubmit="handleSubmit"
     ></EditDialog>
-    <DisposalDialog
-      :visible="state.dialogDisposalVisible"
-      :mode="state.dialogMode"
-      :dataModel="pageModel"
-      :rowData="state.currentRowData"
-      @onClose="handleCloseDisposal"
-      @onSubmit="handleSubmitDisposal"
-    ></DisposalDialog>
   </div>
 </template>
 
@@ -233,40 +226,6 @@ const handleChangePage = (pagingData: any) => {
   pagination.pageSize = pagingData.pageSize;
   pagination.total = pagingData.total;
   getData();
-};
-
-const handleDelete = (id: number) => {
-  infoManagementExternalInfoDeleteRequest({ id })
-    .then((response: any) => {
-      global.$message.success("删除成功");
-      getData();
-    })
-    .catch((error: any) => {
-      global.$message.error("删除失败");
-      console.log(error);
-    });
-};
-
-const handleDisposal = (rowData: any) => {
-  state.dialogDisposalVisible = true;
-  state.currentRowData = rowData;
-  state.dialogMode = "disposal";
-};
-
-const handleCloseDisposal = () => {
-  state.dialogDisposalVisible = false;
-};
-
-const handleSubmitDisposal = (formData: any) => {
-  infoManagementExternalInfoHandleRequest(formData)
-    .then((response: any) => {
-      global.$message.success("删除成功");
-      getData();
-    })
-    .catch((error: any) => {
-      global.$message.error("删除失败");
-      console.log(error);
-    });
 };
 
 onMounted(async () => {
