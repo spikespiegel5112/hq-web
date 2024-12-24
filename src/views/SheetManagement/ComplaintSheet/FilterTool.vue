@@ -11,9 +11,7 @@
                   placeholder="请输入"
                   allow-clear
                 >
-                  <template #prefix>
-                    <span class="username"></span>
-                  </template>
+
                 </a-input>
               </a-form-item>
             </a-col>

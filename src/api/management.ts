@@ -719,7 +719,7 @@ export const planManagementEmergencyPlanGetDisposalRequest = (params: any) => {
 export const operationManagementDutyStaffDeleteRequest = (params: any) => {
   return service({
     url: prefix + "/operationManagement/dutyStaff/delete",
-    method: "GET",
+    method: "POST",
     data: params,
   });
 };

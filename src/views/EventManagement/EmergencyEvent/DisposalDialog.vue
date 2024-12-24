@@ -81,7 +81,7 @@
           <a-form-item name="stepContent" label="处置内容">
             <a-textarea
               v-model:value="state.formData.stepContent"
-             placeholder="请输入"
+              placeholder="请输入"
               :rows="3"
               allow-clear
             >
@@ -201,7 +201,34 @@ const eventList = computed(() => {
 });
 
 const rules: ComputedRef<RuleObject[]> = computed(() => {
-  return [];
+  const validateNumber = (rule: any, value: any, callback: any) => {
+    if (isNaN(Number(value))) {
+      callback(new Error("请输入数字值"));
+    } else {
+      callback();
+    }
+  };
+  const result: any = {};
+  Object.keys(state.formData).forEach((item) => {
+    const dataModelInfo = props.dataModel.find(
+      (item2: any) => item2.name === item
+    ) as any;
+    if (!!dataModelInfo) {
+      result[item] = [];
+      if (dataModelInfo.required) {
+        result[item].push({
+          required: true,
+          message: "请输入" + dataModelInfo.label,
+          trigger: "change",
+        });
+        if (props.mode === "review") result[item] = false;
+      }
+      if (dataModelInfo.dataType === "number") {
+        result[item].push({ validator: validateNumber, trigger: "change" });
+      }
+    }
+  });
+  return result;
 });
 
 watch(

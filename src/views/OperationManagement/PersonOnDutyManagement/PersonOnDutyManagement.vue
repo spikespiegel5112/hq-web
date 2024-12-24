@@ -10,9 +10,9 @@
     </div>
     <BaseTable
       :tableData="state.tableData"
+      :processedTableData="state.processedTableData"
       :dataModel="pageModel"
       :pagination="pagination"
-      tabTable
       @onEdit="handleEdit"
       @onReview="handleReview"
       @onChangePage="handleChangePage"
@@ -42,7 +42,11 @@ import {
   nextTick,
 } from "vue";
 
-import { operationManagementDutyStaffGetPageRequest } from "@/api/management";
+import {
+  operationManagementDutyStaffGetPageRequest,
+  operationManagementDutyStaffDeleteRequest,
+  operationManagementDutyStaffSaveRequest,
+} from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
 
@@ -60,7 +64,7 @@ const pageModel = ref([
   },
   {
     label: "人员姓名",
-    name: "higywayCode",
+    name: "staffName",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -68,7 +72,7 @@ const pageModel = ref([
   },
   {
     label: "人员电话",
-    name: "highwayName",
+    name: "staffPhone",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -76,7 +80,7 @@ const pageModel = ref([
   },
   {
     label: "人员职务",
-    name: "bridgeCode",
+    name: "staffJob",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -84,7 +88,7 @@ const pageModel = ref([
   },
   {
     label: "HOC值班人员姓名",
-    name: "bridgeName",
+    name: "hocStaffName",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -92,23 +96,23 @@ const pageModel = ref([
   },
   {
     label: "HOC值班人员电话",
-    name: "bridgeName",
+    name: "hocStaffPhone",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "值班开始日期",
-    name: "bridgeName",
+    label: "值班开始时间",
+    name: "dutyStartTime",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "值班结束日期",
-    name: "bridgeName",
+    label: "值班结束时间",
+    name: "dutyEndTime",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -126,6 +130,7 @@ const pageModel = ref([
 
 const state = reactive({
   tableData: [] as any[],
+  processedTableData: [] as any[],
   dialogVisible: false,
   dialogMode: null as string | null,
   currentRowData: {},
@@ -138,16 +143,26 @@ const pagination = reactive({
 });
 
 const getData = () => {
-  const result = [] as any[];
-  for (let index = 0; index < 30; index++) {
-    result.push({
-      higywayCode: "aaa",
-      highwayName: "aaa",
-      bridgeCode: "aaa",
-      bridgeName: "aaa",
+  pagination.total = undefined;
+  operationManagementDutyStaffGetPageRequest({
+    ...queryFormData,
+    ...pagination,
+  })
+    .then((response: any) => {
+      response = response.data;
+      state.tableData = response.list;
+      pagination.total = response.total;
+      state.processedTableData = response.list.map((item: any) => {
+        return {
+          ...item,
+          dutyStartTime: global.$dayjs(item.dutyStartTime).format("YYYY-MM-DD"),
+          dutyEndTime: global.$dayjs(item.dutyEndTime).format("YYYY-MM-DD"),
+        };
+      });
+    })
+    .catch((error: any) => {
+      console.log(error);
     });
-  }
-  state.tableData = result;
 };
 
 const handleEdit = (rowData: any) => {
@@ -181,7 +196,17 @@ const handleClose = () => {
   state.dialogVisible = false;
 };
 
-const handleSubmit = () => {};
+const handleSubmit = (formData: any) => {
+  operationManagementDutyStaffSaveRequest(formData)
+    .then((response: any) => {
+      global.$message.success("操作成功");
+      getData();
+    })
+    .catch((error: any) => {
+      global.$message.error("操作失败");
+      console.log(error);
+    });
+};
 
 const handleChangePage = (pagingData: any) => {
   pagination.page = pagingData.current;
@@ -190,7 +215,20 @@ const handleChangePage = (pagingData: any) => {
   getData();
 };
 
-const handleDelete = (id: number) => {};
+const handleDelete = (id: number) => {
+  operationManagementDutyStaffDeleteRequest({
+    id,
+  })
+    .then((response: any) => {
+      global.$message.success("删除成功");
+      getData();
+    })
+    .catch((error: any) => {
+      global.$message.error("删除失败");
+      console.log(error);
+    });
+};
+
 onMounted(async () => {
   getData();
 });

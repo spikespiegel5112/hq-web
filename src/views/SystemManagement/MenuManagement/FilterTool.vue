@@ -7,9 +7,7 @@
             <a-col :span="6">
               <a-form-item name="userName" label="来源种类">
                 <a-input v-model:value="formData.userName" placeholder="请输入">
-                  <template #prefix>
-                    <span class="username"></span>
-                  </template>
+
                 </a-input>
               </a-form-item>
             </a-col>
