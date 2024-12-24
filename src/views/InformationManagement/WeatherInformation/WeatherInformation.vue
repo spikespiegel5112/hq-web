@@ -11,6 +11,7 @@
       :processedTableData="state.processedTableData"
       :dataModel="pageModel"
       :pagination="pagination"
+      @onReview="handleReview"
       @onIssueWarning="handleEdit"
       @onChangePage="handleChangePage"
     />
@@ -45,7 +46,6 @@ import {
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
-import DisposalDialog from "./DisposalDialog.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -66,7 +66,7 @@ const pageModel = ref([
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
-    width: "1rem",
+    width: "1.5rem",
   },
   {
     label: "天气来源",
@@ -121,21 +121,12 @@ const pageModel = ref([
     width: "1rem",
   },
   {
-    label: "附件",
-    name: "attachment",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-    width: "1rem",
-  },
-  {
     label: "操作",
     name: "operationColumn",
     tableVisible: true,
     exportVisible: false,
     fixed: "right",
-    actions: ["issueWarning"],
+    actions: ["review", "issueWarning"],
   },
 ]);
 
@@ -188,11 +179,6 @@ const handleReview = (rowData: any) => {
   state.dialogVisible = true;
   state.dialogMode = "review";
   state.currentRowData = rowData;
-};
-
-const handleAdd = () => {
-  state.dialogVisible = true;
-  state.dialogMode = "add";
 };
 
 const handleSearch = (formData: object) => {

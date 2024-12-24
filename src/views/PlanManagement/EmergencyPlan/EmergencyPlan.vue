@@ -99,6 +99,7 @@ const pageModel = ref([
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
+    width: "2.5rem",
   },
   {
     label: "预案内容",
@@ -107,7 +108,6 @@ const pageModel = ref([
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
-    width: "1.5rem",
   },
   {
     label: "预案等级",
@@ -116,6 +116,7 @@ const pageModel = ref([
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
+    width: "1rem",
   },
   {
     label: "发生时间",
@@ -124,6 +125,7 @@ const pageModel = ref([
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
+    width: "2rem",
   },
   {
     label: "状态",
@@ -133,14 +135,21 @@ const pageModel = ref([
     formVisible: false,
     exportVisible: false,
     tagConfig: {
-      val: "planStatus",
-      dictionary: global.$store.state.dictionary.eventStatus,
       colorList: [
-        { value: 0, color: "error" },
-        { value: 1, color: "warning" },
-        { value: 2, color: "success" },
+        { value: "未处理", color: "error" },
+        { value: "处理中", color: "warning" },
+        { value: "未处理", color: "success" },
       ],
     },
+    // tagConfig: {
+    //   val: "planStatus",
+    //   dictionary: global.$store.state.dictionary.eventStatus,
+    //   colorList: [
+    //     { value: 0, color: "error" },
+    //     { value: 1, color: "warning" },
+    //     { value: 2, color: "success" },
+    //   ],
+    // },
     width: "1rem",
   },
   {
@@ -178,6 +187,12 @@ const pagination = reactive({
   ...global.$store.state.app.defaultPagination,
 });
 
+const eventList = computed(() => {
+  return global.$store.state.app.currentEventTypeList.find(
+    (item: any) => item.type === "应急预案处置"
+  )?.data;
+});
+
 const getData = () => {
   pagination.total = undefined;
   planManagementEmergencyPlanGetPageRequest({
@@ -191,12 +206,16 @@ const getData = () => {
       state.processedTableData = response.list.map((item: any) => {
         return {
           ...item,
-          planStatus: global
-            .$getDictionary("planStatus")
-            .find((item2: any) => item2.value === item.planStatus).label,
+          preplanResourceId: eventList.value.find(
+            (item2: any) => item2.value === item.preplanResourceId.toString()
+          )?.label,
           planLevel: global
             .$getDictionary("planLevel")
-            .find((item2: any) => item2.value === item.planLevel).label,
+            .find((item2: any) => item2.value === item.planLevel)?.label,
+          planStatus: global
+            .$getDictionary("planStatus")
+            .find((item2: any) => item2.value === item.planStatus)?.label,
+          planTime: global.$dayjs(item.planTime).format("YYYY-MM-DD"),
         };
       });
     })

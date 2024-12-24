@@ -30,6 +30,9 @@
                 {{ item.label }}
               </a-select-option>
             </a-select>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.warningType }}
+            </template>
           </a-form-item>
         </a-col>
       </a-row>
@@ -49,6 +52,11 @@
                 {{ item.label }}
               </a-select-option>
             </a-select>
+            <template v-if="props.mode === 'review'">
+              {{ 
+                global.$getDictionary("planLevel").find((item2: any) => item2.value === state.formData.warningLevel)?.label
+              }}
+            </template>
           </a-form-item>
         </a-col>
       </a-row>
@@ -63,10 +71,13 @@
               allow-clear
             >
             </a-textarea>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.warningContent }}
+            </template>
           </a-form-item>
         </a-col>
       </a-row>
-      <a-row>
+      <a-row v-if="props.mode === 'edit'">
         <a-col :span="22">
           <a-form-item name="attachmentList" label="附件">
             <CommonUpload :attachmentList="state.formData.attachmentList" />

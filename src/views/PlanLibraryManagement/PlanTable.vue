@@ -3,6 +3,7 @@
     :tableData="state.tableData"
     :dataModel="pageModel"
     height="100%"
+    :pagination="false"
     tableBodyHeight="calc(100% - 0.4rem)"
     @onEdit="handleEdit"
     @onReview="handleReview"

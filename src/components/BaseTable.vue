@@ -279,9 +279,11 @@ const isProcessedTableDataExist = computed(() => {
 }) as any;
 
 const actualTableData = computed(() => {
-  return isProcessedTableDataExist.value
-    ? props.processedTableData
+  const processedTableData = props.processedTableData;
+  const result = isProcessedTableDataExist.value
+    ? processedTableData
     : state.originalTableData;
+  return result;
 }) as any;
 
 const tableBodyHeight = computed(() => {
