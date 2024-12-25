@@ -199,12 +199,13 @@ const handleEditPlan = (tableData: any, record: any) => {
   state.dialogMode = "editPlan";
   state.planTableData = tableData;
   state.currentEventTypeData = record;
+  debugger
 };
 
 const handleEdit = (rowData: any) => {
   state.dialogVisible = true;
   state.dialogMode = "editPlanName";
-  state.rowData = rowData;
+  state.currentEventTypeData = rowData;
 };
 
 const handleAdd = () => {
