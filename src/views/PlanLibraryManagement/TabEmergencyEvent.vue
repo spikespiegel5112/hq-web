@@ -182,6 +182,7 @@ const getData = () => {
   preplanPreplanGetPageRequest({
     ...queryFormData,
     ...pagination,
+    preplanType:0
   })
     .then((response: any) => {
       response = response.data;

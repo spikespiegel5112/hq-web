@@ -1,5 +1,6 @@
 <template>
   <BaseTable
+    class="plantable"
     :tableData="state.tableData"
     :dataModel="pageModel"
     height="100%"
@@ -220,4 +221,12 @@ onMounted(async () => {
 onBeforeUnmount(() => {});
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.common_basetable_wrapper {
+  &.plantable {
+    :deep(.ant-table-wrapper) {
+      height: auto !important;
+    }
+  }
+}
+</style>
