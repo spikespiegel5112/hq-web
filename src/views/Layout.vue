@@ -68,7 +68,7 @@ const getEventTypeList = () => {
   })
     .then((response: any) => {
       global.$store.commit("app/updateCurrentEventTypeList", {
-        type: "突发事件处置",
+        type: 1,
         data: response.data.list,
       });
     })
@@ -81,7 +81,7 @@ const getEventTypeList = () => {
   })
     .then((response: any) => {
       global.$store.commit("app/updateCurrentEventTypeList", {
-        type: 1,
+        type: 0,
         data: response.data.list,
       });
     })
