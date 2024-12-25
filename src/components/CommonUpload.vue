@@ -34,6 +34,8 @@ import {
 } from "vue";
 import { UploadOutlined } from "@ant-design/icons-vue";
 
+import { attachmentDeleteRequest } from "@/api/management";
+
 const emit: any = defineEmits(["update:attachmentList"]);
 
 const props = defineProps({
@@ -78,6 +80,7 @@ watch(
 
     newValue.forEach((item: any, index: number) => {
       state.fileList.push({
+        id: item.id,
         uid: index,
         name: item.attachmentName,
         status: "done",
@@ -102,6 +105,7 @@ const handleChangeAttachment = (value: any) => {
 
 const handleDeleteAttachment = (value: any) => {
   console.log(props.attachmentList);
+
   let sliceIndex: number = 0;
 
   props.attachmentList.forEach((item: any, index: number) => {
@@ -111,6 +115,17 @@ const handleDeleteAttachment = (value: any) => {
   });
 
   props.attachmentList.splice(sliceIndex, 1);
+  attachmentDeleteRequest({
+    id: value.id,
+  })
+    .then((res: any) => {
+      console.log(res);
+      global.$message.success("删除成功");
+    })
+    .catch((err: any) => {
+      console.log(err);
+      global.$message.error("删除失败");
+    });
 };
 
 const initFileList = () => {

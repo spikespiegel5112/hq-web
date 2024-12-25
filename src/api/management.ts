@@ -22,6 +22,15 @@ export const attachmentDownloadRequest = (params: any) => {
 // 上传
 // /attachment/upload
 
+// 删除
+export const attachmentDeleteRequest = (params: any) => {
+  return service({
+    url: prefix + "/attachment/delete",
+    method: "POST",
+    data: params,
+  });
+};
+
 // 获取令牌
 export const authLoginRequest = (params: any) => {
   return service({

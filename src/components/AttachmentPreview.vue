@@ -129,26 +129,6 @@ const initSwiper = async () => {
   });
 };
 
-const checkFileType = (file: any) => {
-  let result = "";
-  const attachmentName = file.attachmentName;
-  const fileSufix = attachmentName.split(".")[1];
-
-  const imageType = ["png", "jpg", "jpeg", "gif", "bmp"];
-  const videoType = ["mp4", "avi", "mov", "wmv", "flv", "rmvb", "3gp"];
-  const fileType = ["xls", "xlsx", "pdf", "doc", "docx", "ppt", "pptx", "txt"];
-  if (imageType.includes(fileSufix)) {
-    result = "image";
-  }
-  if (videoType.includes(fileSufix)) {
-    result = "video";
-  }
-  if (fileType.includes(fileSufix)) {
-    result = "file";
-  }
-  return result;
-};
-
 onMounted(async () => {});
 
 onBeforeUnmount(() => {});
