@@ -31,13 +31,15 @@
             <a-space>
               <a
                 href="javascript:;"
-                v-for="item in actualTableData[scope.index].attachmentList"
+                v-for="item2 in getAttachmentTypeList(
+                  actualTableData[scope.index].attachmentList
+                )"
               >
-                <template v-if="checkFileType(item) === 'image'">
+                <template v-if="item2 === 'image'">
                   <a-button
-                    :key="item.attachmentName"
+                    :key="item2"
                     type="link"
-                    @click.stop="handlePreview('preview', scope)"
+                    @click.stop="handlePreview(scope, 'image')"
                   >
                     <PictureOutlined
                       :style="{
@@ -47,15 +49,21 @@
                     />
                   </a-button>
                 </template>
-                <template v-else-if="checkFileType(item) === 'file'">
-                  <PaperClipOutlined
-                    :style="{
-                      color: '#8EE1F9',
-                      fontSize: '0.3rem',
-                    }"
-                  />
+                <template v-else-if="item2 === 'file'">
+                  <a-button
+                    :key="item2"
+                    type="link"
+                    @click.stop="handlePreview(scope, 'file')"
+                  >
+                    <PaperClipOutlined
+                      :style="{
+                        color: '#8EE1F9',
+                        fontSize: '0.3rem',
+                      }"
+                    />
+                  </a-button>
                 </template>
-                <template v-else-if="checkFileType(item) === 'video'">
+                <template v-else-if="item2 === 'video'">
                   <PaperClipOutlined
                     :style="{
                       color: '#8EE1F9',
@@ -127,8 +135,9 @@
 
     <AttachmentPreview
       :visible="state.dialogVisible"
-      type="image"
+      :fileType="state.currentPreviewFileType"
       :attachmentList="state.attachmentList"
+      @onClose="state.dialogVisible = false"
     ></AttachmentPreview>
   </div>
 </template>
@@ -148,7 +157,7 @@ import {
 import AttachmentPreview from "@/components/AttachmentPreview.vue";
 import { PaperClipOutlined, PictureOutlined } from "@ant-design/icons-vue";
 
-let emit = defineEmits<{
+const emit = defineEmits<{
   (e: "onEdit", rowData: any): void;
   (e: "onReview", rowData: any): void;
   (e: "onChangePage", pagination: object): void;
@@ -246,6 +255,7 @@ const state = reactive({
   ] as any[],
   dialogVisible: false,
   attachmentList: [] as any[],
+  currentPreviewFileType: "",
 });
 
 const tableHeight = computed(() => {
@@ -336,7 +346,7 @@ const checkFileType = (file: any) => {
 
   const imageType = ["png", "jpg", "jpeg", "gif", "bmp"];
   const videoType = ["mp4", "avi", "mov", "wmv", "flv", "rmvb", "3gp"];
-  const fileType = ["xls", "xlsx"];
+  const fileType = ["xls", "xlsx", "pdf"];
   if (imageType.includes(fileSufix)) {
     result = "image";
   }
@@ -383,15 +393,15 @@ const handleAction = (action: any, scope: any) => {
   }
 };
 
-const handlePreview = (action: any, scope: any) => {
-  console.log(action, scope);
+const handlePreview = (scope: any, type: string) => {
   const record = scope.record;
   const attachmentList = record.attachmentList;
   const imageList = attachmentList.filter(
-    (item: any) => checkFileType(item) === "image"
+    (item: any) => checkFileType(item) === type
   );
   state.dialogVisible = true;
-  state.attachmentList = attachmentList;
+  state.attachmentList = imageList;
+  state.currentPreviewFileType = type;
 };
 
 const initPagination = () => {
@@ -403,6 +413,22 @@ const initPagination = () => {
       ? props.pagination.pageSize
       : pagination.pageSize;
   }
+};
+
+const getAttachmentTypeList = (attachmentList: any) => {
+  const typeList = [] as any[];
+  attachmentList.forEach((item: any) => {
+    if (checkFileType(item) === "image" && !typeList.includes("image")) {
+      typeList.push("image");
+    }
+    if (checkFileType(item) === "file" && !typeList.includes("file")) {
+      typeList.push("file");
+    }
+    if (checkFileType(item) === "video" && !typeList.includes("video")) {
+      typeList.push("video");
+    }
+  });
+  return typeList;
 };
 
 onMounted(() => {});

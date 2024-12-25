@@ -5,23 +5,35 @@
     @cancel="handleClose"
     width="9rem"
   >
-    <!-- {{ props.attachmentList }} -->
-    <a-carousel
-      v-if="props.type === 'image'"
-      arrows
-      dots-class="slick-dots slick-thumb"
-    >
-
-      <template #customPaging="props">
-        {{ props }}
-        <!-- <img :src="getImgUrl(props)" /> -->
-      </template>
-      <div v-for="item in props.attachmentList" :key="item">
-      {{ getImgUrl(item) }}
-
-        <img :src="getImgUrl(item)" />
+    <!-- Slider main container -->
+    <div class="swiper">
+      <!-- Additional required wrapper -->
+      <div class="swiper-wrapper">
+        <!-- Slides -->
+        <div
+          v-for="item in props.attachmentList"
+          class="swiper-slide"
+          :style="{
+            textAlign: 'center',
+          }"
+        >
+          <img v-if="props.fileType === 'image'" :src="getImgUrl(item)" />
+          <PDFViewer
+            v-if="props.fileType === 'file'"
+            :filePath="global.$store.state.app.pdfViewerFilePath"
+          />
+        </div>
       </div>
-    </a-carousel>
+      <!-- If we need pagination -->
+      <div class="swiper-pagination"></div>
+
+      <!-- If we need navigation buttons -->
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+
+      <!-- If we need scrollbar -->
+      <div class="swiper-scrollbar"></div>
+    </div>
   </a-modal>
 </template>
 
@@ -36,17 +48,28 @@ import {
   ref,
   nextTick,
 } from "vue";
+
+// import Swiper JS
+// core version + navigation, pagination modules:
+import Swiper from "swiper/bundle";
+// import Swiper and modules styles
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+
 import { CloseOutlined, CloseCircleFilled } from "@ant-design/icons-vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
-const formDataRef = ref();
+const emit = defineEmits<{
+  (e: "onClose", rowData: any): void;
+}>();
 
 const props = defineProps({
   attachmentList: { type: Array, required: true, default: () => [] },
   visible: { type: Boolean, required: true, default: false },
-  type: { type: String, default: "", required: true },
+  fileType: { type: String, default: "", required: true },
 });
 
 const state = reactive({
@@ -58,6 +81,7 @@ watch(
   () => props.visible,
   async (newValue: any) => {
     state.visible = newValue;
+    initSwiper();
   }
 );
 
@@ -67,11 +91,55 @@ watch(
 );
 
 const getImgUrl = (item: any) => {
-  debugger
   return `${global.$getBaseUrl()}/attachment/download?id=${item.id}`;
 };
 
-const handleClose = () => {};
+const handleClose = () => {
+  emit("onClose");
+};
+
+const initSwiper = async () => {
+  await nextTick();
+  const swiper = new Swiper(".swiper", {
+    // Optional parameters
+    loop: true,
+    // If we need pagination
+    pagination: {
+      el: ".swiper-pagination",
+    },
+
+    // Navigation arrows
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+
+    // And if we need scrollbar
+    scrollbar: {
+      el: ".swiper-scrollbar",
+    },
+  });
+};
+
+const checkFileType = (file: any) => {
+  let result = "";
+  const attachmentName = file.attachmentName;
+  const fileSufix = attachmentName.split(".")[1];
+
+  const imageType = ["png", "jpg", "jpeg", "gif", "bmp"];
+  const videoType = ["mp4", "avi", "mov", "wmv", "flv", "rmvb", "3gp"];
+  const fileType = ["xls", "xlsx", "pdf"];
+  if (imageType.includes(fileSufix)) {
+    result = "image";
+  }
+  if (videoType.includes(fileSufix)) {
+    result = "video";
+  }
+  if (fileType.includes(fileSufix)) {
+    result = "file";
+  }
+  return result;
+};
 
 onMounted(async () => {});
 
@@ -137,5 +205,9 @@ onBeforeUnmount(() => {});
       }
     }
   }
+}
+.swiper {
+  width: 600px;
+  height: 600px;
 }
 </style>

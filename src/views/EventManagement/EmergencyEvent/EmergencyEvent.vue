@@ -40,6 +40,7 @@
     <DisposalDialog
       :visible="state.dialogDisposalVisible"
       :rowData="state.currentRowData"
+      :dataModel="pageModel"
       mode="disposal"
       @onClose="handleCloseHandling"
       @onSubmit="handleSubmitDisposal"

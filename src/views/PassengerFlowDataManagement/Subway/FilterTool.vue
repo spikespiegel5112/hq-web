@@ -1,45 +1,27 @@
 <template>
   <div class="common_filtertool_wrapper">
-    <a-form :model="formData" autocomplete="off" ref="formDataRef">
+    <a-form :model="state.formData" autocomplete="off" ref="formDataRef">
       <a-row>
         <a-col :span="20">
           <a-row :gutter="20">
-            <a-col :span="6">
-              <a-form-item name="userName" label="报警类型">
+            <a-col :span="8">
+              <a-form-item name="userName" label="时段">
                 <a-input
-                  v-model="formData.userName"
+                  v-model:value="state.formData.userName"
                   placeholder="请输入"
                   allow-clear
                 >
-
                 </a-input>
               </a-form-item>
             </a-col>
 
-            <a-col :span="6">
-              <a-form-item name="source" label="来源">
-                <a-select v-model="formData.source" placeholder="请输入">
-                  <a-select-option
-                    v-for="item in global.$store.state.dictionary[
-                      'externalDataSources'
-                    ]"
-                    :value="item.value"
-                  >
-                    {{ item.label }}
-                  </a-select-option>
-                </a-select>
-               </a-form-item>
-            </a-col>
-
-            <a-col :span="6">
-              <a-form-item name="password" label="时间">
-                <a-input
-                  v-model="formData.password"
-                  placeholder="请输入"
+            <a-col :span="8">
+              <a-form-item name="source" label="查询时间">
+                <a-range-picker
+                  v-model:value="state.formData.source"
+                  format="YYYY-MM-DD"
                   allow-clear
-                >
-                  
-                </a-input>
+                />
               </a-form-item>
             </a-col>
           </a-row>
@@ -72,8 +54,6 @@ import {
   nextTick,
 } from "vue";
 
-
-
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
@@ -84,20 +64,21 @@ const emit = defineEmits<{
 
 const formDataRef: any = ref(null);
 
-const formData = reactive({
-  userName: null,
-  password: null,
+const state = reactive({
+  formData: {
+    userName: null,
+    source: null,
+    date: null,
+  },
 });
 
-
-
 const handleSearch = () => {
-  emit("onSearch", formData);
+  emit("onSearch", state.formData);
 };
 
 const handleReset = () => {
   formDataRef.value.resetFields();
-  emit("onReset", formData);
+  emit("onReset", state.formData);
 };
 
 onMounted(async () => {});
@@ -105,6 +86,4 @@ onMounted(async () => {});
 onBeforeUnmount(() => {});
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

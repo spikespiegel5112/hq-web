@@ -59,6 +59,7 @@ declare module 'vue' {
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']
     ImportButton: typeof import('./components/ImportButton.vue')['default']
     Menu: typeof import('./components/Menu.vue')['default']
+    PDFViewer: typeof import('./components/PDFViewer.vue')['default']
     RightEvent: typeof import('./components/RightEvent.vue')['default']
     RightLight: typeof import('./components/RightLight.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
