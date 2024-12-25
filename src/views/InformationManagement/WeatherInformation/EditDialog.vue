@@ -6,41 +6,124 @@
         <span class="text"> {{ dialogTitle }}</span>
       </div>
     </template>
-    <div class="common_table_wrapper">
-      <a-table
-        class="common_basetable_wrapper"
-        :dataSource="props.rowData.warningList"
-        :columns="columns"
-        :pagination="false"
-      >
-        <template #bodyCell="{ text, record, index, column }">
-          <div
-            v-if="column.dataIndex === 'index'"
-            :style="{
-              textAlign: 'center',
-            }"
+    <a-row justify="center">
+      <a-col :span="22">
+        <div class="common_table_wrapper">
+          <a-table
+            class="common_basetable_wrapper"
+            :dataSource="props.rowData.warningList"
+            :columns="columns"
+            :pagination="false"
           >
-            {{ index + 1 }}
-          </div>
-          <div
-            v-if="column.dataIndex === 'warningLevel'"
-            :style="{
-              textAlign: 'center',
-            }"
-          >
-            {{
+            <template #bodyCell="{ text, record, index, column }">
+              <div
+                v-if="column.dataIndex === 'index'"
+                :style="{
+                  textAlign: 'center',
+                }"
+              >
+                {{ index + 1 }}
+              </div>
+              <div
+                v-if="column.dataIndex === 'warningLevel'"
+                :style="{
+                  textAlign: 'center',
+                }"
+              >
+                {{
               global
                 .$getDictionary("planLevel")
                 .find((item:any) => item.value === record.warningLevel)?.label
-            }}
-          </div>
-        </template>
-      </a-table>
-    </div>
+                }}
+              </div>
+            </template>
+          </a-table>
+        </div>
+      </a-col>
+    </a-row>
 
+    <a-form
+      :model="state.formData"
+      ref="formDataRef"
+      autocomplete="off"
+      :label-col="{ style: { width: '80px' } }"
+    >
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="warningType" label="类型">
+            <a-select
+              v-if="global.$checkEditable(props.mode)"
+              v-model:value="state.formData.warningType"
+              placeholder="请选择"
+              allow-clear
+            >
+              <a-select-option
+                v-for="item in global.$getDictionary(
+                  'weather_warning_warning_type_enum'
+                )"
+                :value="item.value"
+              >
+                {{ item.label }}
+              </a-select-option>
+            </a-select>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.warningType }}
+            </template>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="warningLevel" label="级别">
+            <a-select
+              v-if="global.$checkEditable(props.mode)"
+              v-model:value="state.formData.warningLevel"
+              placeholder="请选择"
+              allow-clear
+            >
+              <a-select-option
+                v-for="item in global.$getDictionary('planLevel')"
+                :value="item.value"
+              >
+                {{ item.label }}
+              </a-select-option>
+            </a-select>
+            <template v-if="props.mode === 'review'">
+              {{ 
+                global.$getDictionary("planLevel").find((item2: any) => item2.value === state.formData.warningLevel)?.label
+              }}
+            </template>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="warningContent" label="内容">
+            <a-textarea
+              v-if="global.$checkEditable(props.mode)"
+              v-model:value="state.formData.warningContent"
+              placeholder="请输入"
+              :rows="5"
+              allow-clear
+            >
+            </a-textarea>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.warningContent }}
+            </template>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="attachmentList" label="附件">
+            <CommonUpload :attachmentList="state.formData.attachmentList" />
+          </a-form-item>
+        </a-col>
+      </a-row>
+    </a-form>
     <template #footer>
       <a-row v-if="props.mode === 'edit'">
-        <a-col :span="24">
+        <a-col :span="22">
           <a-button key="back" @click="handleClose">取消</a-button>
           <a-button key="submit" type="primary" @click="handleSubmit">
             确认
@@ -48,7 +131,7 @@
         </a-col>
       </a-row>
       <a-row v-else>
-        <a-col :span="22">
+        <a-col :span="24">
           <a-button key="back" @click="handleClose">关闭</a-button>
         </a-col>
       </a-row>
