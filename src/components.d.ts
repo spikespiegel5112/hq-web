@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AButton: typeof import('ant-design-vue/es')['Button']
+    ACarousel: typeof import('ant-design-vue/es')['Carousel']
     AccessLog: typeof import('./components/AccessLog.vue')['default']
     ACol: typeof import('ant-design-vue/es')['Col']
     AConfigProvider: typeof import('ant-design-vue/es')['ConfigProvider']
@@ -45,6 +46,7 @@ declare module 'vue' {
     ATimelineItem: typeof import('ant-design-vue/es')['TimelineItem']
     ATimePicker: typeof import('ant-design-vue/es')['TimePicker']
     ATimeRangePicker: typeof import('ant-design-vue/es')['TimeRangePicker']
+    AttachmentPreview: typeof import('./components/AttachmentPreview.vue')['default']
     AttachmentReview: typeof import('./components/AttachmentReview.vue')['default']
     AUpload: typeof import('ant-design-vue/es')['Upload']
     BaseTable: typeof import('./components/BaseTable.vue')['default']

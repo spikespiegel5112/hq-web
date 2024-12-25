@@ -34,12 +34,18 @@
                 v-for="item in actualTableData[scope.index].attachmentList"
               >
                 <template v-if="checkFileType(item) === 'image'">
-                  <PictureOutlined
-                    :style="{
-                      color: '#8EE1F9',
-                      fontSize: '0.3rem',
-                    }"
-                  />
+                  <a-button
+                    :key="item.attachmentName"
+                    type="link"
+                    @click.stop="handlePreview('preview', scope)"
+                  >
+                    <PictureOutlined
+                      :style="{
+                        color: '#8EE1F9',
+                        fontSize: '0.3rem',
+                      }"
+                    />
+                  </a-button>
                 </template>
                 <template v-else-if="checkFileType(item) === 'file'">
                   <PaperClipOutlined
@@ -118,6 +124,12 @@
       show-less-items
       @change="hangleChangePage"
     />
+
+    <AttachmentPreview
+      :visible="state.dialogVisible"
+      type="image"
+      :attachmentList="state.attachmentList"
+    ></AttachmentPreview>
   </div>
 </template>
 
@@ -133,6 +145,7 @@ import {
   ref,
   nextTick,
 } from "vue";
+import AttachmentPreview from "@/components/AttachmentPreview.vue";
 import { PaperClipOutlined, PictureOutlined } from "@ant-design/icons-vue";
 
 let emit = defineEmits<{
@@ -163,6 +176,8 @@ const props = defineProps({
       total: 0,
     },
   },
+
+  dialogVisible: false,
 });
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
@@ -229,6 +244,8 @@ const state = reactive({
       color: "font-color-red",
     },
   ] as any[],
+  dialogVisible: false,
+  attachmentList: [] as any[],
 });
 
 const tableHeight = computed(() => {
@@ -366,6 +383,17 @@ const handleAction = (action: any, scope: any) => {
   }
 };
 
+const handlePreview = (action: any, scope: any) => {
+  console.log(action, scope);
+  const record = scope.record;
+  const attachmentList = record.attachmentList;
+  const imageList = attachmentList.filter(
+    (item: any) => checkFileType(item) === "image"
+  );
+  state.dialogVisible = true;
+  state.attachmentList = attachmentList;
+};
+
 const initPagination = () => {
   if (!!props.pagination) {
     pagination.total = global.$isNotEmpty(props.pagination.total)
@@ -374,32 +402,6 @@ const initPagination = () => {
     pagination.pageSize = global.$isNotEmpty(props.pagination.pageSize)
       ? props.pagination.pageSize
       : pagination.pageSize;
-  }
-};
-
-const checkAtttachmentIcon = (attachmentName: string) => {
-  console.log(attachmentName);
-  const attachmentType = attachmentName.split(".").pop();
-  switch (attachmentType) {
-    case "pdf":
-      return <PaperClipOutlined />;
-    case "doc":
-    case "docx":
-      return <PaperClipOutlined />;
-    case "xls":
-    case "xlsx":
-      return <PaperClipOutlined />;
-    case "ppt":
-    case "pptx":
-      return <PaperClipOutlined />;
-    case "jpg":
-      return <PaperClipOutlined />;
-    case "jpeg":
-    case "png":
-    case "gif":
-      return <PaperClipOutlined />;
-    default:
-      return <PaperClipOutlined />;
   }
 };
 
