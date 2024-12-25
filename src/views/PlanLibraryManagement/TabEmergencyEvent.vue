@@ -170,7 +170,7 @@ const state = reactive({
 });
 
 let queryFormData = reactive({
-  preplanType: 0,
+  preplanType: 1,
 } as any);
 
 const pagination = reactive({
@@ -182,7 +182,7 @@ const getData = () => {
   preplanPreplanGetPageRequest({
     ...queryFormData,
     ...pagination,
-    preplanType:0
+    preplanType: 1,
   })
     .then((response: any) => {
       response = response.data;

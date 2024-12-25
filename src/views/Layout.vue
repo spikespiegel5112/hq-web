@@ -64,7 +64,7 @@ const init = () => {
 
 const getEventTypeList = () => {
   preplanPreplanGetPageRequest({
-    preplanType: 0,
+    preplanType: 1,
   })
     .then((response: any) => {
       global.$store.commit("app/updateCurrentEventTypeList", {
@@ -77,7 +77,7 @@ const getEventTypeList = () => {
     });
 
   preplanPreplanGetPageRequest({
-    preplanType: 1,
+    preplanType: 0,
   })
     .then((response: any) => {
       global.$store.commit("app/updateCurrentEventTypeList", {

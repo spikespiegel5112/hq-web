@@ -288,7 +288,7 @@ const getPlanData = () => {
     (item: any) => Number(item.value) === props.rowData.preplanResourceId
   );
   preplanPreplanGetStepPageRequest({
-    preplanType: 1,
+    preplanType: 0,
     eventType: planData.label,
   })
     .then((response: any) => {

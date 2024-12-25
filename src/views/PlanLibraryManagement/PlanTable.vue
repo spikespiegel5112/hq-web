@@ -223,9 +223,14 @@ onBeforeUnmount(() => {});
 
 <style scoped lang="scss">
 .common_basetable_wrapper {
+  margin: 0 auto;
+  width: 95%;
   &.plantable {
     :deep(.ant-table-wrapper) {
       height: auto !important;
+      .ant-btn{
+        color: #44E9E7;
+      }
     }
   }
 }

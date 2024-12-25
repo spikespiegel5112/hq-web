@@ -264,7 +264,7 @@ const getStepData = () => {
   });
 
   preplanPreplanGetStepPageRequest({
-    preplanType: 0,
+    preplanType: 1,
     eventType: planData.label,
   })
     .then((response: any) => {
