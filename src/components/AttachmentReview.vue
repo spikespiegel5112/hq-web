@@ -70,23 +70,24 @@ watch(
 );
 
 const checkFileType = (file: any) => {
-  console.log(file);
   let result = "";
   const attachmentName = file.attachmentName;
-  const fileType = attachmentName.split(".")[1];
+  const fileSufix = attachmentName.split(".")[1];
 
   const imageType = ["png", "jpg", "jpeg", "gif", "bmp"];
-  const videoType = ["mp4", "avi", "mov", "rmvb", "rm", "flv", "3gp", "mkv"];
-  if (imageType.includes(fileType)) {
+  const videoType = ["mp4", "avi", "mov", "wmv", "flv", "rmvb", "3gp"];
+  const fileType = ["xls", "xlsx", "pdf", "doc", "docx", "ppt", "pptx", "txt"];
+  if (imageType.includes(fileSufix)) {
     result = "image";
-  } else if (videoType.includes(fileType)) {
+  }
+  if (videoType.includes(fileSufix)) {
     result = "video";
-  } else {
+  }
+  if (fileType.includes(fileSufix)) {
     result = "file";
   }
   return result;
 };
-
 const handlePreview = (value: any) => {
   console.log(value);
   state.previewVisible = true;

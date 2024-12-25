@@ -136,7 +136,7 @@ const checkFileType = (file: any) => {
 
   const imageType = ["png", "jpg", "jpeg", "gif", "bmp"];
   const videoType = ["mp4", "avi", "mov", "wmv", "flv", "rmvb", "3gp"];
-  const fileType = ["xls", "xlsx", "pdf"];
+  const fileType = ["xls", "xlsx", "pdf", "doc", "docx", "ppt", "pptx", "txt"];
   if (imageType.includes(fileSufix)) {
     result = "image";
   }

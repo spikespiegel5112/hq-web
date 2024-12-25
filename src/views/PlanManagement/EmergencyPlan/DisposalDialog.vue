@@ -79,7 +79,7 @@
           <a-form-item name="stepContent" label="处置内容">
             <a-textarea
               v-model:value="state.formData.stepContent"
-             placeholder="请输入"
+              placeholder="请输入"
               :rows="3"
               allow-clear
             >
@@ -283,7 +283,7 @@ const getPlanData = () => {
   console.log(props.rowData);
   console.log(eventList.value);
   console.log(global.$store.state.app.currentEventTypeList);
-
+  state.planInfo = [];1
   const planData: any = eventList.value.find(
     (item: any) => Number(item.value) === props.rowData.preplanResourceId
   );
