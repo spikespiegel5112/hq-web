@@ -169,9 +169,7 @@ const state = reactive({
   rowData: {},
 });
 
-let queryFormData = reactive({
-  preplanType: 1,
-} as any);
+let queryFormData = reactive({} as any);
 
 const pagination = reactive({
   ...global.$store.state.app.defaultPagination,
@@ -182,7 +180,7 @@ const getData = () => {
   preplanPreplanGetPageRequest({
     ...queryFormData,
     ...pagination,
-    preplanType: 1,
+    preplanType: 0,
   })
     .then((response: any) => {
       response = response.data;
@@ -199,7 +197,7 @@ const handleEditPlan = (tableData: any, record: any) => {
   state.dialogMode = "editPlan";
   state.planTableData = tableData;
   state.currentEventTypeData = record;
-  debugger
+  debugger;
 };
 
 const handleEdit = (rowData: any) => {
