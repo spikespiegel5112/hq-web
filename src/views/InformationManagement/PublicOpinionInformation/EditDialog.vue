@@ -35,7 +35,6 @@
           </a-form-item>
         </a-col>
       </a-row>
-
       <a-row>
         <a-col :span="22">
           <a-form-item name="publicSentimentTime" label="上报时间">

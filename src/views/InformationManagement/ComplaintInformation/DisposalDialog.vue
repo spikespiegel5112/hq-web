@@ -14,98 +14,55 @@
     >
       <a-row>
         <a-col :span="22">
-          <a-form-item name="externalSource" label="来源">
-            <a-select
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.externalSource"
-              placeholder="请选择"
-            >
-              <a-select-option
-                v-for="item in global.$getDictionary(
-                  'external_info_external_source'
-                )"
-                :value="item.value"
-              >
-                {{ item.label }}
-              </a-select-option>
-            </a-select>
-            <template v-if="props.mode === 'review'">
-              {{ global.$getDictionary('external_info_external_source').find((item:any)=>item.value===state.formData.externalSource)?.label }}
-            </template>
+          <a-form-item name="complaintRegion" label="来源">
+            {{ global.$getDictionary("complaint_info_complaint_region").find((item:any)=>item.value===props.rowData.complaintRegion)?.label }}
           </a-form-item>
         </a-col>
       </a-row>
-
       <a-row>
         <a-col :span="22">
-          <a-form-item name="externalTime" label="上报时间">
+          <a-form-item name="complaintType" label="投诉类型">
+            {{ global.$getDictionary("complaintType").find((item:any)=>item.value===props.rowData.complaintType)?.label }}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="complaintSensitive" label="敏感程度">
+            {{ global.$getDictionary("sensitivity").find((item:any)=>item.value===props.rowData.complaintSensitive)?.label }}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="handlingTime" label="处置时间">
             <a-date-picker
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.externalTime"
+              v-model:value="state.formData.handlingTime"
               format="YYYY-MM-DD HH:mm:ss"
               @change="handleChangeTime1"
             ></a-date-picker>
-            <template v-if="props.mode === 'review'">
-              {{
-                global.$dayjs(state.formData.externalTime).format("YYYY-MM-DD")
-              }}
-            </template>
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="externalType" label="类型">
-            <a-select
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.externalType"
-              placeholder="请选择"
-            >
-              <a-select-option
-                v-for="item in global.$getDictionary(
-                  'external_info_external_type'
-                )"
-                :value="item.value"
-              >
-                {{ item.label }}
-              </a-select-option>
-            </a-select>
-            <template v-if="props.mode === 'review'">
-              {{ global.$getDictionary('external_info_external_type').find((item:any)=>item.value===state.formData.externalType)?.label }}
-            </template>
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="22">
-          <a-form-item name="externalContent" label="内容">
+          <a-form-item name="handlingContent" label="处置情况">
             <a-textarea
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.externalContent"
+              v-model:value="state.formData.handlingContent"
               placeholder="请输入"
               :rows="3"
               allow-clear
             >
             </a-textarea>
-            <template v-if="props.mode === 'review'">
-              {{ state.formData.externalContent }}
-            </template>
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="attachmentList" label="附件">
+          <a-form-item name="handlingAttachmentList" label="附件">
             <CommonUpload
-              v-if="global.$checkEditable(props.mode)"
-              :attachmentList="state.formData.attachmentList"
+              :attachmentList="state.formData.handlingAttachmentList"
             />
-            <template v-if="props.mode === 'review'">
-              <CommonUpload
-                disabled
-                :attachmentList="state.formData.attachmentList"
-              />
-            </template>
           </a-form-item>
         </a-col>
       </a-row>
@@ -167,15 +124,10 @@ const state = reactive({
   visible: false,
   formData: {
     id: null as number | null | undefined,
-    attachmentList: [] as any[],
-    attachmentAssociationCode: null,
-    externalContent: null,
-    externalSource: null,
-    externalTime: null,
-    externalType: null,
+
     handlingContent: null,
-    handlingStatus: null,
     handlingTime: null,
+    handlingAttachmentList: [] as any[],
   },
 });
 
@@ -195,10 +147,9 @@ watch(
         let rowData = JSON.parse(JSON.stringify(props.rowData));
         rowData = {
           ...rowData,
-          externalTime: global.$dayjs(
-            rowData.externalTime,
-            "YYYY-MM-DD HH:mm:ss"
-          ),
+          handlingTime: !!rowData.handlingTime
+            ? global.$dayjs(rowData.handlingTime, "YYYY-MM-DD HH:mm:ss")
+            : null,
         };
         Object.keys(state.formData).forEach((item: string) => {
           state.formData[item] = !!rowData[item] ? rowData[item] : undefined;
@@ -217,15 +168,12 @@ const handleSubmit = () => {
   formDataRef.value
     .validate()
     .then(() => {
-      if (props.mode === "add") {
-        state.formData.id = undefined;
-      }
-      const externalTime = global
-        .$dayjs(state.formData.externalTime)
+      const handlingTime = global
+        .$dayjs(state.formData.handlingTime)
         .format("YYYY-MM-DD HH:mm:ss");
       emit("onSubmit", {
         ...state.formData,
-        externalTime,
+        handlingTime,
       });
       handleClose();
     })

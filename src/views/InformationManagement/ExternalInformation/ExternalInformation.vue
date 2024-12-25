@@ -253,11 +253,11 @@ const handleCloseDisposal = () => {
 const handleSubmitDisposal = (formData: any) => {
   infoManagementExternalInfoHandleRequest(formData)
     .then((response: any) => {
-      global.$message.success("删除成功");
+      global.$message.success("操作成功");
       getData();
     })
     .catch((error: any) => {
-      global.$message.error("删除失败");
+      global.$message.error("操作失败");
       console.log(error);
     });
 };

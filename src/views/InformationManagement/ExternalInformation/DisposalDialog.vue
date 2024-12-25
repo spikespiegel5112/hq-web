@@ -35,7 +35,7 @@
           <a-form-item name="handlingContent" label="处置情况">
             <a-textarea
               v-model:value="state.formData.handlingContent"
-             placeholder="请输入"
+              placeholder="请输入"
               :rows="3"
               allow-clear
             >
@@ -45,14 +45,10 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="externalContent" label="附件">
-            <a-textarea
-              v-model:value="state.formData.handlingContent"
-             placeholder="请输入"
-              :rows="3"
-              allow-clear
-            >
-            </a-textarea>
+          <a-form-item name="handlingAttachmentList" label="附件">
+            <CommonUpload
+              :attachmentList="state.formData.handlingAttachmentList"
+            />
           </a-form-item>
         </a-col>
       </a-row>
@@ -117,6 +113,7 @@ const state = reactive({
 
     handlingContent: null,
     handlingTime: null,
+    handlingAttachmentList: [] as any[],
   },
 });
 
@@ -136,10 +133,9 @@ watch(
         let rowData = JSON.parse(JSON.stringify(props.rowData));
         rowData = {
           ...rowData,
-          handlingTime: global.$dayjs(
-            rowData.handlingTime,
-            "YYYY-MM-DD HH:mm:ss"
-          ),
+          handlingTime: !!rowData.handlingTime
+            ? global.$dayjs(rowData.handlingTime, "YYYY-MM-DD HH:mm:ss")
+            : null,
         };
         Object.keys(state.formData).forEach((item: string) => {
           state.formData[item] = !!rowData[item] ? rowData[item] : undefined;
@@ -158,9 +154,6 @@ const handleSubmit = () => {
   formDataRef.value
     .validate()
     .then(() => {
-      if (props.mode === "add") {
-        state.formData.id = undefined;
-      }
       const handlingTime = global
         .$dayjs(state.formData.handlingTime)
         .format("YYYY-MM-DD HH:mm:ss");

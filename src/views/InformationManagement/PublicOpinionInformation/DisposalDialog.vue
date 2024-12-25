@@ -14,8 +14,22 @@
     >
       <a-row>
         <a-col :span="22">
-          <a-form-item name="publicSentimentSource" label="来源">
+          <a-form-item name="publicSentimentSource" label="舆情来源">
             {{ global.$getDictionary("public_sentiment_info_public_sentiment_source").find((item:any)=>item.value===props.rowData.publicSentimentSource)?.label }}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="publicSentimentType" label="舆情类型">
+            {{ global.$getDictionary("public_sentiment_info_public_sentiment_type").find((item:any)=>item.value===props.rowData.publicSentimentType)?.label }}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="publicSentimentContent" label="舆情来源">
+            {{ props.rowData.publicSentimentContent }}
           </a-form-item>
         </a-col>
       </a-row>
@@ -35,7 +49,7 @@
           <a-form-item name="handlingContent" label="处置情况">
             <a-textarea
               v-model:value="state.formData.handlingContent"
-             placeholder="请输入"
+              placeholder="请输入"
               :rows="3"
               allow-clear
             >
@@ -45,14 +59,10 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="handlingContent" label="附件">
-            <a-textarea
-              v-model:value="state.formData.handlingContent"
-             placeholder="请输入"
-              :rows="3"
-              allow-clear
-            >
-            </a-textarea>
+          <a-form-item name="handlingAttachmentList" label="附件">
+            <CommonUpload
+              :attachmentList="state.formData.handlingAttachmentList"
+            />
           </a-form-item>
         </a-col>
       </a-row>
@@ -114,8 +124,10 @@ const state = reactive({
   visible: false,
   formData: {
     id: null as number | null | undefined,
+
     handlingContent: null,
     handlingTime: null,
+    handlingAttachmentList: [] as any[],
   },
 });
 
@@ -156,9 +168,6 @@ const handleSubmit = () => {
   formDataRef.value
     .validate()
     .then(() => {
-      if (props.mode === "add") {
-        state.formData.id = undefined;
-      }
       const handlingTime = global
         .$dayjs(state.formData.handlingTime)
         .format("YYYY-MM-DD HH:mm:ss");
