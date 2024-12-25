@@ -20,7 +20,7 @@
           <img v-if="props.fileType === 'image'" :src="getImgUrl(item)" />
           <PDFViewer
             v-if="props.fileType === 'file'"
-            :filePath="global.$store.state.app.pdfViewerFilePath"
+            :filePath="getImgUrl(item)"
           />
         </div>
       </div>
@@ -81,7 +81,15 @@ watch(
   () => props.visible,
   async (newValue: any) => {
     state.visible = newValue;
-    initSwiper();
+  }
+);
+
+watch(
+  () => props.attachmentList,
+  (newValue: any, oldValue: any) => {
+    if (props.fileType === "image") {
+      initSwiper();
+    }
   }
 );
 

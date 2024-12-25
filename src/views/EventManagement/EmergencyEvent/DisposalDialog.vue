@@ -267,7 +267,6 @@ const getData = () => {
 };
 
 const getPlanData = () => {
-  console.log(props.rowData);
   const planData: any = eventList.value.find(
     (item: any) => Number(item.value) === props.rowData.prId
   );

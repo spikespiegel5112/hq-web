@@ -284,9 +284,9 @@ const getPlanData = () => {
   console.log(eventList.value);
   console.log(global.$store.state.app.currentEventTypeList);
 
-  const planData: any = eventList.value.find((item: any) => {
-    return Number(item.value) === props.rowData.preplanResourceId;
-  });
+  const planData: any = eventList.value.find(
+    (item: any) => Number(item.value) === props.rowData.preplanResourceId
+  );
   preplanPreplanGetStepPageRequest({
     preplanType: 1,
     eventType: planData.label,
