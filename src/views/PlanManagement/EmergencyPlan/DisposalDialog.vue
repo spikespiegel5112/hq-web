@@ -197,7 +197,7 @@ const colorList: any[] = [
 
 const eventList = computed(() => {
   return global.$store.state.app.currentEventTypeList.find(
-    (item: any) => item.type === "应急预案处置"
+    (item: any) => item.type === 1
   )?.data;
 });
 

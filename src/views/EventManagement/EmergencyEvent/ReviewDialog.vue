@@ -215,7 +215,7 @@ const currentStepOrder = computed(() => {
 
 const eventList = computed(() => {
   return global.$store.state.app.currentEventTypeList.find(
-    (item: any) => item.type === "突发事件处置"
+    (item: any) => item.type === 0
   )?.data;
 });
 

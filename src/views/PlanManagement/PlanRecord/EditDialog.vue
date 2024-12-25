@@ -192,7 +192,7 @@ const dialogTitle: ComputedRef<string> = computed(() => {
 
 const eventList = computed(() => {
   let result = global.$store.state.app.currentEventTypeList.find(
-    (item: any) => item.type === "应急预案处置"
+    (item: any) => item.type === 1
   )?.data;
   result = result.map((item: any) => {
     return {

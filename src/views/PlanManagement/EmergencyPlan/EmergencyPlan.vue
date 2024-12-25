@@ -189,7 +189,7 @@ const pagination = reactive({
 
 const eventList = computed(() => {
   return global.$store.state.app.currentEventTypeList.find(
-    (item: any) => item.type === "应急预案处置"
+    (item: any) => item.type === 1
   )?.data;
 });
 
@@ -204,11 +204,12 @@ const getData = () => {
       state.tableData = response.list;
       pagination.total = response.total;
       state.processedTableData = response.list.map((item: any) => {
+        const preplanResourceId = eventList.value.find(
+          (item2: any) => item2.value === item.preplanResourceId.toString()
+        )?.label;
         return {
           ...item,
-          preplanResourceId: eventList.value.find(
-            (item2: any) => item2.value === item.preplanResourceId.toString()
-          )?.label,
+          preplanResourceId,
           planLevel: global
             .$getDictionary("planLevel")
             .find((item2: any) => item2.value === item.planLevel)?.label,
