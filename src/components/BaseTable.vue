@@ -109,6 +109,7 @@
       </a-table-column>
     </a-table>
     <a-pagination
+      v-if="!!props.pagination"
       v-model:current="pagination.page"
       show-quick-jumper
       :total="pagination.total"
@@ -155,7 +156,7 @@ const props = defineProps({
   tabTable: { type: Boolean, default: false },
   tableBodyHeight: { type: String || null, default: null },
   pagination: {
-    type: Object,
+    type: [Object, Boolean],
     default: {
       page: 1,
       pageSize: 30,
@@ -305,6 +306,9 @@ watch(
     }
     initPagination();
     state.loading = false;
+  },
+  {
+    deep: true,
   }
 );
 
@@ -363,12 +367,14 @@ const handleAction = (action: any, scope: any) => {
 };
 
 const initPagination = () => {
-  pagination.total = global.$isNotEmpty(props.pagination.total)
-    ? props.pagination.total
-    : pagination.total;
-  pagination.pageSize = global.$isNotEmpty(props.pagination.pageSize)
-    ? props.pagination.pageSize
-    : pagination.pageSize;
+  if (!!props.pagination) {
+    pagination.total = global.$isNotEmpty(props.pagination.total)
+      ? props.pagination.total
+      : pagination.total;
+    pagination.pageSize = global.$isNotEmpty(props.pagination.pageSize)
+      ? props.pagination.pageSize
+      : pagination.pageSize;
+  }
 };
 
 const checkAtttachmentIcon = (attachmentName: string) => {

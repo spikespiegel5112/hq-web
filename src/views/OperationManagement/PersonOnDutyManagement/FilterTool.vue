@@ -79,7 +79,7 @@ const handleSearch = () => {
 
   const formData: any = JSON.parse(JSON.stringify(state.formData));
   formData.dutyTime = undefined;
-  debugger;
+  ;
   emit("onSearch", {
     ...formData,
     dutyStartTime,
