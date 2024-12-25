@@ -49,7 +49,7 @@ const routerDictionary = [
           {
             title: "出租车",
             path: "Taxi",
-            name: "PassengerFlowDataManagementTaxi",
+            name: "Taxi",
             component: () =>
               import(
                 /* webpackChunkName: "Taxi" */ "@/views/PassengerFlowDataManagement/Taxi/Taxi.vue"

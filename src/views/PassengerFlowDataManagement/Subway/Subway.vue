@@ -10,20 +10,11 @@
       :tableData="state.tableData"
       :dataModel="pageModel"
       :pagination="pagination"
-      tabTable
       @onEdit="handleEdit"
       @onReview="handleReview"
       @onChangePage="handleChangePage"
       @onDelete="handleDelete"
     />
-    <EditDialog
-      :visible="state.dialogVisible"
-      :mode="state.dialogMode"
-      :dataModel="pageModel"
-      :rowData="state.currentRowData"
-      @onClose="handleClose"
-      @onSubmit="handleSubmit"
-    ></EditDialog>
   </div>
 </template>
 
@@ -42,7 +33,6 @@ import {
 
 import { screenBannerInfoRequest } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
-import EditDialog from "./EditDialog.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;

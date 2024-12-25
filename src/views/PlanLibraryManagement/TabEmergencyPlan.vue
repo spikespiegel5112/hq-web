@@ -203,7 +203,7 @@ const handleEditPlan = (tableData: any, record: any) => {
 const handleEdit = (rowData: any) => {
   state.dialogVisible = true;
   state.dialogMode = "editPlanName";
-  state.rowData = rowData;
+  state.currentEventTypeData = rowData;
 };
 
 const handleAdd = () => {

@@ -8,7 +8,6 @@
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
-
     <a-table
       :columns="transformPageModel()"
       :data-source="state.tableData"
@@ -197,7 +196,6 @@ const handleEditPlan = (tableData: any, record: any) => {
   state.dialogMode = "editPlan";
   state.planTableData = tableData;
   state.currentEventTypeData = record;
-  debugger;
 };
 
 const handleEdit = (rowData: any) => {

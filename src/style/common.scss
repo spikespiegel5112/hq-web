@@ -185,7 +185,7 @@ input:focus {
 .common_table_wrapper {
   margin: 0.1rem 0.2rem;
   padding: 0.1rem 0.3rem;
-  height: calc(100% - 0.8rem);
+  height: calc(100% - 0.75rem);
   background-color: #040d2b;
   border: 1px solid #004390;
   border-radius: 0.1rem;
@@ -419,7 +419,7 @@ input:focus {
     background-color: transparent;
     .common_basetable_wrapper {
       .ant-table-wrapper {
-        height: 8rem;
+        height: calc(100vh - 4.4rem);
       }
     }
   }
