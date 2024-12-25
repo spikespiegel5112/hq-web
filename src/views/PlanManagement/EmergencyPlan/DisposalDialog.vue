@@ -197,7 +197,7 @@ const colorList: any[] = [
 
 const eventList = computed(() => {
   return global.$store.state.app.currentEventTypeList.find(
-    (item: any) => item.type === 1
+    (item: any) => item.type === 0
   )?.data;
 });
 
@@ -288,7 +288,7 @@ const getPlanData = () => {
     (item: any) => Number(item.value) === props.rowData.preplanResourceId
   );
   preplanPreplanGetStepPageRequest({
-    preplanType: 0,
+    preplanType: 1,
     eventType: planData.label,
   })
     .then((response: any) => {

@@ -64,24 +64,24 @@ const init = () => {
 
 const getEventTypeList = () => {
   preplanPreplanGetPageRequest({
-    preplanType: 1,
+    preplanType: 0,
   })
     .then((response: any) => {
       global.$store.commit("app/updateCurrentEventTypeList", {
-        type: 1,
+        type: 0,
         data: response.data.list,
       });
     })
     .catch((error: any) => {
       console.log(error);
     });
-
+    
   preplanPreplanGetPageRequest({
-    preplanType: 0,
+    preplanType: 1,
   })
     .then((response: any) => {
       global.$store.commit("app/updateCurrentEventTypeList", {
-        type: 0,
+        type: 1,
         data: response.data.list,
       });
     })

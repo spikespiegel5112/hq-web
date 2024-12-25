@@ -189,7 +189,7 @@ const pagination = reactive({
 
 const eventList = computed(() => {
   return global.$store.state.app.currentEventTypeList.find(
-    (item: any) => item.type === 1
+    (item: any) => item.type === 0
   )?.data;
 });
 

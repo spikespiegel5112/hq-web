@@ -180,7 +180,7 @@ const getData = () => {
   preplanPreplanGetPageRequest({
     ...queryFormData,
     ...pagination,
-    preplanType: 0,
+    preplanType: 1,
   })
     .then((response: any) => {
       response = response.data;
