@@ -153,7 +153,7 @@ const props = defineProps({
   rowData: { type: Object, required: true, default: () => {} },
   tableData: { type: Object, required: true, default: () => [] },
   dataModel: { type: Array, required: true, default: () => [] },
-  preplanType: { type: String, required: true, default: "" },
+  preplanType: { type: [Number, null], required: true, default: null },
 });
 
 let state = reactive({
@@ -324,6 +324,4 @@ onMounted(async () => {});
 onBeforeUnmount(() => {});
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>
