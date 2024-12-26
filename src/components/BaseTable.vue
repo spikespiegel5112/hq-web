@@ -26,7 +26,6 @@
           <div v-if="item.name === 'index'">
             {{ scope.index + 1 }}
           </div>
-
           <div v-if="item.name === 'attachment'" class="attachment">
             <a-space>
               <a
@@ -181,7 +180,7 @@ const props = defineProps({
     type: [Object, Boolean],
     default: {
       page: 1,
-      pageSize: 30,
+      pageSize: 10,
       total: 0,
     },
   },
@@ -195,7 +194,7 @@ const global = currentInstance.appContext.config.globalProperties;
 const pagination = reactive({
   current: 1,
   total: 0,
-  pageSize: 30,
+  pageSize: 10,
 });
 
 const state = reactive({
@@ -374,7 +373,7 @@ const handleAction = (action: any, scope: any) => {
   } else if (action === "preview") {
     // this.$emit("onPreview", row);
     return;
-  } else if (action === "review") {
+  } else if (["review", "detail"].includes(action)) {
     emit("onReview", state.originalTableData[scope.index]);
   } else if (action === "edit") {
     emit("onEdit", state.originalTableData[scope.index]);

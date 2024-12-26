@@ -6,49 +6,52 @@
         <span class="text"> {{ dialogTitle }}</span>
       </div>
     </template>
+    <a-row justify="center">
+      <a-col :span="22">
+        <div class="common_table_wrapper">
+          <a-table
+            class="common_basetable_wrapper"
+            :dataSource="props.rowData.warningList"
+            :columns="columns"
+            :pagination="false"
+          >
+            <template #bodyCell="{ text, record, index, column }">
+              <div
+                v-if="column.dataIndex === 'index'"
+                :style="{
+                  textAlign: 'center',
+                }"
+              >
+                {{ index + 1 }}
+              </div>
+              <div
+                v-if="column.dataIndex === 'warningLevel'"
+                :style="{
+                  textAlign: 'center',
+                }"
+              >
+                {{
+              global
+                .$getDictionary("planLevel")
+                .find((item:any) => item.value === record.warningLevel)?.label
+                }}
+              </div>
+            </template>
+          </a-table>
+        </div>
+      </a-col>
+    </a-row>
+
     <a-form
       :model="state.formData"
       ref="formDataRef"
       autocomplete="off"
-      :label-col="{ style: { width: '150px' } }"
+      :label-col="{ style: { width: '80px' } }"
     >
       <a-row>
         <a-col :span="23">
-          <a-form-item name="dataTime" label="日期">
-            <template v-if="props.mode === 'detail'">
-              {{ state.formData.dataTime }}
-            </template>
-          </a-form-item>
-        </a-col>
-      </a-row>
-
-      <a-row>
-        <a-col :span="23">
-          <a-form-item name="weatherSource" label="天气来源">
+          <a-form-item name="warningType" label="类型">
             <a-select
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.weatherSource"
-              placeholder="请选择"
-              allow-clear
-            >
-              <a-select-option
-                v-for="item in global.$getDictionary('planLevel')"
-                :value="item.value"
-              >
-                {{ item.label }}
-              </a-select-option>
-            </a-select>
-            <template v-if="props.mode === 'detail'">
-              {{ state.formData.weatherSource }}
-            </template>
-          </a-form-item>
-        </a-col>
-      </a-row>
-
-      <a-row>
-        <a-col :span="23">
-          <a-form-item name="temperature" label="温度（℃）">
-            <!-- <a-select
               v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.warningType"
               placeholder="请选择"
@@ -62,50 +65,9 @@
               >
                 {{ item.label }}
               </a-select-option>
-            </a-select> -->
-            <template v-if="props.mode === 'detail'">
-              {{ state.formData.temperature }}
-            </template>
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="23">
-          <a-form-item name="weather" label="天气">
-            <a-select
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.weather"
-              placeholder="请选择"
-              allow-clear
-            >
-              <a-select-option
-                v-for="item in global.$getDictionary('planLevel')"
-                :value="item.value"
-              >
-                {{ item.label }}
-              </a-select-option>
             </a-select>
-            <template v-if="props.mode === 'detail'">
-              {{ state.formData.weather }}
-            </template>
-          </a-form-item>
-        </a-col>
-      </a-row>
-
-      <a-row>
-        <a-col :span="23">
-          <a-form-item name="warningType" label="预警类型">
-            <template v-if="props.mode === 'detail'">
+            <template v-if="props.mode === 'review'">
               {{ state.formData.warningType }}
-            </template>
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="23">
-          <a-form-item name="warningContent" label="预警内容">
-            <template v-if="props.mode === 'detail'">
-              {{ state.formData.warningContent }}
             </template>
           </a-form-item>
         </a-col>
@@ -126,11 +88,36 @@
                 {{ item.label }}
               </a-select-option>
             </a-select>
-            <template v-if="props.mode === 'detail'">
+            <template v-if="props.mode === 'review'">
               {{ 
                 global.$getDictionary("planLevel").find((item2: any) => item2.value === state.formData.warningLevel)?.label
               }}
             </template>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="23">
+          <a-form-item name="warningContent" label="内容">
+            <a-textarea
+              v-if="global.$checkEditable(props.mode)"
+              v-model:value="state.formData.warningContent"
+              placeholder="请输入"
+              :rows="5"
+              allow-clear
+            >
+            </a-textarea>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.warningContent }}
+            </template>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="23">
+          <a-form-item name="attachmentList" label="附件">
+            {{ state.formData.attachmentList }}
+            <CommonUpload :attachmentList="state.formData.attachmentList" />
           </a-form-item>
         </a-col>
       </a-row>
@@ -295,11 +282,11 @@ watch(
     state.tableData = [];
     if (!!newValue) {
       await nextTick();
-      if (["edit", "review", "detail", "disposal"].includes(props.mode)) {
+      if (["edit", "review", "disposal"].some((item) => item === props.mode)) {
         let rowData = JSON.parse(JSON.stringify(props.rowData));
         rowData = {
           ...rowData,
-          dataTime: global.$dayjs(rowData.dataTime).format("YYYY/MM/DD"),
+          dataTime: global.$dayjs(rowData.dataTime, "YYYY-MM-DD HH:mm:ss"),
         };
         Object.keys(state.formData).forEach((item: string) => {
           state.formData[item] = global.$isNotEmpty(rowData[item])

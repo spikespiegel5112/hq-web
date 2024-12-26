@@ -56,6 +56,10 @@ const dictionary = {
         value: "edit",
       },
       {
+        title: "详情",
+        value: "detail",
+      },
+      {
         title: "查看",
         value: "review",
       },

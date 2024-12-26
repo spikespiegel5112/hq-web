@@ -14,7 +14,7 @@
         },
       }"
       :seedToken="{
-        fontSize: 20,
+        // fontSize: 20,
       }"
     >
       <transition name="fade">

@@ -267,6 +267,18 @@ const routerDictionary = [
             },
           },
           {
+            title: "日历信息管理",
+            path: "CalendarInformationManagement",
+            name: "CalendarInformationManagement",
+            component: () =>
+              import(
+                /* webpackChunkName: "CalendarInformationManagement" */ "@/views/OperationManagement/CalendarInformationManagement/CalendarInformationManagement.vue"
+              ),
+            meta: {
+              title: "告警信息管理",
+            },
+          },
+          {
             title: "配置",
             path: "OperationManagementConfiguration",
             name: "OperationManagementConfiguration",

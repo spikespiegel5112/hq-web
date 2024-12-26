@@ -3,7 +3,9 @@
     <FilterTool @onSearch="handleSearch" @onReset="handleReset"></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
+        <a-button class="import">导入</a-button>
         <a-button class="export">导出</a-button>
+        <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
     <BaseTable
@@ -11,25 +13,20 @@
       :processedTableData="state.processedTableData"
       :dataModel="pageModel"
       :pagination="pagination"
+      @onEdit="handleEdit"
       @onReview="handleReview"
-      @onIssueWarning="handleEdit"
       @onChangePage="handleChangePage"
+      @onDelete="handleDelete"
     />
-    <EditDialog
-      :visible="state.dialogVisible"
-      :mode="state.dialogMode"
-      :dataModel="pageModel"
-      :rowData="state.currentRowData"
-      @onClose="handleClose"
-    ></EditDialog>
-    <PublishDialog
-      :visible="state.publishDialogVisible"
+    <ReviewDialog
+      :visible="state.dialogReviewVisible"
       :mode="state.dialogMode"
       :dataModel="pageModel"
       :rowData="state.currentRowData"
       @onClose="handleClose"
       @onSubmit="handleSubmit"
-    ></PublishDialog>
+    >
+    </ReviewDialog>
   </div>
 </template>
 
@@ -47,16 +44,27 @@ import {
 } from "vue";
 
 import {
-  infoManagementWeatherInfoGetOneByIdRequest,
-  infoManagementWeatherInfoGetPageRequest,
-  infoManagementWeatherInfoPublishWarningRequest,
+  operationManagementAlarmInfoGetPageRequest,
+  operationManagementAlarmInfoDeleteRequest,
+  operationManagementAlarmInfoSaveRequest,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
-import PublishDialog from "./PublishDialog.vue";
-import EditDialog from "./EditDialog.vue";
+import ReviewDialog from "./ReviewDialog.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
+
+// "": "string",
+// "": 0,
+// "alarmStatus": 0,
+// "": "2024-01-01 00:00:00",
+// "": 0,
+// "eventAssociationId": 0,
+// "eventType": 0,
+// "id": 0,
+// "preplanResourceId": 0,
+// "updateBy": "string",
+// "updateTime": "2024-12-24T06:21:04.625Z"
 
 const pageModel = ref([
   {
@@ -68,40 +76,52 @@ const pageModel = ref([
     exportVisible: false,
   },
   {
+    label: "预警类型",
+    name: "preplanResourceId",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "内容",
+    name: "alarmContent",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "级别",
+    name: "alarmLevel",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "日期类型",
+    name: "dateType",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
     label: "日期",
-    name: "dataTime",
+    name: "alarmTime",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
-    width: "1.5rem",
   },
   {
-    label: "天气来源",
-    name: "weatherSource",
+    label: "告警状态",
+    name: "alarmStatus",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
-    width: "2rem",
-  },
-  {
-    label: "温度（℃）",
-    name: "temperature",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-    width: "1rem",
-  },
-  {
-    label: "天气",
-    name: "weather",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-    width: "1rem",
   },
   {
     label: "操作",
@@ -109,15 +129,14 @@ const pageModel = ref([
     tableVisible: true,
     exportVisible: false,
     fixed: "right",
-    actions: ["detail", "issueWarning"],
+    actions: ["review"],
   },
 ]);
 
 const state = reactive({
   tableData: [] as any[],
   processedTableData: [] as any[],
-  dialogVisible: false,
-  publishDialogVisible: false,
+  dialogReviewVisible: false,
   dialogMode: null as string | null,
   currentRowData: {},
 });
@@ -128,9 +147,16 @@ const pagination = reactive({
   ...global.$store.state.app.defaultPagination,
 });
 
+const eventAllList = computed(() => {
+  return [
+    ...global.$store.state.app.currentEventTypeList[0].data,
+    ...global.$store.state.app.currentEventTypeList[1].data,
+  ];
+});
+
 const getData = () => {
   pagination.total = undefined;
-  infoManagementWeatherInfoGetPageRequest({
+  operationManagementAlarmInfoGetPageRequest({
     ...queryFormData,
     ...pagination,
   })
@@ -141,9 +167,21 @@ const getData = () => {
       state.processedTableData = response.list.map((item: any) => {
         return {
           ...item,
-          warningLevel: global
-            .$getDictionary("planLevel")
-            .find((item2: any) => item2.value === item.warningLevel)?.label,
+          dutyStartTime: global.$dayjs(item.dutyStartTime).format("YYYY-MM-DD"),
+          dutyEndTime: global.$dayjs(item.dutyEndTime).format("YYYY-MM-DD"),
+          preplanResourceId: eventAllList.value.find(
+            (item2: any) => item2.value === item.preplanResourceId.toString()
+          )?.label,
+          alarmTime: global.$dayjs(item.alarmTime).format("YYYY-MM-DD"),
+          alarmLevel: global
+            .$getDictionary("alarmLevel")
+            .find((item2: any) => item2.value === item.alarmLevel)?.label,
+          dateType: global
+            .$getDictionary("dateType")
+            .find((item2: any) => item2.value === item.dateType)?.label,
+          alarmStatus: global
+            .$getDictionary("alarmStatus")
+            .find((item2: any) => item2.value === item.alarmStatus)?.label,
         };
       });
     })
@@ -153,15 +191,20 @@ const getData = () => {
 };
 
 const handleEdit = (rowData: any) => {
-  state.publishDialogVisible = true;
+  state.dialogReviewVisible = true;
   state.dialogMode = "edit";
   state.currentRowData = rowData;
 };
 
 const handleReview = (rowData: any) => {
-  state.dialogVisible = true;
-  state.dialogMode = "detail";
+  state.dialogReviewVisible = true;
+  state.dialogMode = "review";
   state.currentRowData = rowData;
+};
+
+const handleAdd = () => {
+  state.dialogReviewVisible = true;
+  state.dialogMode = "add";
 };
 
 const handleSearch = (formData: object) => {
@@ -175,19 +218,18 @@ const handleReset = (formData: object) => {
 };
 
 const handleClose = () => {
-  state.dialogVisible = false;
-  state.publishDialogVisible = false;
+  state.dialogReviewVisible = false;
 };
 
 const handleSubmit = (formData: any) => {
-  infoManagementWeatherInfoPublishWarningRequest(formData)
+  operationManagementAlarmInfoSaveRequest(formData)
     .then((response: any) => {
-      global.$message.success("提交成功");
+      global.$message.success("操作成功");
       getData();
     })
     .catch((error: any) => {
+      global.$message.error("操作失败");
       console.log(error);
-      global.$message.error("提交失败");
     });
 };
 
@@ -196,6 +238,20 @@ const handleChangePage = (pagingData: any) => {
   pagination.pageSize = pagingData.pageSize;
   pagination.total = pagingData.total;
   getData();
+};
+
+const handleDelete = (id: number) => {
+  operationManagementAlarmInfoDeleteRequest({
+    id,
+  })
+    .then((response: any) => {
+      global.$message.success("删除成功");
+      getData();
+    })
+    .catch((error: any) => {
+      global.$message.error("删除失败");
+      console.log(error);
+    });
 };
 
 onMounted(async () => {
