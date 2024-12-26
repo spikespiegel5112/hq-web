@@ -130,11 +130,13 @@
     <a-pagination
       v-if="!!props.pagination"
       v-model:current="pagination.page"
-      show-quick-jumper
+      showQuickJumper
+      showLessItems
+      showSizeChanger
+      :pageSizeOptions="['10', '20', '30', '50', '100']"
       :total="pagination.total"
       :page-size="pagination.pageSize"
       :show-total="(total) => `共 ${total} 条`"
-      show-less-items
       @change="hangleChangePage"
     />
 
