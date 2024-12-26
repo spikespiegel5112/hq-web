@@ -1,6 +1,6 @@
 <template>
   <Block
-    title="当日累计疏散客流"
+    title="当日小时疏散客流"
     class="accumulatedevacuationofpassengerflowonthesameday"
   >
     <div id="accumulatedevacuationofpassengerflowonthesameday"></div>
@@ -138,11 +138,7 @@ const getData = () => {
       response.forEach((item: any, index: number) => {
         dataDictionary.push({
           title: index,
-          value: response.reduce((cum: number, item2: any, index2: number) => {
-            return index2 < index
-              ? cum + item2.dispersedHourlyPassengerCount
-              : cum;
-          }, 0),
+          value: item.dispersedHourlyPassengerCount,
         });
       });
       setOption();
