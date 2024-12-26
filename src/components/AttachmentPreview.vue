@@ -3,7 +3,7 @@
     class="common_attachmentpreview_wrapper"
     v-model:open="state.visible"
     @cancel="handleClose"
-    width="9rem"
+    width="12rem"
   >
     <!-- Slider main container -->
     <div class="swiper">
@@ -17,15 +17,17 @@
             textAlign: 'center',
           }"
         >
-          <img v-if="props.fileType === 'image'" :src="getImgUrl(item)" />
-          <PDFViewer
-            v-if="props.fileType === 'file' && props.visible"
-            :filePath="getImgUrl(item)"
-          />
-          <VideoPlayer
-            v-if="props.fileType === 'video' && props.visible"
-            :filePath="getImgUrl(item)"
-          />
+          <div class="content">
+            <img v-if="props.fileType === 'image'" :src="getImgUrl(item)" />
+            <PDFViewer
+              v-if="props.fileType === 'file' && props.visible"
+              :filePath="getImgUrl(item)"
+            />
+            <VideoPlayer
+              v-if="props.fileType === 'video' && props.visible"
+              :filePath="getImgUrl(item)"
+            />
+          </div>
         </div>
       </div>
       <!-- If we need pagination -->
@@ -213,7 +215,26 @@ onBeforeUnmount(() => {});
   }
 }
 .swiper {
-  width: 600px;
+  width: 100%;
   height: 600px;
+  .swiper-wrapper {
+    .swiper-slide {
+      .content {
+        display: flex;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+        > div {
+          display: inline-block;
+          width: calc(100% - 1.5rem);
+          height: auto;
+        }
+        img {
+          max-width: 100%;
+          max-height: 100%;
+        }
+      }
+    }
+  }
 }
 </style>
