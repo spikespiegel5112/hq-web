@@ -3,14 +3,14 @@
     <FilterTool @onSearch="handleSearch" @onReset="handleReset"></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
-                 <!-- <ExportButton
-          :action="eventManageSuddenEventExportRequest"
+        <ExportButton
+          :action="planManagementEmergencyPlanExportRecordExcelRequest"
           :queryFormData="queryFormData"
           :pagination="{
             ...pagination,
             pageSize: 1000,
           }"
-        /> -->
+        />
       </a-space>
     </div>
     <BaseTable
@@ -52,7 +52,7 @@ import {
   planManagementEmergencyPlanGetRecordPageRequest,
   planManagementEmergencyPlanDeleteRequest,
   planManagementEmergencyPlanSaveRequest,
-  eventManageSuddenEventExportRequest,
+  planManagementEmergencyPlanExportRecordExcelRequest,
 } from "@/api/management";
 
 import FilterTool from "./FilterTool.vue";

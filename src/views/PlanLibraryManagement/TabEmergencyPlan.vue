@@ -4,14 +4,17 @@
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
         <a-button class="import">导入</a-button>
-                 <!-- <ExportButton
+        <ExportButton
           :action="eventManageSuddenEventExportRequest"
-          :queryFormData="queryFormData"
+          :queryFormData="{
+            ...queryFormData,
+            preplanType: 0,
+          }"
           :pagination="{
             ...pagination,
             pageSize: 1000,
           }"
-        /> -->
+        />
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>

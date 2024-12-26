@@ -4,14 +4,14 @@
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
         <a-button class="import">导入</a-button>
-                 <!-- <ExportButton
-          :action="eventManageSuddenEventExportRequest"
+                 <ExportButton
+          :action="operationManagementAlarmInfoExportExcelRequest"
           :queryFormData="queryFormData"
           :pagination="{
             ...pagination,
             pageSize: 1000,
           }"
-        /> -->
+        />
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
@@ -54,7 +54,7 @@ import {
   operationManagementAlarmInfoGetPageRequest,
   operationManagementAlarmInfoDeleteRequest,
   operationManagementAlarmInfoSaveRequest,
-  eventManageSuddenEventExportRequest,
+  operationManagementAlarmInfoExportExcelRequest,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import ReviewDialog from "./ReviewDialog.vue";

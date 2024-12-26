@@ -501,9 +501,21 @@ export const infoManagementPublicSentimentInfoHandleRequest = (params: any) => {
   });
 };
 
+// 信息管理-舆情信息-excel导出
+export const infoManagementPublicSentimentInfoExportExcelRequest = (
+  params: any
+) => {
+  return service({
+    url: prefix + "/infoManagement/publicSentimentInfo/exportExcel",
+    method: "GET",
+    data: params,
+    responseType: "blob",
+  });
+};
+
 // 信息管理-投诉信息
 
-// 删除
+// 信息管理-投诉信息-删除
 export const infoManagementComplaintInfoDeleteRequest = (params: any) => {
   return service({
     url: prefix + "/infoManagement/complaintInfo/delete",
@@ -512,7 +524,7 @@ export const infoManagementComplaintInfoDeleteRequest = (params: any) => {
   });
 };
 
-// 处置
+// 信息管理-投诉信息-处置
 export const infoManagementComplaintInfoHandleRequest = (params: any) => {
   return service({
     url: prefix + "/infoManagement/complaintInfo/handle",
@@ -521,9 +533,19 @@ export const infoManagementComplaintInfoHandleRequest = (params: any) => {
   });
 };
 
+// 信息管理-投诉信息-excel导出
+export const infoManagementComplaintInfoExportExcelRequest = (params: any) => {
+  return service({
+    url: prefix + "/infoManagement/complaintInfo/exportExcel",
+    method: "GET",
+    data: params,
+    responseType: "blob",
+  });
+};
+
 // 信息管理-天气信息
 
-// 根据Id查询
+// 信息管理-天气信息-根据Id查询
 export const infoManagementWeatherInfoGetOneByIdRequest = (params: any) => {
   return service({
     url: prefix + "/infoManagement/weatherInfo/getOneById",
@@ -541,7 +563,7 @@ export const infoManagementWeatherInfoGetPageRequest = (params: any) => {
   });
 };
 
-// 发布预警
+// 信息管理-天气信息-发布预警
 export const infoManagementWeatherInfoPublishWarningRequest = (params: any) => {
   return service({
     url: prefix + "/infoManagement/weatherInfo/publishWarning",
@@ -550,15 +572,17 @@ export const infoManagementWeatherInfoPublishWarningRequest = (params: any) => {
   });
 };
 
-// excel导出
-export const infoManagementComplaintInfoExportExcelRequest = (params: any) => {
+// 信息管理-天气信息-报表导出
+export const infoManagementWeatherInfoExportRequest = (params: any) => {
   return service({
-    url: prefix + "/infoManagement/complaintInfo/exportExcel",
-    method: "POST",
+    url: prefix + "/infoManagement/weatherInfo/export",
+    method: "GET",
     data: params,
     responseType: "blob",
   });
 };
+
+// 信息管理-投诉信息
 
 // 根据Id查询
 export const infoManagementComplaintInfoGetOneByIdRequest = (params: any) => {
@@ -687,7 +711,7 @@ export const planManagementEmergencyPlanDeleteRequest = (params: any) => {
 export const planManagementEmergencyPlanExportExcelRequest = (params: any) => {
   return service({
     url: prefix + "/planManagement/emergencyPlan/exportExcel",
-    method: "POST",
+    method: "GET",
     data: params,
     responseType: "blob",
   });
@@ -699,7 +723,7 @@ export const planManagementEmergencyPlanExportRecordExcelRequest = (
 ) => {
   return service({
     url: prefix + "/planManagement/emergencyPlan/exportRecordExcel",
-    method: "POST",
+    method: "GET",
     data: params,
     responseType: "blob",
   });
@@ -785,7 +809,7 @@ export const operationManagementDutyStaffDeleteRequest = (params: any) => {
 export const operationManagementDutyStaffExportExcelRequest = (params: any) => {
   return service({
     url: prefix + "/operationManagement/dutyStaff/exportExcel",
-    method: "POST",
+    method: "GET",
     data: params,
     responseType: "blob",
   });
@@ -842,7 +866,7 @@ export const operationManagementAlarmInfoDeleteRequest = (params: any) => {
 export const operationManagementAlarmInfoExportExcelRequest = (params: any) => {
   return service({
     url: prefix + "/operationManagement/alarmInfo/exportExcel",
-    method: "POST",
+    method: "GET",
     data: params,
     responseType: "blob",
   });
@@ -900,7 +924,7 @@ export const operationManagementCalendarInfoExportExcelRequest = (
 ) => {
   return service({
     url: prefix + "/operationManagement/calendarInfo/exportExcel",
-    method: "POST",
+    method: "GET",
     data: params,
     responseType: "blob",
   });
