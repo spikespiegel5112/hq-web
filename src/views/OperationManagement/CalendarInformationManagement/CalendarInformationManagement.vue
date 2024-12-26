@@ -18,15 +18,15 @@
       @onChangePage="handleChangePage"
       @onDelete="handleDelete"
     />
-    <ReviewDialog
-      :visible="state.dialogReviewVisible"
+    <EditDialog
+      :visible="state.dialogVisible"
       :mode="state.dialogMode"
       :dataModel="pageModel"
       :rowData="state.currentRowData"
       @onClose="handleClose"
       @onSubmit="handleSubmit"
     >
-    </ReviewDialog>
+    </EditDialog>
   </div>
 </template>
 
@@ -44,27 +44,15 @@ import {
 } from "vue";
 
 import {
-  operationManagementAlarmInfoGetPageRequest,
-  operationManagementAlarmInfoDeleteRequest,
-  operationManagementAlarmInfoSaveRequest,
+  operationManagementCalendarInfoGetPageRequest,
+  operationManagementCalendarInfoDeleteRequest,
+  operationManagementCalendarInfoSaveRequest,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
-import ReviewDialog from "./ReviewDialog.vue";
+import EditDialog from "./EditDialog.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
-
-// "": "string",
-// "": 0,
-// "alarmStatus": 0,
-// "": "2024-01-01 00:00:00",
-// "": 0,
-// "eventAssociationId": 0,
-// "eventType": 0,
-// "id": 0,
-// "preplanResourceId": 0,
-// "updateBy": "string",
-// "updateTime": "2024-12-24T06:21:04.625Z"
 
 const pageModel = ref([
   {
@@ -76,24 +64,8 @@ const pageModel = ref([
     exportVisible: false,
   },
   {
-    label: "预警类型",
-    name: "preplanResourceId",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
-    label: "内容",
-    name: "alarmContent",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
-    label: "级别",
-    name: "alarmLevel",
+    label: "日期",
+    name: "calendarDate",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -108,16 +80,8 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "日期",
-    name: "alarmTime",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
-    label: "告警状态",
-    name: "alarmStatus",
+    label: "展会类型",
+    name: "exhibitionType",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -129,14 +93,14 @@ const pageModel = ref([
     tableVisible: true,
     exportVisible: false,
     fixed: "right",
-    actions: ["review"],
+    actions: ["edit", "review", "delete"],
   },
 ]);
 
 const state = reactive({
   tableData: [] as any[],
   processedTableData: [] as any[],
-  dialogReviewVisible: false,
+  dialogVisible: false,
   dialogMode: null as string | null,
   currentRowData: {},
 });
@@ -156,7 +120,7 @@ const eventAllList = computed(() => {
 
 const getData = () => {
   pagination.total = undefined;
-  operationManagementAlarmInfoGetPageRequest({
+  operationManagementCalendarInfoGetPageRequest({
     ...queryFormData,
     ...pagination,
   })
@@ -167,21 +131,12 @@ const getData = () => {
       state.processedTableData = response.list.map((item: any) => {
         return {
           ...item,
-          dutyStartTime: global.$dayjs(item.dutyStartTime).format("YYYY-MM-DD"),
-          dutyEndTime: global.$dayjs(item.dutyEndTime).format("YYYY-MM-DD"),
-          preplanResourceId: eventAllList.value.find(
-            (item2: any) => item2.value === item.preplanResourceId.toString()
-          )?.label,
-          alarmTime: global.$dayjs(item.alarmTime).format("YYYY-MM-DD"),
-          alarmLevel: global
-            .$getDictionary("alarmLevel")
-            .find((item2: any) => item2.value === item.alarmLevel)?.label,
           dateType: global
             .$getDictionary("dateType")
             .find((item2: any) => item2.value === item.dateType)?.label,
-          alarmStatus: global
-            .$getDictionary("alarmStatus")
-            .find((item2: any) => item2.value === item.alarmStatus)?.label,
+          exhibitionType: global
+            .$getDictionary("exhibitionType")
+            .find((item2: any) => item2.value === item.exhibitionType)?.label,
         };
       });
     })
@@ -191,19 +146,19 @@ const getData = () => {
 };
 
 const handleEdit = (rowData: any) => {
-  state.dialogReviewVisible = true;
+  state.dialogVisible = true;
   state.dialogMode = "edit";
   state.currentRowData = rowData;
 };
 
 const handleReview = (rowData: any) => {
-  state.dialogReviewVisible = true;
+  state.dialogVisible = true;
   state.dialogMode = "review";
   state.currentRowData = rowData;
 };
 
 const handleAdd = () => {
-  state.dialogReviewVisible = true;
+  state.dialogVisible = true;
   state.dialogMode = "add";
 };
 
@@ -218,17 +173,17 @@ const handleReset = (formData: object) => {
 };
 
 const handleClose = () => {
-  state.dialogReviewVisible = false;
+  state.dialogVisible = false;
 };
 
 const handleSubmit = (formData: any) => {
-  operationManagementAlarmInfoSaveRequest(formData)
+  operationManagementCalendarInfoSaveRequest(formData)
     .then((response: any) => {
       global.$message.success("操作成功");
       getData();
     })
     .catch((error: any) => {
-      global.$message.error("操作失败");
+      global.$message.error(error.message || "操作失败");
       console.log(error);
     });
 };
@@ -241,7 +196,7 @@ const handleChangePage = (pagingData: any) => {
 };
 
 const handleDelete = (id: number) => {
-  operationManagementAlarmInfoDeleteRequest({
+  operationManagementCalendarInfoDeleteRequest({
     id,
   })
     .then((response: any) => {

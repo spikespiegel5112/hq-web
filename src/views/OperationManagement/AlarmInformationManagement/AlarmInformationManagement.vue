@@ -54,18 +54,6 @@ import ReviewDialog from "./ReviewDialog.vue";
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
-// "": "string",
-// "": 0,
-// "alarmStatus": 0,
-// "": "2024-01-01 00:00:00",
-// "": 0,
-// "eventAssociationId": 0,
-// "eventType": 0,
-// "id": 0,
-// "preplanResourceId": 0,
-// "updateBy": "string",
-// "updateTime": "2024-12-24T06:21:04.625Z"
-
 const pageModel = ref([
   {
     label: "序号",

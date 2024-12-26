@@ -132,11 +132,11 @@ const getData = () => {
 
       Object.keys(state).forEach((item: any) => {
         if (item === "northFirstTaxiBoardingPointWaitingTime") {
-          const aaa = response.northFirstTaxiBoardingPointWaitingTime;
-          const bbb = response.northFirstTaxiBoardingPointWaitingCount;
+          // const aaa = response.northFirstTaxiBoardingPointWaitingTime;
+          // const bbb = response.northFirstTaxiBoardingPointWaitingCount;
 
-          const ccc = response.northFirstTaxiBoardingPointWaitingCount;
-          const ddd = response.northFirstTaxiBoardingPointWaitingTime;
+          // const ccc = response.northFirstTaxiBoardingPointWaitingCount;
+          // const ddd = response.northFirstTaxiBoardingPointWaitingTime;
         }
         state[item] = response[item];
       });

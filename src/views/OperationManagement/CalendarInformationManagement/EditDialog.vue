@@ -1,5 +1,5 @@
 <template>
-  <a-modal v-model:open="state.visible" @cancel="handleClose" width="12rem">
+  <a-modal v-model:open="state.visible" @cancel="handleClose" width="8rem">
     <template #title>
       <div class="common_dislogtitle_item">
         <span class="sequre"></span>
@@ -14,104 +14,73 @@
       :label-col="{ style: { width: '170px' } }"
     >
       <a-row>
-        <a-col :span="11">
+        <a-col :span="22">
           <a-form-item
-            name="staffName"
-            label="人员姓名"
+            name="calendarDate"
+            label="日期"
             :label-col="{ style: { width: '100px' } }"
           >
-            <a-input
+            <a-date-picker
               v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.staffName"
-              placeholder="请输入"
-            >
-            </a-input>
-            <template v-if="props.mode === 'review'">
-              {{ state.formData.staffName }}
-            </template>
-          </a-form-item>
-        </a-col>
-        <a-col :span="12">
-          <a-form-item name="staffPhone" label="人员电话">
-            <a-input
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.staffPhone"
-              placeholder="请输入"
-            >
-            </a-input>
-            <template v-if="props.mode === 'review'">
-              {{ state.formData.staffPhone }}
-            </template>
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="11">
-          <a-form-item
-            name="staffJob"
-            label="人员职务"
-            :label-col="{ style: { width: '100px' } }"
-          >
-            <a-input
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.staffJob"
-              placeholder="请输入"
-            >
-            </a-input>
-            <template v-if="props.mode === 'review'">
-              {{ state.formData.staffJob }}
-            </template>
-          </a-form-item>
-        </a-col>
-        <a-col :span="12">
-          <a-form-item name="hocStaffName" label="HOC值班人员姓名">
-            <a-input
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.hocStaffName"
-              placeholder="请输入"
-            >
-            </a-input>
-            <template v-if="props.mode === 'review'">
-              {{ state.formData.hocStaffName }}
-            </template>
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="11">
-          <a-form-item
-            name="dutyStartTime"
-            label="值班时间"
-            :label-col="{ style: { width: '100px' } }"
-          >
-            <a-range-picker
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.dutyTime"
+              v-model:value="state.formData.calendarDate"
               format="YYYY-MM-DD"
               @change="handleChangeDutyTime"
               allow-clear
             />
             <template v-if="props.mode === 'review'">
-              {{
-                global.$dayjs(state.formData.dutyStartTime).format("YYYY-MM-DD")
-              }}
-              -
-              {{
-                global.$dayjs(state.formData.dutyEndTime).format("YYYY-MM-DD")
-              }}
+              {{ state.formData.staffName }}
             </template>
           </a-form-item>
         </a-col>
-        <a-col :span="12">
-          <a-form-item name="hocStaffPhone" label="HOC值班人员电话">
-            <a-input
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item
+            name="dateType"
+            label="日期类型"
+            :label-col="{ style: { width: '100px' } }"
+          >
+            <a-select
               v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.hocStaffPhone"
-              placeholder="请输入"
+              v-model:value="state.formData.dateType"
+              placeholder="请选择"
             >
-            </a-input>
+              <a-select-option
+                v-for="item in global.$getDictionary('dateType')"
+                :value="item.value"
+              >
+                {{ item.label }}
+              </a-select-option>
+            </a-select>
             <template v-if="props.mode === 'review'">
-              {{ state.formData.hocStaffPhone }}
+              {{ state.formData.dateType }}
+            </template>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item
+            name="exhibitionType"
+            label="展会类型"
+            :label-col="{ style: { width: '100px' } }"
+          >
+            <a-select
+              v-if="global.$checkEditable(props.mode)"
+              v-model:value="state.formData.exhibitionType"
+              placeholder="请选择"
+            >
+              <a-select-option
+                v-for="item in global.$getDictionary('exhibitionType')"
+                :value="item.value"
+              >
+                {{ item.label }}
+              </a-select-option>
+            </a-select>
+            <template v-if="props.mode === 'review'">
+              {{
+                global.$dayjs(state.formData.dutyStartTime).format("YYYY-MM-DD")
+              }}
             </template>
           </a-form-item>
         </a-col>
@@ -176,14 +145,9 @@ const state = reactive({
   visible: false,
   formData: {
     id: null as number | null | undefined,
-    dutyEndTime: null,
-    dutyStartTime: null,
-    hocStaffJob: null,
-    hocStaffName: null,
-    hocStaffPhone: null,
-    staffJob: null,
-    staffName: null,
-    staffPhone: null,
+    calendarDate: null,
+    dateType: null,
+    exhibitionType: null,
   },
   dutyTime: [],
 }) as any;
@@ -232,24 +196,14 @@ watch(
     if (!!newValue) {
       await nextTick();
       if (["edit", "review", "disposal"].some((item) => item === props.mode)) {
-        let rowData = JSON.parse(JSON.stringify(props.rowData));
-        rowData = {
-          ...rowData,
-        };
-        state.dutyTime = [
-          global.$dayjs(rowData.dutyStartTime, "YYYY-MM-DD HH:mm:ss"),
-          global.$dayjs(rowData.dutyEndTime, "YYYY-MM-DD HH:mm:ss"),
-        ];
-        state.formData.dutyStartTime = global.$dayjs(
-          rowData.dutyStartTime,
-          "YYYY-MM-DD HH:mm:ss"
-        );
-        state.formData.dutyEndTime = global.$dayjs(
-          rowData.dutyEndTime,
-          "YYYY-MM-DD HH:mm:ss"
-        );
-        Object.keys(state.formData).forEach((item: string) => {
-          state.formData[item] = !!rowData[item] ? rowData[item] : undefined;
+        const rowData = JSON.parse(JSON.stringify(props.rowData));
+        Object.keys(state.formData).forEach((item) => {
+          state.formData[item] = rowData[item];
+          if (item === "calendarDate") {
+            state.formData[item] = !!rowData[item]
+              ? global.$dayjs(rowData[item])
+              : null;
+          }
         });
       }
     }
@@ -269,16 +223,13 @@ const handleSubmit = () => {
       if (props.mode === "add") {
         state.formData.id = undefined;
       }
-      const dutyStartTime = global
-        .$dayjs(state.dutyTime[0])
-        .format("YYYY-MM-DD HH:mm:ss");
-      const dutyEndTime = global
-        .$dayjs(state.dutyTime[1])
-        .format("YYYY-MM-DD HH:mm:ss");
+      const calendarDate = global
+        .$dayjs(state.formData.calendarDate)
+        .format("YYYY-MM-DD");
+
       emit("onSubmit", {
         ...state.formData,
-        dutyStartTime,
-        dutyEndTime,
+        calendarDate,
       });
       handleClose();
     })
@@ -287,10 +238,7 @@ const handleSubmit = () => {
     });
 };
 
-const handleChangeDutyTime = (value: any) => {
-  state.formData.dutyStartTime = value[0];
-  state.formData.dutyEndTime = value[1];
-};
+const handleChangeDutyTime = (value: any) => {};
 
 onBeforeUnmount(() => {});
 </script>
