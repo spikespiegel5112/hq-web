@@ -853,3 +853,64 @@ export const operationManagementAlarmInfoSaveRequest = (params: any) => {
     data: params,
   });
 };
+
+// 运行管理-日历信息
+// 删除
+export const operationManagementCalendarInfoDeleteRequest = (params: any) => {
+  return service({
+    url: prefix + "/operationManagement/calendarInfo/delete",
+    method: "POST",
+    data: params,
+  });
+};
+
+// excel导出
+export const operationManagementCalendarInfoExportExcelRequest = (
+  params: any
+) => {
+  return service({
+    url: prefix + "/operationManagement/calendarInfo/exportExcel",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 根据Id查询
+export const operationManagementCalendarInfoGetOneByIdRequest = (
+  params: any
+) => {
+  return service({
+    url: prefix + "/operationManagement/calendarInfo/getOneById",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 分页查询
+export const operationManagementCalendarInfoGetPageRequest = (params: any) => {
+  return service({
+    url: prefix + "/operationManagement/calendarInfo/getPage",
+    method: "POST",
+    data: params,
+  });
+};
+
+// excel导入
+export const operationManagementCalendarInfoImportExcelRequest = (
+  params: any
+) => {
+  return service({
+    url: prefix + "/operationManagement/calendarInfo/importExcel",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 保存
+export const operationManagementCalendarInfoSaveRequest = (params: any) => {
+  return service({
+    url: prefix + "/operationManagement/calendarInfo/save",
+    method: "POST",
+    data: params,
+  });
+};

@@ -127,8 +127,17 @@ watch(
 const getData = () => {
   backendIndexPageTaxiVehicleMonitorRequest({})
     .then((response: any) => {
+      console.log(response);
+      response = response.data;
+
       Object.keys(state).forEach((item: any) => {
-        response = response.data;
+        if (item === "northFirstTaxiBoardingPointWaitingTime") {
+          const aaa = response.northFirstTaxiBoardingPointWaitingTime;
+          const bbb = response.northFirstTaxiBoardingPointWaitingCount;
+
+          const ccc = response.northFirstTaxiBoardingPointWaitingCount;
+          const ddd = response.northFirstTaxiBoardingPointWaitingTime;
+        }
         state[item] = response[item];
       });
     })

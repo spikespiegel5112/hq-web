@@ -187,6 +187,18 @@ const routerDictionary = [
             },
           },
           {
+            title: "日历信息",
+            path: "CalenderInformation",
+            name: "CalenderInformation",
+            component: () =>
+              import(
+                /* webpackChunkName: "CalenderInformation" */ "@/views/InformationManagement/CalenderInformation/CalenderInformation.vue"
+              ),
+            meta: {
+              title: "投诉信息",
+            },
+          },
+          {
             title: "天气信息",
             path: "WeatherInformation",
             name: "WeatherInformation",
