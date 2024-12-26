@@ -135,9 +135,9 @@ onMounted(() => {
     z-index: 1;
     .arrow {
       display: inline-block;
-      margin: 0 0.2rem 0 0;
-      width: 0.5rem;
-      height: 0.5rem;
+      margin: 0 0.3rem 0 0.1rem;
+      width: 0.7rem;
+      height: 0.7rem;
       background-image: url("@/assets/header_title_arrow.png");
       background-repeat: no-repeat;
       background-size: contain;
