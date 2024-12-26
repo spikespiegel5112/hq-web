@@ -18,18 +18,7 @@
         :key="item.name"
         :title="item.title"
         :data-index="item.name"
-        :width="
-           item.actions instanceof Array
-            ? item.actions.reduce((sum:number, cur:number) => {
-                const actionDictionary =
-                  global.$store.state.dictionary.actionDictionary;
-                const charLength = actionDictionary.find(
-                  (item2:any) => item2.name === cur
-                ).label.length;
-                return sum + (charLength *10+10);
-              }, 20)+110 + 'px'
-            : item.width
-        "
+        :width="parsedColumnWidth(item)"
         :fixed="item.fixed"
         :align="global.$isNotEmpty(item.align) ? item.align : 'center'"
       >
@@ -277,6 +266,30 @@ const tableHeight = computed(() => {
   }
 });
 
+const parsedColumnWidth = (item: any) => {
+  let result;
+
+  if (item.key === "operationColumn") {
+    result =
+      item.actions.reduce((sum: number, cur: number) => {
+        const actionDictionary =
+          global.$store.state.dictionary.actionDictionary;
+        const charLength = actionDictionary.find(
+          (item2: any) => item2.name === cur
+        ).label.length;
+        return sum + (charLength * 2 + 40);
+      }, 0) +
+      80 +
+      "px";
+  } else if (item.key === "attachment") {
+    result = 100;
+  } else {
+    result = item.width;
+  }
+
+  return result;
+};
+
 const innerDataModel = computed(() => {
   const dataModel = props.dataModel.map((item: any) => {
     return {
@@ -489,6 +502,9 @@ onMounted(() => {});
               }
             }
             .attachment {
+              .ant-btn {
+                padding: 2.428571428571429px 0;
+              }
               img {
                 display: inline-block;
                 width: 0.3rem;
