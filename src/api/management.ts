@@ -16,6 +16,7 @@ export const attachmentDownloadRequest = (params: any) => {
     url: prefix + "/attachment/download",
     method: "GET",
     data: params,
+    responseType: "blob",
   });
 };
 
@@ -161,6 +162,7 @@ export const passengerFlowMetroPassengerFlowExportRequest = (params: any) => {
     url: prefix + "/passengerFlow/metroPassengerFlow/export",
     method: "GET",
     params,
+    responseType: "blob",
   });
 };
 
@@ -350,6 +352,7 @@ export const eventManageSuddenEventExportRequest = (params: any) => {
     url: prefix + "/eventManage/suddenEvent/export",
     method: "GET",
     params,
+    responseType: "blob",
   });
 };
 
@@ -359,6 +362,7 @@ export const eventManageSuddenEventExportRecordRequest = (params: any) => {
     url: prefix + "/eventManage/suddenEvent/exportRecord",
     method: "GET",
     params,
+    responseType: "blob",
   });
 };
 
@@ -442,11 +446,9 @@ export const infoManagementExternalInfoExportExcelRequest = (params: any) => {
     url: prefix + "/infoManagement/externalInfo/exportExcel",
     method: "GET",
     params,
+    responseType: "blob",
   });
 };
-
-
-
 
 // 信息管理-舆情信息
 
@@ -554,6 +556,7 @@ export const infoManagementComplaintInfoExportExcelRequest = (params: any) => {
     url: prefix + "/infoManagement/complaintInfo/exportExcel",
     method: "POST",
     data: params,
+    responseType: "blob",
   });
 };
 
@@ -619,6 +622,7 @@ export const preplanPreplanExportRequest = (params: any) => {
     url: prefix + "/preplan/preplan/export",
     method: "GET",
     data: params,
+    responseType: "blob",
   });
 };
 
@@ -628,6 +632,7 @@ export const preplanPreplanExportStepRequest = (params: any) => {
     url: prefix + "/preplan/preplan/exportStep",
     method: "GET",
     data: params,
+    responseType: "blob",
   });
 };
 
@@ -684,6 +689,7 @@ export const planManagementEmergencyPlanExportExcelRequest = (params: any) => {
     url: prefix + "/planManagement/emergencyPlan/exportExcel",
     method: "POST",
     data: params,
+    responseType: "blob",
   });
 };
 
@@ -695,6 +701,7 @@ export const planManagementEmergencyPlanExportRecordExcelRequest = (
     url: prefix + "/planManagement/emergencyPlan/exportRecordExcel",
     method: "POST",
     data: params,
+    responseType: "blob",
   });
 };
 
@@ -780,6 +787,7 @@ export const operationManagementDutyStaffExportExcelRequest = (params: any) => {
     url: prefix + "/operationManagement/dutyStaff/exportExcel",
     method: "POST",
     data: params,
+    responseType: "blob",
   });
 };
 
@@ -836,6 +844,7 @@ export const operationManagementAlarmInfoExportExcelRequest = (params: any) => {
     url: prefix + "/operationManagement/alarmInfo/exportExcel",
     method: "POST",
     data: params,
+    responseType: "blob",
   });
 };
 
@@ -893,6 +902,7 @@ export const operationManagementCalendarInfoExportExcelRequest = (
     url: prefix + "/operationManagement/calendarInfo/exportExcel",
     method: "POST",
     data: params,
+    responseType: "blob",
   });
 };
 

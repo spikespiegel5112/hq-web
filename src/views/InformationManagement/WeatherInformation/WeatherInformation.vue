@@ -8,7 +8,7 @@
           :queryFormData="queryFormData"
           :pagination="{
             ...pagination,
-            pageSize: 9999999,
+            pageSize: 1000,
           }"
         /> -->
       </a-space>

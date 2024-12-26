@@ -36,7 +36,7 @@ const props = defineProps({
     type: Object,
     required: false,
     default: {
-      pageSize: 999999,
+      pageSize: 9999,
     },
   },
 });
