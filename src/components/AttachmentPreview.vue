@@ -19,7 +19,11 @@
         >
           <img v-if="props.fileType === 'image'" :src="getImgUrl(item)" />
           <PDFViewer
-            v-if="props.fileType === 'file'"
+            v-if="props.fileType === 'file' && props.visible"
+            :filePath="getImgUrl(item)"
+          />
+          <VideoPlayer
+            v-if="props.fileType === 'video' && props.visible"
             :filePath="getImgUrl(item)"
           />
         </div>
@@ -28,8 +32,15 @@
       <div class="swiper-pagination"></div>
 
       <!-- If we need navigation buttons -->
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div>
+      {{ props.attachmentList }}
+      <div
+        v-if="props.attachmentList.length > 0"
+        class="swiper-button-prev"
+      ></div>
+      <div
+        v-if="props.attachmentList.length > 0"
+        class="swiper-button-next"
+      ></div>
 
       <!-- If we need scrollbar -->
       <div class="swiper-scrollbar"></div>

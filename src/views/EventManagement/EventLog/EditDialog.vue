@@ -34,7 +34,7 @@
             <a-input
               v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.manageRegion"
-              placeholder="请输入"
+              placeholder="请选择"
             >
             </a-input>
             <template v-if="props.mode === 'review'">

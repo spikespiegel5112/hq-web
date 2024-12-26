@@ -53,7 +53,7 @@ declare module 'vue' {
     Block: typeof import('./components/Block.vue')['default']
     CommonTitle: typeof import('./components/CommonTitle.vue')['default']
     CommonUpload: typeof import('./components/CommonUpload.vue')['default']
-    copy: typeof import('./components/Block copy.vue')['default']
+    copy: typeof import('./components/PDFViewer copy.vue')['default']
     DigitFlipper: typeof import('./components/DigitFlipper.vue')['default']
     Header: typeof import('./components/Header.vue')['default']
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']
