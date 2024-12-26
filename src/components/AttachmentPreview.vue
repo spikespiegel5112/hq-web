@@ -34,6 +34,13 @@
       <!-- If we need scrollbar -->
       <div class="swiper-scrollbar"></div>
     </div>
+    <template #footer>
+      <a-row>
+        <a-col :span="24">
+          <a-button key="back" @click="handleClose">关闭</a-button>
+        </a-col>
+      </a-row>
+    </template>
   </a-modal>
 </template>
 
