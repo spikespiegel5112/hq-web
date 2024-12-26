@@ -45,6 +45,16 @@ const dictionary = {
         name: "delete",
         color: "font-color-red",
       },
+      {
+        label: "发布预警",
+        name: "issueWarning",
+        color: "font-color-red",
+      },
+      {
+        label: "事件处置",
+        name: "eventDisposal",
+        color: "font-color-red",
+      },
     ],
     dialogMode: [
       {
@@ -127,20 +137,6 @@ const dictionary = {
       {
         title: "节假日",
         value: 2,
-      },
-    ],
-    publicSentimentSensitive: [
-      {
-        title: "非敏感",
-        value: 1,
-      },
-      {
-        title: "中性",
-        value: 2,
-      },
-      {
-        title: "敏感",
-        value: 3,
       },
     ],
 

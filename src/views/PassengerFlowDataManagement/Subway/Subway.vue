@@ -3,7 +3,12 @@
     <FilterTool @onSearch="handleSearch" @onReset="handleReset"></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
-        <a-button class="export">导出</a-button>
+        <ImportButton
+          :action="`/api/manage/backend/railwayArrive/importPic`"
+          @onSuccess="handleUploaded"
+        />
+        <a-button class="export" @click="handleExport">导出</a-button>
+        <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
     <BaseTable
@@ -13,8 +18,15 @@
       @onEdit="handleEdit"
       @onReview="handleReview"
       @onChangePage="handleChangePage"
-      @onDelete="handleDelete"
     />
+    <EditDialog
+      :visible="state.dialogVisible"
+      :mode="state.dialogMode"
+      :dataModel="pageModel"
+      :rowData="state.currentRowData"
+      @onClose="handleClose"
+      @onSubmit="handleSubmit"
+    ></EditDialog>
   </div>
 </template>
 
@@ -31,8 +43,13 @@ import {
   nextTick,
 } from "vue";
 
-import { screenBannerInfoRequest } from "@/api/management";
+import {
+  passengerFlowMetroPassengerFlowGetPageRequest,
+  backendRailwayArriveRailwayArriveExportRequest,
+  backendRailwayArriveSaveRailwayArriveRequest,
+} from "@/api/management";
 import FilterTool from "./FilterTool.vue";
+import EditDialog from "./EditDialog.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -47,44 +64,44 @@ const pageModel = ref([
     exportVisible: false,
   },
   {
+    label: "小时进站数",
+    name: "metroHourInTotal",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "小时出站数",
+    name: "metroHourOutTotal",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "地铁站",
+    name: "metroStationCode",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
     label: "统计时间",
-    name: "higywayCode",
+    name: "metroStationCode",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "进站數",
-    name: "highwayName",
-    required: true,
+    label: "操作",
+    name: "operationColumn",
     tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
-    label: "出站数",
-    name: "bridgeCode",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
-    label: "站点",
-    name: "bridgeName",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
-    label: "站点",
-    name: "bridgeName",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
+    exportVisible: false,
+    fixed: "right",
+    actions: ["edit", "review", "delete"],
   },
 ]);
 
@@ -100,30 +117,35 @@ let queryFormData = reactive({} as any);
 const pagination = reactive({
   ...global.$store.state.app.defaultPagination,
 });
+const env = computed(() => {
+  return import.meta.env;
+});
 
 const getData = () => {
-  const result = [] as any[];
-  for (let index = 0; index < 30; index++) {
-    result.push({
-      higywayCode: "aaa",
-      highwayName: "aaa",
-      bridgeCode: "aaa",
-      bridgeName: "aaa",
+  passengerFlowMetroPassengerFlowGetPageRequest({
+    ...queryFormData,
+    ...pagination,
+  })
+    .then((response: any) => {
+      response = response.data;
+      state.tableData = response.list;
+      pagination.total = response.total;
+    })
+    .catch((error: any) => {
+      console.log(error);
     });
-  }
-  state.tableData = result;
 };
 
-const handleEdit = (rowData: any) => {
+const handleEdit = (currentRowData: any) => {
   state.dialogVisible = true;
   state.dialogMode = "edit";
-  state.currentRowData = rowData;
+  state.currentRowData = currentRowData;
 };
 
-const handleReview = (rowData: any) => {
+const handleReview = (currentRowData: any) => {
   state.dialogVisible = true;
   state.dialogMode = "review";
-  state.currentRowData = rowData;
+  state.currentRowData = currentRowData;
 };
 
 const handleAdd = () => {
@@ -145,7 +167,17 @@ const handleClose = () => {
   state.dialogVisible = false;
 };
 
-const handleSubmit = () => {};
+const handleSubmit = (formData: any) => {
+  backendRailwayArriveSaveRailwayArriveRequest(formData)
+    .then((response: any) => {
+      global.$message.success("提交成功");
+      getData();
+    })
+    .catch((error: any) => {
+      console.log(error);
+      global.$message.error("提交失败");
+    });
+};
 
 const handleChangePage = (pagingData: any) => {
   pagination.page = pagingData.current;
@@ -153,8 +185,32 @@ const handleChangePage = (pagingData: any) => {
   pagination.total = pagingData.total;
   getData();
 };
+const handleDelete = (id: number) => {
+  infoManagementExternalInfoDeleteRequest({ id })
+    .then((response: any) => {
+      global.$message.success("删除成功");
+      getData();
+    })
+    .catch((error: any) => {
+      global.$message.error("删除失败");
+      console.log(error);
+    });
+};
 
-const handleDelete = (id: number) => {};
+const handleUploaded = (response: any) => {
+  getData();
+};
+
+const handleExport = () => {
+  backendRailwayArriveRailwayArriveExportRequest()
+    .then((response: any) => {
+      global.$exportTable(response, global.$route);
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+};
+
 onMounted(async () => {
   getData();
 });

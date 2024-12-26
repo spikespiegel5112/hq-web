@@ -5,6 +5,23 @@
         <a-col :span="21">
           <a-row :gutter="20">
             <a-col :span="6">
+              <a-form-item name="source" label="来源">
+                <a-select
+                  v-model:value="state.formData.externalSource"
+                  placeholder="请选择"
+                >
+                  <a-select-option
+                    v-for="item in global.$getDictionary(
+                      'emergency_plan_plan_source'
+                    )"
+                    :value="item.value"
+                  >
+                    {{ item.label }}
+                  </a-select-option>
+                </a-select>
+              </a-form-item>
+            </a-col>
+            <a-col :span="6">
               <a-form-item name="preplanResourceId" label="类型">
                 <a-select
                   v-model:value="state.formData.preplanResourceId"

@@ -144,6 +144,26 @@ export const backendIndexPageTodayFlowAcceleratedRequest = (params: any) => {
   });
 };
 
+// 客流数据管理-地铁客流
+
+// 客流数据管理-地铁客流-导出
+export const passengerFlowMetroPassengerFlowExportRequest = (params: any) => {
+  return service({
+    url: prefix + "/passengerFlow/metroPassengerFlow/export",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 客流数据管理-地铁客流-分页查询
+export const passengerFlowMetroPassengerFlowGetPageRequest = (params: any) => {
+  return service({
+    url: prefix + "/passengerFlow/metroPassengerFlow/getPage",
+    method: "POST",
+    data: params,
+  });
+};
+
 // 获取系统数据字典项列表(新)
 export const dictionaryManageGetDictListRequest = (params: any) => {
   return service({

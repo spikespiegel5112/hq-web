@@ -18,7 +18,18 @@
         :key="item.name"
         :title="item.title"
         :data-index="item.name"
-        :width="item.width"
+        :width="
+           item.actions instanceof Array
+            ? item.actions.reduce((sum:number, cur:number) => {
+                const actionDictionary =
+                  global.$store.state.dictionary.actionDictionary;
+                const charLength = actionDictionary.find(
+                  (item2:any) => item2.name === cur
+                ).label.length;
+                return sum + (charLength *10+10);
+              }, 20)+110 + 'px'
+            : item.width
+        "
         :fixed="item.fixed"
         :align="global.$isNotEmpty(item.align) ? item.align : 'center'"
       >
@@ -73,7 +84,26 @@
               </a>
             </a-space>
           </div>
-          <div v-if="item.name === 'operationColumn'" class="operation">
+          <div v-else-if="!!item.tagConfig" class="taglist">
+            <a-tag
+              :color="
+                item.tagConfig.colorList.find(
+                  (item2) => item2.value === scope.record[item.name]
+                )?.color
+              "
+            >
+              {{
+                !!item.tagConfig.val
+                  ? item.tagConfig.dictionary.find((item2) => {
+                      const result =
+                        item2.value === scope.record[item.tagConfig.val];
+                      return result;
+                    })?.label
+                  : scope.record[item.name]
+              }}
+            </a-tag>
+          </div>
+          <div v-else-if="item.name === 'operationColumn'" class="operation">
             <span
               v-for="(action, index) in item.actions"
               :class="
@@ -95,25 +125,6 @@
                 }}
               </a-button>
             </span>
-          </div>
-          <div v-else-if="!!item.tagConfig" class="taglist">
-            <a-tag
-              :color="
-                item.tagConfig.colorList.find(
-                  (item2) => item2.value === scope.record[item.name]
-                )?.color
-              "
-            >
-              {{
-                !!item.tagConfig.val
-                  ? item.tagConfig.dictionary.find((item2) => {
-                      const result =
-                        item2.value === scope.record[item.tagConfig.val];
-                      return result;
-                    })?.label
-                  : scope.record[item.name]
-              }}
-            </a-tag>
           </div>
           <div v-else>
             {{ scope.record[item.name] }}
@@ -155,6 +166,7 @@ import {
 } from "vue";
 import AttachmentPreview from "@/components/AttachmentPreview.vue";
 import { PaperClipOutlined, PictureOutlined } from "@ant-design/icons-vue";
+import { debug } from "console";
 
 const emit = defineEmits<{
   (e: "onEdit", rowData: any): void;

@@ -45,10 +45,10 @@ const state = reactive({
 });
 
 const getDictionaryNameList = () => {
-  dictionaryManageGetDictPagingRequest({
-  })
+  dictionaryManageGetDictPagingRequest({})
     .then((response: any) => {
       state.dictionaryNameList = response.data.list;
+      console.log(state.dictionaryNameList);
     })
     .catch((error: any) => {
       console.log(error);

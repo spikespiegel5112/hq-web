@@ -66,6 +66,7 @@ const pageModel = ref([
     tableVisible: true,
     formVisible: true,
     exportVisible: false,
+    width: "1rem",
   },
   {
     label: "日期",
@@ -74,7 +75,7 @@ const pageModel = ref([
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
-    width: "1.5rem",
+    width: "3rem",
   },
   {
     label: "天气来源",
@@ -83,7 +84,7 @@ const pageModel = ref([
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
-    width: "2rem",
+    width: "3rem",
   },
   {
     label: "温度（℃）",
@@ -92,7 +93,7 @@ const pageModel = ref([
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
-    width: "1rem",
+    width: "3rem",
   },
   {
     label: "天气",
@@ -101,7 +102,6 @@ const pageModel = ref([
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
-    width: "1rem",
   },
   {
     label: "操作",
