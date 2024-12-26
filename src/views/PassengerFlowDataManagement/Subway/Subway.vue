@@ -7,7 +7,14 @@
           :action="`/api/manage/backend/railwayArrive/importPic`"
           @onSuccess="handleUploaded"
         />
-        <a-button class="export" @click="handleExport">导出</a-button>
+        <ExportButton
+          :action="passengerFlowMetroPassengerFlowExportRequest"
+          :queryFormData="queryFormData"
+          :pagination="{
+            ...pagination,
+            pageSize: 9999999,
+          }"
+        />
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
@@ -47,6 +54,8 @@ import {
   passengerFlowMetroPassengerFlowGetPageRequest,
   backendRailwayArriveRailwayArriveExportRequest,
   backendRailwayArriveSaveRailwayArriveRequest,
+  passengerFlowMetroPassengerFlowExportRequest,
+  eventManageSuddenEventExportRequest,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
@@ -202,7 +211,10 @@ const handleUploaded = (response: any) => {
 };
 
 const handleExport = () => {
-  backendRailwayArriveRailwayArriveExportRequest()
+  backendRailwayArriveRailwayArriveExportRequest({
+    ...queryFormData,
+    ...pagination,
+  })
     .then((response: any) => {
       global.$exportTable(response, global.$route);
     })

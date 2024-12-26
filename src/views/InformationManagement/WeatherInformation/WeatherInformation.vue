@@ -3,7 +3,14 @@
     <FilterTool @onSearch="handleSearch" @onReset="handleReset"></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
-        <a-button class="export">导出</a-button>
+                 <!-- <ExportButton
+          :action="eventManageSuddenEventExportRequest"
+          :queryFormData="queryFormData"
+          :pagination="{
+            ...pagination,
+            pageSize: 9999999,
+          }"
+        /> -->
       </a-space>
     </div>
     <BaseTable
@@ -50,6 +57,7 @@ import {
   infoManagementWeatherInfoGetOneByIdRequest,
   infoManagementWeatherInfoGetPageRequest,
   infoManagementWeatherInfoPublishWarningRequest,
+  eventManageSuddenEventExportRequest,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import PublishDialog from "./PublishDialog.vue";

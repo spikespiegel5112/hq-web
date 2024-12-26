@@ -130,6 +130,7 @@ import {
   eventManageSuddenEventSaveDisposalRequest,
   eventManageSuddenEventGetDisposalRequest,
   preplanPreplanGetStepPageRequest,
+  eventManageSuddenEventExportRequest,
 } from "@/api/management";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;

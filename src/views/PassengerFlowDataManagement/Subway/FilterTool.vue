@@ -5,7 +5,7 @@
         <a-col :span="20">
           <a-row :gutter="20">
             <a-col :span="8">
-              <a-form-item name="userName" label="地铁类型">
+              <a-form-item name="userName" label="地铁站编码">
                 <a-input
                   v-model:value="state.formData.userName"
                   placeholder="请输入"

@@ -152,8 +152,6 @@ import {
   nextTick,
 } from "vue";
 
-import { screenBannerInfoRequest } from "@/api/management";
-
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
@@ -202,7 +200,10 @@ watch(
         rowData = {
           ...rowData,
           eventTime: global.$dayjs(rowData.eventTime, "YYYY-MM-DD HH:mm:ss"),
-          disposalCompletionTime: global.$dayjs(rowData.disposalCompletionTime, "YYYY-MM-DD HH:mm:ss"),
+          disposalCompletionTime: global.$dayjs(
+            rowData.disposalCompletionTime,
+            "YYYY-MM-DD HH:mm:ss"
+          ),
         };
         state.formData = rowData;
       }

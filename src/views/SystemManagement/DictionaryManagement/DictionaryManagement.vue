@@ -29,7 +29,8 @@ import {
   nextTick,
 } from "vue";
 
-import { dictionaryManageGetDictPagingRequest } from "@/api/management";
+import { dictionaryManageGetDictPagingRequest  ,eventManageSuddenEventExportRequest
+} from "@/api/management";
 
 import DictionaryManagementItem from "./DictionaryManagementItem/DictionaryManagementItem.vue";
 import DictionaryManagementName from "./DictionaryManagementName/DictionaryManagementName.vue";

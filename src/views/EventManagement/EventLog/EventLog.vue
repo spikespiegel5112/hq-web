@@ -3,7 +3,14 @@
     <FilterTool @onSearch="handleSearch" @onReset="handleReset"></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
-        <a-button class="export">导出</a-button>
+        <ExportButton
+          :action="eventManageSuddenEventExportRecordRequest"
+          :queryFormData="queryFormData"
+          :pagination="{
+            ...pagination,
+            pageSize: 9999999,
+          }"
+        />
       </a-space>
     </div>
     <BaseTable
@@ -44,6 +51,8 @@ import {
   eventManageSuddenEventGetRecordPageRequest,
   eventManageSuddenEventDeleteRequest,
   eventManageSuddenEventSaveRequest,
+  eventManageSuddenEventExportRecordRequest,
+  eventManageSuddenEventExportRequest,
 } from "@/api/management";
 
 import FilterTool from "./FilterTool.vue";

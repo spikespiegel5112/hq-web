@@ -108,6 +108,15 @@ export const backendRailwayArriveSaveRailwayArriveBatchRequest = (
   });
 };
 
+// 区域小时客流-铁路到达-删除铁路到达
+export const backendRailwayArriveDeleteRequest = (params: any) => {
+  return service({
+    url: prefix + "/backend/railwayArrive/delete",
+    method: "POST",
+    params,
+  });
+};
+
 // 后台管理-客流疏散
 export const backendIndexPageFlowDistRequest = (params: any) => {
   return service({
@@ -150,8 +159,8 @@ export const backendIndexPageTodayFlowAcceleratedRequest = (params: any) => {
 export const passengerFlowMetroPassengerFlowExportRequest = (params: any) => {
   return service({
     url: prefix + "/passengerFlow/metroPassengerFlow/export",
-    method: "POST",
-    data: params,
+    method: "GET",
+    params,
   });
 };
 
@@ -339,7 +348,7 @@ export const eventManageSuddenEventDeleteDisposalRequest = (params: any) => {
 export const eventManageSuddenEventExportRequest = (params: any) => {
   return service({
     url: prefix + "/eventManage/suddenEvent/export",
-    method: "POST",
+    method: "GET",
     params,
   });
 };
@@ -426,6 +435,18 @@ export const infoManagementExternalInfoHandleRequest = (params: any) => {
     data: params,
   });
 };
+
+// 信息管理-外部信息-excel导出
+export const infoManagementExternalInfoExportExcelRequest = (params: any) => {
+  return service({
+    url: prefix + "/infoManagement/externalInfo/exportExcel",
+    method: "GET",
+    params,
+  });
+};
+
+
+
 
 // 信息管理-舆情信息
 

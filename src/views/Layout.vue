@@ -75,7 +75,7 @@ const getEventTypeList = () => {
     .catch((error: any) => {
       console.log(error);
     });
-    
+
   preplanPreplanGetPageRequest({
     preplanType: 1,
   })
