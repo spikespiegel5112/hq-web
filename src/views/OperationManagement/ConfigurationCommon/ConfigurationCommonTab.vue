@@ -17,40 +17,20 @@
           <a-col :span="8">
             <a-form-item name="username" label="蓄车场南存车数">
               <a-row>
-                <a-col :span="8">
+                <a-col
+                  :span="8"
+                  v-for="(key, index) in ['green', 'yellow', 'red']"
+                  :key="index"
+                >
                   <a-form-item-rest>
                     <a-input
                       v-model:value="
-                        state.formData
-                          .passenger_flow_threshold_south_parking_lot_parking_count_green
+                        state.formData[
+                          `passenger_flow_threshold_south_parking_lot_parking_count_${key}`
+                        ]
                       "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData
-                          .passenger_flow_threshold_south_parking_lot_parking_count_yellow
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData
-                          .passenger_flow_threshold_south_parking_lot_parking_count_red
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
+                      :placeholder="`请输入${key}值`"
+                    />
                   </a-form-item-rest>
                 </a-col>
               </a-row>
@@ -81,40 +61,20 @@
           <a-col :span="8">
             <a-form-item name="username" label="p9出入口拥堵车辆数">
               <a-row>
-                <a-col :span="8">
+                <a-col
+                  :span="8"
+                  v-for="(key, index) in ['green', 'yellow', 'red']"
+                  :key="index"
+                >
                   <a-form-item-rest>
                     <a-input
                       v-model:value="
-                        state.formData
-                          .passenger_flow_threshold_p9_entrance_and_exit_congested_vehicle_count_green
+                        state.formData[
+                          `passenger_flow_threshold_p9_entrance_and_exit_congested_vehicle_count_${key}`
+                        ]
                       "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData
-                          .passenger_flow_threshold_p9_entrance_and_exit_congested_vehicle_count_yellow
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData
-                          .passenger_flow_threshold_p9_entrance_and_exit_congested_vehicle_count_red
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
+                      :placeholder="`请输入${key}值`"
+                    />
                   </a-form-item-rest>
                 </a-col>
               </a-row>
@@ -125,40 +85,20 @@
           <a-col :span="8">
             <a-form-item name="username" label="蓄车场北存车数">
               <a-row>
-                <a-col :span="8">
+                <a-col
+                  :span="8"
+                  v-for="(key, index) in ['green', 'yellow', 'red']"
+                  :key="index"
+                >
                   <a-form-item-rest>
                     <a-input
                       v-model:value="
-                        state.formData
-                          .passenger_flow_threshold_north_parking_lot_parking_count_green
+                        state.formData[
+                          `passenger_flow_threshold_north_parking_lot_parking_count_${key}`
+                        ]
                       "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData
-                          .passenger_flow_threshold_north_parking_lot_parking_count_yellow
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData
-                          .passenger_flow_threshold_north_parking_lot_parking_count_red
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
+                      :placeholder="`请输入${key}值`"
+                    />
                   </a-form-item-rest>
                 </a-col>
               </a-row>
@@ -167,40 +107,20 @@
           <a-col :span="8">
             <a-form-item name="username" label="p10坡道拥堵车辆数">
               <a-row>
-                <a-col :span="8">
+                <a-col
+                  :span="8"
+                  v-for="(key, index) in ['green', 'yellow', 'red']"
+                  :key="index"
+                >
                   <a-form-item-rest>
                     <a-input
                       v-model:value="
-                        state.formData
-                          .passenger_flow_threshold_p10_ramp_congested_vehicle_count_green
+                        state.formData[
+                          `passenger_flow_threshold_p10_ramp_congested_vehicle_count_${key}`
+                        ]
                       "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData
-                          .passenger_flow_threshold_p10_ramp_congested_vehicle_count_yellow
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData
-                          .passenger_flow_threshold_p10_ramp_congested_vehicle_count_red
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
+                      :placeholder="`请输入${key}值`"
+                    />
                   </a-form-item-rest>
                 </a-col>
               </a-row>
@@ -209,40 +129,20 @@
           <a-col :span="8">
             <a-form-item name="username" label="p10出入口拥堵车辆数">
               <a-row>
-                <a-col :span="8">
+                <a-col
+                  :span="8"
+                  v-for="(key, index) in ['green', 'yellow', 'red']"
+                  :key="index"
+                >
                   <a-form-item-rest>
                     <a-input
                       v-model:value="
-                        state.formData
-                          .passenger_flow_threshold_p10_entrance_and_exit_congested_vehicle_count_green
+                        state.formData[
+                          `passenger_flow_threshold_p10_entrance_and_exit_congested_vehicle_count_${key}`
+                        ]
                       "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData
-                          .passenger_flow_threshold_p10_entrance_and_exit_congested_vehicle_count_yellow
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData
-                          .passenger_flow_threshold_p10_entrance_and_exit_congested_vehicle_count_red
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
+                      :placeholder="`请输入${key}值`"
+                    />
                   </a-form-item-rest>
                 </a-col>
               </a-row>
@@ -253,40 +153,20 @@
           <a-col :span="8">
             <a-form-item name="username" label="P9场库车位占用数">
               <a-row>
-                <a-col :span="8">
+                <a-col
+                  :span="8"
+                  v-for="(key, index) in ['green', 'yellow', 'red']"
+                  :key="index"
+                >
                   <a-form-item-rest>
                     <a-input
                       v-model:value="
-                        state.formData
-                          .passenger_flow_threshold_p9_parking_lot_parking_space_occupy_count_green
+                        state.formData[
+                          `passenger_flow_threshold_p9_parking_lot_parking_space_occupy_count_${key}`
+                        ]
                       "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData
-                          .passenger_flow_threshold_p9_parking_lot_parking_space_occupy_count_yellow
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData
-                          .passenger_flow_threshold_p9_parking_lot_parking_space_occupy_count_red
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
+                      :placeholder="`请输入${key}值`"
+                    />
                   </a-form-item-rest>
                 </a-col>
               </a-row>
@@ -295,40 +175,20 @@
           <a-col :span="8">
             <a-form-item name="username" label="P10场库车位占用数">
               <a-row>
-                <a-col :span="8">
+                <a-col
+                  :span="8"
+                  v-for="(key, index) in ['green', 'yellow', 'red']"
+                  :key="index"
+                >
                   <a-form-item-rest>
                     <a-input
                       v-model:value="
-                        state.formData
-                          .passenger_flow_threshold_p10_parking_lot_parking_space_occupy_count_green
+                        state.formData[
+                          `passenger_flow_threshold_p10_parking_lot_parking_space_occupy_count_${key}`
+                        ]
                       "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData
-                          .passenger_flow_threshold_p10_parking_lot_parking_space_occupy_count_yellow
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData
-                          .passenger_flow_threshold_p10_parking_lot_parking_space_occupy_count_red
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
+                      :placeholder="`请输入${key}值`"
+                    />
                   </a-form-item-rest>
                 </a-col>
               </a-row>
@@ -337,40 +197,20 @@
           <a-col :span="8">
             <a-form-item name="username" label="ERC预测数值">
               <a-row>
-                <a-col :span="8">
+                <a-col
+                  :span="8"
+                  v-for="(key, index) in ['green', 'yellow', 'red']"
+                  :key="index"
+                >
                   <a-form-item-rest>
                     <a-input
                       v-model:value="
-                        state.formData
-                          .passenger_flow_threshold_erc_prediction_value_green
+                        state.formData[
+                          `passenger_flow_threshold_erc_prediction_value_${key}`
+                        ]
                       "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData
-                          .passenger_flow_threshold_erc_prediction_value_yellow
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData
-                          .passenger_flow_threshold_erc_prediction_value_red
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
+                      :placeholder="`请输入${key}值`"
+                    />
                   </a-form-item-rest>
                 </a-col>
               </a-row>
@@ -381,40 +221,20 @@
           <a-col :span="8">
             <a-form-item name="username" label="出租车上客点排队时长">
               <a-row>
-                <a-col :span="8">
+                <a-col
+                  :span="8"
+                  v-for="(key, index) in ['green', 'yellow', 'red']"
+                  :key="index"
+                >
                   <a-form-item-rest>
                     <a-input
                       v-model:value="
-                        state.formData
-                          .passenger_flow_threshold_taxi_boarding_point_wait_time_green
+                        state.formData[
+                          `passenger_flow_threshold_taxi_boarding_point_wait_time_${key}`
+                        ]
                       "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData
-                          .passenger_flow_threshold_taxi_boarding_point_wait_time_yellow
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData
-                          .passenger_flow_threshold_taxi_boarding_point_wait_time_red
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
+                      :placeholder="`请输入${key}值`"
+                    />
                   </a-form-item-rest>
                 </a-col>
               </a-row>
@@ -423,40 +243,20 @@
           <a-col :span="8">
             <a-form-item name="username" label="场区挤压人数">
               <a-row>
-                <a-col :span="8">
+                <a-col
+                  :span="8"
+                  v-for="(key, index) in ['green', 'yellow', 'red']"
+                  :key="index"
+                >
                   <a-form-item-rest>
                     <a-input
                       v-model:value="
-                        state.formData
-                          .passenger_flow_threshold_area_packed_person_count_green
+                        state.formData[
+                          `passenger_flow_threshold_area_packed_person_count_${key}`
+                        ]
                       "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData
-                          .passenger_flow_threshold_area_packed_person_count_yellow
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData
-                          .passenger_flow_threshold_area_packed_person_count_red
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
+                      :placeholder="`请输入${key}值`"
+                    />
                   </a-form-item-rest>
                 </a-col>
               </a-row>
@@ -468,37 +268,18 @@
           <a-col :span="8">
             <a-form-item name="username" label="高峰日">
               <a-row>
-                <a-col :span="8">
+                <a-col
+                  :span="8"
+                  v-for="(key, index) in ['green', 'yellow', 'red']"
+                  :key="index"
+                >
                   <a-form-item-rest>
                     <a-input
                       v-model:value="
-                        state.formData.radar_threshold_peak_day_green
+                        state.formData[`radar_threshold_peak_day_${key}`]
                       "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData.radar_threshold_peak_day_yellow
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData.radar_threshold_peak_day_red
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
+                      :placeholder="`请输入${key}值`"
+                    />
                   </a-form-item-rest>
                 </a-col>
               </a-row>
@@ -507,37 +288,18 @@
           <a-col :span="8">
             <a-form-item name="username" label="客流">
               <a-row>
-                <a-col :span="8">
+                <a-col
+                  :span="8"
+                  v-for="(key, index) in ['green', 'yellow', 'red']"
+                  :key="index"
+                >
                   <a-form-item-rest>
                     <a-input
                       v-model:value="
-                        state.formData.radar_threshold_passenger_flow_green
+                        state.formData[`radar_threshold_passenger_flow_${key}`]
                       "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData.radar_threshold_passenger_flow_yellow
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData.radar_threshold_passenger_flow_red
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
+                      :placeholder="`请输入${key}值`"
+                    />
                   </a-form-item-rest>
                 </a-col>
               </a-row>
@@ -546,37 +308,18 @@
           <a-col :span="8">
             <a-form-item name="username" label="高峰时段">
               <a-row>
-                <a-col :span="8">
+                <a-col
+                  :span="8"
+                  v-for="(key, index) in ['green', 'yellow', 'red']"
+                  :key="index"
+                >
                   <a-form-item-rest>
                     <a-input
                       v-model:value="
-                        state.formData.radar_threshold_peak_hour_green
+                        state.formData[`radar_threshold_peak_hour_${key}`]
                       "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData.radar_threshold_peak_hour_yellow
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData.radar_threshold_peak_hour_red
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
+                      :placeholder="`请输入${key}值`"
+                    />
                   </a-form-item-rest>
                 </a-col>
               </a-row>
@@ -587,35 +330,18 @@
           <a-col :span="8">
             <a-form-item name="username" label="天气">
               <a-row>
-                <a-col :span="8">
+                <a-col
+                  :span="8"
+                  v-for="(key, index) in ['green', 'yellow', 'red']"
+                  :key="index"
+                >
                   <a-form-item-rest>
                     <a-input
                       v-model:value="
-                        state.formData.radar_threshold_weather_green
+                        state.formData[`radar_threshold_weather_${key}`]
                       "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData.radar_threshold_weather_yellow
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="state.formData.radar_threshold_weather_red"
-                      placeholder="请输入"
-                    >
-                    </a-input>
+                      :placeholder="`请输入${key}值`"
+                    />
                   </a-form-item-rest>
                 </a-col>
               </a-row>
@@ -624,37 +350,18 @@
           <a-col :span="8">
             <a-form-item name="username" label="会展">
               <a-row>
-                <a-col :span="8">
+                <a-col
+                  :span="8"
+                  v-for="(key, index) in ['green', 'yellow', 'red']"
+                  :key="index"
+                >
                   <a-form-item-rest>
                     <a-input
                       v-model:value="
-                        state.formData.radar_threshold_exhibition_green
+                        state.formData[`radar_threshold_exhibition_${key}`]
                       "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData.radar_threshold_exhibition_yellow
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData.radar_threshold_exhibition_red
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
+                      :placeholder="`请输入${key}值`"
+                    />
                   </a-form-item-rest>
                 </a-col>
               </a-row>
@@ -667,37 +374,18 @@
           <a-col :span="8">
             <a-form-item name="username" label="出租车">
               <a-row>
-                <a-col :span="8">
+                <a-col
+                  :span="8"
+                  v-for="(key, index) in ['green', 'yellow', 'red']"
+                  :key="index"
+                >
                   <a-form-item-rest>
                     <a-input
                       v-model:value="
-                        state.formData.history_compare_threshold_taxi_green
+                        state.formData[`history_compare_threshold_taxi_${key}`]
                       "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData.history_compare_threshold_taxi_yellow
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData.history_compare_threshold_taxi_red
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
+                      :placeholder="`请输入${key}值`"
+                    />
                   </a-form-item-rest>
                 </a-col>
               </a-row>
@@ -706,37 +394,20 @@
           <a-col :span="8">
             <a-form-item name="username" label="网约车">
               <a-row>
-                <a-col :span="8">
+                <a-col
+                  :span="8"
+                  v-for="(key, index) in ['green', 'yellow', 'red']"
+                  :key="index"
+                >
                   <a-form-item-rest>
                     <a-input
                       v-model:value="
-                        state.formData.history_compare_threshold_ehailing_green
+                        state.formData[
+                          `history_compare_threshold_ehailing_${key}`
+                        ]
                       "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData.history_compare_threshold_ehailing_yellow
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData.history_compare_threshold_ehailing_red
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
+                      :placeholder="`请输入${key}值`"
+                    />
                   </a-form-item-rest>
                 </a-col>
               </a-row>
@@ -745,39 +416,20 @@
           <a-col :span="8">
             <a-form-item name="username" label="停车库">
               <a-row>
-                <a-col :span="8">
+                <a-col
+                  :span="8"
+                  v-for="(key, index) in ['green', 'yellow', 'red']"
+                  :key="index"
+                >
                   <a-form-item-rest>
                     <a-input
                       v-model:value="
-                        state.formData
-                          .history_compare_threshold_parking_lot_green
+                        state.formData[
+                          `history_compare_threshold_parking_lot_${key}`
+                        ]
                       "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData
-                          .history_compare_threshold_parking_lot_yellow
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData.history_compare_threshold_parking_lot_red
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
+                      :placeholder="`请输入${key}值`"
+                    />
                   </a-form-item-rest>
                 </a-col>
               </a-row>
@@ -788,37 +440,18 @@
           <a-col :span="8">
             <a-form-item name="username" label="地铁">
               <a-row>
-                <a-col :span="8">
+                <a-col
+                  :span="8"
+                  v-for="(key, index) in ['green', 'yellow', 'red']"
+                  :key="index"
+                >
                   <a-form-item-rest>
                     <a-input
                       v-model:value="
-                        state.formData.history_compare_threshold_metro_green
+                        state.formData[`history_compare_threshold_metro_${key}`]
                       "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData.history_compare_threshold_metro_yellow
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData.history_compare_threshold_metro_red
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
+                      :placeholder="`请输入${key}值`"
+                    />
                   </a-form-item-rest>
                 </a-col>
               </a-row>
@@ -827,37 +460,18 @@
           <a-col :span="8">
             <a-form-item name="username" label="其他">
               <a-row>
-                <a-col :span="8">
+                <a-col
+                  :span="8"
+                  v-for="(key, index) in ['green', 'yellow', 'red']"
+                  :key="index"
+                >
                   <a-form-item-rest>
                     <a-input
                       v-model:value="
-                        state.formData.history_compare_threshold_other_green
+                        state.formData[`history_compare_threshold_other_${key}`]
                       "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData.history_compare_threshold_other_yellow
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
-                  </a-form-item-rest>
-                </a-col>
-                <a-col :span="8">
-                  <a-form-item-rest>
-                    <a-input
-                      v-model:value="
-                        state.formData.history_compare_threshold_other_yellow
-                      "
-                      placeholder="请输入"
-                    >
-                    </a-input>
+                      :placeholder="`请输入${key}值`"
+                    />
                   </a-form-item-rest>
                 </a-col>
               </a-row>
@@ -869,7 +483,9 @@
 
     <a-row justify="end">
       <a-col>
-        <a-button type="primary" @click="handleSubmit">确认</a-button>
+        <a-button type="primary" @click="handleSubmit" :loading="state.loading">
+          确认
+        </a-button>
       </a-col>
     </a-row>
   </div>
@@ -915,6 +531,7 @@ const dataIndex = [] as any[];
 const state = reactive({
   visible: false,
   formData: {} as any,
+  loading: false,
 });
 
 let queryFormData = reactive({
@@ -980,6 +597,7 @@ const getData = () => {
 };
 
 const handleSubmit = () => {
+  state.loading = true;
   const params = [] as any[];
   Object.keys(state.formData).forEach((item: any) => {
     params.push({
@@ -993,10 +611,12 @@ const handleSubmit = () => {
     .then((response: any) => {
       console.log(response);
       global.$message.success("提交成功");
+      state.loading = false;
     })
     .catch((error: any) => {
       console.log(error);
       global.$message.error("提交失败");
+      state.loading = false;
     });
 };
 
