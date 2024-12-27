@@ -29,7 +29,8 @@
                           `passenger_flow_threshold_south_parking_lot_parking_count_${key}`
                         ]
                       "
-                      :placeholder="`请输入${key}值`"
+                      :class="key"
+                      placeholder="请输入"
                     />
                   </a-form-item-rest>
                 </a-col>
@@ -51,7 +52,8 @@
                           `passenger_flow_threshold_p9_ramp_congested_vehicle_count_${key}`
                         ]
                       "
-                      :placeholder="`请输入${key}值`"
+                      :class="key"
+                      placeholder="请输入"
                     />
                   </a-form-item-rest>
                 </a-col>
@@ -73,7 +75,8 @@
                           `passenger_flow_threshold_p9_entrance_and_exit_congested_vehicle_count_${key}`
                         ]
                       "
-                      :placeholder="`请输入${key}值`"
+                      :class="key"
+                      placeholder="请输入"
                     />
                   </a-form-item-rest>
                 </a-col>
@@ -97,7 +100,8 @@
                           `passenger_flow_threshold_north_parking_lot_parking_count_${key}`
                         ]
                       "
-                      :placeholder="`请输入${key}值`"
+                      :class="key"
+                      placeholder="请输入"
                     />
                   </a-form-item-rest>
                 </a-col>
@@ -119,7 +123,8 @@
                           `passenger_flow_threshold_p10_ramp_congested_vehicle_count_${key}`
                         ]
                       "
-                      :placeholder="`请输入${key}值`"
+                      :class="key"
+                      placeholder="请输入"
                     />
                   </a-form-item-rest>
                 </a-col>
@@ -141,7 +146,8 @@
                           `passenger_flow_threshold_p10_entrance_and_exit_congested_vehicle_count_${key}`
                         ]
                       "
-                      :placeholder="`请输入${key}值`"
+                      :class="key"
+                      placeholder="请输入"
                     />
                   </a-form-item-rest>
                 </a-col>
@@ -165,7 +171,8 @@
                           `passenger_flow_threshold_p9_parking_lot_parking_space_occupy_count_${key}`
                         ]
                       "
-                      :placeholder="`请输入${key}值`"
+                      :class="key"
+                      placeholder="请输入"
                     />
                   </a-form-item-rest>
                 </a-col>
@@ -187,7 +194,8 @@
                           `passenger_flow_threshold_p10_parking_lot_parking_space_occupy_count_${key}`
                         ]
                       "
-                      :placeholder="`请输入${key}值`"
+                      :class="key"
+                      placeholder="请输入"
                     />
                   </a-form-item-rest>
                 </a-col>
@@ -209,7 +217,8 @@
                           `passenger_flow_threshold_erc_prediction_value_${key}`
                         ]
                       "
-                      :placeholder="`请输入${key}值`"
+                      :class="key"
+                      placeholder="请输入"
                     />
                   </a-form-item-rest>
                 </a-col>
@@ -233,7 +242,8 @@
                           `passenger_flow_threshold_taxi_boarding_point_wait_time_${key}`
                         ]
                       "
-                      :placeholder="`请输入${key}值`"
+                      :class="key"
+                      placeholder="请输入"
                     />
                   </a-form-item-rest>
                 </a-col>
@@ -255,7 +265,8 @@
                           `passenger_flow_threshold_area_packed_person_count_${key}`
                         ]
                       "
-                      :placeholder="`请输入${key}值`"
+                      :class="key"
+                      placeholder="请输入"
                     />
                   </a-form-item-rest>
                 </a-col>
@@ -278,7 +289,8 @@
                       v-model:value="
                         state.formData[`radar_threshold_peak_day_${key}`]
                       "
-                      :placeholder="`请输入${key}值`"
+                      :class="key"
+                      placeholder="请输入"
                     />
                   </a-form-item-rest>
                 </a-col>
@@ -298,7 +310,8 @@
                       v-model:value="
                         state.formData[`radar_threshold_passenger_flow_${key}`]
                       "
-                      :placeholder="`请输入${key}值`"
+                      :class="key"
+                      placeholder="请输入"
                     />
                   </a-form-item-rest>
                 </a-col>
@@ -318,7 +331,8 @@
                       v-model:value="
                         state.formData[`radar_threshold_peak_hour_${key}`]
                       "
-                      :placeholder="`请输入${key}值`"
+                      :class="key"
+                      placeholder="请输入"
                     />
                   </a-form-item-rest>
                 </a-col>
@@ -340,7 +354,8 @@
                       v-model:value="
                         state.formData[`radar_threshold_weather_${key}`]
                       "
-                      :placeholder="`请输入${key}值`"
+                      :class="key"
+                      placeholder="请输入"
                     />
                   </a-form-item-rest>
                 </a-col>
@@ -360,7 +375,8 @@
                       v-model:value="
                         state.formData[`radar_threshold_exhibition_${key}`]
                       "
-                      :placeholder="`请输入${key}值`"
+                      :class="key"
+                      placeholder="请输入"
                     />
                   </a-form-item-rest>
                 </a-col>
@@ -384,7 +400,8 @@
                       v-model:value="
                         state.formData[`history_compare_threshold_taxi_${key}`]
                       "
-                      :placeholder="`请输入${key}值`"
+                      :class="key"
+                      placeholder="请输入"
                     />
                   </a-form-item-rest>
                 </a-col>
@@ -406,7 +423,8 @@
                           `history_compare_threshold_ehailing_${key}`
                         ]
                       "
-                      :placeholder="`请输入${key}值`"
+                      :class="key"
+                      placeholder="请输入"
                     />
                   </a-form-item-rest>
                 </a-col>
@@ -428,7 +446,8 @@
                           `history_compare_threshold_parking_lot_${key}`
                         ]
                       "
-                      :placeholder="`请输入${key}值`"
+                      :class="key"
+                      placeholder="请输入"
                     />
                   </a-form-item-rest>
                 </a-col>
@@ -450,7 +469,8 @@
                       v-model:value="
                         state.formData[`history_compare_threshold_metro_${key}`]
                       "
-                      :placeholder="`请输入${key}值`"
+                      :class="key"
+                      placeholder="请输入"
                     />
                   </a-form-item-rest>
                 </a-col>
@@ -470,7 +490,8 @@
                       v-model:value="
                         state.formData[`history_compare_threshold_other_${key}`]
                       "
-                      :placeholder="`请输入${key}值`"
+                      :class="key"
+                      placeholder="请输入"
                     />
                   </a-form-item-rest>
                 </a-col>
@@ -636,5 +657,19 @@ onBeforeUnmount(() => {});
   margin: 0.1rem 0;
   padding: 0.3rem 0;
   background-color: #010f27;
+  .ant-input {
+    &.green {
+      background-color: rgba(114, 241, 1, 0.2);
+      border-color: rgba(114, 241, 1, 0.8);
+    }
+    &.yellow {
+      background-color: rgba(255, 234, 0, 0.2);
+      border-color: rgba(255, 234, 0, 0.8);
+    }
+    &.red {
+      background-color: rgba(255, 36, 0, 0.2);
+      border-color: rgba(255, 36, 0, 0.8);
+    }
+  }
 }
 </style>

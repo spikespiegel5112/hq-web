@@ -1,95 +1,22 @@
 <template>
-  <div class="operationmanagementconfigurment">
-    <a-form
-      ref="formDataRef"
-      :model="state.formData"
-      autocomplete="off"
-      :rules="rules"
-      :label-col="{ style: { width: '200px' } }"
+  <div class="configurationcommon">
+    <a-tabs
+      class="common_tab_container"
+      v-model:activeKey="state.activeKey"
+      @tabClick="handleChangeTab"
     >
-      <a-space direction="vertical">
-        <CommonTitle title="客流國値" />
-        <a-row :gutter="20">
-          <a-col :span="12">
-            <a-form-item name="username" label="P9进/出场车流阈值">
-              <a-input
-                v-model:value="state.formData.username"
-                placeholder="请输入"
-              >
-                <template #prefix>
-                  <span class="username"></span>
-                </template>
-              </a-input>
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item name="username" label="P10进/出场车流阈值">
-              <a-input
-                v-model:value="state.formData.username"
-                placeholder="请输入"
-              >
-                <template #prefix>
-                  <span class="username"></span>
-                </template>
-              </a-input>
-            </a-form-item>
-          </a-col>
-        </a-row>
-        <a-row :gutter="20">
-          <a-col :span="12">
-            <a-form-item name="username" label="P9进/出场车流阈值">
-              <a-input
-                v-model:value="state.formData.username"
-                placeholder="请输入"
-              >
-                <template #prefix>
-                  <span class="username"></span>
-                </template>
-              </a-input>
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item name="username" label="P10进/出场车流阈值">
-              <a-input
-                v-model:value="state.formData.username"
-                placeholder="请输入"
-              >
-                <template #prefix>
-                  <span class="username"></span>
-                </template>
-              </a-input>
-            </a-form-item>
-          </a-col>
-        </a-row>
-        <CommonTitle title="客流國値" />
-        <a-row :gutter="20">
-          <a-col :span="12">
-            <a-form-item name="username" label="P9进/出场车流阈值">
-              <a-input
-                v-model:value="state.formData.username"
-                placeholder="请输入"
-              >
-                <template #prefix>
-                  <span class="username"></span>
-                </template>
-              </a-input>
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item name="username" label="P10进/出场车流阈值">
-              <a-input
-                v-model:value="state.formData.username"
-                placeholder="请输入"
-              >
-                <template #prefix>
-                  <span class="username"></span>
-                </template>
-              </a-input>
-            </a-form-item>
-          </a-col>
-        </a-row>
-      </a-space>
-    </a-form>
+      <a-tab-pane
+        v-for="item in global.$getDictionary('dateFeaturesType')"
+        :key="item.value"
+        :tab="item.label"
+      >
+        <component
+          :is="ConfigurationThresholdTab"
+          :dateType="item.value"
+          :activeTabId="state.activeKey"
+        ></component>
+      </a-tab-pane>
+    </a-tabs>
   </div>
 </template>
 
@@ -105,43 +32,29 @@ import {
   ref,
   nextTick,
 } from "vue";
-import type { Rule } from "ant-design-vue/es/form";
+
+import ConfigurationThresholdTab from "./ConfigurationThresholdTab.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
 const state = reactive({
   visible: false,
+  activeKey: "",
   formData: {},
 });
 
-const rules: Record<string, Rule[]> = {
-  username: [
-    {
-      required: true,
-      message: "请输入用户名",
-      trigger: "change",
-    },
-  ],
-  password: [
-    {
-      required: true,
-      message: "请输入密码",
-      trigger: "change",
-    },
-  ],
-  seconds: [
-    {
-      required: true,
-      message: "请输入验证码",
-      trigger: "change",
-    },
-  ],
+const getData = () => {
+  init();
 };
 
-const getData = () => {};
+const init = () => {
+  const dateFeaturesTypeList = global.$getDictionary("dateFeaturesType");
+  state.activeKey = dateFeaturesTypeList[0].name;
+};
 
-const handleSubmit = () => {};
+const handleChangeTab = (activeKey: any) => {};
+
 onMounted(async () => {
   getData();
 });
@@ -150,9 +63,8 @@ onBeforeUnmount(() => {});
 </script>
 
 <style scoped lang="scss">
-.operationmanagementconfigurment {
+.configurationcommon {
   margin: 0.1rem;
-  padding: 0.3rem;
   background-color: #010f27;
 }
 </style>
