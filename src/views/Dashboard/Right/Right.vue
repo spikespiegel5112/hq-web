@@ -98,15 +98,15 @@ const defaultCameraList = ref("");
 
 // 声明 data 数组
 const alarmList = ref([
-  { name: '申虹国际大厦', top: '1.4rem', left: '1.4rem',isAlarm:false },
-  { name: "出租车市域铁", top: "1.4rem", left: "2rem" ,isAlarm:false },
-  { name: '蓄车场北', top: '0.8rem', left: '1.6rem' ,isAlarm:false },
-  { name: '蓄车场南', top: '2.5rem', left: '1.7rem' ,isAlarm:false },
-  { name: 'P9P10停车库', top: '1.2rem', left: '0.9rem' ,isAlarm:false },
-  { name: '西交B区', top: '1.5rem', left: '1rem' ,isAlarm:false },
-  { name: 'P9网约车1F', top: '1.2rem', left: '1.2rem' ,isAlarm:false },
-  { name: 'P10网约车1F', top: '2.2rem', left: '1rem' ,isAlarm:false },
-  { name: '申贵路地下通道', top: '1.8rem', left: '1.25rem',isAlarm:false },
+  { name: "申虹国际大厦", top: "1.4rem", left: "1.4rem", isAlarm: false },
+  { name: "出租车市域铁", top: "1.4rem", left: "2rem", isAlarm: false },
+  { name: "蓄车场北", top: "0.8rem", left: "1.6rem", isAlarm: false },
+  { name: "蓄车场南", top: "2.5rem", left: "1.7rem", isAlarm: false },
+  { name: "P9P10停车库", top: "1.2rem", left: "0.9rem", isAlarm: false },
+  { name: "西交B区", top: "1.5rem", left: "1rem", isAlarm: false },
+  { name: "P9网约车1F", top: "1.2rem", left: "1.2rem", isAlarm: false },
+  { name: "P10网约车1F", top: "2.2rem", left: "1rem", isAlarm: false },
+  { name: "申贵路地下通道", top: "1.8rem", left: "1.25rem", isAlarm: false },
 ]);
 
 // ----------------------------------data
@@ -229,8 +229,6 @@ const createPanelWindow = () => {
 };
 
 const forCameraData = () => {
-  console.log("cameraListChecked222 ", cameraListChecked.value);
-
   cameraListChecked.value.forEach((item: any) => {
     createPanelWindow().then((videoDomId: any) => {
       let itemData = {
@@ -252,9 +250,7 @@ const startLive = (itemData: any) => {
       title: itemData.ResName,
       stream: 0,
     })
-    .then((res: any) => {
-      // console.log("实况", res);
-    });
+    .then((res: any) => {});
 };
 
 // 获取相机数据
@@ -308,18 +304,13 @@ const getCameraData = async () => {
 
 // 勾选数据
 const handleSelectChange = (value: any) => {
-  console.log("value", value);
   const cameraTemp: any = [];
   cameraListTotal.value.forEach((item: any) => {
-    // console.log('item',item);
-
     if (item.OrgName.includes(value)) {
       cameraTemp.push(item);
     }
   });
   cameraListChecked.value = cameraTemp;
-  console.log("cameraListChecked", cameraListChecked.value);
-
   createPanelWindow();
   forCameraData();
 };
@@ -331,9 +322,11 @@ const setActive = (value: string) => {
 
 // 警报弹窗点击事件-符合类型的视频将显示在页面
 const alarmClick = (value: any) => {
-  cameraListChecked.value = cameraListTotal.value.map((item: { OrgName: any; }) => {
-   return item.OrgName == value.name
-  });
+  cameraListChecked.value = cameraListTotal.value.map(
+    (item: { OrgName: any }) => {
+      return item.OrgName == value.name;
+    }
+  );
   // cameraListTotal.value.forEach(item => {
 
   // });
@@ -344,13 +337,13 @@ const getAreaMapAlarmInfoFun = () => {
   getAreaMapAlarmInfoData({})
     .then((res: any) => {
       areaMapAlarmInfoData.value = res.data.areaToAlarmInfoMap;
-      if(areaMapAlarmInfoData.value){
-        console.log('有事故发生',res.data.areaToAlarmInfoMap);
+      if (areaMapAlarmInfoData.value) {
+        console.log("有事故发生", res.data.areaToAlarmInfoMap);
         for (const key in areaMapAlarmInfoData.value) {
-         alarmList.value.map((item: { name: string; isAlarm: boolean; }) => {
-         return item.name === key ? item.isAlarm = true : null
-         });
-       } 
+          alarmList.value.map((item: { name: string; isAlarm: boolean }) => {
+            return item.name === key ? (item.isAlarm = true) : null;
+          });
+        }
       }
     })
     .catch((err: any) => {
@@ -360,7 +353,6 @@ const getAreaMapAlarmInfoFun = () => {
 
 const checkInit = () => {
   let res = (window as any).imosPlayer.checkInit();
-  console.log(res ? "已初始化" : "未初始化");
 };
 
 onBeforeUnmount(() => {});
