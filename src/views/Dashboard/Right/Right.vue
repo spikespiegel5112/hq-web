@@ -16,30 +16,8 @@
     </div>
     <div class="content">
       <vue-scroll>
-        <a-space wrap>
-          <div>
-            <img
-              :src="
-                global.$getImageUrl(
-                  '/src/assets/menu_PassengerFlowDataManagement.png'
-                )
-              "
-              alt=""
-            />
-          </div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
+        <a-space wrap ref="videoBody">
+          <div ></div>
         </a-space>
       </vue-scroll>
     </div>
@@ -69,13 +47,10 @@ const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
 const formDataRef = ref();
-const AccessTokenData = ref();
 
 const state = reactive({});
 
 onMounted(async () => {
-  console.log("发请求");
-
   // 登录
   try {
     const res1 = await axios.post("http://10.141.10.10:8088/VIID/login/v2", {});
@@ -97,25 +72,89 @@ onMounted(async () => {
     );
     console.log("res2", res2, btoa("loadmin"));
 
-    // 鉴权
+    // 鉴权+keeplive
     res2.data.AccessToken
       ? setInterval(async () => {
-       const res3 =   await axios.post(
-            "http://10.141.10.10:8088/VIID/hadesadapter/user/keepalive",{},
+          const res3 = await axios.post(
+            "http://10.141.10.10:8088/VIID/hadesadapter/user/keepalive",
+            {},
             {
               headers: {
                 Authorization: `${res2.data.AccessToken}`,
               },
             }
           );
-          console.log('res3',res3);
-          
+          console.log("res3", res3);
         }, 30000)
       : null;
+
+    // 动态加载外部脚本
+    await loadScript();
+    // 初始化
+    const initData = {
+      ip: "10.141.10.10",
+      token: res2.data.AccessToken,
+      title: document.title + Date.now(),
+      offset: [0, 0],
+    };
+  await init(initData);
+ 
+  //创建窗格
+  createPanelWindow()
+     
   } catch (error) {
     console.error("Login failed:", error);
   }
 });
+
+// 初始化
+const init = async (initData: any) => {
+  (window as any).imosPlayer
+    .init(initData)
+    .then(function (res: any) {
+      
+      if (res.ErrCode === 0) {
+        console.log("登陆成功res", res);
+      checkInit();  //检查初始化状态
+      } else {
+        alert(res.ErrMsg);
+      }
+    })
+    .catch(function (err: any) {
+      alert("调用失败");
+      console.error(err);
+    });
+};
+
+// 动态加载外部脚本
+const loadScript = () => {
+  return new Promise((resolve: any, reject: any) => {
+    const script = document.createElement("script");
+    script.src = "http://10.141.10.10:8093/static/imosPlayer.min.js";
+    script.onload = () => {
+      console.log("imosPlayer.min.js loaded successfully");
+      resolve();
+    };
+    script.onerror = () => {
+      console.error("Failed to load imosPlayer.min.js");
+      reject();
+    };
+    document.head.appendChild(script);
+  });
+};
+
+// 创建窗格
+const createPanelWindow =() =>{
+ let win = (window as any).imosPlayer.createPanelWindow()
+ console.log("win", win);
+ 
+}
+
+const checkInit = () => {
+  let res = (window as any).imosPlayer.checkInit();
+  console.log(res ? "已初始化" : "未初始化");
+  // alert(res ? "已初始化" : "未初始化");
+};
 
 onBeforeUnmount(() => {});
 </script>
