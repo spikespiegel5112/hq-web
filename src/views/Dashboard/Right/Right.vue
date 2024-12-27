@@ -47,6 +47,7 @@ const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
 const formDataRef = ref();
+const videoDomId = ref();
 
 const state = reactive({});
 
@@ -104,6 +105,10 @@ onMounted(async () => {
 
     // 创建窗格
     createPanelWindow();
+
+    // 启动实况
+    startLive();
+
   } catch (error) {
     console.error("Login failed:", error);
   }
@@ -146,10 +151,27 @@ const loadScript = () => {
 
 // 创建窗格
 const createPanelWindow = () => {
-  let win = (window as any).imosPlayer.createPanelWindow();
+  let videoDom = (window as any).imosPlayer.createPanelWindow();
   // 将 win 的内容赋值给 winContent
-  winContent.value = win.outerHTML;
+  videoDom.style.width = "146px";
+  videoDom.style.height = "154px";
+  videoDomId.value = videoDom.id;
+  winContent.value = videoDom.outerHTML;
   console.log("win", winContent.value);
+};
+
+// 启动实况
+const startLive = () => {
+  console.log("startLive");
+  (window as any).imosPlayer
+    .playLive(videoDomId.value, {
+      camera: "31018900001320000109",
+      title: "123456789",
+      stream: 0,
+    })
+    .then((res: any) => {
+      console.log("实况", res);
+    });
 };
 
 const checkInit = () => {
