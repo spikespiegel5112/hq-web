@@ -1,16 +1,20 @@
 <template>
   <div class="configurationcommon">
-    {{global.$getDictionary('dateFeaturesType')}}
-    <a-tabs v-model:activeKey="state.activeKey" @tabClick="handleChangeTab">
+    <a-tabs
+      class="common_tab_container"
+      v-model:activeKey="state.activeKey"
+      @tabClick="handleChangeTab"
+    >
       <a-tab-pane
         v-for="item in global.$getDictionary('dateFeaturesType')"
         :key="item.value"
         :tab="item.label"
       >
-        <ConfigurationCommonTab
+        <component
+          :is="ConfigurationCommonTab"
           :dateType="item.value"
           :activeTabId="state.activeKey"
-        />
+        ></component>
       </a-tab-pane>
     </a-tabs>
   </div>
@@ -61,7 +65,6 @@ onBeforeUnmount(() => {});
 <style scoped lang="scss">
 .configurationcommon {
   margin: 0.1rem;
-  padding: 0.3rem;
   background-color: #010f27;
 }
 </style>

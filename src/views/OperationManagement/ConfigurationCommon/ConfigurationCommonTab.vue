@@ -5,86 +5,774 @@
       :model="state.formData"
       autocomplete="off"
       :rules="rules"
-      :label-col="{ style: { width: '200px' } }"
+      :label-col="{ style: { width: '160px' } }"
     >
-      <a-space direction="vertical">
-        <CommonTitle title="客流國値" />
+      <a-space
+        direction="vertical"
+        :style="{
+          width: '100%',
+        }"
+      >
+        <CommonTitle title="客流阈值" />
         <a-row :gutter="20">
-          <a-col :span="12">
-            <a-form-item name="username" label="P9进/出场车流阈值">
-              <a-input
-                v-model:value="state.formData.username"
-                placeholder="请输入"
-              >
-                <template #prefix>
-                  <span class="username"></span>
-                </template>
-              </a-input>
+          <a-col :span="8">
+            <a-form-item name="username" label="蓄车场南存车数">
+              <a-row>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_south_parking_lot_parking_count_green
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_south_parking_lot_parking_count_yellow
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_south_parking_lot_parking_count_red
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+              </a-row>
             </a-form-item>
           </a-col>
-          <a-col :span="12">
-            <a-form-item name="username" label="P10进/出场车流阈值">
-              <a-input
-                v-model:value="state.formData.username"
-                placeholder="请输入"
-              >
-                <template #prefix>
-                  <span class="username"></span>
-                </template>
-              </a-input>
+          <a-col :span="8">
+            <a-form-item name="username" label="P9坡道拥堵车辆数">
+              <a-row>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_south_parking_lot_parking_count_green
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_south_parking_lot_parking_count_yellow
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_south_parking_lot_parking_count_red
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+              </a-row>
+            </a-form-item>
+          </a-col>
+          <a-col :span="8">
+            <a-form-item name="username" label="p9出入口拥堵车辆数">
+              <a-row>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_south_parking_lot_parking_count_green
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_south_parking_lot_parking_count_yellow
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_south_parking_lot_parking_count_red
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+              </a-row>
             </a-form-item>
           </a-col>
         </a-row>
         <a-row :gutter="20">
-          <a-col :span="12">
-            <a-form-item name="username" label="P9进/出场车流阈值">
-              <a-input
-                v-model:value="state.formData.username"
-                placeholder="请输入"
-              >
-                <template #prefix>
-                  <span class="username"></span>
-                </template>
-              </a-input>
+          <a-col :span="8">
+            <a-form-item name="username" label="蓄车场北存车数">
+              <a-row>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_north_parking_lot_parking_count_green
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_north_parking_lot_parking_count_yellow
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_north_parking_lot_parking_count_red
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+              </a-row>
             </a-form-item>
           </a-col>
-          <a-col :span="12">
-            <a-form-item name="username" label="P10进/出场车流阈值">
-              <a-input
-                v-model:value="state.formData.username"
-                placeholder="请输入"
-              >
-                <template #prefix>
-                  <span class="username"></span>
-                </template>
-              </a-input>
+          <a-col :span="8">
+            <a-form-item name="username" label="p10坡道拥堵车辆数">
+              <a-row>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_p10_ramp_congested_vehicle_count_green
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_p10_ramp_congested_vehicle_count_yellow
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_p10_ramp_congested_vehicle_count_red
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+              </a-row>
+            </a-form-item>
+          </a-col>
+          <a-col :span="8">
+            <a-form-item name="username" label="p10出入口拥堵车辆数">
+              <a-row>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_p10_entrance_and_exit_congested_vehicle_count_green
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_p10_entrance_and_exit_congested_vehicle_count_yellow
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_p10_entrance_and_exit_congested_vehicle_count_red
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+              </a-row>
             </a-form-item>
           </a-col>
         </a-row>
-        <CommonTitle title="客流國値" />
         <a-row :gutter="20">
-          <a-col :span="12">
-            <a-form-item name="username" label="P9进/出场车流阈值">
-              <a-input
-                v-model:value="state.formData.username"
-                placeholder="请输入"
-              >
-                <template #prefix>
-                  <span class="username"></span>
-                </template>
-              </a-input>
+          <a-col :span="8">
+            <a-form-item name="username" label="P9场库车位占用数">
+              <a-row>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_p9_parking_lot_parking_space_occupy_count_green
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_p9_parking_lot_parking_space_occupy_count_yellow
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_p9_parking_lot_parking_space_occupy_count_red
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+              </a-row>
             </a-form-item>
           </a-col>
-          <a-col :span="12">
-            <a-form-item name="username" label="P10进/出场车流阈值">
-              <a-input
-                v-model:value="state.formData.username"
-                placeholder="请输入"
-              >
-                <template #prefix>
-                  <span class="username"></span>
-                </template>
-              </a-input>
+          <a-col :span="8">
+            <a-form-item name="username" label="P10场库车位占用数">
+              <a-row>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_p10_parking_lot_parking_space_occupy_count_green
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_p10_parking_lot_parking_space_occupy_count_yellow
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_p10_parking_lot_parking_space_occupy_count_red
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+              </a-row>
+            </a-form-item>
+          </a-col>
+          <a-col :span="8">
+            <a-form-item name="username" label="ERC预测数值">
+              <a-row>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_erc_prediction_value_green
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_erc_prediction_value_yellow
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_erc_prediction_value_red
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+              </a-row>
+            </a-form-item>
+          </a-col>
+        </a-row>
+        <a-row :gutter="20">
+          <a-col :span="8">
+            <a-form-item name="username" label="出租车上客点排队时长">
+              <a-row>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_taxi_boarding_point_wait_time_green
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_taxi_boarding_point_wait_time_yellow
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_taxi_boarding_point_wait_time_red
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+              </a-row>
+            </a-form-item>
+          </a-col>
+          <a-col :span="8">
+            <a-form-item name="username" label="场区挤压人数">
+              <a-row>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_area_packed_person_count_green
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_area_packed_person_count_yellow
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_area_packed_person_count_red
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+              </a-row>
+            </a-form-item>
+          </a-col>
+        </a-row>
+        <CommonTitle title="雷达图比例" />
+        <a-row :gutter="20">
+          <a-col :span="8">
+            <a-form-item name="username" label="高峰日">
+              <a-row>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData.radar_threshold_peak_day_green
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData.radar_threshold_peak_day_yellow
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="state.formData.radar_threshold_peak_day_red"
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+              </a-row>
+            </a-form-item>
+          </a-col>
+          <a-col :span="8">
+            <a-form-item name="username" label="客流">
+              <a-row>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData.radar_threshold_passenger_flow_green
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData.radar_threshold_passenger_flow_yellow
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData.radar_threshold_passenger_flow_red
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+              </a-row>
+            </a-form-item>
+          </a-col>
+          <a-col :span="8">
+            <a-form-item name="username" label="高峰时段">
+              <a-row>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData.radar_threshold_peak_hour_green
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData.radar_threshold_peak_hour_yellow
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="state.formData.radar_threshold_peak_hour_red"
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+              </a-row>
+            </a-form-item>
+          </a-col>
+        </a-row>
+        <a-row :gutter="20">
+          <a-col :span="8">
+            <a-form-item name="username" label="天气">
+              <a-row>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .radar_threshold_weather_green
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .radar_threshold_weather_yellow
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .radar_threshold_weather_red
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+              </a-row>
+            </a-form-item>
+          </a-col>
+          <a-col :span="8">
+            <a-form-item name="username" label="会展">
+              <a-row>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .radar_threshold_exhibition_green
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .radar_threshold_exhibition_yellow
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .radar_threshold_exhibition_red
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+              </a-row>
+            </a-form-item>
+          </a-col>
+        </a-row>
+
+        <CommonTitle title="历史数据对比报警值" />
+        <a-row :gutter="20">
+          <a-col :span="8">
+            <a-form-item name="username" label="出租车">
+              <a-row>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_south_parking_lot_parking_count_green
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_south_parking_lot_parking_count_yellow
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_south_parking_lot_parking_count_red
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+              </a-row>
+            </a-form-item>
+          </a-col>
+          <a-col :span="8">
+            <a-form-item name="username" label="网约车">
+              <a-row>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_south_parking_lot_parking_count_green
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_south_parking_lot_parking_count_yellow
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_south_parking_lot_parking_count_red
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+              </a-row>
+            </a-form-item>
+          </a-col>
+          <a-col :span="8">
+            <a-form-item name="username" label="停车库">
+              <a-row>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_south_parking_lot_parking_count_green
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_south_parking_lot_parking_count_yellow
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_south_parking_lot_parking_count_red
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+              </a-row>
+            </a-form-item>
+          </a-col>
+        </a-row>
+        <a-row :gutter="20">
+          <a-col :span="8">
+            <a-form-item name="username" label="地铁">
+              <a-row>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_south_parking_lot_parking_count_green
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_south_parking_lot_parking_count_yellow
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_south_parking_lot_parking_count_red
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+              </a-row>
+            </a-form-item>
+          </a-col>
+          <a-col :span="8">
+            <a-form-item name="username" label="其他">
+              <a-row>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_south_parking_lot_parking_count_green
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_south_parking_lot_parking_count_yellow
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+                <a-col :span="8">
+                  <a-input
+                    v-model:value="
+                      state.formData
+                        .passenger_flow_threshold_south_parking_lot_parking_count_red
+                    "
+                    placeholder="请输入"
+                  >
+                  </a-input>
+                </a-col>
+              </a-row>
             </a-form-item>
           </a-col>
         </a-row>
@@ -123,16 +811,15 @@ const props = defineProps({
     default: null,
     required: false,
   },
-  attachmentList: { type: Array, required: true, default: () => [] as any[] },
 });
 
 const state = reactive({
   visible: false,
-  formData: {},
+  formData: {} as any,
 });
 
 let queryFormData = reactive({
-  dateType: 0,
+  dateType: null,
 } as any);
 
 const pagination = reactive({
@@ -140,14 +827,8 @@ const pagination = reactive({
 });
 
 watch(
-  () => props.activeTabId,
-  (newValue: any, oldValue: any) => {
-    debugger
-
-    if (props.dateType === newValue) {
-      getData();
-    }
-  }
+  () => props.dateType,
+  (newValue: any, oldValue: any) => {}
 );
 
 const rules: Record<string, Rule[]> = {
@@ -181,6 +862,10 @@ const getData = () => {
   })
     .then((response: any) => {
       console.log(response);
+      response = response.data;
+      response.forEach((item: any) => {
+        state.formData[item.configCode] = item.configValue;
+      });
     })
     .catch((error: any) => {
       console.log(error);
@@ -188,7 +873,9 @@ const getData = () => {
 };
 
 const handleSubmit = () => {};
+
 onMounted(async () => {
+  queryFormData.dateType = props.dateType;
   getData();
 });
 
