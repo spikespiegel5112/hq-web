@@ -24,14 +24,14 @@
       @onChangePage="handleChangePage"
       @onDelete="handleDelete"
     />
-    <EditDialog
+    <ReviewDialo
       :visible="state.dialogVisible"
       :mode="state.dialogMode"
       :dataModel="pageModel"
       :rowData="state.currentRowData"
       @onClose="handleClose"
       @onSubmit="handleSubmit"
-    ></EditDialog>
+    ></ReviewDialo>
   </div>
 </template>
 
@@ -56,7 +56,7 @@ import {
 } from "@/api/management";
 
 import FilterTool from "./FilterTool.vue";
-import EditDialog from "./EditDialog.vue";
+import ReviewDialo from "./ReviewDialo.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
