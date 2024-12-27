@@ -1004,3 +1004,28 @@ export const passengerFlowParkingPassengerFlowGetPageRequest = (
     data: params,
   });
 };
+
+// 运行管理-运行配置
+// Operation Config Controller
+
+// 配置
+export const operationManagementOperationConfigConfigRequest = (
+  params: any
+) => {
+  return service({
+    url: prefix + "/operationManagement/operationConfig/config",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 查询列表
+export const operationManagementOperationConfigGetListRequest = (
+  params: any
+) => {
+  return service({
+    url: prefix + "/operationManagement/operationConfig/getList",
+    method: "POST",
+    data: params,
+  });
+};

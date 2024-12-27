@@ -292,12 +292,12 @@ const routerDictionary = [
             },
           },
           {
-            title: "禁用配置",
-            path: "ConfigurationDisable",
-            name: "ConfigurationDisable",
+            title: "常用配置",
+            path: "ConfigurationCommon",
+            name: "ConfigurationCommon",
             component: () =>
               import(
-                /* webpackChunkName: "ConfigurationDisable" */ "@/views/OperationManagement/ConfigurationDisable/ConfigurationDisable.vue"
+                /* webpackChunkName: "ConfigurationCommon" */ "@/views/OperationManagement/ConfigurationCommon/ConfigurationCommon.vue"
               ),
             meta: {
               title: "阈值配置",

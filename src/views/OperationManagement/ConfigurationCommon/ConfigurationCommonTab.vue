@@ -107,13 +107,48 @@ import {
 } from "vue";
 import type { Rule } from "ant-design-vue/es/form";
 
+import { operationManagementOperationConfigGetListRequest } from "@/api/management.ts";
+
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
+
+const props = defineProps({
+  dateType: {
+    type: [String, Number],
+    default: null,
+    required: false,
+  },
+  activeTabId: {
+    type: [String, Number],
+    default: null,
+    required: false,
+  },
+  attachmentList: { type: Array, required: true, default: () => [] as any[] },
+});
 
 const state = reactive({
   visible: false,
   formData: {},
 });
+
+let queryFormData = reactive({
+  dateType: 0,
+} as any);
+
+const pagination = reactive({
+  ...global.$store.state.app.defaultPagination,
+});
+
+watch(
+  () => props.activeTabId,
+  (newValue: any, oldValue: any) => {
+    debugger
+
+    if (props.dateType === newValue) {
+      getData();
+    }
+  }
+);
 
 const rules: Record<string, Rule[]> = {
   username: [
@@ -139,7 +174,18 @@ const rules: Record<string, Rule[]> = {
   ],
 };
 
-const getData = () => {};
+const getData = () => {
+  operationManagementOperationConfigGetListRequest({
+    ...queryFormData,
+    ...pagination,
+  })
+    .then((response: any) => {
+      console.log(response);
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+};
 
 const handleSubmit = () => {};
 onMounted(async () => {
