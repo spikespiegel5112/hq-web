@@ -3,7 +3,21 @@
     <div class="header">
       <a-form>
         <a-row class="rowClass">
-          <a-col :span="12"> P9停车场</a-col>
+          <a-col :span="12" style="margin-top: 0.04rem;">
+            <span
+              :class="{ active: isActive === 'p9' }"
+              @click="setActive('p9')"
+            >
+              P9停车场
+            </span>
+            <span
+              style="margin-left: 0.1rem;"
+              :class="{ active: isActive === 'nanxu' }"
+              @click="setActive('nanxu')"
+            >
+              南蓄车场
+            </span>
+          </a-col>
           <a-col :span="12">
             <a-form-item label="区域">
               <a-select placeholder="请选择">
@@ -14,6 +28,7 @@
         </a-row>
       </a-form>
     </div>
+
     <div class="content">
       <vue-scroll>
         <a-space wrap>
@@ -48,6 +63,7 @@ const global = currentInstance.appContext.config.globalProperties;
 
 const formDataRef = ref();
 const videoDomId = ref();
+const isActive = ref('p9');
 
 const state = reactive({});
 
@@ -174,6 +190,11 @@ const startLive = () => {
     });
 };
 
+// 设置激活的 span
+const setActive = (value: string) => {
+  isActive.value = value;
+};
+
 const checkInit = () => {
   let res = (window as any).imosPlayer.checkInit();
   console.log(res ? "已初始化" : "未初始化");
@@ -220,5 +241,12 @@ onBeforeUnmount(() => {});
 }
 .rowClass {
   display: flex;
+}
+.active{
+  background-color: #035bcd;
+  padding: 0.02rem;
+  text-align: center;
+  box-sizing: border-box;
+  border-radius: 0.05rem;
 }
 </style>
