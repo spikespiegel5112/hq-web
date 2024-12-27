@@ -910,6 +910,8 @@ const props = defineProps({
   },
 });
 
+const dataIndex = [] as any[];
+
 const state = reactive({
   visible: false,
   formData: {} as any,
@@ -960,6 +962,14 @@ const getData = () => {
     .then((response: any) => {
       console.log(response);
       response = response.data;
+      dataIndex.push(
+        ...response.map((item: any) => {
+          return {
+            id: item.id,
+            configCode: item.configCode,
+          };
+        })
+      );
       response.forEach((item: any) => {
         state.formData[item.configCode] = item.configValue;
       });
@@ -976,6 +986,7 @@ const handleSubmit = () => {
       configCode: item,
       configValue: state.formData[item],
       dateType: props.dateType,
+      id: dataIndex.find((item2: any) => item2.configCode === item)?.id,
     });
   });
   operationManagementOperationConfigConfigRequest(params)
