@@ -199,12 +199,17 @@ watch(
     state.visible = newValue;
     if (!!newValue) {
       await nextTick();
-      if (["edit", "review", 'disposal'].some((item) => item === props.mode)) {
+      if (["edit", "review", "disposal"].some((item) => item === props.mode)) {
         const formData = JSON.parse(JSON.stringify(props.rowData));
+        debugger
+
+        formData.statisticalDate = global.$dayjs(
+          formData.statisticalDate.toString()
+        );
 
         formData.statisticalBeginHour = global
-          .$dayjs(formData.statisticalBeginHour.toString(), "HH")
-          .format("HH:mm:ss");
+          .$dayjs(formData.statisticalBeginHour, "HH")
+          .format("HH");
 
         state.formData = formData;
       }

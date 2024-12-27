@@ -15,7 +15,6 @@
             pageSize: 1000,
           }"
         />
-        <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
     <BaseTable
@@ -26,14 +25,6 @@
       @onReview="handleReview"
       @onChangePage="handleChangePage"
     />
-    <EditDialog
-      :visible="state.dialogVisible"
-      :mode="state.dialogMode"
-      :dataModel="pageModel"
-      :rowData="state.currentRowData"
-      @onClose="handleClose"
-      @onSubmit="handleSubmit"
-    ></EditDialog>
   </div>
 </template>
 
@@ -103,14 +94,6 @@ const pageModel = ref([
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
-  },
-  {
-    label: "操作",
-    name: "operationColumn",
-    tableVisible: true,
-    exportVisible: false,
-    fixed: "right",
-    actions: ["edit", "review", "delete"],
   },
 ]);
 
