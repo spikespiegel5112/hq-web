@@ -5,7 +5,7 @@
       :model="state.formData"
       autocomplete="off"
       :rules="rules"
-      :label-col="{ style: { width: '160px' } }"
+      :label-col="{ style: { width: '170px' } }"
     >
       <a-space
         direction="vertical"
@@ -522,10 +522,7 @@
               <a-row>
                 <a-col :span="8">
                   <a-input
-                    v-model:value="
-                      state.formData
-                        .radar_threshold_weather_green
-                    "
+                    v-model:value="state.formData.radar_threshold_weather_green"
                     placeholder="请输入"
                   >
                   </a-input>
@@ -533,8 +530,7 @@
                 <a-col :span="8">
                   <a-input
                     v-model:value="
-                      state.formData
-                        .radar_threshold_weather_yellow
+                      state.formData.radar_threshold_weather_yellow
                     "
                     placeholder="请输入"
                   >
@@ -542,10 +538,7 @@
                 </a-col>
                 <a-col :span="8">
                   <a-input
-                    v-model:value="
-                      state.formData
-                        .radar_threshold_weather_red
-                    "
+                    v-model:value="state.formData.radar_threshold_weather_red"
                     placeholder="请输入"
                   >
                   </a-input>
@@ -559,8 +552,7 @@
                 <a-col :span="8">
                   <a-input
                     v-model:value="
-                      state.formData
-                        .radar_threshold_exhibition_green
+                      state.formData.radar_threshold_exhibition_green
                     "
                     placeholder="请输入"
                   >
@@ -569,8 +561,7 @@
                 <a-col :span="8">
                   <a-input
                     v-model:value="
-                      state.formData
-                        .radar_threshold_exhibition_yellow
+                      state.formData.radar_threshold_exhibition_yellow
                     "
                     placeholder="请输入"
                   >
@@ -579,8 +570,7 @@
                 <a-col :span="8">
                   <a-input
                     v-model:value="
-                      state.formData
-                        .radar_threshold_exhibition_red
+                      state.formData.radar_threshold_exhibition_red
                     "
                     placeholder="请输入"
                   >
@@ -599,8 +589,7 @@
                 <a-col :span="8">
                   <a-input
                     v-model:value="
-                      state.formData
-                        .passenger_flow_threshold_south_parking_lot_parking_count_green
+                      state.formData.history_compare_threshold_taxi_green
                     "
                     placeholder="请输入"
                   >
@@ -609,8 +598,7 @@
                 <a-col :span="8">
                   <a-input
                     v-model:value="
-                      state.formData
-                        .passenger_flow_threshold_south_parking_lot_parking_count_yellow
+                      state.formData.history_compare_threshold_taxi_yellow
                     "
                     placeholder="请输入"
                   >
@@ -619,8 +607,7 @@
                 <a-col :span="8">
                   <a-input
                     v-model:value="
-                      state.formData
-                        .passenger_flow_threshold_south_parking_lot_parking_count_red
+                      state.formData.history_compare_threshold_taxi_red
                     "
                     placeholder="请输入"
                   >
@@ -635,8 +622,7 @@
                 <a-col :span="8">
                   <a-input
                     v-model:value="
-                      state.formData
-                        .passenger_flow_threshold_south_parking_lot_parking_count_green
+                      state.formData.history_compare_threshold_ehailing_green
                     "
                     placeholder="请输入"
                   >
@@ -645,8 +631,7 @@
                 <a-col :span="8">
                   <a-input
                     v-model:value="
-                      state.formData
-                        .passenger_flow_threshold_south_parking_lot_parking_count_yellow
+                      state.formData.history_compare_threshold_ehailing_yellow
                     "
                     placeholder="请输入"
                   >
@@ -655,8 +640,7 @@
                 <a-col :span="8">
                   <a-input
                     v-model:value="
-                      state.formData
-                        .passenger_flow_threshold_south_parking_lot_parking_count_red
+                      state.formData.history_compare_threshold_ehailing_red
                     "
                     placeholder="请输入"
                   >
@@ -671,8 +655,7 @@
                 <a-col :span="8">
                   <a-input
                     v-model:value="
-                      state.formData
-                        .passenger_flow_threshold_south_parking_lot_parking_count_green
+                      state.formData.history_compare_threshold_parking_lot_green
                     "
                     placeholder="请输入"
                   >
@@ -682,7 +665,7 @@
                   <a-input
                     v-model:value="
                       state.formData
-                        .passenger_flow_threshold_south_parking_lot_parking_count_yellow
+                        .history_compare_threshold_parking_lot_yellow
                     "
                     placeholder="请输入"
                   >
@@ -691,8 +674,7 @@
                 <a-col :span="8">
                   <a-input
                     v-model:value="
-                      state.formData
-                        .passenger_flow_threshold_south_parking_lot_parking_count_red
+                      state.formData.history_compare_threshold_parking_lot_red
                     "
                     placeholder="请输入"
                   >
@@ -709,8 +691,7 @@
                 <a-col :span="8">
                   <a-input
                     v-model:value="
-                      state.formData
-                        .passenger_flow_threshold_south_parking_lot_parking_count_green
+                      state.formData.history_compare_threshold_metro_green
                     "
                     placeholder="请输入"
                   >
@@ -719,8 +700,7 @@
                 <a-col :span="8">
                   <a-input
                     v-model:value="
-                      state.formData
-                        .passenger_flow_threshold_south_parking_lot_parking_count_yellow
+                      state.formData.history_compare_threshold_metro_yellow
                     "
                     placeholder="请输入"
                   >
@@ -729,8 +709,7 @@
                 <a-col :span="8">
                   <a-input
                     v-model:value="
-                      state.formData
-                        .passenger_flow_threshold_south_parking_lot_parking_count_red
+                      state.formData.history_compare_threshold_metro_red
                     "
                     placeholder="请输入"
                   >
@@ -745,8 +724,7 @@
                 <a-col :span="8">
                   <a-input
                     v-model:value="
-                      state.formData
-                        .passenger_flow_threshold_south_parking_lot_parking_count_green
+                      state.formData.history_compare_threshold_other_green
                     "
                     placeholder="请输入"
                   >
@@ -755,8 +733,7 @@
                 <a-col :span="8">
                   <a-input
                     v-model:value="
-                      state.formData
-                        .passenger_flow_threshold_south_parking_lot_parking_count_yellow
+                      state.formData.history_compare_threshold_other_yellow
                     "
                     placeholder="请输入"
                   >
@@ -765,8 +742,7 @@
                 <a-col :span="8">
                   <a-input
                     v-model:value="
-                      state.formData
-                        .passenger_flow_threshold_south_parking_lot_parking_count_red
+                      state.formData.history_compare_threshold_other_yellow
                     "
                     placeholder="请输入"
                   >
@@ -883,9 +859,12 @@ onBeforeUnmount(() => {});
 </script>
 
 <style scoped lang="scss">
+.common_tab_container {
+  background-color: transparent !important;
+}
 .operationmanagementconfigurment {
-  margin: 0.1rem;
-  padding: 0.3rem;
+  margin: 0.1rem 0;
+  padding: 0.3rem 0;
   background-color: #010f27;
 }
 </style>
