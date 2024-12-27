@@ -30,10 +30,7 @@
                   allow-clear
                 >
                   <a-select-option
-                    v-for="item in global.$getDictionary(
-                      'disposalStatus',
-                      'string'
-                    )"
+                    v-for="item in global.$getDictionary('disposalStatus')"
                     :value="item.value"
                   >
                     {{ item.label }}
