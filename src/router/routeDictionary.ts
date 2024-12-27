@@ -280,15 +280,39 @@ const routerDictionary = [
             },
           },
           {
-            title: "配置",
-            path: "OperationManagementConfiguration",
-            name: "OperationManagementConfiguration",
+            title: "阈值配置",
+            path: "ConfigurationThreshold",
+            name: "ConfigurationThreshold",
             component: () =>
               import(
-                /* webpackChunkName: "OperationManagementConfiguration" */ "@/views/OperationManagement/OperationManagementConfiguration/OperationManagementConfiguration.vue"
+                /* webpackChunkName: "ConfigurationThreshold" */ "@/views/OperationManagement/ConfigurationThreshold/ConfigurationThreshold.vue"
               ),
             meta: {
-              title: "告警信息管理",
+              title: "阈值配置",
+            },
+          },
+          {
+            title: "禁用配置",
+            path: "ConfigurationDisable",
+            name: "ConfigurationDisable",
+            component: () =>
+              import(
+                /* webpackChunkName: "ConfigurationDisable" */ "@/views/OperationManagement/ConfigurationDisable/ConfigurationDisable.vue"
+              ),
+            meta: {
+              title: "阈值配置",
+            },
+          },
+          {
+            title: "地图配置",
+            path: "ConfigurationMap",
+            name: "ConfigurationMap",
+            component: () =>
+              import(
+                /* webpackChunkName: "ConfigurationMap" */ "@/views/OperationManagement/ConfigurationMap/ConfigurationMap.vue"
+              ),
+            meta: {
+              title: "阈值配置",
             },
           },
         ],
