@@ -19,7 +19,7 @@
               <a-row>
                 <a-col :span="22">
                   <a-form-item label="管理区域">
-                    {{ state.formData.eventType }}
+                    {{ state.formData.manageRegion }}
                   </a-form-item>
                 </a-col>
               </a-row>
@@ -40,7 +40,7 @@
               <a-row>
                 <a-col :span="22">
                   <a-form-item label="等级">
-                    {{ state.formData.eventLocation }}
+                    {{ state.formData.eventLevel }}
                   </a-form-item>
                 </a-col>
               </a-row>
@@ -215,7 +215,7 @@ const currentStepOrder = computed(() => {
 
 const eventList = computed(() => {
   return global.$store.state.app.currentEventTypeList.find(
-    (item: any) => item.type === 1
+    (item: any) => item.type === global.$store.state.app.emergencyEventType
   )?.data;
 });
 

@@ -99,7 +99,7 @@ const pageModel = ref([
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
-    width: "1rem",
+    width: "2rem",
   },
   {
     label: "事件类型",

@@ -197,7 +197,7 @@ const pagination = reactive({
 
 const eventList = computed(() => {
   return global.$store.state.app.currentEventTypeList.find(
-    (item: any) => item.type === 0
+    (item: any) => item.type === global.$store.state.app.emergencyPlanType
   )?.data;
 });
 
