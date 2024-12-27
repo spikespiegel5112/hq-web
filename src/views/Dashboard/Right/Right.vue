@@ -3,7 +3,7 @@
     <div class="header">
       <a-form>
         <a-row class="rowClass">
-          <a-col :span="12" style="margin-top: 0.04rem;">
+          <a-col :span="12" style="margin-top: 0.04rem">
             <span
               :class="{ active: isActive === 'p9' }"
               @click="setActive('p9')"
@@ -11,7 +11,7 @@
               P9停车场
             </span>
             <span
-              style="margin-left: 0.1rem;"
+              style="margin-left: 0.1rem"
               :class="{ active: isActive === 'nanxu' }"
               @click="setActive('nanxu')"
             >
@@ -32,7 +32,7 @@
     <div class="content">
       <vue-scroll>
         <a-space wrap>
-          <div v-html="winContent"></div>
+          <div id="videoDOM"></div>
         </a-space>
       </vue-scroll>
     </div>
@@ -63,7 +63,8 @@ const global = currentInstance.appContext.config.globalProperties;
 
 const formDataRef = ref();
 const videoDomId = ref();
-const isActive = ref('p9');
+const searchRecordsData = ref();
+const isActive = ref("p9");
 
 const state = reactive({});
 
@@ -95,7 +96,7 @@ onMounted(async () => {
     // 鉴权+keeplive
     res2.data.AccessToken
       ? setInterval(async () => {
-          const res3 = await axios.post(
+          await axios.post(
             "http://10.141.10.10:8088/VIID/hadesadapter/user/keepalive",
             {},
             {
@@ -104,7 +105,6 @@ onMounted(async () => {
               },
             }
           );
-          console.log("res3", res3);
         }, 30000)
       : null;
 
@@ -114,20 +114,24 @@ onMounted(async () => {
     const initData = {
       ip: "10.141.10.10",
       token: res2.data.AccessToken,
-      title: document.title + Date.now(),
+      title: document.title,
       offset: [0, 0],
     };
+    console.log("initData", initData);
+
     await init(initData);
 
-    // 创建窗格
-    createPanelWindow();
+    setTimeout(() => {
+      // 创建窗格
+      createPanelWindow();
 
-    // 启动实况
-    startLive();
-
+      // 启动实况
+      startLive();
+    }, 1000);
   } catch (error) {
     console.error("Login failed:", error);
   }
+  // onMounted end----------------
 });
 
 // 初始化
@@ -139,11 +143,11 @@ const init = async (initData: any) => {
         console.log("登陆成功res", res);
         checkInit(); // 检查初始化状态
       } else {
-        alert(res.ErrMsg);
+        // alert(res.ErrMsg);
       }
     })
     .catch(function (err: any) {
-      alert("调用失败");
+      // alert("调用失败");
       console.error(err);
     });
 };
@@ -169,20 +173,22 @@ const loadScript = () => {
 const createPanelWindow = () => {
   let videoDom = (window as any).imosPlayer.createPanelWindow();
   // 将 win 的内容赋值给 winContent
-  videoDom.style.width = "146px";
-  videoDom.style.height = "154px";
+  videoDom.style.width = "150px";
+  videoDom.style.height = "150px";
+
   videoDomId.value = videoDom.id;
-  winContent.value = videoDom.outerHTML;
-  console.log("win", winContent.value);
+  console.log("videoDomId", videoDomId.value);
+  // document.body.appendChild(videoDom);
+  const videoContainer = document.querySelector("#videoDOM");
+  videoContainer ? videoContainer.appendChild(videoDom) : null;
 };
 
 // 启动实况
 const startLive = () => {
-  console.log("startLive");
   (window as any).imosPlayer
     .playLive(videoDomId.value, {
       camera: "31018900001320000109",
-      title: "123456789",
+      title: "虹桥枢纽运行管理一体化平台",
       stream: 0,
     })
     .then((res: any) => {
@@ -242,7 +248,7 @@ onBeforeUnmount(() => {});
 .rowClass {
   display: flex;
 }
-.active{
+.active {
   background-color: #035bcd;
   padding: 0.02rem;
   text-align: center;
