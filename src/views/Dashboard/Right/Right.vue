@@ -2,8 +2,8 @@
   <div class="dashboardright common_block_wrapper">
     <div class="header">
       <a-form>
-        <a-row>
-          <a-col :span="12"> </a-col>
+        <a-row class="rowClass">
+          <a-col :span="12"> P9停车场</a-col>
           <a-col :span="12">
             <a-form-item label="区域">
               <a-select placeholder="请选择">
@@ -59,16 +59,63 @@ import {
   nextTick,
 } from "vue";
 
+import axios from "axios"; // 导入 axios
 import { screenBannerInfoRequest } from "@/api/management";
+import { log } from "console";
+import CryptoJS from "crypto-js"; // 导入 crypto-js
+import internal from "stream";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
 const formDataRef = ref();
+const AccessTokenData = ref();
 
 const state = reactive({});
 
-onMounted(async () => {});
+onMounted(async () => {
+  console.log("发请求");
+
+  // 登录
+  try {
+    const res1 = await axios.post("http://10.141.10.10:8088/VIID/login/v2", {});
+    console.log("res1  ", res1);
+    const postData = {
+      UserName: "loadmin",
+      AccessCode: res1.data.AccessCode,
+      LoginSignature: CryptoJS.MD5(
+        btoa("loadmin") +
+          res1.data.AccessCode +
+          CryptoJS.MD5("Hqhoc_20240919").toString()
+      ).toString(),
+    };
+
+    // 二次调用获取token
+    const res2 = await axios.post(
+      "http://10.141.10.10:8088/VIID/login/v2",
+      postData
+    );
+    console.log("res2", res2, btoa("loadmin"));
+
+    // 鉴权
+    res2.data.AccessToken
+      ? setInterval(async () => {
+       const res3 =   await axios.post(
+            "http://10.141.10.10:8088/VIID/hadesadapter/user/keepalive",{},
+            {
+              headers: {
+                Authorization: `${res2.data.AccessToken}`,
+              },
+            }
+          );
+          console.log('res3',res3);
+          
+        }, 30000)
+      : null;
+  } catch (error) {
+    console.error("Login failed:", error);
+  }
+});
 
 onBeforeUnmount(() => {});
 </script>
@@ -108,5 +155,8 @@ onBeforeUnmount(() => {});
       }
     }
   }
+}
+.rowClass {
+  display: flex;
 }
 </style>
