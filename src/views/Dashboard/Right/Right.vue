@@ -37,6 +37,10 @@
         <img
           src="@/assets/mapPic.png"
         />
+        <!-- 报警事件 -->
+        <div class="location" v-for="item in alarmList" :key="item.name" :style="{left: item.left, top: item.top}">
+          <span class="bubble">{{ item.name }}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -78,6 +82,23 @@ const state = reactive({});
 const winContent = ref("");
 const defaultCameraList = ref("");
 
+// 声明 data 数组
+const alarmList = ref([
+  // { name: '申虹国际大厦', top: '1.4rem', left: '1.4rem' },
+  { name: '出租车市域铁', top: '1.4rem', left: '2rem' },
+  // { name: '蓄车场北', top: '0.8rem', left: '1.6rem' },
+  // { name: '蓄车场南', top: '2.5rem', left: '1.7rem' },
+  // { name: 'P9P10停车库', top: '1.2rem', left: '0.9rem' },
+  // { name: '西交B区', top: '1.5rem', left: '1rem' },
+  // { name: 'P9网约车1F', top: '1.2rem', left: '1.2rem' },
+  // { name: 'P10网约车1F', top: '2.2rem', left: '1rem' },
+  // { name: '申贵路地下通道', top: '1.8rem', left: '1.25rem' }
+]);
+
+
+ 
+
+// ----------------------------------data
 onMounted(async () => {
   try {
     const res1 = await axios.post("http://10.141.10.10:8088/VIID/login/v2", {});
@@ -336,12 +357,52 @@ onBeforeUnmount(() => {});
   overflow: hidden;
 }
 .mapPic{
+  position: relative;
   // width: 2rem;
   // height: 2rem;
   margin-top: 0.5rem;
   img{
     width: 100%;
     height: 100%;
+  }
+}
+.location{
+  width: 0.3rem;
+  height: 0.3rem; 
+  background-color: #f68b00;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  animation: breathe  1.6s infinite ease-in-out;
+}
+@keyframes breathe  {
+  0% { transform: scale(0.3); opacity: 1; }
+  50% { transform: scale(0.5); opacity: 0.8; }
+  100% { transform: scale(0.3); opacity: 1; }
+}
+.bubble {
+  position: absolute;
+  bottom: 100%; /* 确保气泡显示在 .location 的上方 */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #f68b00;
+  color: white;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.2rem;
+  font-size: 0.5rem;
+  white-space: nowrap;
+  z-index: 10;
+  margin-bottom: 0.4rem; /* 添加一些间距，确保气泡和 .location 之间有空隙 */
+  &::after {
+    content: '';
+    position: absolute;
+    top: 100%; /* 确保三角形显示在气泡的底部 */
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 0.2rem;
+    border-style: solid;
+    border-color: #f68b00 transparent transparent transparent;
   }
 }
 </style>
