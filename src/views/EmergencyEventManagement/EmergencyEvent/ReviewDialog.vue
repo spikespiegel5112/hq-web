@@ -264,7 +264,7 @@ const getStepData = () => {
   });
 
   preplanPreplanGetStepPageRequest({
-    preplanType: 0,
+    preplanType: global.$store.state.app.emergencyPlanType,
     eventType: planData.label,
   })
     .then((response: any) => {

@@ -8,7 +8,7 @@
           :action="eventManageSuddenEventExportRequest"
           :queryFormData="{
             ...queryFormData,
-            preplanType: 0,
+            preplanType: global.$store.state.app.emergencyPlanType,
           }"
           :pagination="{
             ...pagination,
@@ -192,7 +192,7 @@ const getData = () => {
   preplanPreplanGetPageRequest({
     ...queryFormData,
     ...pagination,
-    preplanType: 0,
+    preplanType: global.$store.state.app.emergencyPlanType,
   })
     .then((response: any) => {
       response = response.data;

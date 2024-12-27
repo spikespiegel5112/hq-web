@@ -100,16 +100,16 @@ onMounted(async () => {
     // 鉴权
     res2.data.AccessToken
       ? setInterval(async () => {
-       const res3 =   await axios.post(
-            "http://10.141.10.10:8088/VIID/hadesadapter/user/keepalive",{},
+          const res3 = await axios.post(
+            "http://10.141.10.10:8088/VIID/hadesadapter/user/keepalive",
+            {},
             {
               headers: {
                 Authorization: `${res2.data.AccessToken}`,
               },
             }
           );
-          console.log('res3',res3);
-          
+          console.log("res3", res3);
         }, 30000)
       : null;
   } catch (error) {

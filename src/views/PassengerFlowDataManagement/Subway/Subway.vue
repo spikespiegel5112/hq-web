@@ -89,7 +89,7 @@ const pageModel = ref([
   },
   {
     label: "统计时间",
-    name: "metroStationCode",
+    name: "statisticalTime",
     required: true,
     tableVisible: true,
     formVisible: true,

@@ -272,7 +272,7 @@ const getPlanData = () => {
     (item: any) => Number(item.value) === props.rowData.prId
   );
   preplanPreplanGetStepPageRequest({
-    preplanType: 1,
+    preplanType: global.$store.state.app.emergencyEventType,
     eventType: planData.label,
   })
     .then((response: any) => {

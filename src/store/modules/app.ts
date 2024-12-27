@@ -21,6 +21,8 @@ const app = {
       total: 0 as number | undefined,
     },
     currentEventTypeList: [] as any[],
+    emergencyPlanType: 0,
+    emergencyEventType: 1,
   }),
   mutations: {
     updateBannerInfo: (state: any, payload: any) => {

@@ -284,12 +284,12 @@ const getPlanData = () => {
   console.log(props.rowData);
   console.log(eventList.value);
   console.log(global.$store.state.app.currentEventTypeList);
-  state.planInfo = [];1
+  state.planInfo = [];
   const planData: any = eventList.value.find(
     (item: any) => Number(item.value) === props.rowData.preplanResourceId
   );
   preplanPreplanGetStepPageRequest({
-    preplanType: 1,
+    preplanType: global.$store.state.app.emergencyPlanType,
     eventType: planData.label,
   })
     .then((response: any) => {
