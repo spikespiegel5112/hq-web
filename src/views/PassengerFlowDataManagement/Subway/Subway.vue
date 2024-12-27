@@ -3,10 +3,6 @@
     <FilterTool @onSearch="handleSearch" @onReset="handleReset"></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
-        <ImportButton
-          :action="`/api/manage/backend/railwayArrive/importPic`"
-          @onSuccess="handleUploaded"
-        />
         <ExportButton
           :action="passengerFlowMetroPassengerFlowExportRequest"
           :queryFormData="queryFormData"

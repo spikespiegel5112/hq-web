@@ -969,3 +969,38 @@ export const operationManagementCalendarInfoSaveRequest = (params: any) => {
     data: params,
   });
 };
+
+// 客流数据管理-车库流量信息
+// Parking Flow Controller
+
+// 客流数据管理-车库流量信息-导出
+export const passengerFlowParkingPassengerFlowExportRequest = (params: any) => {
+  return service({
+    url: prefix + "/passengerFlow/parkingPassengerFlow/export",
+    method: "GET",
+    params,
+    responseType: "blob",
+  });
+};
+
+// 客流数据管理-车库流量信息-出入口信息查询
+export const passengerFlowParkingPassengerFlowGetCapPlaceRequest = (
+  params: any
+) => {
+  return service({
+    url: prefix + "/passengerFlow/parkingPassengerFlow/getCapPlace",
+    method: "GET",
+    params,
+  });
+};
+
+// 客流数据管理-车库流量信息-分页查询
+export const passengerFlowParkingPassengerFlowGetPageRequest = (
+  params: any
+) => {
+  return service({
+    url: prefix + "/passengerFlow/parkingPassengerFlow/getPage",
+    method: "POST",
+    data: params,
+  });
+};

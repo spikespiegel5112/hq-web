@@ -22,7 +22,7 @@
               </a-form-item>
             </a-col>
             <a-col :span="6">
-              <a-form-item name="preplanResourceId" label="事件类型">
+              <a-form-item name="preplanResourceId" label="预案类型">
                 <a-select
                   v-model:value="state.formData.preplanResourceId"
                   placeholder="请选择"

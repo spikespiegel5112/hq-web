@@ -3,8 +3,7 @@
     <FilterTool @onSearch="handleSearch" @onReset="handleReset"></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
-        <a-button class="import">导入</a-button>
-                 <!-- <ExportButton
+        <!-- <ExportButton
           :action="eventManageSuddenEventExportRequest"
           :queryFormData="queryFormData"
           :pagination="{
@@ -44,7 +43,6 @@ import {
   ref,
   nextTick,
 } from "vue";
-
 
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
@@ -94,7 +92,11 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "操作",     name: "operationColumn",     tableVisible: true,     exportVisible: false,     fixed: "right",
+    label: "操作",
+    name: "operationColumn",
+    tableVisible: true,
+    exportVisible: false,
+    fixed: "right",
     actions: ["edit", "review", "delete"],
   },
 ]);
