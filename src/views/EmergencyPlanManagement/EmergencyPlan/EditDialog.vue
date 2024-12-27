@@ -85,19 +85,17 @@
       <a-row>
         <a-col :span="22">
           <a-form-item name="planLevel" label="预案等级">
-            <a-select
-              v-if="global.$checkEditable(props.mode)"
+            <a-radio-group
               v-model:value="state.formData.planLevel"
-              placeholder="请选择"
+              buttonStyle="solid"
             >
-              <a-select-option
+              <a-radio-button
                 v-for="item in global.$getDictionary('planLevel')"
-                :key="item.value"
                 :value="item.value"
               >
                 {{ item.label }}
-              </a-select-option>
-            </a-select>
+              </a-radio-button>
+            </a-radio-group>
             <template v-if="props.mode === 'review'">
               {{ state.formData.planLevel }}
             </template>

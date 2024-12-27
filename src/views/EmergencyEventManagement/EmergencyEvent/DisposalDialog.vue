@@ -24,7 +24,7 @@
           </a-form-item>
         </a-col>
         <a-col :span="11">
-          <a-form-item name="disposalTime" label="时间">
+          <a-form-item name="disposalTime" label="处置时间">
             <a-date-picker
               v-model:value="state.formData.disposalTime"
               :show-time="{ format: 'HH:mm' }"

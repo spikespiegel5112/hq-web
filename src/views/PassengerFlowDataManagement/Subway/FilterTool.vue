@@ -6,12 +6,18 @@
           <a-row :gutter="20">
             <a-col :span="8">
               <a-form-item name="metroStationCode" label="地铁站编码">
-                <a-input
+                <a-select
                   v-model:value="state.formData.metroStationCode"
-                  placeholder="请输入"
-                  allow-clear
+                  placeholder="请选择"
                 >
-                </a-input>
+                  <a-select-option
+                    v-for="item in global.$getDictionary('metro_station_code')"
+                    :key="item.value"
+                    :value="item.value"
+                  >
+                    {{ item.label }}
+                  </a-select-option>
+                </a-select>
               </a-form-item>
             </a-col>
 
@@ -21,6 +27,7 @@
                   v-model:value="state.statisticalTime"
                   format="YYYY-MM-DD"
                   allow-clear
+                  @change="handleChangeTime1"
                 />
               </a-form-item>
             </a-col>
@@ -66,9 +73,9 @@ const formDataRef: any = ref(null);
 
 const state = reactive({
   formData: {
-    metroStationCode: "string",
-    statisticalTimeBegin: "2024-12-27T02:44:04.228Z",
-    statisticalTimeEnd: "2024-12-27T02:44:04.228Z",
+    metroStationCode: null,
+    statisticalTimeBegin: null,
+    statisticalTimeEnd: null,
   },
   statisticalTime: [],
 });
@@ -80,6 +87,16 @@ const handleSearch = () => {
 const handleReset = () => {
   formDataRef.value.resetFields();
   emit("onReset", state.formData);
+};
+
+const handleChangeTime1 = (value: any) => {
+  state.formData.statisticalTimeBegin = global
+    .$dayjs(value[0])
+    .format("YYYY-MM-DD HH:mm:ss");
+
+  state.formData.statisticalTimeEnd = global
+    .$dayjs(value[1])
+    .format("YYYY-MM-DD HH:mm:ss");
 };
 
 onMounted(async () => {});
