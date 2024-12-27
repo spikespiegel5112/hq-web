@@ -16,8 +16,8 @@
     </div>
     <div class="content">
       <vue-scroll>
-        <a-space wrap ref="videoBody">
-          <div ></div>
+        <a-space wrap>
+          <div v-html="winContent"></div>
         </a-space>
       </vue-scroll>
     </div>
@@ -49,6 +49,9 @@ const global = currentInstance.appContext.config.globalProperties;
 const formDataRef = ref();
 
 const state = reactive({});
+
+// 定义 winContent 响应式数据
+const winContent = ref("");
 
 onMounted(async () => {
   // 登录
@@ -97,11 +100,10 @@ onMounted(async () => {
       title: document.title + Date.now(),
       offset: [0, 0],
     };
-  await init(initData);
- 
-  //创建窗格
-  createPanelWindow()
-     
+    await init(initData);
+
+    // 创建窗格
+    createPanelWindow();
   } catch (error) {
     console.error("Login failed:", error);
   }
@@ -112,10 +114,9 @@ const init = async (initData: any) => {
   (window as any).imosPlayer
     .init(initData)
     .then(function (res: any) {
-      
       if (res.ErrCode === 0) {
         console.log("登陆成功res", res);
-      checkInit();  //检查初始化状态
+        checkInit(); // 检查初始化状态
       } else {
         alert(res.ErrMsg);
       }
@@ -144,11 +145,12 @@ const loadScript = () => {
 };
 
 // 创建窗格
-const createPanelWindow =() =>{
- let win = (window as any).imosPlayer.createPanelWindow()
- console.log("win", win);
- 
-}
+const createPanelWindow = () => {
+  let win = (window as any).imosPlayer.createPanelWindow();
+  // 将 win 的内容赋值给 winContent
+  winContent.value = win.outerHTML;
+  console.log("win", winContent.value);
+};
 
 const checkInit = () => {
   let res = (window as any).imosPlayer.checkInit();
@@ -165,7 +167,6 @@ onBeforeUnmount(() => {});
   flex-direction: column;
   height: calc(100vh - 1.75rem);
   position: relative;
-  // color: #fff;
   .content {
     height: calc(100vh - 2.8rem);
     overflow: auto;
