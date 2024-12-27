@@ -20,7 +20,12 @@
           </a-col>
           <a-col :span="12">
             <a-form-item label="区域">
-              <a-select v-model:value="selectedRegion" placeholder="请选择" @change="handleSelectChange" style="z-index: 1000;">
+              <a-select
+                v-model:value="selectedRegion"
+                placeholder="请选择"
+                @change="handleSelectChange"
+                style="z-index: 1000"
+              >
                 <a-select-option value="全部">全部</a-select-option>
                 <!-- <a-select-option value="BM1">BM1</a-select-option>
                 <a-select-option value="BM2">BM2</a-select-option> -->
@@ -34,9 +39,18 @@
     <div class="content">
       <div id="videoDOM"></div>
       <div class="mapPic">
-        <img
-          src="@/assets/mapPic.png"
-        />
+        <img src="@/assets/mapPic.png" />
+        <!-- 报警事件 -->
+        <div
+          class="location"
+          v-for="item in alarmList"
+          :key="item.name"
+          :style="{ left: item.left, top: item.top }"
+          @click="alarmClick(item)"
+          v-show="item.isAlarm"
+        >
+          <span class="bubble">{{ item.name }}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -56,7 +70,10 @@ import {
 } from "vue";
 
 import axios from "axios"; // 导入 axios
-import { screenBannerInfoRequest } from "@/api/management";
+import {
+  screenBannerInfoRequest,
+  getAreaMapAlarmInfoData,
+} from "@/api/management";
 import { log } from "console";
 import CryptoJS from "crypto-js"; // 导入 crypto-js
 import internal from "stream";
@@ -69,8 +86,9 @@ const videoDomId = ref();
 const AccessToken = ref();
 const cameraListTotal = ref();
 const cameraListChecked = ref();
-const selectedRegion = ref('全部');
+const selectedRegion = ref("全部");
 const isActive = ref("p9");
+const areaMapAlarmInfoData = ref([]);
 
 const state = reactive({});
 
@@ -78,6 +96,20 @@ const state = reactive({});
 const winContent = ref("");
 const defaultCameraList = ref("");
 
+// 声明 data 数组
+const alarmList = ref([
+  { name: "申虹国际大厦", top: "1.4rem", left: "1.4rem", isAlarm: false },
+  { name: "出租车市域铁", top: "1.4rem", left: "2rem", isAlarm: false },
+  { name: "蓄车场北", top: "0.8rem", left: "1.6rem", isAlarm: false },
+  { name: "蓄车场南", top: "2.5rem", left: "1.7rem", isAlarm: false },
+  { name: "P9P10停车库", top: "1.2rem", left: "0.9rem", isAlarm: false },
+  { name: "西交B区", top: "1.5rem", left: "1rem", isAlarm: false },
+  { name: "P9网约车1F", top: "1.2rem", left: "1.2rem", isAlarm: false },
+  { name: "P10网约车1F", top: "2.2rem", left: "1rem", isAlarm: false },
+  { name: "申贵路地下通道", top: "1.8rem", left: "1.25rem", isAlarm: false },
+]);
+
+// ----------------------------------data
 onMounted(async () => {
   try {
     const res1 = await axios.post("http://10.141.10.10:8088/VIID/login/v2", {});
@@ -121,21 +153,29 @@ onMounted(async () => {
 
     await init(initData);
 
-    setTimeout(() => {
-    }, 1000);
+    setTimeout(() => {}, 1000);
   } catch (error) {
     console.error("Login failed:", error);
   }
 
+  //获取相机资源数据
   await getCameraData();
-  forCameraData();
-  await nextTick(() => {
-      // DOM 全部加载后的操作
-      const videoDOM = document.getElementById('videoDOM');
-      videoDOM ? videoDOM.style.overflow = 'hidden' : ''  // 这里可以获取到 videoDOM 的 DOM 结构
-      console.log('DOM 结构',videoDOM); // 这里可以获取到 videoDOM 的 DOM 结构
-    });
 
+  // 默认循环视频数组
+  forCameraData();
+
+  //获取区域告警信息
+  getAreaMapAlarmInfoFun();
+
+  // // 监听 areaMapAlarmInfoData 的变化
+  // watch(
+  //   () => areaMapAlarmInfoData.value,
+  //   (newValue:any) => {
+  //     if (newValue && newValue.length > 0) {
+  //       console.log("111");
+  //     }
+  //   }
+  // );
 });
 
 // 初始化
@@ -189,8 +229,6 @@ const createPanelWindow = () => {
 };
 
 const forCameraData = () => {
-  console.log('cameraListChecked222 ',cameraListChecked.value);
-  
   cameraListChecked.value.forEach((item: any) => {
     createPanelWindow().then((videoDomId: any) => {
       let itemData = {
@@ -212,9 +250,7 @@ const startLive = (itemData: any) => {
       title: itemData.ResName,
       stream: 0,
     })
-    .then((res: any) => {
-      // console.log("实况", res);
-    });
+    .then((res: any) => {});
 };
 
 // 获取相机数据
@@ -260,26 +296,23 @@ const getCameraData = async () => {
   });
 
   // 视频暂时只显示4个，视频会盖住其他dom元素 暂时没法解决
-  cameraListChecked.value.length >= 4 ? cameraListChecked.value = cameraListChecked.value.slice(0, 4) : null;
+  cameraListChecked.value.length >= 4
+    ? (cameraListChecked.value = cameraListChecked.value.slice(0, 4))
+    : null;
   console.log("Checked111---", cameraListChecked.value);
 };
 
 // 勾选数据
 const handleSelectChange = (value: any) => {
-  console.log('value',value);
-  const cameraTemp:any = []
+  const cameraTemp: any = [];
   cameraListTotal.value.forEach((item: any) => {
-    // console.log('item',item);
-    
     if (item.OrgName.includes(value)) {
-      cameraTemp.push(item)
+      cameraTemp.push(item);
     }
   });
   cameraListChecked.value = cameraTemp;
-  console.log('cameraListChecked',cameraListChecked.value);
-  
-  createPanelWindow()
-  forCameraData()
+  createPanelWindow();
+  forCameraData();
 };
 
 // 设置激活的 span
@@ -287,9 +320,39 @@ const setActive = (value: string) => {
   isActive.value = value;
 };
 
+// 警报弹窗点击事件-符合类型的视频将显示在页面
+const alarmClick = (value: any) => {
+  cameraListChecked.value = cameraListTotal.value.map(
+    (item: { OrgName: any }) => {
+      return item.OrgName == value.name;
+    }
+  );
+  // cameraListTotal.value.forEach(item => {
+
+  // });
+};
+
+// //获取区域告警信息
+const getAreaMapAlarmInfoFun = () => {
+  getAreaMapAlarmInfoData({})
+    .then((res: any) => {
+      areaMapAlarmInfoData.value = res.data.areaToAlarmInfoMap;
+      if (areaMapAlarmInfoData.value) {
+        console.log("有事故发生", res.data.areaToAlarmInfoMap);
+        for (const key in areaMapAlarmInfoData.value) {
+          alarmList.value.map((item: { name: string; isAlarm: boolean }) => {
+            return item.name === key ? (item.isAlarm = true) : null;
+          });
+        }
+      }
+    })
+    .catch((err: any) => {
+      console.log(err);
+    });
+};
+
 const checkInit = () => {
   let res = (window as any).imosPlayer.checkInit();
-  console.log(res ? "已初始化" : "未初始化");
 };
 
 onBeforeUnmount(() => {});
@@ -335,13 +398,63 @@ onBeforeUnmount(() => {});
   box-sizing: border-box;
   overflow: hidden;
 }
-.mapPic{
+.mapPic {
+  position: relative;
   // width: 2rem;
   // height: 2rem;
   margin-top: 0.5rem;
-  img{
+  img {
     width: 100%;
     height: 100%;
+  }
+}
+.location {
+  width: 0.3rem;
+  height: 0.3rem;
+  background-color: #f68b00;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  animation: breathe 1.6s infinite ease-in-out;
+  cursor: pointer;
+}
+@keyframes breathe {
+  0% {
+    transform: scale(0.3);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.5);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(0.3);
+    opacity: 1;
+  }
+}
+.bubble {
+  position: absolute;
+  bottom: 100%; /* 确保气泡显示在 .location 的上方 */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #f68b00;
+  color: white;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.2rem;
+  font-size: 0.5rem;
+  white-space: nowrap;
+  z-index: 10;
+  margin-bottom: 0.4rem; /* 添加一些间距，确保气泡和 .location 之间有空隙 */
+  &::after {
+    content: "";
+    position: absolute;
+    top: 100%; /* 确保三角形显示在气泡的底部 */
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 0.2rem;
+    border-style: solid;
+    border-color: #f68b00 transparent transparent transparent;
   }
 }
 </style>
