@@ -273,7 +273,7 @@ const getData = () => {
     .then((response: any) => {
       response = response.data;
       state.disposalData = response;
-      console.log(response);
+      
     })
     .catch((error: any) => {
       console.log(error);

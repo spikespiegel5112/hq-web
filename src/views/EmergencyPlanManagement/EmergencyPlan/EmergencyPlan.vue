@@ -332,7 +332,6 @@ const handleSubmitDisposal = (formData: any) => {
 
 onMounted(async () => {
   getData();
-  console.log(global.$store.state.dictionary.eventStatus);
 });
 
 onBeforeUnmount(() => {});

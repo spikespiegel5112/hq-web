@@ -599,7 +599,7 @@ const getData = () => {
     ...pagination,
   })
     .then((response: any) => {
-      console.log(response);
+      
       response = response.data;
       dataIndex.push(
         ...response.map((item: any) => {
@@ -631,7 +631,7 @@ const handleSubmit = () => {
   });
   operationManagementOperationConfigConfigRequest(params)
     .then((response: any) => {
-      console.log(response);
+      
       global.$message.success("提交成功");
       state.loading = false;
     })
