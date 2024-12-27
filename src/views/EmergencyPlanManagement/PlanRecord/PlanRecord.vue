@@ -56,7 +56,7 @@ import {
 } from "@/api/management";
 
 import FilterTool from "./FilterTool.vue";
-import ReviewDialo from "./ReviewDialo.vue";
+import ReviewDialo from "./ReviewDialog.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
