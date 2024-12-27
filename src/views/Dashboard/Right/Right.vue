@@ -17,29 +17,7 @@
     <div class="content">
       <vue-scroll>
         <a-space wrap>
-          <div>
-            <img
-              :src="
-                global.$getImageUrl(
-                  '/src/assets/menu_PassengerFlowDataManagement.png'
-                )
-              "
-              alt=""
-            />
-          </div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
+          <div v-html="winContent"></div>
         </a-space>
       </vue-scroll>
     </div>
@@ -69,13 +47,14 @@ const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
 const formDataRef = ref();
-const AccessTokenData = ref();
+const videoDomId = ref();
 
 const state = reactive({});
 
-onMounted(async () => {
-  console.log("发请求");
+// 定义 winContent 响应式数据
+const winContent = ref("");
 
+onMounted(async () => {
   // 登录
   try {
     const res1 = await axios.post("http://10.141.10.10:8088/VIID/login/v2", {});
@@ -97,7 +76,7 @@ onMounted(async () => {
     );
     console.log("res2", res2, btoa("loadmin"));
 
-    // 鉴权
+    // 鉴权+keeplive
     res2.data.AccessToken
       ? setInterval(async () => {
           const res3 = await axios.post(
@@ -112,10 +91,94 @@ onMounted(async () => {
           console.log("res3", res3);
         }, 30000)
       : null;
+
+    // 动态加载外部脚本
+    await loadScript();
+    // 初始化
+    const initData = {
+      ip: "10.141.10.10",
+      token: res2.data.AccessToken,
+      title: document.title + Date.now(),
+      offset: [0, 0],
+    };
+    await init(initData);
+
+    // 创建窗格
+    createPanelWindow();
+
+    // 启动实况
+    startLive();
+
   } catch (error) {
     console.error("Login failed:", error);
   }
 });
+
+// 初始化
+const init = async (initData: any) => {
+  (window as any).imosPlayer
+    .init(initData)
+    .then(function (res: any) {
+      if (res.ErrCode === 0) {
+        console.log("登陆成功res", res);
+        checkInit(); // 检查初始化状态
+      } else {
+        alert(res.ErrMsg);
+      }
+    })
+    .catch(function (err: any) {
+      alert("调用失败");
+      console.error(err);
+    });
+};
+
+// 动态加载外部脚本
+const loadScript = () => {
+  return new Promise((resolve: any, reject: any) => {
+    const script = document.createElement("script");
+    script.src = "http://10.141.10.10:8093/static/imosPlayer.min.js";
+    script.onload = () => {
+      console.log("imosPlayer.min.js loaded successfully");
+      resolve();
+    };
+    script.onerror = () => {
+      console.error("Failed to load imosPlayer.min.js");
+      reject();
+    };
+    document.head.appendChild(script);
+  });
+};
+
+// 创建窗格
+const createPanelWindow = () => {
+  let videoDom = (window as any).imosPlayer.createPanelWindow();
+  // 将 win 的内容赋值给 winContent
+  videoDom.style.width = "146px";
+  videoDom.style.height = "154px";
+  videoDomId.value = videoDom.id;
+  winContent.value = videoDom.outerHTML;
+  console.log("win", winContent.value);
+};
+
+// 启动实况
+const startLive = () => {
+  console.log("startLive");
+  (window as any).imosPlayer
+    .playLive(videoDomId.value, {
+      camera: "31018900001320000109",
+      title: "123456789",
+      stream: 0,
+    })
+    .then((res: any) => {
+      console.log("实况", res);
+    });
+};
+
+const checkInit = () => {
+  let res = (window as any).imosPlayer.checkInit();
+  console.log(res ? "已初始化" : "未初始化");
+  // alert(res ? "已初始化" : "未初始化");
+};
 
 onBeforeUnmount(() => {});
 </script>
@@ -126,7 +189,6 @@ onBeforeUnmount(() => {});
   flex-direction: column;
   height: calc(100vh - 1.75rem);
   position: relative;
-  // color: #fff;
   .content {
     height: calc(100vh - 2.8rem);
     overflow: auto;
