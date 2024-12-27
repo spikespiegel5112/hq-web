@@ -9,6 +9,15 @@ import { store } from "@/store";
 
 const prefix = "/manage";
 
+// 获取告警信息
+export const getAreaMapAlarmInfoData = (params: any) => {
+  return service({
+    url: prefix + "/backend/indexPage/getAreaMapAlarmInfoData",
+    method: "POST",
+    data: params,
+  });
+};
+
 // 附件
 // 下载
 export const attachmentDownloadRequest = (params: any) => {
