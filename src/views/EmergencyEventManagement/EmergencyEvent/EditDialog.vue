@@ -29,7 +29,7 @@
               @change="handleChangeEventType"
             >
               <a-select-option
-                v-for="item in global.$store.state.dictionary.manageRegion"
+                v-for="item in global.$getDictionary('manageRegion')"
                 :key="item.value"
                 :value="item.value"
               >
