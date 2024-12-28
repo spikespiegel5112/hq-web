@@ -9,6 +9,14 @@ import { store } from "@/store";
 
 const prefix = "/manage";
 
+// 视频上墙
+export const videoUpperWall = (params: any) => {
+  return service({
+    url: prefix + "/backend/indexPage/videoUpperWall",
+    method: "POST",
+    data: params,
+  });
+};
 // 获取告警信息
 export const getAreaMapAlarmInfoData = (params: any) => {
   return service({
