@@ -262,7 +262,7 @@ const getData = () => {
         id: props.rowData.eventAssociationId,
       });
       disposalData = disposalData.data;
-      state.disposalData = disposalData
+      state.disposalData = disposalData;
       state.disposalList = disposalData.disposalList;
       response.emergencyPlanDisposalList.forEach((item: any, index: number) => {
         state.fileList.push(getCurrentStep(item));
@@ -272,9 +272,6 @@ const getData = () => {
         state.formData[item] = response[item];
       });
       console.log(state.formData);
-      // response.preplanResourceStepList.forEach((item: any, index: number) => {
-      //   state.fileList.push(getCurrentStep(item));
-      // });
     })
     .catch((error: any) => {
       console.log(error);

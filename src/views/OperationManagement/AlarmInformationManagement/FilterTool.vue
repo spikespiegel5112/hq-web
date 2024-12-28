@@ -20,12 +20,11 @@
                 </a-select>
               </a-form-item>
             </a-col>
-            <a-col :span="7">
+            <a-col :span="9">
               <a-form-item name="alarmTime" label="日期">
                 <a-range-picker
                   show-time
                   v-model:value="state.alarmTime"
-                  format="YYYY-MM-DD"
                   allow-clear
                   @change="handleChangeDateTime1"
                 />
@@ -47,7 +46,7 @@
                 </a-select>
               </a-form-item>
             </a-col>
-            <a-col :span="5">
+            <a-col :span="4">
               <a-form-item name="alarmLevel" label="级别">
                 <a-select
                   v-model:value="state.formData.alarmLevel"
