@@ -24,7 +24,7 @@
             <a-col :span="8">
               <a-form-item name="statisticalTime" label="查询时间">
                 <a-range-picker
-                  v-model:value="state.statisticalTime"
+                  v-model:value="state.formData.statisticalTime"
                   format="YYYY-MM-DD"
                   allow-clear
                   @change="handleChangeTime1"
@@ -86,6 +86,8 @@ const handleSearch = () => {
 
 const handleReset = () => {
   formDataRef.value.resetFields();
+  state.formData.statisticalTimeBegin = null;
+  state.formData.statisticalTimeEnd = null;
   emit("onReset", state.formData);
 };
 

@@ -2,7 +2,7 @@
   <div class="common_basetable_wrapper">
     <a-table
       :dataSource="actualTableData"
-      :loading="state.loading"
+      :loading="global.$store.state.app.tableLoading"
       :rowClassName="
         (_record, index) => (index % 2 === 1 ? 'table-striped' : undefined)
       "
@@ -367,10 +367,17 @@ watch(
       state.originalTableData = [];
     }
     initPagination();
-    state.loading = false;
+    global.$store.commit("app/updateTableLoading", false);
   },
   {
     deep: true,
+  }
+);
+
+watch(
+  () => props.loading,
+  (newValue: any, oldValue: any) => {
+    // state.loading = newValue;
   }
 );
 
@@ -395,7 +402,7 @@ const checkFileType = (file: any) => {
 };
 
 const hangleChangePage = (current: number, pageSize: number) => {
-  state.loading = true;
+  global.$store.commit("app/updateTableLoading", true);
   pagination.current = current;
   pagination.pageSize = pageSize;
   emit("onChangePage", pagination);

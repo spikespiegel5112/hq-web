@@ -17,6 +17,7 @@
       :tableData="state.tableData"
       :dataModel="pageModel"
       :pagination="pagination"
+      :loading="global.$store.state.app.tableLoading"
       @onEdit="handleEdit"
       @onReview="handleReview"
       @onChangePage="handleChangePage"
@@ -45,7 +46,6 @@ import {
   eventManageSuddenEventExportRequest,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
-import EditDialog from "./EditDialog.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -105,9 +105,6 @@ let queryFormData = reactive({} as any);
 const pagination = reactive({
   ...global.$store.state.app.defaultPagination,
 });
-const env = computed(() => {
-  return import.meta.env;
-});
 
 const getData = () => {
   passengerFlowMetroPassengerFlowGetPageRequest({
@@ -142,6 +139,7 @@ const handleAdd = () => {
 };
 
 const handleSearch = (formData: object) => {
+  global.$store.commit("app/updateTableLoading", true);
   queryFormData = formData;
   getData();
 };

@@ -23,6 +23,7 @@ const app = {
     currentEventTypeList: [] as any[],
     emergencyPlanType: 0,
     emergencyEventType: 1,
+    tableLoading: true,
   }),
   mutations: {
     updateBannerInfo: (state: any, payload: any) => {
@@ -67,6 +68,9 @@ const app = {
           }),
         });
       }
+    },
+    updateTableLoading: (state: any, payload: any) => {
+      state.tableLoading = payload;
     },
   },
   actions: {

@@ -11,6 +11,9 @@
         <a-layout-content>
           <AccessLog />
           <router-view v-if="dictionaryReady"></router-view>
+          <div v-else class="loading">
+            <LoadingOutlined />
+          </div>
         </a-layout-content>
       </a-layout>
     </a-layout>
@@ -29,6 +32,7 @@ import {
   ref,
   nextTick,
 } from "vue";
+import { LoadingOutlined } from "@ant-design/icons-vue";
 
 import Header from "@/components/Header.vue";
 import Menu from "@/components/Menu.vue";
@@ -112,6 +116,16 @@ onBeforeUnmount(() => {});
       padding: 0;
       background-image: linear-gradient(to bottom, #001529, transparent);
       background-color: transparent;
+    }
+  }
+  .loading {
+    width: 100%;
+    height: calc(100% - 0.75rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .anticon {
+      font-size: 10rem;
     }
   }
 }
