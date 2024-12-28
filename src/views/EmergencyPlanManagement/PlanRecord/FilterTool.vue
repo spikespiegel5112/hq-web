@@ -25,6 +25,7 @@
             <a-col :span="10">
               <a-form-item name="planTime" label="查询时间">
                 <a-range-picker
+                  show-time
                   v-model:value="state.planTime"
                   format="YYYY-MM-DD"
                   @change="handleChangePlanTime"

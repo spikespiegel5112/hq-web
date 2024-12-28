@@ -23,11 +23,11 @@
                 </a-select>
               </a-form-item>
             </a-col>
-            <a-col :span="8">
+            <a-col :span="10">
               <a-form-item name="statisticalDate" label="查询时间">
                 <a-range-picker
+                  show-time
                   v-model:value="state.statisticalDate"
-                  format="YYYY-MM-DD"
                   @change="handleChangeStatisticalDate"
                 />
               </a-form-item>

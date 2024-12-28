@@ -85,6 +85,7 @@
             :label-col="{ style: { width: '100px' } }"
           >
             <a-range-picker
+                  show-time
               v-if="global.$checkEditable(props.mode)"
               v-model:value="state.dutyTime"
               format="YYYY-MM-DD"

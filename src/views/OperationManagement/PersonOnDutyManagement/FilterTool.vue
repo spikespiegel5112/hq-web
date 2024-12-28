@@ -17,7 +17,8 @@
 
             <a-col :span="10">
               <a-form-item name="password" label="值班时间">
-                <a-range-picker v-model:value="state.dutyTime" show-time />
+                <a-range-picker
+                  show-time v-model:value="state.dutyTime" show-time />
               </a-form-item>
             </a-col>
           </a-row>

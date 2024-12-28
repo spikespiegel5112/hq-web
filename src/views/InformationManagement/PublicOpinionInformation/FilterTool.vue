@@ -53,6 +53,7 @@
             <a-col :span="8">
               <a-form-item name="publicSentimentTime" label="舆情发生时间">
                 <a-range-picker
+                  show-time
                   v-model="state.publicSentimentTime"
                   format="YYYY-MM-DD"
                   allow-clear

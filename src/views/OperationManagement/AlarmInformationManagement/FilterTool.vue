@@ -23,6 +23,7 @@
             <a-col :span="7">
               <a-form-item name="alarmTime" label="日期">
                 <a-range-picker
+                  show-time
                   v-model:value="state.alarmTime"
                   format="YYYY-MM-DD"
                   allow-clear

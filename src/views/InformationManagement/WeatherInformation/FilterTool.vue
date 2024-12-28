@@ -7,6 +7,7 @@
             <a-col :span="8">
               <a-form-item name="dataTime" label="时间">
                 <a-range-picker
+                  show-time
                   v-model:value="state.dataTime"
                   format="YYYY-MM-DD"
                   @change="handleChangeTime1"
