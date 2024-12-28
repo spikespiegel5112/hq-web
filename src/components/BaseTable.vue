@@ -136,7 +136,7 @@
       :pageSizeOptions="['10', '20', '30', '50', '100']"
       :total="pagination.total"
       :page-size="pagination.pageSize"
-      :show-total="(total) => `共 ${total} 条`"
+      :show-total="(total:number) => `共 ${total} 条`"
       @change="hangleChangePage"
     />
 

@@ -11,8 +11,9 @@
         :tableData="state.tableData"
         :processedTableData="state.processedTableData"
         :dataModel="pageModel"
+        :pagination="pagination"
         height="100%"
-        tableBodyHeight="calc(100% - 0.4rem)"
+        tableBodyHeight="calc(100%)"
       />
     </div>
   </Block>
@@ -109,6 +110,10 @@ const state = reactive({
   timeType: 1,
 });
 
+const pagination = reactive({
+  ...global.$store.state.app.defaultPagination,
+});
+
 const eventAllList = computed(() => {
   return [
     ...global.$store.state.app.currentEventTypeList[0].data,
@@ -179,7 +184,7 @@ onBeforeUnmount(() => {});
       );
     }
     :deep(.ant-table-wrapper) {
-      height: 100%;
+      height: calc(100% - 0.6rem);
       background-color: transparent;
       .ant-table-wrapper,
       .ant-spin-nested-loading,
@@ -193,42 +198,39 @@ onBeforeUnmount(() => {});
       .ant-pagination {
         margin: 0.1rem 0 0 0;
       }
-      .ant-table-container {
-        height: 100%;
-        .ant-table-tbody {
-          .ant-table-row {
-            &.table-striped,
-            &:hover {
-              transition: all 0.3s;
-              background-image: linear-gradient(
-                to right,
-                rgba(0, 67, 144, 0) 0%,
-                rgba(0, 67, 144, 1) 40%,
-                rgba(0, 67, 144, 1) 70%,
-                rgba(0, 67, 144, 0) 100%
-              );
-              > td {
-                background-color: transparent;
-              }
-            }
-            &:hover {
-              background-image: linear-gradient(
-                to right,
-                rgb(15, 83, 231) 0%,
-                rgba(15, 83, 231, 1) 100%
-              );
-            }
-            .ant-table-cell {
-              padding: 0.05rem;
+      .ant-table-tbody {
+        .ant-table-row {
+          &.table-striped,
+          &:hover {
+            transition: all 0.3s;
+            background-image: linear-gradient(
+              to right,
+              rgba(0, 67, 144, 0) 0%,
+              rgba(0, 67, 144, 1) 40%,
+              rgba(0, 67, 144, 1) 70%,
+              rgba(0, 67, 144, 0) 100%
+            );
+            > td {
+              background-color: transparent;
             }
           }
+          &:hover {
+            background-image: linear-gradient(
+              to right,
+              rgb(15, 83, 231) 0%,
+              rgba(15, 83, 231, 1) 100%
+            );
+          }
+          .ant-table-cell {
+            padding: 0.05rem;
+          }
         }
-        .ant-table-thead {
-          tr {
-            .ant-table-cell {
-              padding: 0.05rem;
-              background-color: #0023a6;
-            }
+      }
+      .ant-table-thead {
+        tr {
+          .ant-table-cell {
+            padding: 0.05rem;
+            background-color: #0023a6;
           }
         }
       }
