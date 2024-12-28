@@ -2,7 +2,7 @@
   <div class="common_filtertool_wrapper">
     <a-form :model="formData" autocomplete="off" ref="formDataRef">
       <a-row>
-        <a-col :span="20">
+        <a-col :span="21">
           <a-row :gutter="20">
             <a-col :span="8">
               <a-form-item name="userName" label="上客点">
@@ -13,7 +13,7 @@
             </a-col>
           </a-row>
         </a-col>
-        <a-col :span="4" class="operation">
+        <a-col :span="3" class="operation">
           <a-space>
             <a-button class="submitbutton" @click="handleReset">
               重置
