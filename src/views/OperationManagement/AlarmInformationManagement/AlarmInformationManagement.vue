@@ -25,7 +25,7 @@
       @onChangePage="handleChangePage"
       @onDelete="handleDelete"
     />
-    <!-- <ReviewEventDialog
+    <ReviewEventDialog
       :visible="state.dialogReviewEventVisible"
       :mode="state.dialogMode"
       :dataModel="pageModel"
@@ -33,10 +33,9 @@
       @onClose="handleClose"
       @onSubmit="handleSubmit"
     >
-    </ReviewEventDialog> -->
-
+    </ReviewEventDialog>
     <ReviewPlanDialog
-      :visible="state.dialogReviewEventVisible"
+      :visible="state.dialogReviewPlanVisible"
       :mode="state.dialogMode"
       :dataModel="pageModel"
       :rowData="state.currentRowData"
@@ -200,19 +199,24 @@ const getData = () => {
 };
 
 const handleEdit = (rowData: any) => {
-  state.dialogReviewEventVisible = true;
+  state.dialogReviewPlanVisible = true;
   state.dialogMode = "edit";
   state.currentRowData = rowData;
 };
 
 const handleReview = (rowData: any) => {
-  state.dialogReviewEventVisible = true;
+  if (rowData.dateType === global.$store.state.app.emergencyPlanType) {
+    state.dialogReviewPlanVisible = true;
+  }
+  if (rowData.dateType === global.$store.state.app.emergencyEventType) {
+    state.dialogReviewEventVisible = true;
+  }
   state.dialogMode = "review";
   state.currentRowData = rowData;
 };
 
 const handleAdd = () => {
-  state.dialogReviewEventVisible = true;
+  state.dialogReviewPlanVisible = true;
   state.dialogMode = "add";
 };
 
@@ -227,7 +231,7 @@ const handleReset = (formData: object) => {
 };
 
 const handleClose = () => {
-  state.dialogReviewEventVisible = false;
+  state.dialogReviewPlanVisible = false;
   global.$store.commit("app/updateTableLoading", false);
 };
 
