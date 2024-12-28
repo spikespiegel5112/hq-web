@@ -206,11 +206,12 @@ const handleEdit = (rowData: any) => {
 
 const handleReview = (rowData: any) => {
   console.log(eventAllList.value);
-  const emergencyPlanList =
-    global.$store.state.app.currentEventTypeList[0].data;
-  const emergencyEventList =
-    global.$store.state.app.currentEventTypeList[1].data;
-
+  const emergencyPlanList = global.$store.state.app.currentEventTypeList.find(
+    (item: any) => item.type === global.$store.state.app.emergencyPlanType
+  ).data;
+  const emergencyEventList = global.$store.state.app.currentEventTypeList.find(
+    (item: any) => item.type === global.$store.state.app.emergencyEventType
+  ).data;
   if (
     emergencyPlanList.some(
       (item: any) => Number(item.value) === rowData.preplanResourceId
