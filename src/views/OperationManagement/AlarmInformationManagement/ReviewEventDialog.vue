@@ -241,7 +241,7 @@ const getData = async () => {
     id: props.rowData.eventAssociationId,
   })
     .then((response: any) => {
-      debugger;
+      // debugger;
 
       response = response.data;
       state.tableData = response.list;

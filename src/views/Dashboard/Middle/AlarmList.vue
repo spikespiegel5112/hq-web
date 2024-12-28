@@ -9,6 +9,7 @@
     >
       <BaseTable
         :tableData="state.tableData"
+        :processedTableData="state.processedTableData"
         :dataModel="pageModel"
         height="100%"
         tableBodyHeight="calc(100% - 0.4rem)"
@@ -62,7 +63,7 @@ const pageModel = ref([
   },
   {
     label: "报警类型",
-    name: "dateType",
+    name: "alarmLevel",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -103,8 +104,16 @@ const pageModel = ref([
 
 const state = reactive({
   tableData: [] as any[],
+  processedTableData: [] as any[],
   dataModel: [] as any[],
   timeType: 1,
+});
+
+const eventAllList = computed(() => {
+  return [
+    ...global.$store.state.app.currentEventTypeList[0].data,
+    ...global.$store.state.app.currentEventTypeList[1].data,
+  ];
 });
 
 watch(
@@ -129,6 +138,15 @@ const getData = () => {
   })
     .then((response: any) => {
       state.tableData = response.data;
+      const eventLevel = global.$getDictionary("eventLevel");
+      state.processedTableData = response.data.map((item: any) => {
+        return {
+          ...item,
+          alarmLevel: eventLevel.find(
+            (item2: any) => item.alarmLevel === Number(item2.value)
+          )?.label,
+        };
+      });
     })
     .catch((error: any) => {
       console.log(error);
