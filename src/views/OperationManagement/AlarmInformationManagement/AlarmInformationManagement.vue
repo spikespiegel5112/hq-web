@@ -25,7 +25,7 @@
       @onChangePage="handleChangePage"
       @onDelete="handleDelete"
     />
-    <ReviewEventDialog
+    <!-- <ReviewEventDialog
       :visible="state.dialogReviewEventVisible"
       :mode="state.dialogMode"
       :dataModel="pageModel"
@@ -33,10 +33,10 @@
       @onClose="handleClose"
       @onSubmit="handleSubmit"
     >
-    </ReviewEventDialog>
+    </ReviewEventDialog> -->
 
     <ReviewPlanDialog
-      :visible="state.dialogReviewPlanVisible"
+      :visible="state.dialogReviewEventVisible"
       :mode="state.dialogMode"
       :dataModel="pageModel"
       :rowData="state.currentRowData"

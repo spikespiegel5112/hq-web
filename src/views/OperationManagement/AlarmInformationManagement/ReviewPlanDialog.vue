@@ -169,6 +169,7 @@ import {
 import {
   planManagementEmergencyPlanGetDisposalRequest,
   preplanPreplanGetStepPageRequest,
+  planManagementEmergencyPlanGetOneByIdRequest,
 } from "@/api/management";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
@@ -243,9 +244,7 @@ watch(
       rowData = {
         ...rowData,
       };
-      state.formData = rowData;
       getData();
-      getStepData();
     }
   }
 );
@@ -254,8 +253,27 @@ const getData = () => {
   global.$store.commit("app/updateTableLoading", true);
   state.formData.eventType = props.rowData.eventType;
   state.formData.seId = props.rowData.id;
+  planManagementEmergencyPlanGetOneByIdRequest({
+    id: props.rowData.eventAssociationId,
+  })
+    .then(async (response: any) => {
+      response = response.data;
+      state.disposalData = response;
+      state.disposalList = response.disposalList;
+      await getStepData(response.preplanResourceId);
+      Object.keys(state.formData).forEach((item: any) => {
+        state.formData[item] = response[item];
+      });
+      console.log(state.formData);
+      // response.preplanResourceStepList.forEach((item: any, index: number) => {
+      //   state.fileList.push(getCurrentStep(item));
+      // });
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
   planManagementEmergencyPlanGetDisposalRequest({
-    id: props.rowData.id,
+    id: props.rowData.eventAssociationId,
   })
     .then(async (response: any) => {
       response = response.data;
@@ -270,22 +288,26 @@ const getData = () => {
     });
 };
 
-const getStepData = () => {
-  const planData: any = eventList.value.find((item: any) => {
-    return Number(item.value) === props.rowData.preplanResourceId;
-  });
-
-  preplanPreplanGetStepPageRequest({
-    preplanType: global.$store.state.app.emergencyEventType,
-    eventType: planData.label,
-  })
-    .then((response: any) => {
-      response = response.data;
-      state.planInfo = response.list;
-    })
-    .catch((error: any) => {
-      console.log(error);
+const getStepData = (preplanResourceId: number) => {
+  return new Promise((resolve, reject) => {
+    const planData: any = eventList.value.find((item: any) => {
+      return Number(item.value) === preplanResourceId;
     });
+
+    preplanPreplanGetStepPageRequest({
+      prId: preplanResourceId,
+      eventType: planData.label,
+    })
+      .then((response: any) => {
+        response = response.data;
+        state.planInfo = response.list;
+        resolve(response.list);
+      })
+      .catch((error: any) => {
+        console.log(error);
+        reject(error);
+      });
+  });
 };
 
 const handleClose = () => {
@@ -306,6 +328,8 @@ const getCurrentStep = (currentPreplanData: any) => {
   });
   return _result || result;
 };
+
+const getPlanData = () => {};
 
 onMounted(() => {
   setTimeout(() => {
