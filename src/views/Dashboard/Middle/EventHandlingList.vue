@@ -74,7 +74,7 @@ import {
   nextTick,
 } from "vue";
 
-import { backendIndexPageEmergencyResultRequest } from "@/api/management";
+import { backendIndexPageSuddenEventRequest } from "@/api/management";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -106,10 +106,9 @@ watch(
 
 const getData = () => {
   global.$store.commit("app/updateTableLoading", true);
-  backendIndexPageEmergencyResultRequest({
+  backendIndexPageSuddenEventRequest({
     hour: 1,
     // queryDate: global.$dayjs().format("YYYY-MM-DD"),
-    queryDate: "2024-09-11",
     timeType: state.timeType,
   })
     .then((response: any) => {

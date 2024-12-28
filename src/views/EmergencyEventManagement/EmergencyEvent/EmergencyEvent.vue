@@ -304,6 +304,7 @@ const handleDisposal = (rowData: any) => {
 
 const handleCloseHandling = () => {
   state.dialogDisposalVisible = false;
+  global.$store.commit("app/updateTableLoading", false);
 };
 
 const handleSubmitDisposal = (formData: any) => {

@@ -15,6 +15,7 @@
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
+    <!-- {{ global.$store.state.app.tableLoading }} -->
     <BaseTable
       :tableData="state.tableData"
       :processedTableData="state.processedTableData"
@@ -264,6 +265,7 @@ const handleReset = (formData: object) => {
 const handleClose = () => {
   state.dialogVisible = false;
   state.dialogReviewVisible = false;
+  global.$store.commit("app/updateTableLoading", false);
 };
 
 const handleSubmit = (formData: any) => {
@@ -309,6 +311,7 @@ const handleDisposal = (rowData: any) => {
 
 const handleCloseHandling = () => {
   state.dialogDisposalVisible = false;
+  global.$store.commit("app/updateTableLoading", false);
 };
 
 const handleSubmitDisposal = (formData: any) => {

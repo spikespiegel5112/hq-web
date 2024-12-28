@@ -26,6 +26,17 @@ export const getAreaMapAlarmInfoData = (params: any) => {
   });
 };
 
+
+// 大屏-突发事件
+export const backendIndexPageSuddenEventRequest = (params: any) => {
+  return service({
+    url: prefix + "/backend/indexPage/suddenEvent",
+    method: "POST",
+    data: params,
+  });
+};
+
+
 // 附件
 // 下载
 export const attachmentDownloadRequest = (params: any) => {

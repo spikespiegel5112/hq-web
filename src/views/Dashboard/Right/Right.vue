@@ -34,16 +34,17 @@
           </a-col>
           <!-- 上墙 -->
           <a-col :span="12">
-          <a-button type="primary" class="checkBtn" @click="checkBtn">上墙</a-button>
+            <a-button type="primary" class="checkBtn" @click="checkBtn"
+              >上墙</a-button
+            >
           </a-col>
         </a-row>
       </a-form>
     </div>
 
     <div class="content">
-      <div id="videoDOMId">
-      </div>
-      
+      <div id="videoDOMId"></div>
+
       <div class="mapPic">
         <img src="@/assets/mapPic.png" />
         <!-- 报警事件 -->
@@ -79,7 +80,7 @@ import axios from "axios"; // 导入 axios
 import {
   screenBannerInfoRequest,
   getAreaMapAlarmInfoData,
-  videoUpperWall
+  videoUpperWall,
 } from "@/api/management";
 import CryptoJS from "crypto-js"; // 导入 crypto-js
 
@@ -188,23 +189,23 @@ const checkBtn = () => {
   console.log("点击了上墙");
   videoUpperWall({})
     .then((res: any) => {
-        console.log("上墙res", res);
+      console.log("上墙res", res);
     })
     .catch((err: any) => {
       console.log(err);
     });
-    // 更新所有 videoDom 中的勾选框显示状态
-    document.querySelectorAll("#videoDOMId input[type='checkbox']").forEach((checkbox: any) => {
-    checkbox.style.display = "block";
-    
-    
-    //  // 注册勾选事件
-    //  checkbox.addEventListener('change', (event:any) => {
-    //   handleCheckboxChange(event);
-    // }); 
-  });
-};
+  // 更新所有 videoDom 中的勾选框显示状态
+  document
+    .querySelectorAll("#videoDOMId input[type='checkbox']")
+    .forEach((checkbox: any) => {
+      checkbox.style.display = "block";
 
+      //  // 注册勾选事件
+      //  checkbox.addEventListener('change', (event:any) => {
+      //   handleCheckboxChange(event);
+      // });
+    });
+};
 
 // 初始化
 const init = async (initData: any) => {
@@ -245,19 +246,17 @@ const createPanelWindow = () => {
     videoDom.style.marginTop = "0.08rem";
     videoDom.style.overflow = "hidden"; // 确保子元素内部也隐藏溢出部分
 
-     // 创建勾选框
-     const checkbox = document.createElement("input");
+    // 创建勾选框
+    const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.style.position = "absolute";
     checkbox.style.top = "5px";
-    checkbox.style.left = "5px"; 
+    checkbox.style.left = "5px";
     checkbox.style.display = checkFlag.value ? "block" : "none"; // 初始状态根据 checkFlag 决定
 
-    checkbox.addEventListener('change', handleCheckboxChange);
+    checkbox.addEventListener("change", handleCheckboxChange);
 
     videoDom.appendChild(checkbox);
-
-     
 
     const videoContainer = document.querySelector("#videoDOMId");
     if (videoContainer) {
@@ -270,13 +269,13 @@ const createPanelWindow = () => {
 };
 
 // 视频勾选事件
-const handleCheckboxChange = (event: Event, ) => {
+const handleCheckboxChange = (event: Event) => {
   const checkbox = event.target as HTMLInputElement;
   if (checkbox.checked) {
-    console.log("勾选框被选中", );
+    console.log("勾选框被选中");
     // 在这里添加勾选框被选中时的逻辑
   } else {
-    console.log("勾选框未被选中", );
+    console.log("勾选框未被选中");
     // 在这里添加勾选框未被选中时的逻辑
   }
 };
@@ -404,7 +403,6 @@ const getAreaMapAlarmInfoFun = () => {
     });
 };
 
-
 onBeforeUnmount(() => {});
 </script>
 
@@ -415,7 +413,7 @@ onBeforeUnmount(() => {});
   height: calc(100vh - 1.75rem);
   position: relative;
   .content {
-    height: calc(100vh - 2.8rem);
+    height: calc(100vh - 3.4rem);
     text-align: center;
     position: relative;
     // background-color: #fff;
@@ -507,7 +505,7 @@ onBeforeUnmount(() => {});
     border-color: #f68b00 transparent transparent transparent;
   }
 }
-.checkBtn{
+.checkBtn {
   margin: -1rem 0 0.1rem 0;
 }
 </style>

@@ -38,7 +38,19 @@ const global = currentInstance.appContext.config.globalProperties;
 const props = defineProps({
   timeType: { type: Number, default: 1, required: true },
 });
-
+// "id": 36,
+//             "preplanResourceId": 111,
+//             "eventAssociationId": 94,
+//             "": "区域人数统计超阈值范围告警",
+//             "": 0,
+//             "": "2024-12-28 19:39:35",
+//             "alarmLevel": 0,
+//             "alarmStatus": 1,
+//             "createBy": null,
+//             "createTime": "2024-12-27 22:03:22",
+//             "updateBy": null,
+//             "updateTime": "2024-12-27 22:03:22",
+//             "preplanEventType": null
 const pageModel = ref([
   {
     label: "序号",
@@ -50,7 +62,7 @@ const pageModel = ref([
   },
   {
     label: "报警类型",
-    name: "infoType",
+    name: "dateType",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -58,7 +70,7 @@ const pageModel = ref([
   },
   {
     label: "报警内容",
-    name: "content",
+    name: "alarmContent",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -66,20 +78,20 @@ const pageModel = ref([
   },
   {
     label: "报警时间",
-    name: "warnDate",
+    name: "alarmTime",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
-  {
-    label: "报警地点",
-    name: "source",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
+  // {
+  //   label: "报警地点",
+  //   name: "source",
+  //   required: true,
+  //   tableVisible: true,
+  //   formVisible: true,
+  //   exportVisible: true,
+  // },
   {
     label: "查看",
     name: "operationColumn",
@@ -107,10 +119,9 @@ const getData = () => {
   global.$store.commit("app/updateTableLoading", true);
   backendIndexPageGetAlarmInfoDataRequest({
     alarmLevel: null,
-    
     alarmTimeEnd: null,
     alarmTimeStart: null,
-    
+
     dateType: null,
     page: 1,
     pageSize: 10,
