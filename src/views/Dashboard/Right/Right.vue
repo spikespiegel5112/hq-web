@@ -33,9 +33,9 @@
             </a-form-item>
           </a-col>
           <!-- 上墙 -->
-          <!-- <a-col :span="12">
+          <a-col :span="12">
           <a-button type="primary" class="checkBtn" @click="checkBtn">上墙</a-button>
-          </a-col> -->
+          </a-col>
         </a-row>
       </a-form>
     </div>
