@@ -135,11 +135,9 @@ const getData = () => {
     alarmLevel: null,
     alarmTimeEnd: null,
     alarmTimeStart: null,
-
     dateType: null,
-    page: 1,
-    pageSize: 10,
     preplanResourceId: null,
+    ...pagination,
   })
     .then((response: any) => {
       state.tableData = response.data;

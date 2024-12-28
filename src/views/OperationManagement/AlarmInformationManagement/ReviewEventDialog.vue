@@ -40,7 +40,13 @@
               <a-row>
                 <a-col :span="22">
                   <a-form-item label="等级">
-                    {{ state.formData.eventLevel }}
+                    {{
+                      global
+                        .$getDictionary("planLevel")
+                        .find(
+                          (item:any) => item.value === state.formData.eventLevel
+                        )?.label
+                    }}
                   </a-form-item>
                 </a-col>
               </a-row>
@@ -181,14 +187,14 @@ const state = reactive({
   formData: {
     id: null as number | null | undefined,
     attachmentList: [] as any[],
-    planCode: null,
-    planContent: null,
-    planLevel: null,
-    planLocation: null,
-    planSource: null,
-    planStatus: null,
-    planTime: null,
-    preplanResourceId: null,
+    eventCode: null,
+    eventContent: null,
+    eventLocation: null,
+    eventStatus: null,
+    eventTime: null,
+    eventType: null,
+    eventLevel: null,
+    manageRegion: null,
   } as any,
   fileList: [] as any[],
   disposalList: [] as any[],
@@ -240,46 +246,33 @@ const getData = async () => {
   eventManageSuddenEventGetPageRequest({
     id: props.rowData.eventAssociationId,
   })
-    .then((response: any) => {
-      // debugger;
-
-      response = response.data;
-      state.tableData = response.list;
-      pagination.total = response.total;
-      state.processedTableData = response.list.map((item: any) => {
-        return {
-          ...item,
-          eventStatus: global
-            .$getDictionary("eventStatus")
-            .find((item2: any) => item2.value === item.eventStatus).label,
-          eventLevel: global
-            .$getDictionary("eventLevel")
-            .find((item2: any) => item2.value === item.eventLevel).label,
-        };
-      });
-    })
-    .catch((error: any) => {
-      console.log(error);
-    });
-
-  eventManageSuddenEventGetDisposalRequest({
-    seId: props.rowData.eventAssociationId,
-  })
     .then(async (response: any) => {
       response = response.data;
-      state.disposalData = response;
-      state.disposalList = response.disposalList;
-      if (response.preplanResourceStepList) {
-        response.preplanResourceStepList.forEach((item: any, index: number) => {
-          state.fileList.push(getCurrentStep(item));
+      const disposalData = response.list[0];
+      state.disposalData = disposalData;
+      await getStepData(disposalData.prId);
+      Object.keys(state.formData).forEach((item: any) => {
+        state.formData[item] = disposalData[item];
+      });
+      console.log(state.formData);
+      eventManageSuddenEventGetDisposalRequest({
+        seId: props.rowData.eventAssociationId,
+      })
+        .then(async (response: any) => {
+          response = response.data;
+          state.disposalData = response;
+          state.disposalList = response.disposalList;
+          if (response.preplanResourceStepList) {
+            response.preplanResourceStepList.forEach(
+              (item: any, index: number) => {
+                state.fileList.push(getCurrentStep(item));
+              }
+            );
+          }
+        })
+        .catch((error: any) => {
+          console.log(error);
         });
-      }
-
-      // await getStepData(response.preplanResourceId);
-      // Object.keys(state.formData).forEach((item: any) => {
-      //   state.formData[item] = props.rowData[item];
-      // });
-      // console.log(state.formData);
     })
     .catch((error: any) => {
       console.log(error);
