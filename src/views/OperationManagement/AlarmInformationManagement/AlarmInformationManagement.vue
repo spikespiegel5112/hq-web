@@ -4,7 +4,7 @@
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
         <a-button class="import">导入</a-button>
-                 <ExportButton
+        <ExportButton
           :action="operationManagementAlarmInfoExportExcelRequest"
           :queryFormData="queryFormData"
           :pagination="{
@@ -151,6 +151,7 @@ const eventAllList = computed(() => {
 });
 
 const getData = () => {
+  global.$store.commit("app/updateTableLoading", true);
   pagination.total = undefined;
   operationManagementAlarmInfoGetPageRequest({
     ...queryFormData,

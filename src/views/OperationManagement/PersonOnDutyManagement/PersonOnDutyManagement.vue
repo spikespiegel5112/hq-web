@@ -151,6 +151,7 @@ const pagination = reactive({
 });
 
 const getData = () => {
+  global.$store.commit("app/updateTableLoading", true);
   pagination.total = undefined;
   operationManagementDutyStaffGetPageRequest({
     ...queryFormData,

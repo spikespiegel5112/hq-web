@@ -108,6 +108,7 @@ const pagination = reactive({
 });
 
 const getData = () => {
+  global.$store.commit("app/updateTableLoading", true);
   passengerFlowMetroPassengerFlowGetPageRequest({
     ...queryFormData,
     ...pagination,

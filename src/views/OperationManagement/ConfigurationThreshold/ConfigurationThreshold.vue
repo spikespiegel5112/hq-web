@@ -45,6 +45,7 @@ const state = reactive({
 });
 
 const getData = () => {
+  global.$store.commit("app/updateTableLoading", true);
   init();
 };
 

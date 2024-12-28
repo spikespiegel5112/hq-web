@@ -125,6 +125,7 @@ watch(
 );
 
 const getData = () => {
+  global.$store.commit("app/updateTableLoading", true);
   backendIndexPageTaxiVehicleMonitorRequest({})
     .then((response: any) => {
       

@@ -129,6 +129,7 @@ watch(
 );
 
 const getData = () => {
+  global.$store.commit("app/updateTableLoading", true);
   dictionaryManageGetDictPagingRequest({
     ...queryFormData,
     ...pagination,

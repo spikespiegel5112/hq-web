@@ -108,6 +108,7 @@ watch(
 );
 
 const getData = () => {
+  global.$store.commit("app/updateTableLoading", true);
   pagination.total = undefined;
   preplanPreplanGetStepPageRequest({
     prId: props.planId,

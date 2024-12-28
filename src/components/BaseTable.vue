@@ -377,7 +377,7 @@ watch(
 watch(
   () => props.loading,
   (newValue: any, oldValue: any) => {
-    // state.loading = newValue;
+    global.$store.commit("app/updateTableLoading", newValue);
   }
 );
 
@@ -444,7 +444,7 @@ const handlePreview = (scope: any, type: string) => {
   );
   state.dialogVisible = true;
   state.attachmentList = imageList;
-  
+
   state.currentPreviewFileType = type;
 };
 

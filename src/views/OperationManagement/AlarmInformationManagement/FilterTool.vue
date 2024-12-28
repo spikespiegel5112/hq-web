@@ -129,8 +129,10 @@ const handleSearch = () => {
 
 const handleReset = () => {
   formDataRef.value.resetFields();
-  emit("onReset", state.formData);
   state.alarmTime = [];
+  state.formData.alarmTimeStart = null;
+  state.formData.alarmTimeEnd = null;
+  emit("onReset", state.formData);
 };
 
 const handleChangeDateTime1 = (value: any) => {

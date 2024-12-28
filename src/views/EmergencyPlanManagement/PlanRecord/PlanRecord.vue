@@ -164,6 +164,7 @@ const eventList = computed(() => {
 });
 
 const getData = () => {
+  global.$store.commit("app/updateTableLoading", true);
   pagination.total = undefined;
   planManagementEmergencyPlanGetRecordPageRequest({
     ...queryFormData,

@@ -121,6 +121,7 @@ const pagination = reactive({
 });
 
 const getData = () => {
+  global.$store.commit("app/updateTableLoading", true);
   const result = [] as any[];
   for (let index = 0; index < 30; index++) {
     result.push({

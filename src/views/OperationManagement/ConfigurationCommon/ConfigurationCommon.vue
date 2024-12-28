@@ -135,6 +135,7 @@ const rules: Record<string, Rule[]> = {
 };
 
 const getData = () => {
+  global.$store.commit("app/updateTableLoading", true);
   operationManagementOperationConfigGetListRequest({
     ...queryFormData,
     ...pagination,

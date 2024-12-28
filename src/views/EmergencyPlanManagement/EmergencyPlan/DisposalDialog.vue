@@ -265,6 +265,7 @@ watch(
 );
 
 const getData = () => {
+  global.$store.commit("app/updateTableLoading", true);
   state.eventType = props.rowData.eventType;
   state.formData.id = props.rowData.id;
   planManagementEmergencyPlanGetDisposalRequest({

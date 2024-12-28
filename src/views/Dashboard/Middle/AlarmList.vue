@@ -106,6 +106,7 @@ watch(
 );
 
 const getData = () => {
+  global.$store.commit("app/updateTableLoading", true);
   backendIndexPageEmergencyRequest({
     hour: 1,
     // queryDate: global.$dayjs().format("YYYY-MM-DD"),

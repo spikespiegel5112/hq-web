@@ -163,6 +163,7 @@ const tableBodyHeight = computed(() => {
 }) as any;
 
 const getData = () => {
+  global.$store.commit("app/updateTableLoading", true);
   state.tableData = routeDictionary.find(
     (item: any) => item.name === "layout"
   ).children;

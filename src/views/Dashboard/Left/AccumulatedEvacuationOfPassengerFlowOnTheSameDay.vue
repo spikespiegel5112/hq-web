@@ -129,6 +129,7 @@ const setOption: EChartsOption = () => {
 };
 
 const getData = () => {
+  global.$store.commit("app/updateTableLoading", true);
   backendIndexPageTodayFlowAcceleratedRequest({
     ...global.$store.state.app.currentQueryDateParams,
     timeType: 1,

@@ -117,6 +117,7 @@ const env = computed(() => {
 });
 
 const getData = () => {
+  global.$store.commit("app/updateTableLoading", true);
   backendRailwayArriveGetRailwayArrivePagingRequest({
     ...queryFormData,
     ...pagination,

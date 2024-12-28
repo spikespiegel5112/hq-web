@@ -252,6 +252,7 @@ watch(
 );
 
 const getData = () => {
+  global.$store.commit("app/updateTableLoading", true);
   state.eventType = props.rowData.eventType;
   state.formData.seId = props.rowData.id;
   eventManageSuddenEventGetDisposalRequest({

@@ -139,7 +139,8 @@ const rules: Record<string, Rule[]> = {
   ],
 };
 
-const getData = () => {};
+const getData = () => {
+  global.$store.commit("app/updateTableLoading", true);};
 
 const handleSubmit = () => {};
 onMounted(async () => {

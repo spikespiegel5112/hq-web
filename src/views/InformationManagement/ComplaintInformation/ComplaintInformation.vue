@@ -155,6 +155,7 @@ const pagination = reactive({
 });
 
 const getData = () => {
+  global.$store.commit("app/updateTableLoading", true);
   infoManagementComplaintInfoGetPageRequest({
     ...queryFormData,
     ...pagination,
