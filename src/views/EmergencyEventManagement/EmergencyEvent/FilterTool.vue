@@ -4,7 +4,7 @@
       <a-row>
         <a-col :span="21">
           <a-row :gutter="20">
-            <a-col :span="7">
+            <a-col :span="5">
               <a-form-item name="manageRegion" label="管理区域">
                 <a-select
                   v-model:value="state.formData.manageRegion"
@@ -22,7 +22,7 @@
               </a-form-item>
             </a-col>
 
-            <a-col :span="5">
+            <a-col :span="4">
               <a-form-item name="eventType" label="事件类型">
                 <a-select
                   v-model:value="state.formData.eventType"
@@ -49,12 +49,11 @@
               </a-form-item>
             </a-col>
 
-            <a-col :span="7">
+            <a-col :span="10">
               <a-form-item name="eventTime" label="接收时间">
                 <a-range-picker
                   show-time
                   v-model:value="state.eventTime"
-                  format="YYYY-MM-DD"
                   @change="handleChangeEventTime"
                   allow-clear
                 />

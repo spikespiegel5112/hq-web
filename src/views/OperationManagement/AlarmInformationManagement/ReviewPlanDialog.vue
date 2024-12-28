@@ -3,7 +3,7 @@
     <template #title>
       <div class="common_dislogtitle_item">
         <span class="sequre"></span>
-        <span class="text"> {{ dialogTitle }}</span>
+        <span class="text"> 查看应急预案</span>
       </div>
     </template>
     <div class="maincontent">
@@ -261,6 +261,7 @@ const getData = () => {
       let disposalData = await planManagementEmergencyPlanGetDisposalRequest({
         id: props.rowData.eventAssociationId,
       });
+
       disposalData = disposalData.data;
       state.disposalData = disposalData;
       state.disposalList = disposalData.disposalList;

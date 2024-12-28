@@ -3,7 +3,7 @@
     <template #title>
       <div class="common_dislogtitle_item">
         <span class="sequre"></span>
-        <span class="text"> {{ dialogTitle }}</span>
+        <span class="text"> 查看突发事件</span>
       </div>
     </template>
     <div class="maincontent">
@@ -153,11 +153,9 @@ import {
 } from "vue";
 
 import {
-  eventManageSuddenEventSaveDisposalRequest,
   eventManageSuddenEventGetDisposalRequest,
   preplanPreplanGetStepPageRequest,
 } from "@/api/management";
-import { debug } from "console";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -181,13 +179,14 @@ const state = reactive({
   formData: {
     id: null as number | null | undefined,
     attachmentList: [] as any[],
-    eventCode: null,
-    eventContent: null,
-    eventLocation: null,
-    eventStatus: null,
-    eventTime: null,
-    eventType: null,
-    eventLevel: null,
+    planCode: null,
+    planContent: null,
+    planLevel: null,
+    planLocation: null,
+    planSource: null,
+    planStatus: null,
+    planTime: null,
+    preplanResourceId: null,
   } as any,
   fileList: [] as any[],
   disposalList: [] as any[],
@@ -226,56 +225,60 @@ watch(
     state.visible = newValue;
     if (!!newValue) {
       await nextTick();
-      let rowData = JSON.parse(JSON.stringify(props.rowData));
-      rowData = {
-        ...rowData,
-        eventTime: !!rowData.eventTime
-          ? global.$dayjs(rowData.eventTime, "YYYY-MM-DD HH:mm:ss")
-          : null,
-      };
-      state.formData = rowData;
+
       getData();
-      getStepData();
     }
   }
 );
 
-const getData = () => {
+const getData = async () => {
   global.$store.commit("app/updateTableLoading", true);
   state.formData.eventType = props.rowData.eventType;
   state.formData.seId = props.rowData.id;
   eventManageSuddenEventGetDisposalRequest({
-    seId: props.rowData.id,
+    seId: props.rowData.eventAssociationId,
   })
     .then(async (response: any) => {
+      console.log(props.rowData);
       response = response.data;
-      state.disposalData = response;
-      state.disposalList = response.disposalList;
-      response.preplanResourceStepList.forEach((item: any, index: number) => {
+      let disposalData = response;
+      disposalData = disposalData.data;
+      state.disposalData = disposalData;
+      state.disposalList = disposalData.disposalList;
+      response.emergencyPlanDisposalList.forEach((item: any, index: number) => {
         state.fileList.push(getCurrentStep(item));
       });
+      await getStepData(response.preplanResourceId);
+      Object.keys(state.formData).forEach((item: any) => {
+        state.formData[item] = props.rowData[item];
+      });
+      console.log(state.formData);
     })
     .catch((error: any) => {
       console.log(error);
     });
 };
 
-const getStepData = () => {
-  const planData: any = eventList.value.find((item: any) => {
-    return Number(item.value) === props.rowData.preplanResourceId;
-  });
-
-  preplanPreplanGetStepPageRequest({
-    preplanType: global.$store.state.app.emergencyPlanType,
-    eventType: planData.label,
-  })
-    .then((response: any) => {
-      response = response.data;
-      state.planInfo = response.list;
-    })
-    .catch((error: any) => {
-      console.log(error);
+const getStepData = (preplanResourceId: number) => {
+  return new Promise((resolve, reject) => {
+    const planData: any = eventList.value.find((item: any) => {
+      return Number(item.value) === preplanResourceId;
     });
+
+    preplanPreplanGetStepPageRequest({
+      prId: preplanResourceId,
+      eventType: planData.label,
+    })
+      .then((response: any) => {
+        response = response.data;
+        state.planInfo = response.list;
+        resolve(response.list);
+      })
+      .catch((error: any) => {
+        console.log(error);
+        reject(error);
+      });
+  });
 };
 
 const handleClose = () => {
@@ -296,6 +299,8 @@ const getCurrentStep = (currentPreplanData: any) => {
   });
   return _result || result;
 };
+
+const getPlanData = () => {};
 
 onMounted(() => {
   setTimeout(() => {

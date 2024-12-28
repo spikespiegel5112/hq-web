@@ -9,6 +9,7 @@
                 <a-select
                   v-model:value="state.formData.preplanResourceId"
                   placeholder="请选择"
+                  allow-clear
                 >
                   <a-select-option
                     v-for="item in eventAllList"
@@ -109,6 +110,7 @@ const state = reactive({
     alarmTimeEnd: null,
     alarmTimeStart: null,
     preplanResourceId: null,
+    // preplanResourceId: "106",
   },
   alarmTime: [],
 });

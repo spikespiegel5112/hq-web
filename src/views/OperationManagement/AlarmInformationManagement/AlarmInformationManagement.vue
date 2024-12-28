@@ -205,10 +205,24 @@ const handleEdit = (rowData: any) => {
 };
 
 const handleReview = (rowData: any) => {
-  if (rowData.dateType === global.$store.state.app.emergencyPlanType) {
+  console.log(eventAllList.value);
+  const emergencyPlanList =
+    global.$store.state.app.currentEventTypeList[0].data;
+  const emergencyEventList =
+    global.$store.state.app.currentEventTypeList[1].data;
+
+  if (
+    emergencyPlanList.some(
+      (item: any) => Number(item.value) === rowData.preplanResourceId
+    )
+  ) {
     state.dialogReviewPlanVisible = true;
   }
-  if (rowData.dateType === global.$store.state.app.emergencyEventType) {
+  if (
+    emergencyEventList.some(
+      (item: any) => Number(item.value) === rowData.preplanResourceId
+    )
+  ) {
     state.dialogReviewEventVisible = true;
   }
   state.dialogMode = "review";
@@ -232,6 +246,7 @@ const handleReset = (formData: object) => {
 
 const handleClose = () => {
   state.dialogReviewPlanVisible = false;
+  state.dialogReviewEventVisible = false;
   global.$store.commit("app/updateTableLoading", false);
 };
 
