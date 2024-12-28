@@ -15,7 +15,7 @@
       <a-row>
         <a-col :span="22">
           <a-form-item name="complaintRegion" label="来源">
-            {{ global.$getDictionary("complaint_info_complaint_region").find((item:any)=>item.value===props.rowData.complaintRegion)?.label }}
+            {{ global.$getDictionary("manageRegion").find((item:any)=>item.value===props.rowData.complaintRegion)?.label }}
           </a-form-item>
         </a-col>
       </a-row>

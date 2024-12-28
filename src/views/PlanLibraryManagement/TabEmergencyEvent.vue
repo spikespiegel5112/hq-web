@@ -4,7 +4,17 @@
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
         <a-button class="import">导入</a-button>
-        <a-button class="export">导出</a-button>
+        <ExportButton
+          :action="preplanPreplanExportStepRequest"
+          :queryFormData="{
+            ...queryFormData,
+            preplanType: global.$store.state.app.emergencyEventType,
+          }"
+          :pagination="{
+            ...pagination,
+            pageSize: 1000,
+          }"
+        />
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
@@ -117,6 +127,7 @@ import {
   preplanPreplanDeleteRequest,
   preplanPreplanSaveRequest,
   preplanPreplanGetStepPageRequest,
+  preplanPreplanExportStepRequest,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
@@ -179,7 +190,7 @@ const getData = () => {
   preplanPreplanGetPageRequest({
     ...queryFormData,
     ...pagination,
-    preplanType: 1,
+    preplanType: global.$store.state.app.emergencyEventType,
   })
     .then((response: any) => {
       response = response.data;

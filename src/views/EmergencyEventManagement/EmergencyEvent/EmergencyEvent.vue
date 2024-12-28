@@ -4,7 +4,14 @@
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
         <a-button class="import">导入</a-button>
-        <a-button class="export">导出</a-button>
+        <ExportButton
+          :action="eventManageSuddenEventExportRequest"
+          :queryFormData="queryFormData"
+          :pagination="{
+            ...pagination,
+            pageSize: 1000,
+          }"
+        />
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
@@ -60,11 +67,13 @@ import {
   ref,
   nextTick,
 } from "vue";
+
 import {
-  planManagementEmergencyPlanGetPageRequest,
-  planManagementEmergencyPlanDeleteRequest,
-  planManagementEmergencyPlanSaveRequest,
-  planManagementEmergencyPlanSaveDisposalRequest,
+  eventManageSuddenEventGetPageRequest,
+  eventManageSuddenEventDeleteRequest,
+  eventManageSuddenEventSaveRequest,
+  eventManageSuddenEventSaveDisposalRequest,
+  eventManageSuddenEventExportRequest,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
@@ -84,43 +93,8 @@ const pageModel = ref([
     exportVisible: false,
   },
   {
-    label: "来源",
-    name: "planSource",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-    width: "1rem",
-  },
-  {
-    label: "预案类型",
-    name: "preplanResourceId",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-    width: "2.5rem",
-  },
-  {
-    label: "预案内容",
-    name: "planContent",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
-    label: "预案等级",
-    name: "planLevel",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-    width: "1rem",
-  },
-  {
-    label: "发生时间",
-    name: "planTime",
+    label: "管理区域",
+    name: "manageRegion",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -128,26 +102,70 @@ const pageModel = ref([
     width: "2rem",
   },
   {
-    label: "状态",
-    name: "planStatus",
+    label: "事件类型",
+    name: "eventType",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+    width: "1.2rem",
+  },
+  {
+    label: "详细地址",
+    name: "eventLocation",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+    width: "1.5rem",
+  },
+  {
+    label: "事件内容",
+    name: "eventContent",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "等级",
+    name: "eventLevel",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+    width: "1rem",
+  },
+  {
+    label: "突发事件编码",
+    name: "eventType",
+    required: true,
+    tableVisible: false,
+    formVisible: true,
+    exportVisible: true,
+    width: "1.5rem",
+  },
+  {
+    label: "发生时间",
+    name: "eventTime",
     required: true,
     tableVisible: true,
     formVisible: false,
     exportVisible: false,
-    // tagConfig: {
-    //   colorList: [
-    //     { value: "未处理", color: "error" },
-    //     { value: "处理中", color: "warning" },
-    //     { value: "未处理", color: "success" },
-    //   ],
-    // },
+    width: "2.5rem",
+  },
+  {
+    label: "状态",
+    name: "eventStatus",
+    required: true,
+    tableVisible: true,
+    formVisible: false,
+    exportVisible: false,
     tagConfig: {
-      val: "planStatus",
-      dictionary: global.$store.state.dictionary.eventStatus,
       colorList: [
-        { value: 0, color: "error" },
-        { value: 1, color: "warning" },
-        { value: 2, color: "success" },
+        { value: "未处理", color: "error" },
+        { value: "处理中", color: "warning" },
+        { value: "未处理", color: "success" },
       ],
     },
     width: "1rem",
@@ -159,7 +177,6 @@ const pageModel = ref([
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
-    width: "1.5rem",
   },
   {
     label: "操作",
@@ -187,15 +204,9 @@ const pagination = reactive({
   ...global.$store.state.app.defaultPagination,
 });
 
-const eventList = computed(() => {
-  return global.$store.state.app.currentEventTypeList.find(
-    (item: any) => item.type === 0
-  )?.data;
-});
-
 const getData = () => {
   pagination.total = undefined;
-  planManagementEmergencyPlanGetPageRequest({
+  eventManageSuddenEventGetPageRequest({
     ...queryFormData,
     ...pagination,
   })
@@ -204,19 +215,14 @@ const getData = () => {
       state.tableData = response.list;
       pagination.total = response.total;
       state.processedTableData = response.list.map((item: any) => {
-        const preplanResourceId = eventList.value.find(
-          (item2: any) => item2.value === item.preplanResourceId.toString()
-        )?.label;
         return {
           ...item,
-          preplanResourceId,
-          planLevel: global
-            .$getDictionary("planLevel")
-            .find((item2: any) => item2.value === item.planLevel)?.label,
-          // planStatus: global
-          //   .$getDictionary("planStatus")
-          //   .find((item2: any) => item2.value === item.planStatus)?.label,
-          planTime: global.$dayjs(item.planTime).format("YYYY-MM-DD"),
+          eventStatus: global
+            .$getDictionary("eventStatus")
+            .find((item2: any) => item2.value === item.eventStatus).label,
+          eventLevel: global
+            .$getDictionary("eventLevel")
+            .find((item2: any) => item2.value === item.eventLevel).label,
         };
       });
     })
@@ -258,17 +264,14 @@ const handleClose = () => {
 };
 
 const handleSubmit = (formData: any) => {
-  planManagementEmergencyPlanSaveRequest(formData)
+  eventManageSuddenEventSaveRequest(formData)
     .then((response: any) => {
       global.$message.success("提交成功");
       getData();
     })
     .catch((error: any) => {
       console.log(error);
-      const message = global.$isNotEmpty(error.message)
-        ? error.message
-        : "提交失败";
-      global.$message.error(message);
+      global.$message.error("提交失败");
     });
 };
 
@@ -280,7 +283,7 @@ const handleChangePage = (pagingData: any) => {
 };
 
 const handleDelete = (id: number) => {
-  planManagementEmergencyPlanDeleteRequest({
+  eventManageSuddenEventDeleteRequest({
     id,
   })
     .then((response: any) => {
@@ -306,7 +309,7 @@ const handleSubmitDisposal = (formData: any) => {
   const disposalTime = global
     .$dayjs(formData.disposalTime)
     .format("YYYY-MM-DD HH:mm:ss");
-  planManagementEmergencyPlanSaveDisposalRequest({
+  eventManageSuddenEventSaveDisposalRequest({
     ...formData,
     disposalTime,
   })
@@ -324,7 +327,6 @@ const handleSubmitDisposal = (formData: any) => {
 
 onMounted(async () => {
   getData();
-  console.log(global.$store.state.dictionary.eventStatus);
 });
 
 onBeforeUnmount(() => {});

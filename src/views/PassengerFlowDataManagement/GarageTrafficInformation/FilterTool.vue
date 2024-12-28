@@ -5,19 +5,28 @@
         <a-col :span="20">
           <a-row :gutter="20">
             <a-col :span="8">
-              <a-form-item name="statisticalBeginHour" label="时段">
-                <a-time-picker
-                  v-model:value="state.formData.statisticalBeginHour"
-                  format="HH:mm:ss"
-                  valueFormat="HH"
-                  :minute-step="60"
-                  :second-step="60"
-                />
+              <a-form-item name="capPlace" label="出入口">
+                <a-select
+                  v-model:value="state.formData.capPlace"
+                  placeholder="请选择"
+                >
+                  <a-select-option
+                    v-for="item in state.capPlaceList"
+                    :key="item"
+                    :value="item"
+                  >
+                    {{ item }}
+                  </a-select-option>
+                </a-select>
               </a-form-item>
             </a-col>
-            <a-col :span="8">
-              <a-form-item name="password" label="查询时间">
-                <a-time-range-picker v-model:value="state.formData.ddddd" />
+            <a-col :span="10">
+              <a-form-item name="statisticalTime" label="查询时间">
+                <a-range-picker
+                  v-model:value="state.statisticalTime"
+                  show-time
+                  @change="handleChangeStatisticalTime"
+                />
               </a-form-item>
             </a-col>
           </a-row>
@@ -53,6 +62,8 @@ import {
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
+import { passengerFlowParkingPassengerFlowGetCapPlaceRequest } from "@/api/management";
+
 const emit = defineEmits<{
   (e: "onSearch", formData: object): void;
   (e: "onReset", formData: object): void;
@@ -63,8 +74,12 @@ const formDataRef: any = ref(null);
 const state = reactive({
   visible: false,
   formData: {
-    statisticalBeginHour: null,
+    capPlace: null,
+    statisticalTimeBegin: null,
+    statisticalTimeEnd: null,
   },
+  statisticalTime: [] as any[],
+  capPlaceList: [] as string[],
 });
 
 const handleSearch = () => {
@@ -72,16 +87,36 @@ const handleSearch = () => {
 };
 
 const handleReset = () => {
-  formDataRef.value.resetFields();
-  const formData: any = Object.keys(state.formData).forEach((item: any) => {
-    state.formData[item] = global.$isEmpty(state.formData[item])
-      ? undefined
-      : state.formData[item];
-  });
-  emit("onReset", formData);
+  state.formData.statisticalTimeBegin = null;
+  state.formData.statisticalTimeEnd = null;
+  state.statisticalTime = [];
+  emit("onReset", state.formData);
 };
 
-onMounted(async () => {});
+const getCapPlaceList = async () => {
+  passengerFlowParkingPassengerFlowGetCapPlaceRequest()
+    .then((response: any) => {
+      state.capPlaceList = response.data;
+      state.formData.capPlace = response.data[0];
+      emit("onSearch", state.formData);
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+};
+
+const handleChangeStatisticalTime = () => {
+  state.formData.statisticalTimeBegin = global
+    .$dayjs(state.statisticalTime[0])
+    .format("YYYY-MM-DD HH:mm:ss");
+  state.formData.statisticalTimeEnd = global
+    .$dayjs(state.statisticalTime[1])
+    .format("YYYY-MM-DD HH:mm:ss");
+};
+
+onMounted(async () => {
+  getCapPlaceList();
+});
 
 onBeforeUnmount(() => {});
 </script>

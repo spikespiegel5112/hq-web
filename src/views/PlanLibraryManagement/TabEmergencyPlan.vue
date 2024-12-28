@@ -4,7 +4,17 @@
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
         <a-button class="import">导入</a-button>
-        <a-button class="export">导出</a-button>
+        <ExportButton
+          :action="eventManageSuddenEventExportRequest"
+          :queryFormData="{
+            ...queryFormData,
+            preplanType: global.$store.state.app.emergencyPlanType,
+          }"
+          :pagination="{
+            ...pagination,
+            pageSize: 1000,
+          }"
+        />
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
@@ -116,6 +126,7 @@ import {
   preplanPreplanDeleteRequest,
   preplanPreplanSaveRequest,
   preplanPreplanGetStepPageRequest,
+  eventManageSuddenEventExportRequest,
 } from "@/api/management";
 
 import { CaretRightOutlined } from "@ant-design/icons-vue";
@@ -181,7 +192,7 @@ const getData = () => {
   preplanPreplanGetPageRequest({
     ...queryFormData,
     ...pagination,
-    preplanType: 0,
+    preplanType: global.$store.state.app.emergencyPlanType,
   })
     .then((response: any) => {
       response = response.data;

@@ -24,7 +24,7 @@
           </a-form-item>
         </a-col>
         <a-col :span="11">
-          <a-form-item name="disposalTime" label="时间">
+          <a-form-item name="disposalTime" label="处置时间">
             <a-date-picker
               v-model:value="state.formData.disposalTime"
               :show-time="{ format: 'HH:mm' }"
@@ -130,6 +130,7 @@ import {
   eventManageSuddenEventSaveDisposalRequest,
   eventManageSuddenEventGetDisposalRequest,
   preplanPreplanGetStepPageRequest,
+  eventManageSuddenEventExportRequest,
 } from "@/api/management";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
@@ -197,7 +198,7 @@ const colorList: any[] = [
 
 const eventList = computed(() => {
   return global.$store.state.app.currentEventTypeList.find(
-    (item: any) => item.type === 1
+    (item: any) => item.type === global.$store.state.app.emergencyEventType
   )?.data;
 });
 
@@ -259,7 +260,7 @@ const getData = () => {
     .then((response: any) => {
       response = response.data;
       state.disposalData = response;
-      console.log(response);
+      
     })
     .catch((error: any) => {
       console.log(error);
@@ -271,7 +272,7 @@ const getPlanData = () => {
     (item: any) => Number(item.value) === props.rowData.prId
   );
   preplanPreplanGetStepPageRequest({
-    preplanType: 1,
+    preplanType: global.$store.state.app.emergencyEventType,
     eventType: planData.label,
   })
     .then((response: any) => {

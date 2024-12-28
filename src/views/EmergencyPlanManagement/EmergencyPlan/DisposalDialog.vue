@@ -24,7 +24,7 @@
           </a-form-item>
         </a-col>
         <a-col :span="11">
-          <a-form-item name="disposalTime" label="时间">
+          <a-form-item name="disposalTime" label="响应时间">
             <a-date-picker
               v-model:value="state.formData.disposalTime"
               :show-time="{ format: 'HH:mm' }"
@@ -127,6 +127,7 @@ import type { Rule, RuleObject } from "ant-design-vue/es/form";
 import {
   planManagementEmergencyPlanGetDisposalRequest,
   preplanPreplanGetStepPageRequest,
+  eventManageSuddenEventExportRequest,
 } from "@/api/management";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
@@ -197,7 +198,7 @@ const colorList: any[] = [
 
 const eventList = computed(() => {
   return global.$store.state.app.currentEventTypeList.find(
-    (item: any) => item.type === 0
+    (item: any) => item.type === global.$store.state.app.emergencyPlanType
   )?.data;
 });
 
@@ -272,7 +273,6 @@ const getData = () => {
     .then((response: any) => {
       response = response.data;
       state.disposalData = response;
-      console.log(response);
     })
     .catch((error: any) => {
       console.log(error);
@@ -283,12 +283,12 @@ const getPlanData = () => {
   console.log(props.rowData);
   console.log(eventList.value);
   console.log(global.$store.state.app.currentEventTypeList);
-  state.planInfo = [];1
+  state.planInfo = [];
   const planData: any = eventList.value.find(
     (item: any) => Number(item.value) === props.rowData.preplanResourceId
   );
   preplanPreplanGetStepPageRequest({
-    preplanType: 1,
+    preplanType: global.$store.state.app.emergencyPlanType,
     eventType: planData.label,
   })
     .then((response: any) => {
@@ -354,12 +354,19 @@ onBeforeUnmount(() => {});
     display: flex;
     align-items: center;
     > span {
-      display: inline-flex;
+      display: flex;
       align-items: center;
       align-content: center;
     }
+    > span:nth-child(2) {
+      flex: 1;
+    }
+    .ant-radio {
+      width: 0.3rem;
+    }
     .step_wrapper {
       display: flex;
+      flex: 1;
       margin: 0.05rem 0;
       width: 100%;
       > span {

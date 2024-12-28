@@ -1,22 +1,33 @@
 <template>
-  <div class="common_tab_container">
-    <a-tabs v-model:activeKey="state.activeKey">
-      <a-tab-pane key="GarageTrafficInformationP9P10" tab="P9 P10">
-        <GarageTrafficInformationP9P10 />
-      </a-tab-pane>
-      <a-tab-pane
-        key="GarageTrafficInformationQuickPickupPointNorth"
-        tab="快速上客点北"
-      >
-        <GarageTrafficInformationQuickPickupPointNorth />
-      </a-tab-pane>
-      <a-tab-pane
-        key="GarageTrafficInformationQuickPickupPointWest"
-        tab="快速上客点西"
-      >
-        <GarageTrafficInformationQuickPickupPointWest />
-      </a-tab-pane>
-    </a-tabs>
+  <div class="common_table_wrapper">
+    <FilterTool @onSearch="handleSearch" @onReset="handleReset"></FilterTool>
+    <div class="common_tableoperation_wrapper">
+      <a-space size="middle" wrap>
+        <ExportButton
+          :action="passengerFlowParkingPassengerFlowExportRequest"
+          :queryFormData="queryFormData"
+          :pagination="{
+            ...pagination,
+            pageSize: 1000,
+          }"
+        />
+      </a-space>
+    </div>
+    <BaseTable
+      :tableData="state.tableData"
+      :dataModel="pageModel"
+      :pagination="pagination"
+      @onEdit="handleEdit"
+      @onChangePage="handleChangePage"
+    />
+    <EditDialog
+      :visible="state.dialogVisible"
+      :mode="state.dialogMode"
+      :dataModel="pageModel"
+      :rowData="state.currentRowData"
+      @onClose="handleClose"
+      @onSubmit="handleSubmit"
+    ></EditDialog>
   </div>
 </template>
 
@@ -33,19 +44,133 @@ import {
   nextTick,
 } from "vue";
 
-import GarageTrafficInformationQuickPickupPointNorth from "./GarageTrafficInformationQuickPickupPointNorth.vue";
-import GarageTrafficInformationQuickPickupPointWest from "./GarageTrafficInformationQuickPickupPointWest.vue";
-import GarageTrafficInformationP9P10 from "./GarageTrafficInformationP9P10.vue";
+import FilterTool from "./FilterTool.vue";
+import EditDialog from "./EditDialog.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
-const formDataRef = ref();
+import {
+  passengerFlowParkingPassengerFlowGetPageRequest,
+  passengerFlowParkingPassengerFlowExportRequest,
+} from "@/api/management";
+
+const pageModel = ref([
+  {
+    label: "序号",
+    name: "index",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: false,
+  },
+  {
+    label: "出入口",
+    name: "capPlace",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "进场数",
+    name: "inCount",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "出场数",
+    name: "outCount",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "统计时间",
+    name: "statisticalTime",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "操作",
+    name: "operationColumn",
+    tableVisible: true,
+    exportVisible: false,
+    fixed: "right",
+    actions: ["edit", "review", "delete"],
+  },
+]);
 
 const state = reactive({
-  activeKey: "GarageTrafficInformationP9P10",
+  tableData: [] as any[],
+  dialogVisible: false,
+  dialogMode: null as string | null,
+  currentRowData: {},
 });
 
+let queryFormData = reactive({} as any);
+
+const pagination = reactive({
+  ...global.$store.state.app.defaultPagination,
+});
+
+const getData = () => {
+  passengerFlowParkingPassengerFlowGetPageRequest({
+    ...queryFormData,
+    ...pagination,
+  }).then((response: any) => {
+    response = response.data;
+    state.tableData = response.list;
+    pagination.total = response.total;
+  });
+};
+
+const handleEdit = (rowData: any) => {
+  state.dialogVisible = true;
+  state.dialogMode = "edit";
+  state.currentRowData = rowData;
+};
+
+const handleReview = (rowData: any) => {
+  state.dialogVisible = true;
+  state.dialogMode = "review";
+  state.currentRowData = rowData;
+};
+
+const handleAdd = () => {
+  state.dialogVisible = true;
+  state.dialogMode = "add";
+};
+
+const handleSearch = (formData: object) => {
+  queryFormData = formData;
+  getData();
+};
+
+const handleReset = (formData: object) => {
+  queryFormData = formData;
+  getData();
+};
+
+const handleClose = () => {
+  state.dialogVisible = false;
+};
+
+const handleSubmit = () => {};
+
+const handleChangePage = (pagingData: any) => {
+  pagination.page = pagingData.current;
+  pagination.pageSize = pagingData.pageSize;
+  pagination.total = pagingData.total;
+  getData();
+};
+
+const handleDelete = (id: number) => {};
 onMounted(async () => {});
 
 onBeforeUnmount(() => {});

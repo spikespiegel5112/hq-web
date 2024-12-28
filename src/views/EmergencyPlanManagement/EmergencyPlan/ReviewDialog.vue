@@ -18,29 +18,40 @@
             >
               <a-row>
                 <a-col :span="22">
-                  <a-form-item label="管理区域">
-                    {{ state.formData.eventType }}
+                  <a-form-item label="来源">
+                    {{ state.formData.planSource }}
                   </a-form-item>
                 </a-col>
               </a-row>
               <a-row>
                 <a-col :span="22">
-                  <a-form-item label="事件类型">
-                    {{ state.formData.eventType }}
+                  <a-form-item label="预案类型">
+                    {{
+                      eventList.find(
+                        (item) =>
+                          Number(item.value) ===
+                          state.formData.preplanResourceId
+                      )?.label
+                    }}
                   </a-form-item>
                 </a-col>
               </a-row>
               <a-row>
                 <a-col :span="22">
-                  <a-form-item label="具体地址">
-                    {{ state.formData.eventLocation }}
+                  <a-form-item label="预案内容">
+                    {{ state.formData.planContent }}
                   </a-form-item>
                 </a-col>
               </a-row>
               <a-row>
                 <a-col :span="22">
-                  <a-form-item label="等级">
-                    {{ state.formData.eventLocation }}
+                  <a-form-item label="预案等级">
+                    {{
+                      global
+                        .$getDictionary("planLevel")
+                        .find((item) => item.value === state.formData.planLevel)
+                        ?.label
+                    }}
                   </a-form-item>
                 </a-col>
               </a-row>
@@ -49,7 +60,7 @@
                   <a-form-item label="发生时间">
                     {{
                       global
-                        .$dayjs(state.formData.eventTime)
+                        .$dayjs(state.formData.planTime)
                         .format("YYYY-MM-DD HH:mm:ss")
                     }}
                   </a-form-item>
@@ -57,13 +68,19 @@
               </a-row>
               <a-row>
                 <a-col :span="22">
-                  <a-form-item label="事件内容">
-                    {{ state.formData.eventContent }}
+                  <a-form-item label="状态">
+                    {{
+                      global
+                        .$getDictionary("planStatus")
+                        .find(
+                          (item) => item.value === state.formData.planStatus
+                        )?.label
+                    }}
                   </a-form-item>
                 </a-col>
               </a-row>
               <a-row>
-                <a-col :span="24">
+                <a-col :span="22">
                   <a-form-item label="附件">
                     <AttachmentReview
                       :attachmentList="state.formData.attachmentList"
@@ -78,10 +95,7 @@
           <div class="date"></div>
           <vue-scroll class="right">
             <a-timeline mode="left">
-              <a-timeline-item
-                v-for="(item, index) in state.disposalData
-                  .preplanResourceStepList"
-              >
+              <a-timeline-item v-for="(item, index) in state.planInfo">
                 <template #dot>
                   <span>{{ index + 1 }}</span>
                 </template>
@@ -153,8 +167,7 @@ import {
 } from "vue";
 
 import {
-  eventManageSuddenEventSaveDisposalRequest,
-  eventManageSuddenEventGetDisposalRequest,
+  planManagementEmergencyPlanGetDisposalRequest,
   preplanPreplanGetStepPageRequest,
 } from "@/api/management";
 
@@ -180,13 +193,14 @@ const state = reactive({
   formData: {
     id: null as number | null | undefined,
     attachmentList: [] as any[],
-    eventCode: null,
-    eventContent: null,
-    eventLocation: null,
-    eventStatus: null,
-    eventTime: null,
-    eventType: null,
-    eventLevel: null,
+    planCode: null,
+    planContent: null,
+    planLevel: null,
+    planLocation: null,
+    planSource: null,
+    planStatus: null,
+    planTime: null,
+    preplanResourceId: null,
   } as any,
   fileList: [] as any[],
   disposalList: [] as any[],
@@ -215,7 +229,7 @@ const currentStepOrder = computed(() => {
 
 const eventList = computed(() => {
   return global.$store.state.app.currentEventTypeList.find(
-    (item: any) => item.type === 1
+    (item: any) => item.type === global.$store.state.app.emergencyPlanType
   )?.data;
 });
 
@@ -228,9 +242,6 @@ watch(
       let rowData = JSON.parse(JSON.stringify(props.rowData));
       rowData = {
         ...rowData,
-        eventTime: !!rowData.eventTime
-          ? global.$dayjs(rowData.eventTime, "YYYY-MM-DD HH:mm:ss")
-          : null,
       };
       state.formData = rowData;
       getData();
@@ -242,8 +253,8 @@ watch(
 const getData = () => {
   state.formData.eventType = props.rowData.eventType;
   state.formData.seId = props.rowData.id;
-  eventManageSuddenEventGetDisposalRequest({
-    seId: props.rowData.id,
+  planManagementEmergencyPlanGetDisposalRequest({
+    id: props.rowData.id,
   })
     .then(async (response: any) => {
       response = response.data;
@@ -260,11 +271,11 @@ const getData = () => {
 
 const getStepData = () => {
   const planData: any = eventList.value.find((item: any) => {
-    return Number(item.value) === props.rowData.prId;
+    return Number(item.value) === props.rowData.preplanResourceId;
   });
 
   preplanPreplanGetStepPageRequest({
-    preplanType: 0,
+    preplanType: global.$store.state.app.emergencyPlanType,
     eventType: planData.label,
   })
     .then((response: any) => {

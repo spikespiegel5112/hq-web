@@ -127,7 +127,7 @@ watch(
 const getData = () => {
   backendIndexPageTaxiVehicleMonitorRequest({})
     .then((response: any) => {
-      console.log(response);
+      
       response = response.data;
 
       Object.keys(state).forEach((item: any) => {

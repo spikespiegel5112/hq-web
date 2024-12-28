@@ -3,25 +3,34 @@
     <FilterTool @onSearch="handleSearch" @onReset="handleReset"></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
-        <a-button class="import">导入</a-button>
-        <a-button class="export">导出</a-button>
-        <a-button class="add" @click="handleAdd">新增</a-button>
+        <ExportButton
+          :action="eventManageSuddenEventExportRecordRequest"
+          :queryFormData="queryFormData"
+          :pagination="{
+            ...pagination,
+            pageSize: 1000,
+          }"
+        />
       </a-space>
     </div>
     <BaseTable
       :tableData="state.tableData"
       :dataModel="pageModel"
+      :pagination="pagination"
       tabTable
       @onEdit="handleEdit"
+      @onReview="handleReview"
+      @onChangePage="handleChangePage"
+      @onDelete="handleDelete"
     />
-    <EditDialog
+    <ReviewDialog
       :visible="state.dialogVisible"
       :mode="state.dialogMode"
       :dataModel="pageModel"
       :rowData="state.currentRowData"
       @onClose="handleClose"
       @onSubmit="handleSubmit"
-    ></EditDialog>
+    ></ReviewDialog>
   </div>
 </template>
 
@@ -38,9 +47,16 @@ import {
   nextTick,
 } from "vue";
 
-import { screenBannerInfoRequest } from "@/api/management";
+import {
+  eventManageSuddenEventGetRecordPageRequest,
+  eventManageSuddenEventDeleteRequest,
+  eventManageSuddenEventSaveRequest,
+  eventManageSuddenEventExportRecordRequest,
+  eventManageSuddenEventExportRequest,
+} from "@/api/management";
+
 import FilterTool from "./FilterTool.vue";
-import EditDialog from "./EditDialog.vue";
+import ReviewDialog from "./ReviewDialog.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -55,40 +71,68 @@ const pageModel = ref([
     exportVisible: false,
   },
   {
-    label: "报警类型",
-    name: "higywayCode",
+    label: "管理区域",
+    name: "manageRegion",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "报警内容",
-    name: "highwayName",
+    label: "事件类型",
+    name: "eventType",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "报警时间",
-    name: "bridgeCode",
+    label: "详细地址",
+    name: "eventLocation",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "报警地点",
-    name: "bridgeName",
+    label: "事件内容",
+    name: "eventContent",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "操作",     name: "operationColumn",     tableVisible: true,     exportVisible: false,     fixed: "right",
-    actions: ["edit", "review", "delete"],
+    label: "发生时间",
+    name: "eventTime",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "处置完成时间",
+    name: "disposalCompletionTime",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "附件",
+    name: "attachment",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "操作",
+    name: "operationColumn",
+    tableVisible: true,
+    exportVisible: false,
+    fixed: "right",
+    actions: ["review"],
   },
 ]);
 
@@ -106,16 +150,19 @@ const pagination = reactive({
 });
 
 const getData = () => {
-  const result = [] as any[];
-  for (let index = 0; index < 30; index++) {
-    result.push({
-      higywayCode: "aaa",
-      highwayName: "aaa",
-      bridgeCode: "aaa",
-      bridgeName: "aaa",
+  pagination.total = undefined;
+  eventManageSuddenEventGetRecordPageRequest({
+    ...queryFormData,
+    ...pagination,
+  })
+    .then((response: any) => {
+      response = response.data;
+      state.tableData = response.list;
+      pagination.total = response.total;
+    })
+    .catch((error: any) => {
+      console.log(error);
     });
-  }
-  state.tableData = result;
 };
 
 const handleEdit = (rowData: any) => {
@@ -149,7 +196,17 @@ const handleClose = () => {
   state.dialogVisible = false;
 };
 
-const handleSubmit = () => {};
+const handleSubmit = (formData: any) => {
+  eventManageSuddenEventSaveRequest(formData)
+    .then((response: any) => {
+      global.$message.success("提交成功");
+      getData();
+    })
+    .catch((error: any) => {
+      console.log(error);
+      global.$message.error("提交失败");
+    });
+};
 
 const handleChangePage = (pagingData: any) => {
   pagination.page = pagingData.current;
@@ -158,10 +215,23 @@ const handleChangePage = (pagingData: any) => {
   getData();
 };
 
-const handleDelete = (id: number) => {};
 onMounted(async () => {
   getData();
 });
+
+const handleDelete = (id: number) => {
+  eventManageSuddenEventDeleteRequest({
+    id,
+  })
+    .then((response: any) => {
+      global.$message.success("删除成功");
+      getData();
+    })
+    .catch((error: any) => {
+      global.$message.error("删除失败");
+      console.log(error);
+    });
+};
 
 onBeforeUnmount(() => {});
 </script>

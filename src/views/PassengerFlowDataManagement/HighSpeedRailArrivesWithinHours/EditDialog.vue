@@ -24,7 +24,11 @@
               valueFormat="YYYY-MM-DD"
             />
             <template v-if="props.mode === 'review'">
-              {{ state.formData.statisticalDate }}
+              {{
+                global
+                  .$dayjs(state.formData.statisticalDate)
+                  .format("YYYY年M月DD日")
+              }}
             </template>
           </a-form-item>
         </a-col>
@@ -199,7 +203,7 @@ watch(
     state.visible = newValue;
     if (!!newValue) {
       await nextTick();
-      if (["edit", "review", 'disposal'].some((item) => item === props.mode)) {
+      if (["edit", "review", "disposal"].some((item) => item === props.mode)) {
         const formData = JSON.parse(JSON.stringify(props.rowData));
 
         formData.statisticalBeginHour = global

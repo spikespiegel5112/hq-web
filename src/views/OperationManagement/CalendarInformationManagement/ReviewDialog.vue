@@ -229,7 +229,7 @@ const currentStepOrder = computed(() => {
 
 const eventList = computed(() => {
   return global.$store.state.app.currentEventTypeList.find(
-    (item: any) => item.type === 0
+    (item: any) => item.type === global.$store.state.app.emergencyPlanType
   )?.data;
 });
 
@@ -275,7 +275,7 @@ const getStepData = () => {
   });
 
   preplanPreplanGetStepPageRequest({
-    preplanType: 1,
+    preplanType: global.$store.state.app.emergencyEventType,
     eventType: planData.label,
   })
     .then((response: any) => {

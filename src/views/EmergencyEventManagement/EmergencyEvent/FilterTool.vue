@@ -4,7 +4,7 @@
       <a-row>
         <a-col :span="21">
           <a-row :gutter="20">
-            <a-col :span="6">
+            <a-col :span="7">
               <a-form-item name="manageRegion" label="管理区域">
                 <a-select
                   v-model:value="state.formData.manageRegion"
@@ -12,7 +12,7 @@
                   allow-clear
                 >
                   <a-select-option
-                    v-for="item in global.$store.state.dictionary.manageRegion"
+                    v-for="item in global.$getDictionary('manageRegion')"
                     :key="item.value"
                     :value="item.value"
                   >
@@ -23,17 +23,14 @@
             </a-col>
 
             <a-col :span="5">
-              <a-form-item name="eventType" label="事件状态">
+              <a-form-item name="eventType" label="事件类型">
                 <a-select
                   v-model:value="state.formData.eventType"
                   placeholder="请选择"
                   allow-clear
                 >
                   <a-select-option
-                    v-for="item in global.$getDictionary(
-                      'disposalStatus',
-                      'string'
-                    )"
+                    v-for="item in eventList"
                     :value="item.value"
                   >
                     {{ item.label }}
@@ -41,7 +38,7 @@
                 </a-select>
               </a-form-item>
             </a-col>
-            <a-col :span="6">
+            <a-col :span="5">
               <a-form-item name="eventLocation" label="地点">
                 <a-input
                   v-model:value="state.formData.eventLocation"
@@ -106,7 +103,7 @@ const state = reactive({
   formData: {
     eventTimeBegin: null,
     eventTimeEnd: null,
-    eventType: null,
+    eventStatus: null,
     eventLocation: null,
     manageRegion: null,
   } as any,
@@ -115,7 +112,7 @@ const state = reactive({
 
 const eventList = computed(() => {
   return global.$store.state.app.currentEventTypeList.find(
-    (item: any) => item.type === 1
+    (item: any) => item.type === global.$store.state.app.emergencyEventType
   )?.data;
 });
 

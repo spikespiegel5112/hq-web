@@ -22,7 +22,7 @@
             >
               <a-select-option
                 v-for="item in global.$getDictionary(
-                  'complaint_info_complaint_region'
+                  'manageRegion'
                 )"
                 :value="item.value"
               >
@@ -30,7 +30,7 @@
               </a-select-option>
             </a-select>
             <template v-if="props.mode === 'review'">
-              {{ global.$getDictionary('complaint_info_complaint_region').find((item:any)=>item.value===state.formData.complaintRegion)?.label }}
+              {{ global.$getDictionary('manageRegion').find((item:any)=>item.value===state.formData.complaintRegion)?.label }}
             </template>
           </a-form-item>
         </a-col>
