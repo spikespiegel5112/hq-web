@@ -239,20 +239,21 @@ const getData = async () => {
     seId: props.rowData.eventAssociationId,
   })
     .then(async (response: any) => {
-      console.log(props.rowData);
       response = response.data;
-      let disposalData = response;
-      disposalData = disposalData.data;
-      state.disposalData = disposalData;
-      state.disposalList = disposalData.disposalList;
-      response.emergencyPlanDisposalList.forEach((item: any, index: number) => {
-        state.fileList.push(getCurrentStep(item));
-      });
-      await getStepData(response.preplanResourceId);
-      Object.keys(state.formData).forEach((item: any) => {
-        state.formData[item] = props.rowData[item];
-      });
-      console.log(state.formData);
+      debugger
+      state.disposalData = response;
+      state.disposalList = response.disposalList;
+      if (response.preplanResourceStepList) {
+        response.preplanResourceStepList.forEach((item: any, index: number) => {
+          state.fileList.push(getCurrentStep(item));
+        });
+      }
+
+      // await getStepData(response.preplanResourceId);
+      // Object.keys(state.formData).forEach((item: any) => {
+      //   state.formData[item] = props.rowData[item];
+      // });
+      // console.log(state.formData);
     })
     .catch((error: any) => {
       console.log(error);
