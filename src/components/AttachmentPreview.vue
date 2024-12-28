@@ -119,7 +119,11 @@ watch(
 );
 
 const getImgUrl = (item: any) => {
-  return `${global.$getBaseUrl()}/attachment/download?id=${item.id}`;
+  if (item.directLocation) {
+    return item.attachmentName;
+  } else {
+    return `${global.$getBaseUrl()}/attachment/download?id=${item.id}`;
+  }
 };
 
 const handleClose = () => {

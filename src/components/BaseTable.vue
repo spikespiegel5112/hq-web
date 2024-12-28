@@ -444,6 +444,7 @@ const handlePreview = (scope: any, type: string) => {
   );
   state.dialogVisible = true;
   state.attachmentList = imageList;
+  
   state.currentPreviewFileType = type;
 };
 

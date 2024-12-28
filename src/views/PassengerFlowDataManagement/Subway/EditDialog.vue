@@ -201,7 +201,7 @@ watch(
       await nextTick();
       if (["edit", "review", "disposal"].some((item) => item === props.mode)) {
         const formData = JSON.parse(JSON.stringify(props.rowData));
-        debugger
+        
 
         formData.statisticalDate = global.$dayjs(
           formData.statisticalDate.toString()
