@@ -258,6 +258,15 @@ const getData = () => {
   })
     .then(async (response: any) => {
       response = response.data;
+      let disposalData = await planManagementEmergencyPlanGetDisposalRequest({
+        id: props.rowData.eventAssociationId,
+      });
+      disposalData = disposalData.data;
+      state.disposalData = disposalData
+      state.disposalList = disposalData.disposalList;
+      response.emergencyPlanDisposalList.forEach((item: any, index: number) => {
+        state.fileList.push(getCurrentStep(item));
+      });
       await getStepData(response.preplanResourceId);
       Object.keys(state.formData).forEach((item: any) => {
         state.formData[item] = response[item];
@@ -270,20 +279,20 @@ const getData = () => {
     .catch((error: any) => {
       console.log(error);
     });
-  planManagementEmergencyPlanGetDisposalRequest({
-    id: props.rowData.eventAssociationId,
-  })
-    .then(async (response: any) => {
-      response = response.data;
-      state.disposalData = response;
-      state.disposalList = response.disposalList;
-      response.preplanResourceStepList.forEach((item: any, index: number) => {
-        state.fileList.push(getCurrentStep(item));
-      });
-    })
-    .catch((error: any) => {
-      console.log(error);
-    });
+  // planManagementEmergencyPlanGetDisposalRequest({
+  //   id: props.rowData.eventAssociationId,
+  // })
+  //   .then(async (response: any) => {
+  //     response = response.data;
+  //     state.disposalData = response;
+  //     state.disposalList = response.disposalList;
+  //     response.preplanResourceStepList.forEach((item: any, index: number) => {
+  //       state.fileList.push(getCurrentStep(item));
+  //     });
+  //   })
+  //   .catch((error: any) => {
+  //     console.log(error);
+  //   });
 };
 
 const getStepData = (preplanResourceId: number) => {
