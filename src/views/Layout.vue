@@ -125,7 +125,7 @@ onBeforeUnmount(() => {});
     align-items: center;
     justify-content: center;
     .anticon {
-      font-size: 10rem;
+      font-size: 0.5rem;
     }
   }
 }

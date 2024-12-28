@@ -73,25 +73,33 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "进场数",
-    name: "inCount",
+    label: "抓拍时间",
+    name: "capTime",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "出场数",
-    name: "outCount",
+    label: "车牌号",
+    name: "plateNo",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "统计时间",
-    name: "statisticalTime",
+    label: "图片",
+    name: "imgInfo",
     required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "附件",
+    name: "attachment",
+    required: false,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
@@ -125,7 +133,19 @@ const getData = () => {
     ...pagination,
   }).then((response: any) => {
     response = response.data;
+    response.list = response.list.map((item: any) => {
+      return {
+        ...item,
+        attachmentList: [
+          {
+            attachmentName: item.imgInfo,
+            directLocation: true,
+          },
+        ],
+      };
+    });
     state.tableData = response.list;
+
     pagination.total = response.total;
   });
 };

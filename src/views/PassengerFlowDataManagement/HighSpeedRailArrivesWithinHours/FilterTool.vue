@@ -6,13 +6,21 @@
           <a-row :gutter="20">
             <a-col :span="7">
               <a-form-item name="statisticalBeginHour" label="统计开始时间">
-                <a-time-picker
+                <!-- railway_statistical_begin_hour -->
+                <a-select
                   v-model:value="state.formData.statisticalBeginHour"
-                  format="HH:mm:ss"
-                  valueFormat="HH"
-                  :minute-step="60"
-                  :second-step="60"
-                />
+                  placeholder="请选择"
+                >
+                  <a-select-option
+                    v-for="item in global.$getDictionary(
+                      'railway_statistical_begin_hour'
+                    )"
+                    :key="item.value"
+                    :value="item.value"
+                  >
+                    {{ item.label }}
+                  </a-select-option>
+                </a-select>
               </a-form-item>
             </a-col>
             <a-col :span="8">

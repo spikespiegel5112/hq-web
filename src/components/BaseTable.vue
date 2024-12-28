@@ -384,7 +384,8 @@ watch(
 const checkFileType = (file: any) => {
   let result = "";
   const attachmentName = file.attachmentName;
-  const fileSufix = attachmentName.split(".")[1];
+
+  const fileSufix = attachmentName.split(".").pop().toLowerCase();
 
   const imageType = ["png", "jpg", "jpeg", "gif", "bmp"];
   const videoType = ["mp4", "avi", "mov", "wmv", "flv", "rmvb", "3gp"];
