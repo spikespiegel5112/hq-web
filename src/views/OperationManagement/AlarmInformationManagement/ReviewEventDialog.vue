@@ -155,6 +155,8 @@ import {
 import {
   eventManageSuddenEventGetDisposalRequest,
   preplanPreplanGetStepPageRequest,
+  eventManageSuddenEventGetPageRequest,
+  eventManageSuddenEventGetRecordPageRequest
 } from "@/api/management";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
@@ -235,6 +237,31 @@ const getData = async () => {
   global.$store.commit("app/updateTableLoading", true);
   state.formData.eventType = props.rowData.eventType;
   state.formData.seId = props.rowData.id;
+  eventManageSuddenEventGetRecordPageRequest({
+    id: props.rowData.eventAssociationId,
+  })
+    .then((response: any) => {
+      debugger;
+
+      response = response.data;
+      state.tableData = response.list;
+      pagination.total = response.total;
+      state.processedTableData = response.list.map((item: any) => {
+        return {
+          ...item,
+          eventStatus: global
+            .$getDictionary("eventStatus")
+            .find((item2: any) => item2.value === item.eventStatus).label,
+          eventLevel: global
+            .$getDictionary("eventLevel")
+            .find((item2: any) => item2.value === item.eventLevel).label,
+        };
+      });
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+
   eventManageSuddenEventGetDisposalRequest({
     seId: props.rowData.eventAssociationId,
   })
