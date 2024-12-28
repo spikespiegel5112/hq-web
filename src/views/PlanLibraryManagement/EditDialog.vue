@@ -108,7 +108,8 @@ import {
 import type { Rule, RuleObject } from "ant-design-vue/es/form";
 import { PlusCircleOutlined, MinusCircleOutlined } from "@ant-design/icons-vue";
 
-import { preplanPreplanSaveWithPreplanStepRequest } from "@/api/management";
+import { preplanPreplanSaveWithPreplanStepRequest  ,eventManageSuddenEventExportRequest
+} from "@/api/management";
 
 const columns = [
   {
@@ -268,7 +269,7 @@ const handleSubmit = () => {
     ...state.formData,
   })
     .then((response: any) => {
-      console.log(response);
+      
       global.$message.success("提交成功");
       emit("onClose");
     })

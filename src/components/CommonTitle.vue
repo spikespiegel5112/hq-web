@@ -33,7 +33,7 @@ const global = currentInstance.appContext.config.globalProperties;
 <style scoped lang="scss">
 .common_title_item {
   display: flex;
-  width: 5rem;
+  width: 100%;
   height: 0.25rem;
   position: relative;
   align-items: center;
@@ -42,7 +42,7 @@ const global = currentInstance.appContext.config.globalProperties;
     display: inline-block;
     width: 3px;
     height: 100%;
-    background-color: #fff;
+    background-color: #0096ff;
   }
 
   .title {

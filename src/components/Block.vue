@@ -42,16 +42,20 @@ const blockSize = computed(() => {
   text-align: left;
   position: relative;
   .header {
-    padding: 0.03rem 0.1rem;
     width: 100%;
     height: 0.3rem;
-    font-size: 0.22rem;
-    text-shadow: 0.01rem 0.01rem 0.01rem #000;
-    background-image: linear-gradient(
-      to right,
-      rgba(68, 121, 255, 1),
-      rgba(68, 121, 255, 0)
-    );
+
+    .title {
+      padding: 0.03rem 0.1rem;
+      height: 100%;
+      text-shadow: 0.01rem 0.01rem 0.01rem #000;
+      font-size: 0.22rem;
+      background-image: linear-gradient(
+        to right,
+        rgba(68, 121, 255, 1) 0,
+        rgba(68, 121, 255, 0) 2rem
+      );
+    }
   }
 }
 </style>

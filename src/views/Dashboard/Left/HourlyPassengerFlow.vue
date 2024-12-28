@@ -128,8 +128,6 @@ const getData = () => {
     timeType: 1,
   })
     .then((response: any) => {
-      console.log("=====screenTimeDistFlowRequest=====");
-      console.log(response);
       response = response.data;
       transformData(response);
       setOption();

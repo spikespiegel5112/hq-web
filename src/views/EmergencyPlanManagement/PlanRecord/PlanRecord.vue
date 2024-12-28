@@ -3,11 +3,19 @@
     <FilterTool @onSearch="handleSearch" @onReset="handleReset"></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
-        <a-button class="export">导出</a-button>
+        <ExportButton
+          :action="planManagementEmergencyPlanExportRecordExcelRequest"
+          :queryFormData="queryFormData"
+          :pagination="{
+            ...pagination,
+            pageSize: 1000,
+          }"
+        />
       </a-space>
     </div>
     <BaseTable
       :tableData="state.tableData"
+      :processedTableData="state.processedTableData"
       :dataModel="pageModel"
       :pagination="pagination"
       tabTable
@@ -16,14 +24,14 @@
       @onChangePage="handleChangePage"
       @onDelete="handleDelete"
     />
-    <EditDialog
+    <ReviewDialo
       :visible="state.dialogVisible"
       :mode="state.dialogMode"
       :dataModel="pageModel"
       :rowData="state.currentRowData"
       @onClose="handleClose"
       @onSubmit="handleSubmit"
-    ></EditDialog>
+    ></ReviewDialo>
   </div>
 </template>
 
@@ -41,13 +49,14 @@ import {
 } from "vue";
 
 import {
-  eventManageSuddenEventGetRecordPageRequest,
-  eventManageSuddenEventDeleteRequest,
-  eventManageSuddenEventSaveRequest,
+  planManagementEmergencyPlanGetRecordPageRequest,
+  planManagementEmergencyPlanDeleteRequest,
+  planManagementEmergencyPlanSaveRequest,
+  planManagementEmergencyPlanExportRecordExcelRequest,
 } from "@/api/management";
 
 import FilterTool from "./FilterTool.vue";
-import EditDialog from "./EditDialog.vue";
+import ReviewDialo from "./ReviewDialog.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -62,32 +71,32 @@ const pageModel = ref([
     exportVisible: false,
   },
   {
-    label: "管理区域",
-    name: "manageRegion",
+    label: "来源",
+    name: "planSource",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "事件类型",
-    name: "eventType",
+    label: "预案类型",
+    name: "preplanResourceId",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "详细地址",
-    name: "eventLocation",
+    label: "预案内容",
+    name: "planContent",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "事件内容",
-    name: "eventContent",
+    label: "预案等级",
+    name: "planLevel",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -95,7 +104,7 @@ const pageModel = ref([
   },
   {
     label: "发生时间",
-    name: "eventTime",
+    name: "planTime",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -129,6 +138,7 @@ const pageModel = ref([
 
 const state = reactive({
   tableData: [] as any[],
+  processedTableData: [] as any[],
   dialogVisible: false,
   dialogMode: null as string | null,
   currentRowData: {},
@@ -140,9 +150,22 @@ const pagination = reactive({
   ...global.$store.state.app.defaultPagination,
 });
 
+const eventList = computed(() => {
+  let result = global.$store.state.app.currentEventTypeList.find(
+    (item: any) => item.type === global.$store.state.app.emergencyPlanType
+  )?.data;
+  result = result.map((item: any) => {
+    return {
+      ...item,
+      value: Number(item.value),
+    };
+  });
+  return result;
+});
+
 const getData = () => {
   pagination.total = undefined;
-  eventManageSuddenEventGetRecordPageRequest({
+  planManagementEmergencyPlanGetRecordPageRequest({
     ...queryFormData,
     ...pagination,
   })
@@ -150,6 +173,17 @@ const getData = () => {
       response = response.data;
       state.tableData = response.list;
       pagination.total = response.total;
+      state.processedTableData = response.list.map((item: any) => {
+        return {
+          ...item,
+          preplanResourceId: eventList.value.find(
+            (item2: any) => item2.value === item.preplanResourceId
+          ).label,
+          planLevel: global
+            .$getDictionary("planLevel")
+            .find((item2: any) => item2.value === item.planLevel).label,
+        };
+      });
     })
     .catch((error: any) => {
       console.log(error);
@@ -188,7 +222,7 @@ const handleClose = () => {
 };
 
 const handleSubmit = (formData: any) => {
-  eventManageSuddenEventSaveRequest(formData)
+  planManagementEmergencyPlanSaveRequest(formData)
     .then((response: any) => {
       global.$message.success("提交成功");
       getData();
@@ -211,7 +245,7 @@ onMounted(async () => {
 });
 
 const handleDelete = (id: number) => {
-  eventManageSuddenEventDeleteRequest({
+  planManagementEmergencyPlanDeleteRequest({
     id,
   })
     .then((response: any) => {

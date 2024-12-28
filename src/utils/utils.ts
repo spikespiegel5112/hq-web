@@ -221,17 +221,22 @@ const _utils = {
     currentRoute: any,
     fileName: string | undefined
   ) => {
-    const data = response;
-    const blob = new Blob([data], { type: "text/plain" });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
+    try {
+      const data = response;
+      const blob = new Blob([data]);
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
 
-    link.download =
-      (utils.$isNotEmpty(fileName) ? fileName : currentRoute.meta.title) +
-      ".xlsx"; // 这里填保存成的文件名
-    link.click();
-    URL.revokeObjectURL(link.href);
-    messageApi.success("导出成功!", 3000);
+      link.download =
+        (utils.$isNotEmpty(fileName) ? fileName : currentRoute.meta.title) +
+        ".xlsx"; // 这里填保存成的文件名
+      link.click();
+      URL.revokeObjectURL(link.href);
+
+      messageApi.success("导出成功!", 3000);
+    } catch (error) {
+      messageApi.error("导出失败!", 3000);
+    }
   },
   $getAllDictionary: async () => {
     let dictionaryNameList = [] as any[];

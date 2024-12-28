@@ -2,18 +2,18 @@
   <div class="common_filtertool_wrapper">
     <a-form :model="state.formData" autocomplete="off" ref="formDataRef">
       <a-row>
-        <a-col :span="20">
+        <a-col :span="21">
           <a-row :gutter="20">
             <a-col :span="6">
-              <a-form-item name="manageRegion" label="管理区域">
+              <a-form-item name="source" label="来源">
                 <a-select
-                  v-model:value="state.formData.manageRegion"
-                  placeholder="请输入"
+                  v-model:value="state.formData.externalSource"
+                  placeholder="请选择"
                 >
                   <a-select-option
-                    v-for="item in global.$store.state.dictionary[
-                      'manageRegion'
-                    ]"
+                    v-for="item in global.$getDictionary(
+                      'emergency_plan_plan_source'
+                    )"
                     :value="item.value"
                   >
                     {{ item.label }}
@@ -22,14 +22,15 @@
               </a-form-item>
             </a-col>
             <a-col :span="6">
-              <a-form-item name="eventType" label="事件类型">
+              <a-form-item name="preplanResourceId" label="预案类型">
                 <a-select
-                  v-model:value="state.formData.eventType"
+                  v-model:value="state.formData.preplanResourceId"
                   placeholder="请选择"
                   allow-clear
                 >
                   <a-select-option
                     v-for="item in eventList"
+                    :key="item.value"
                     :value="item.value"
                   >
                     {{ item.label }}
@@ -37,19 +38,19 @@
                 </a-select>
               </a-form-item>
             </a-col>
+
             <a-col :span="10">
-              <a-form-item name="eventTime" label="时间">
+              <a-form-item name="planTime" label="查询时间">
                 <a-range-picker
-                  v-model:value="state.eventTime"
-                  format="YYYY-MM-DD HH:mm:ss"
-                  allow-clear
-                  @change="handleChangeInfoEventTime"
+                  v-model:value="state.planTime"
+                  format="YYYY-MM-DD"
+                  @change="handleChangePlanTime"
                 />
               </a-form-item>
             </a-col>
           </a-row>
         </a-col>
-        <a-col :span="4" class="operation">
+        <a-col :span="3" class="operation">
           <a-space>
             <a-button class="submitbutton" @click="handleReset">
               重置
@@ -89,18 +90,24 @@ const formDataRef: any = ref(null);
 
 const state = reactive({
   formData: {
-    eventTimeBegin: null,
-    eventTimeEnd: null,
-    eventType: null,
-    manageRegion: null,
+    preplanResourceId: null,
+    planTimeStart: null,
+    planTimeEnd: null,
   } as any,
-  eventTime: null,
+  planTime: [] as any,
 });
 
 const eventList = computed(() => {
-  return global.$store.state.app.currentEventTypeList.find(
-    (item: any) => item.type === 1
+  let result = global.$store.state.app.currentEventTypeList.find(
+    (item: any) => item.type === global.$store.state.app.emergencyPlanType
   )?.data;
+  result = result.map((item: any) => {
+    return {
+      ...item,
+      value: Number(item.value),
+    };
+  });
+  return result;
 });
 
 const handleSearch = () => {
@@ -109,21 +116,17 @@ const handleSearch = () => {
 
 const handleReset = () => {
   formDataRef.value.resetFields();
-  state.formData = {
-    ...state.formData,
-    eventTimeBegin: null,
-    eventTimeEnd: null,
-  };
-  state.eventTime = [];
+  state.formData.planTimeStart = "";
+  state.formData.planTimeEnd = "";
+  state.planTime = [];
   emit("onReset", state.formData);
 };
 
-const handleChangeInfoEventTime = (value: any[]) => {
-  state.formData.eventTimeBegin = global
+const handleChangePlanTime = (value: any) => {
+  state.formData.planTimeStart = global
     .$dayjs(value[0])
     .format("YYYY-MM-DD HH:mm:ss");
-
-  state.formData.eventTimeEnd = global
+  state.formData.planTimeEnd = global
     .$dayjs(value[1])
     .format("YYYY-MM-DD HH:mm:ss");
 };

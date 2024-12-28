@@ -9,6 +9,15 @@ import { store } from "@/store";
 
 const prefix = "/manage";
 
+// 获取告警信息
+export const getAreaMapAlarmInfoData = (params: any) => {
+  return service({
+    url: prefix + "/backend/indexPage/getAreaMapAlarmInfoData",
+    method: "POST",
+    data: params,
+  });
+};
+
 // 附件
 // 下载
 export const attachmentDownloadRequest = (params: any) => {
@@ -16,6 +25,7 @@ export const attachmentDownloadRequest = (params: any) => {
     url: prefix + "/attachment/download",
     method: "GET",
     data: params,
+    responseType: "blob",
   });
 };
 
@@ -108,6 +118,15 @@ export const backendRailwayArriveSaveRailwayArriveBatchRequest = (
   });
 };
 
+// 区域小时客流-铁路到达-删除铁路到达
+export const backendRailwayArriveDeleteRequest = (params: any) => {
+  return service({
+    url: prefix + "/backend/railwayArrive/delete",
+    method: "POST",
+    params,
+  });
+};
+
 // 后台管理-客流疏散
 export const backendIndexPageFlowDistRequest = (params: any) => {
   return service({
@@ -150,8 +169,9 @@ export const backendIndexPageTodayFlowAcceleratedRequest = (params: any) => {
 export const passengerFlowMetroPassengerFlowExportRequest = (params: any) => {
   return service({
     url: prefix + "/passengerFlow/metroPassengerFlow/export",
-    method: "POST",
-    data: params,
+    method: "GET",
+    params,
+    responseType: "blob",
   });
 };
 
@@ -339,8 +359,9 @@ export const eventManageSuddenEventDeleteDisposalRequest = (params: any) => {
 export const eventManageSuddenEventExportRequest = (params: any) => {
   return service({
     url: prefix + "/eventManage/suddenEvent/export",
-    method: "POST",
+    method: "GET",
     params,
+    responseType: "blob",
   });
 };
 
@@ -350,6 +371,7 @@ export const eventManageSuddenEventExportRecordRequest = (params: any) => {
     url: prefix + "/eventManage/suddenEvent/exportRecord",
     method: "GET",
     params,
+    responseType: "blob",
   });
 };
 
@@ -427,6 +449,16 @@ export const infoManagementExternalInfoHandleRequest = (params: any) => {
   });
 };
 
+// 信息管理-外部信息-excel导出
+export const infoManagementExternalInfoExportExcelRequest = (params: any) => {
+  return service({
+    url: prefix + "/infoManagement/externalInfo/exportExcel",
+    method: "GET",
+    params,
+    responseType: "blob",
+  });
+};
+
 // 信息管理-舆情信息
 
 // 信息管理-舆情信息-分页查询
@@ -478,9 +510,21 @@ export const infoManagementPublicSentimentInfoHandleRequest = (params: any) => {
   });
 };
 
+// 信息管理-舆情信息-excel导出
+export const infoManagementPublicSentimentInfoExportExcelRequest = (
+  params: any
+) => {
+  return service({
+    url: prefix + "/infoManagement/publicSentimentInfo/exportExcel",
+    method: "GET",
+    data: params,
+    responseType: "blob",
+  });
+};
+
 // 信息管理-投诉信息
 
-// 删除
+// 信息管理-投诉信息-删除
 export const infoManagementComplaintInfoDeleteRequest = (params: any) => {
   return service({
     url: prefix + "/infoManagement/complaintInfo/delete",
@@ -489,7 +533,7 @@ export const infoManagementComplaintInfoDeleteRequest = (params: any) => {
   });
 };
 
-// 处置
+// 信息管理-投诉信息-处置
 export const infoManagementComplaintInfoHandleRequest = (params: any) => {
   return service({
     url: prefix + "/infoManagement/complaintInfo/handle",
@@ -498,9 +542,19 @@ export const infoManagementComplaintInfoHandleRequest = (params: any) => {
   });
 };
 
+// 信息管理-投诉信息-excel导出
+export const infoManagementComplaintInfoExportExcelRequest = (params: any) => {
+  return service({
+    url: prefix + "/infoManagement/complaintInfo/exportExcel",
+    method: "GET",
+    data: params,
+    responseType: "blob",
+  });
+};
+
 // 信息管理-天气信息
 
-// 根据Id查询
+// 信息管理-天气信息-根据Id查询
 export const infoManagementWeatherInfoGetOneByIdRequest = (params: any) => {
   return service({
     url: prefix + "/infoManagement/weatherInfo/getOneById",
@@ -518,7 +572,7 @@ export const infoManagementWeatherInfoGetPageRequest = (params: any) => {
   });
 };
 
-// 发布预警
+// 信息管理-天气信息-发布预警
 export const infoManagementWeatherInfoPublishWarningRequest = (params: any) => {
   return service({
     url: prefix + "/infoManagement/weatherInfo/publishWarning",
@@ -527,14 +581,17 @@ export const infoManagementWeatherInfoPublishWarningRequest = (params: any) => {
   });
 };
 
-// excel导出
-export const infoManagementComplaintInfoExportExcelRequest = (params: any) => {
+// 信息管理-天气信息-报表导出
+export const infoManagementWeatherInfoExportRequest = (params: any) => {
   return service({
-    url: prefix + "/infoManagement/complaintInfo/exportExcel",
-    method: "POST",
+    url: prefix + "/infoManagement/weatherInfo/export",
+    method: "GET",
     data: params,
+    responseType: "blob",
   });
 };
+
+// 信息管理-投诉信息
 
 // 根据Id查询
 export const infoManagementComplaintInfoGetOneByIdRequest = (params: any) => {
@@ -598,6 +655,7 @@ export const preplanPreplanExportRequest = (params: any) => {
     url: prefix + "/preplan/preplan/export",
     method: "GET",
     data: params,
+    responseType: "blob",
   });
 };
 
@@ -607,6 +665,7 @@ export const preplanPreplanExportStepRequest = (params: any) => {
     url: prefix + "/preplan/preplan/exportStep",
     method: "GET",
     data: params,
+    responseType: "blob",
   });
 };
 
@@ -661,8 +720,9 @@ export const planManagementEmergencyPlanDeleteRequest = (params: any) => {
 export const planManagementEmergencyPlanExportExcelRequest = (params: any) => {
   return service({
     url: prefix + "/planManagement/emergencyPlan/exportExcel",
-    method: "POST",
+    method: "GET",
     data: params,
+    responseType: "blob",
   });
 };
 
@@ -672,8 +732,9 @@ export const planManagementEmergencyPlanExportRecordExcelRequest = (
 ) => {
   return service({
     url: prefix + "/planManagement/emergencyPlan/exportRecordExcel",
-    method: "POST",
+    method: "GET",
     data: params,
+    responseType: "blob",
   });
 };
 
@@ -757,8 +818,9 @@ export const operationManagementDutyStaffDeleteRequest = (params: any) => {
 export const operationManagementDutyStaffExportExcelRequest = (params: any) => {
   return service({
     url: prefix + "/operationManagement/dutyStaff/exportExcel",
-    method: "POST",
+    method: "GET",
     data: params,
+    responseType: "blob",
   });
 };
 
@@ -813,8 +875,9 @@ export const operationManagementAlarmInfoDeleteRequest = (params: any) => {
 export const operationManagementAlarmInfoExportExcelRequest = (params: any) => {
   return service({
     url: prefix + "/operationManagement/alarmInfo/exportExcel",
-    method: "POST",
+    method: "GET",
     data: params,
+    responseType: "blob",
   });
 };
 
@@ -855,6 +918,8 @@ export const operationManagementAlarmInfoSaveRequest = (params: any) => {
 };
 
 // 运行管理-日历信息
+// Calendar Info Controller
+
 // 删除
 export const operationManagementCalendarInfoDeleteRequest = (params: any) => {
   return service({
@@ -870,8 +935,9 @@ export const operationManagementCalendarInfoExportExcelRequest = (
 ) => {
   return service({
     url: prefix + "/operationManagement/calendarInfo/exportExcel",
-    method: "POST",
+    method: "GET",
     data: params,
+    responseType: "blob",
   });
 };
 
@@ -910,6 +976,66 @@ export const operationManagementCalendarInfoImportExcelRequest = (
 export const operationManagementCalendarInfoSaveRequest = (params: any) => {
   return service({
     url: prefix + "/operationManagement/calendarInfo/save",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 客流数据管理-车库流量信息
+// Parking Flow Controller
+
+// 客流数据管理-车库流量信息-导出
+export const passengerFlowParkingPassengerFlowExportRequest = (params: any) => {
+  return service({
+    url: prefix + "/passengerFlow/parkingPassengerFlow/export",
+    method: "GET",
+    params,
+    responseType: "blob",
+  });
+};
+
+// 客流数据管理-车库流量信息-出入口信息查询
+export const passengerFlowParkingPassengerFlowGetCapPlaceRequest = (
+  params: any
+) => {
+  return service({
+    url: prefix + "/passengerFlow/parkingPassengerFlow/getCapPlace",
+    method: "GET",
+    params,
+  });
+};
+
+// 客流数据管理-车库流量信息-分页查询
+export const passengerFlowParkingPassengerFlowGetPageRequest = (
+  params: any
+) => {
+  return service({
+    url: prefix + "/passengerFlow/parkingPassengerFlow/getPage",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 运行管理-运行配置
+// Operation Config Controller
+
+// 配置
+export const operationManagementOperationConfigConfigRequest = (
+  params: any
+) => {
+  return service({
+    url: prefix + "/operationManagement/operationConfig/config",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 查询列表
+export const operationManagementOperationConfigGetListRequest = (
+  params: any
+) => {
+  return service({
+    url: prefix + "/operationManagement/operationConfig/getList",
     method: "POST",
     data: params,
   });

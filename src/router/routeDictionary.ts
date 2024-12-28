@@ -110,9 +110,9 @@ const routerDictionary = [
       },
       {
         title: "事件管理",
-        path: "EventManagement",
-        name: "EventManagement",
-        icon: "/src/assets/menu_eventmanagement.png",
+        path: "EmergencyEventManagement",
+        name: "EmergencyEventManagement",
+        icon: "/src/assets/menu_emergencyeventmanagement.png",
         component: () =>
           import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
         children: [
@@ -122,7 +122,7 @@ const routerDictionary = [
             name: "EmergencyEvent",
             component: () =>
               import(
-                /* webpackChunkName: "EmergencyEvent" */ "@/views/EventManagement/EmergencyEvent/EmergencyEvent.vue"
+                /* webpackChunkName: "EmergencyEvent" */ "@/views/EmergencyEventManagement/EmergencyEvent/EmergencyEvent.vue"
               ),
             meta: {
               title: "突发事件",
@@ -134,7 +134,7 @@ const routerDictionary = [
             name: "EventLog",
             component: () =>
               import(
-                /* webpackChunkName: "EventLog" */ "@/views/EventManagement/EventLog/EventLog.vue"
+                /* webpackChunkName: "EventLog" */ "@/views/EmergencyEventManagement/EventLog/EventLog.vue"
               ),
             meta: {
               title: "事件记录",
@@ -203,8 +203,8 @@ const routerDictionary = [
       },
       {
         title: "预案管理",
-        path: "PlanManagement",
-        name: "PlanManagement",
+        path: "EmergencyPlanManagement",
+        name: "EmergencyPlanManagement",
         icon: "/src/assets/menu_informationmanagement.png",
         component: () =>
           import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
@@ -215,7 +215,7 @@ const routerDictionary = [
             name: "EmergencyPlan",
             component: () =>
               import(
-                /* webpackChunkName: "EmergencyPlan" */ "@/views/PlanManagement/EmergencyPlan/EmergencyPlan.vue"
+                /* webpackChunkName: "EmergencyPlan" */ "@/views/EmergencyPlanManagement/EmergencyPlan/EmergencyPlan.vue"
               ),
             meta: {
               title: "应急预案",
@@ -227,7 +227,7 @@ const routerDictionary = [
             name: "PlanRecord",
             component: () =>
               import(
-                /* webpackChunkName: "PlanRecord" */ "@/views/PlanManagement/PlanRecord/PlanRecord.vue"
+                /* webpackChunkName: "PlanRecord" */ "@/views/EmergencyPlanManagement/PlanRecord/PlanRecord.vue"
               ),
             meta: {
               title: "预案记录",
@@ -280,15 +280,39 @@ const routerDictionary = [
             },
           },
           {
-            title: "配置",
-            path: "OperationManagementConfiguration",
-            name: "OperationManagementConfiguration",
+            title: "阈值配置",
+            path: "ConfigurationThreshold",
+            name: "ConfigurationThreshold",
             component: () =>
               import(
-                /* webpackChunkName: "OperationManagementConfiguration" */ "@/views/OperationManagement/OperationManagementConfiguration/OperationManagementConfiguration.vue"
+                /* webpackChunkName: "ConfigurationThreshold" */ "@/views/OperationManagement/ConfigurationThreshold/ConfigurationThreshold.vue"
               ),
             meta: {
-              title: "告警信息管理",
+              title: "阈值配置",
+            },
+          },
+          {
+            title: "常用配置",
+            path: "ConfigurationCommon",
+            name: "ConfigurationCommon",
+            component: () =>
+              import(
+                /* webpackChunkName: "ConfigurationCommon" */ "@/views/OperationManagement/ConfigurationCommon/ConfigurationCommon.vue"
+              ),
+            meta: {
+              title: "阈值配置",
+            },
+          },
+          {
+            title: "地图配置",
+            path: "ConfigurationMap",
+            name: "ConfigurationMap",
+            component: () =>
+              import(
+                /* webpackChunkName: "ConfigurationMap" */ "@/views/OperationManagement/ConfigurationMap/ConfigurationMap.vue"
+              ),
+            meta: {
+              title: "阈值配置",
             },
           },
         ],

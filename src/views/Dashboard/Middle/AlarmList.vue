@@ -30,7 +30,9 @@ import {
   nextTick,
 } from "vue";
 
-import { backendIndexPageEmergencyRequest } from "@/api/management";
+import {
+  backendIndexPageEmergencyRequest,
+} from "@/api/management";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;

@@ -3,12 +3,14 @@
     <FilterTool @onSearch="handleSearch" @onReset="handleReset"></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
-        <ImportButton
-          :action="`/api/manage/backend/railwayArrive/importPic`"
-          @onSuccess="handleUploaded"
+        <ExportButton
+          :action="passengerFlowMetroPassengerFlowExportRequest"
+          :queryFormData="queryFormData"
+          :pagination="{
+            ...pagination,
+            pageSize: 1000,
+          }"
         />
-        <a-button class="export" @click="handleExport">导出</a-button>
-        <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
     <BaseTable
@@ -19,14 +21,6 @@
       @onReview="handleReview"
       @onChangePage="handleChangePage"
     />
-    <EditDialog
-      :visible="state.dialogVisible"
-      :mode="state.dialogMode"
-      :dataModel="pageModel"
-      :rowData="state.currentRowData"
-      @onClose="handleClose"
-      @onSubmit="handleSubmit"
-    ></EditDialog>
   </div>
 </template>
 
@@ -47,6 +41,8 @@ import {
   passengerFlowMetroPassengerFlowGetPageRequest,
   backendRailwayArriveRailwayArriveExportRequest,
   backendRailwayArriveSaveRailwayArriveRequest,
+  passengerFlowMetroPassengerFlowExportRequest,
+  eventManageSuddenEventExportRequest,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
@@ -89,19 +85,11 @@ const pageModel = ref([
   },
   {
     label: "统计时间",
-    name: "metroStationCode",
+    name: "statisticalTime",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
-  },
-  {
-    label: "操作",
-    name: "operationColumn",
-    tableVisible: true,
-    exportVisible: false,
-    fixed: "right",
-    actions: ["edit", "review", "delete"],
   },
 ]);
 
@@ -202,7 +190,10 @@ const handleUploaded = (response: any) => {
 };
 
 const handleExport = () => {
-  backendRailwayArriveRailwayArriveExportRequest()
+  backendRailwayArriveRailwayArriveExportRequest({
+    ...queryFormData,
+    ...pagination,
+  })
     .then((response: any) => {
       global.$exportTable(response, global.$route);
     })

@@ -63,12 +63,18 @@
                   </a-button>
                 </template>
                 <template v-else-if="item2 === 'video'">
-                  <PaperClipOutlined
-                    :style="{
-                      color: '#8EE1F9',
-                      fontSize: '0.3rem',
-                    }"
-                  />
+                  <a-button
+                    :key="item2"
+                    type="link"
+                    @click.stop="handlePreview(scope, 'video')"
+                  >
+                    <VideoCameraOutlined
+                      :style="{
+                        color: '#8EE1F9',
+                        fontSize: '0.3rem',
+                      }"
+                    />
+                  </a-button>
                 </template>
               </a>
             </a-space>
@@ -124,11 +130,13 @@
     <a-pagination
       v-if="!!props.pagination"
       v-model:current="pagination.page"
-      show-quick-jumper
+      showQuickJumper
+      showLessItems
+      showSizeChanger
+      :pageSizeOptions="['10', '20', '30', '50', '100']"
       :total="pagination.total"
       :page-size="pagination.pageSize"
       :show-total="(total) => `共 ${total} 条`"
-      show-less-items
       @change="hangleChangePage"
     />
 
@@ -154,8 +162,11 @@ import {
   nextTick,
 } from "vue";
 import AttachmentPreview from "@/components/AttachmentPreview.vue";
-import { PaperClipOutlined, PictureOutlined } from "@ant-design/icons-vue";
-import { debug } from "console";
+import {
+  PaperClipOutlined,
+  PictureOutlined,
+  VideoCameraOutlined,
+} from "@ant-design/icons-vue";
 
 const emit = defineEmits<{
   (e: "onEdit", rowData: any): void;
@@ -277,7 +288,7 @@ const parsedColumnWidth = (item: any) => {
         const charLength = actionDictionary.find(
           (item2: any) => item2.name === cur
         ).label.length;
-        return sum + (charLength * 2 + 40);
+        return sum + (charLength * 2 + 45);
       }, 0) +
       80 +
       "px";

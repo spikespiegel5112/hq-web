@@ -107,8 +107,6 @@ import {
 } from "vue";
 import type { Rule } from "ant-design-vue/es/form";
 
-import { screenBannerInfoRequest } from "@/api/management";
-
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 

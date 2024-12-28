@@ -71,8 +71,6 @@ const recordRoute = (newValue: any) => {
   state.accessLogList.forEach((item: any) => {
     item.active = newValue.name === item.name;
   });
-  console.log("newRoute");
-  console.log(newRoute);
 };
 
 const handleNavigate = (routeData: any) => {

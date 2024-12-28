@@ -7,26 +7,26 @@
           :action="`/api/manage/backend/railwayArrive/importPic`"
           @onSuccess="handleUploaded"
         />
-        <a-button class="export" @click="handleExport">导出</a-button>
-        <a-button class="add" @click="handleAdd">新增</a-button>
+        <ExportButton
+          :action="eventManageSuddenEventExportRequest"
+          :queryFormData="queryFormData"
+          :pagination="{
+            ...pagination,
+            pageSize: 1000,
+          }"
+        />
       </a-space>
     </div>
     <BaseTable
       :tableData="state.tableData"
+      :processedTableData="state.processedTableData"
       :dataModel="pageModel"
       :pagination="pagination"
       @onEdit="handleEdit"
       @onReview="handleReview"
       @onChangePage="handleChangePage"
+      @onDelete="handleDelete"
     />
-    <EditDialog
-      :visible="state.dialogVisible"
-      :mode="state.dialogMode"
-      :dataModel="pageModel"
-      :rowData="state.currentRowData"
-      @onClose="handleClose"
-      @onSubmit="handleSubmit"
-    ></EditDialog>
   </div>
 </template>
 
@@ -47,6 +47,8 @@ import {
   backendRailwayArriveGetRailwayArrivePagingRequest,
   backendRailwayArriveRailwayArriveExportRequest,
   backendRailwayArriveSaveRailwayArriveRequest,
+  backendRailwayArriveDeleteRequest,
+  eventManageSuddenEventExportRequest,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
@@ -95,18 +97,11 @@ const pageModel = ref([
     formVisible: true,
     exportVisible: true,
   },
-  {
-    label: "操作",
-    name: "operationColumn",
-    tableVisible: true,
-    exportVisible: false,
-    fixed: "right",
-    actions: ["edit", "review", "delete"],
-  },
 ]);
 
 const state = reactive({
   tableData: [] as any[],
+  processedTableData: [] as any[],
   dialogVisible: false,
   dialogMode: null as string | null,
   currentRowData: {},
@@ -129,6 +124,16 @@ const getData = () => {
     .then((response: any) => {
       response = response.data;
       state.tableData = response.list;
+      state.processedTableData = response.list.map(
+        (item: any, index: number) => {
+          return {
+            ...item,
+            statisticalDate: global
+              .$dayjs(item.statisticalDate)
+              .format("YYYY年M月DD日"),
+          };
+        }
+      );
       pagination.total = response.total;
     })
     .catch((error: any) => {
@@ -186,7 +191,7 @@ const handleChangePage = (pagingData: any) => {
   getData();
 };
 const handleDelete = (id: number) => {
-  infoManagementExternalInfoDeleteRequest({ id })
+  backendRailwayArriveDeleteRequest({ id })
     .then((response: any) => {
       global.$message.success("删除成功");
       getData();

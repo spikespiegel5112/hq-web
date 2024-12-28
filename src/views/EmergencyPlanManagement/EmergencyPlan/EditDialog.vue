@@ -21,110 +21,16 @@
     >
       <a-row>
         <a-col :span="22">
-          <a-form-item name="manageRegion" label="管理区域">
+          <a-form-item name="planSource" label="来源">
             <a-select
               v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.manageRegion"
-              placeholder="请选择"
-              @change="handleChangeEventType"
-            >
-              <a-select-option
-                v-for="item in global.$store.state.dictionary.manageRegion"
-                :key="item.value"
-                :value="item.value"
-              >
-                {{ item.label }}
-              </a-select-option>
-            </a-select>
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="22">
-          <a-form-item name="eventType" label="事件类型">
-            <a-select
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.eventType"
-              placeholder="请选择"
-              @change="handleChangeEventType"
-            >
-              <a-select-option
-                v-for="item in eventList"
-                :value="item.label"
-                :key="item.value"
-              >
-                {{ item.label }}
-              </a-select-option>
-            </a-select>
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="22">
-          <a-form-item name="eventLocation" label="具体地址">
-            <a-input
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.eventLocation"
-              placeholder="请输入"
-            >
-            </a-input>
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="22">
-          <a-form-item name="eventLevel" label="等级">
-            <a-select
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.eventLevel"
+              v-model:value="state.formData.planSource"
               placeholder="请选择"
             >
               <a-select-option
-                v-for="item in global.$store.state.dictionary.eventLevel"
-                :key="item.value"
-                :value="item.value"
-              >
-                {{ item.label }}
-              </a-select-option>
-            </a-select>
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="22">
-          <a-form-item name="eventTime" label="发生时间">
-            <a-date-picker
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.eventTime"
-              format="YYYY-MM-DD HH:mm:ss"
-            ></a-date-picker>
-          </a-form-item>
-        </a-col>
-      </a-row>
-
-      <a-row>
-        <a-col :span="22">
-          <a-form-item name="eventContent" label="事件内容">
-            <a-textarea
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.eventContent"
-              placeholder="请输入"
-              :rows="4"
-            >
-            </a-textarea>
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <!-- <a-row>
-        <a-col :span="22">
-          <a-form-item name="eventStatus" label="事件状态">
-            <a-select
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.eventStatus"
-              placeholder="请选择"
-            >
-              <a-select-option
-                v-for="item in global.$store.state.dictionary.disposalStatus"
+                v-for="item in global.$getDictionary(
+                  'emergency_plan_plan_source'
+                )"
                 :key="item.value"
                 :value="item.value"
               >
@@ -132,15 +38,108 @@
               </a-select-option>
             </a-select>
             <template v-if="props.mode === 'review'">
-              {{
-                global.$store.state.dictionary.disposalStatus.find(
-                  (item:any) => item.value === state.formData.eventStatus
-                )?.label
-              }}
+              {{ state.formData.planSource }}
             </template>
           </a-form-item>
         </a-col>
-      </a-row> -->
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="preplanResourceId" label="预案类型">
+            <a-select
+              v-if="global.$checkEditable(props.mode)"
+              v-model:value="state.formData.preplanResourceId"
+              placeholder="请选择"
+            >
+              <a-select-option
+                v-for="item in eventList"
+                :value="item.value"
+                :key="item.value"
+              >
+                {{ item.label }}
+              </a-select-option>
+            </a-select>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.preplanResourceId }}
+            </template>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="planContent" label="预案内容">
+            <a-textarea
+              v-if="global.$checkEditable(props.mode)"
+              v-model:value="state.formData.planContent"
+              placeholder="请输入"
+              :rows="3"
+              allow-clear
+            >
+            </a-textarea>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.planContent }}
+            </template>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="planLevel" label="预案等级">
+            <a-radio-group
+              v-model:value="state.formData.planLevel"
+              buttonStyle="solid"
+            >
+              <a-radio-button
+                v-for="item in global.$getDictionary('planLevel')"
+                :value="item.value"
+              >
+                {{ item.label }}
+              </a-radio-button>
+            </a-radio-group>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.planLevel }}
+            </template>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="planTime" label="发生时间">
+            <a-date-picker
+              v-if="global.$checkEditable(props.mode)"
+              v-model:value="state.formData.planTime"
+              format="YYYY-MM-DD"
+            ></a-date-picker>
+            <template v-if="props.mode === 'review'">
+              {{ global.$dayjs(state.formData.planTime).format("YYYY-MM-DD") }}
+            </template>
+          </a-form-item>
+        </a-col>
+      </a-row>
+
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="planStatus" label="状态">
+            <a-select
+              v-if="global.$checkEditable(props.mode)"
+              v-model:value="state.formData.planStatus"
+              placeholder="请选择"
+              :disabled="props.mode === 'add'"
+            >
+              <a-select-option
+                v-for="item in global.$getDictionary('planStatus')"
+                :key="item.value"
+                :value="item.value"
+              >
+                {{ item.label }}
+              </a-select-option>
+            </a-select>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.planStatus }}
+            </template>
+          </a-form-item>
+        </a-col>
+      </a-row>
       <a-row>
         <a-col :span="22">
           <a-form-item name="attachment" label="附件">
@@ -148,6 +147,12 @@
               v-if="global.$checkEditable(props.mode)"
               :attachmentList="state.formData.attachmentList"
             />
+            <template v-if="props.mode === 'review'">
+              <CommonUpload
+                disabled
+                :attachmentList="state.formData.attachmentList"
+              />
+            </template>
           </a-form-item>
         </a-col>
       </a-row>
@@ -201,25 +206,34 @@ const props = defineProps({
 
 let state = reactive({
   visible: false,
+  disposalResponseTime: 0,
 
   formData: {
     id: null as number | null | undefined,
     attachmentList: [] as any[],
-    manageRegion: null,
-    eventContent: null,
-    eventLocation: null,
-    eventStatus: null,
-    eventTime: null,
-    eventType: null,
-    eventLevel: null,
+    planCode: null,
+    planContent: null,
+    planLevel: null,
+    planLocation: null,
+    planSource: null,
+    planStatus: null,
+    planTime: null,
+    preplanResourceId: null,
   } as any,
   fileList: [] as any[],
 });
 
 const eventList = computed(() => {
-  return global.$store.state.app.currentEventTypeList.find(
-    (item: any) => item.type === 1
+  let result = global.$store.state.app.currentEventTypeList.find(
+    (item: any) => item.type === global.$store.state.app.emergencyPlanType
   )?.data;
+  result = result.map((item: any) => {
+    return {
+      ...item,
+      value: Number(item.value),
+    };
+  });
+  return result;
 });
 
 const dialogTitle: ComputedRef<string> = computed(() => {
@@ -269,11 +283,12 @@ watch(
         const formData = JSON.parse(JSON.stringify(props.rowData));
         state.formData = {
           ...formData,
-          eventTime: !!formData.eventTime
-            ? global.$dayjs(formData.eventTime)
+          planTime: !!formData.planTime
+            ? global.$dayjs(formData.planTime)
             : null,
         };
       }
+      setUndeal();
     }
   }
 );
@@ -285,8 +300,8 @@ const handleClose = () => {
 };
 
 const handleSubmit = () => {
-  const eventTime = global
-    .$dayjs(state.formData.eventTime)
+  const planTime = global
+    .$dayjs(state.formData.planTime)
     .format("YYYY-MM-DD HH:mm:ss");
   if (props.mode === "add") {
     state.formData.id = undefined;
@@ -296,13 +311,20 @@ const handleSubmit = () => {
     .then(() => {
       emit("onSubmit", {
         ...state.formData,
-        eventTime,
+        planTime,
       });
       handleClose();
     })
     .catch((error: any) => {
       console.log("error", error);
     });
+};
+
+const setUndeal = () => {
+  if (props.mode === "add") {
+    const planStatusList = global.$getDictionary("planStatus");
+    state.formData.planStatus = planStatusList[0].value;
+  }
 };
 
 const handleChangeEventTime = (date: any) => {};
