@@ -7,7 +7,7 @@
             <a-col :span="6">
               <a-form-item name="preplanResourceId" label="预警类型">
                 <a-select
-                  v-model="state.formData.preplanResourceId"
+                  v-model:value="state.formData.preplanResourceId"
                   placeholder="请选择"
                 >
                   <a-select-option
@@ -26,13 +26,14 @@
                   v-model:value="state.alarmTime"
                   format="YYYY-MM-DD"
                   allow-clear
+                  @change="handleChangeDateTime1"
                 />
               </a-form-item>
             </a-col>
             <a-col :span="5">
               <a-form-item name="dateType" label="日期类型">
                 <a-select
-                  v-model="state.formData.dateType"
+                  v-model:value="state.formData.dateType"
                   placeholder="请选择"
                 >
                   <a-select-option
@@ -48,7 +49,7 @@
             <a-col :span="5">
               <a-form-item name="alarmLevel" label="级别">
                 <a-select
-                  v-model="state.formData.alarmLevel"
+                  v-model:value="state.formData.alarmLevel"
                   placeholder="请选择"
                 >
                   <a-select-option
@@ -105,9 +106,9 @@ const state = reactive({
   formData: {
     alarmLevel: null,
     dateType: null,
-    preplanResourceId: null,
-    alarmTimeStart: null,
     alarmTimeEnd: null,
+    alarmTimeStart: null,
+    preplanResourceId: null,
   },
   alarmTime: [],
 });
@@ -120,18 +121,9 @@ const eventAllList = computed(() => {
 });
 
 const handleSearch = () => {
-  const alarmTimeStart = global
-    .$dayjs(state.alarmTime[0])
-    .format("YYYY-MM-DD HH:mm:ss");
-  const alarmTimeEnd = global
-    .$dayjs(state.alarmTime[1])
-    .format("YYYY-MM-DD HH:mm:ss");
   const formData: any = JSON.parse(JSON.stringify(state.formData));
-  formData.alarmTime = undefined;
   emit("onSearch", {
     ...formData,
-    alarmTimeStart,
-    alarmTimeEnd,
   });
 };
 
@@ -141,12 +133,12 @@ const handleReset = () => {
   state.alarmTime = [];
 };
 
-// const handleChangealarmTime = (value: any) => {
-//   const alarmTimeStart = global.$dayjs(value[0]).format("YYYY-MM-DD");
-//   const alarmTimeEnd = global.$dayjs(value[1]).format("YYYY-MM-DD");
-//   state.alarmTimeStart = alarmTimeStart;
-//   state.alarmTimeEnd = alarmTimeEnd;
-// };
+const handleChangeDateTime1 = (value: any) => {
+  const alarmTimeStart = global.$dayjs(value[0]).format("YYYY-MM-DD HH:mm:ss");
+  const alarmTimeEnd = global.$dayjs(value[1]).format("YYYY-MM-DD HH:mm:ss");
+  state.formData.alarmTimeStart = alarmTimeStart;
+  state.formData.alarmTimeEnd = alarmTimeEnd;
+};
 
 onMounted(async () => {});
 

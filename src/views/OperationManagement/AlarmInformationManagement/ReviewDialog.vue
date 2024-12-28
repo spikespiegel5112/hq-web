@@ -273,6 +273,7 @@ const getStepData = () => {
   const planData: any = eventList.value.find((item: any) => {
     return Number(item.value) === props.rowData.preplanResourceId;
   });
+  debugger
 
   preplanPreplanGetStepPageRequest({
     preplanType: global.$store.state.app.emergencyEventType,
