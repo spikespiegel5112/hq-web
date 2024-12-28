@@ -79,6 +79,7 @@ import axios from "axios"; // 导入 axios
 import {
   screenBannerInfoRequest,
   getAreaMapAlarmInfoData,
+  videoUpperWall
 } from "@/api/management";
 import { log } from "console";
 import CryptoJS from "crypto-js"; // 导入 crypto-js
@@ -115,7 +116,7 @@ const alarmList = ref([
   { name: "申贵路地下通道", top: "1.8rem", left: "1.25rem", isAlarm: false },
 ]);
 
-// ----------------------------------data
+// ----------------------------------data------------
 onMounted(async () => {
   try {
     const res1 = await axios.post("http://10.141.10.10:8088/VIID/login/v2", {});
@@ -187,10 +188,17 @@ onMounted(async () => {
 // 上墙功能
 const checkBtn = () => {
   console.log("点击了上墙");
+  videoUpperWall({})
+    .then((res: any) => {
+        console.log("上墙res", res);
+    })
+    .catch((err: any) => {
+      console.log(err);
+    });
     // 更新所有 videoDom 中的勾选框显示状态
     document.querySelectorAll("#videoDOMId input[type='checkbox']").forEach((checkbox: any) => {
     checkbox.style.display = "block";
-    console.log("checkbox-dom",checkbox);
+    
     
     //  // 注册勾选事件
     //  checkbox.addEventListener('change', (event:any) => {
