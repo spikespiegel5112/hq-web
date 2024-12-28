@@ -32,12 +32,18 @@
               </a-select>
             </a-form-item>
           </a-col>
+          <!-- 上墙 -->
+          <!-- <a-col :span="12">
+          <a-button type="primary" class="checkBtn" @click="checkBtn">上墙</a-button>
+          </a-col> -->
         </a-row>
       </a-form>
     </div>
 
     <div class="content">
-      <div id="videoDOM"></div>
+      <div id="videoDOMId">
+      </div>
+      
       <div class="mapPic">
         <img src="@/assets/mapPic.png" />
         <!-- 报警事件 -->
@@ -82,7 +88,7 @@ const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
 const formDataRef = ref();
-const videoDomId = ref();
+const checkFlag = ref(false);
 const AccessToken = ref();
 const cameraListTotal = ref();
 const cameraListChecked = ref();
@@ -178,13 +184,28 @@ onMounted(async () => {
   // );
 });
 
+// 上墙功能
+const checkBtn = () => {
+  console.log("点击了上墙");
+    // 更新所有 videoDom 中的勾选框显示状态
+    document.querySelectorAll("#videoDOMId input[type='checkbox']").forEach((checkbox: any) => {
+    checkbox.style.display = "block";
+    console.log("checkbox-dom",checkbox);
+    
+    //  // 注册勾选事件
+    //  checkbox.addEventListener('change', (event:any) => {
+    //   handleCheckboxChange(event);
+    // }); 
+  });
+};
+
+
 // 初始化
 const init = async (initData: any) => {
   (window as any).imosPlayer
     .init(initData)
     .then(function (res: any) {
       if (res.ErrCode === 0) {
-        checkInit(); // 检查初始化状态
       } else {
         console.error(res.ErrMsg);
       }
@@ -214,11 +235,25 @@ const createPanelWindow = () => {
   return new Promise((resolve, reject) => {
     let videoDom = (window as any).imosPlayer.createPanelWindow();
     videoDom.style.width = "140px";
-    videoDom.style.height = "160px";
+    videoDom.style.height = "150px";
     videoDom.style.marginTop = "0.08rem";
     videoDom.style.overflow = "hidden"; // 确保子元素内部也隐藏溢出部分
 
-    const videoContainer = document.querySelector("#videoDOM");
+     // 创建勾选框
+     const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.style.position = "absolute";
+    checkbox.style.top = "5px";
+    checkbox.style.left = "5px"; 
+    checkbox.style.display = checkFlag.value ? "block" : "none"; // 初始状态根据 checkFlag 决定
+
+    checkbox.addEventListener('change', handleCheckboxChange);
+
+    videoDom.appendChild(checkbox);
+
+     
+
+    const videoContainer = document.querySelector("#videoDOMId");
     if (videoContainer) {
       videoContainer.appendChild(videoDom);
       resolve(videoDom.id);
@@ -226,6 +261,18 @@ const createPanelWindow = () => {
       reject("视频容器未找到");
     }
   });
+};
+
+// 视频勾选事件
+const handleCheckboxChange = (event: Event, ) => {
+  const checkbox = event.target as HTMLInputElement;
+  if (checkbox.checked) {
+    console.log("勾选框被选中", );
+    // 在这里添加勾选框被选中时的逻辑
+  } else {
+    console.log("勾选框未被选中", );
+    // 在这里添加勾选框未被选中时的逻辑
+  }
 };
 
 const forCameraData = () => {
@@ -351,9 +398,6 @@ const getAreaMapAlarmInfoFun = () => {
     });
 };
 
-const checkInit = () => {
-  let res = (window as any).imosPlayer.checkInit();
-};
 
 onBeforeUnmount(() => {});
 </script>
@@ -387,7 +431,7 @@ onBeforeUnmount(() => {});
   border-radius: 0.05rem;
 }
 
-#videoDOM {
+#videoDOMId {
   display: flex;
   flex-wrap: wrap;
   // height: 5rem; /* 使用百分比高度 */
@@ -456,5 +500,8 @@ onBeforeUnmount(() => {});
     border-style: solid;
     border-color: #f68b00 transparent transparent transparent;
   }
+}
+.checkBtn{
+  margin: -1rem 0 0.1rem 0;
 }
 </style>
