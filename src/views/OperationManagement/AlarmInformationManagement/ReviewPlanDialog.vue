@@ -258,8 +258,6 @@ const getData = () => {
   })
     .then(async (response: any) => {
       response = response.data;
-      state.disposalData = response;
-      state.disposalList = response.disposalList;
       await getStepData(response.preplanResourceId);
       Object.keys(state.formData).forEach((item: any) => {
         state.formData[item] = response[item];
