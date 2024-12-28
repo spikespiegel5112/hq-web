@@ -25,15 +25,25 @@
       @onChangePage="handleChangePage"
       @onDelete="handleDelete"
     />
-    <ReviewDialog
-      :visible="state.dialogReviewVisible"
+    <ReviewEventDialog
+      :visible="state.dialogReviewEventVisible"
       :mode="state.dialogMode"
       :dataModel="pageModel"
       :rowData="state.currentRowData"
       @onClose="handleClose"
       @onSubmit="handleSubmit"
     >
-    </ReviewDialog>
+    </ReviewEventDialog>
+
+    <ReviewPlanDialog
+      :visible="state.dialogReviewPlanVisible"
+      :mode="state.dialogMode"
+      :dataModel="pageModel"
+      :rowData="state.currentRowData"
+      @onClose="handleClose"
+      @onSubmit="handleSubmit"
+    >
+    </ReviewPlanDialog>
   </div>
 </template>
 
@@ -57,7 +67,8 @@ import {
   operationManagementAlarmInfoExportExcelRequest,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
-import ReviewDialog from "./ReviewDialog.vue";
+import ReviewEventDialog from "./ReviewEventDialog.vue";
+import ReviewPlanDialog from "./ReviewPlanDialog.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -132,7 +143,8 @@ const pageModel = ref([
 const state = reactive({
   tableData: [] as any[],
   processedTableData: [] as any[],
-  dialogReviewVisible: false,
+  dialogReviewEventVisible: false,
+  dialogReviewPlanVisible: false,
   dialogMode: null as string | null,
   currentRowData: {},
 });
@@ -188,19 +200,19 @@ const getData = () => {
 };
 
 const handleEdit = (rowData: any) => {
-  state.dialogReviewVisible = true;
+  state.dialogReviewEventVisible = true;
   state.dialogMode = "edit";
   state.currentRowData = rowData;
 };
 
 const handleReview = (rowData: any) => {
-  state.dialogReviewVisible = true;
+  state.dialogReviewEventVisible = true;
   state.dialogMode = "review";
   state.currentRowData = rowData;
 };
 
 const handleAdd = () => {
-  state.dialogReviewVisible = true;
+  state.dialogReviewEventVisible = true;
   state.dialogMode = "add";
 };
 
@@ -215,7 +227,8 @@ const handleReset = (formData: object) => {
 };
 
 const handleClose = () => {
-  state.dialogReviewVisible = false;
+  state.dialogReviewEventVisible = false;
+  global.$store.commit("app/updateTableLoading", false);
 };
 
 const handleSubmit = (formData: any) => {

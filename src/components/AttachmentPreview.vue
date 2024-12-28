@@ -127,7 +127,8 @@ const getImgUrl = (item: any) => {
 };
 
 const handleClose = () => {
-  emit("onClose");
+  global.$store.commit("app/updateTableLoading", false);
+  emit("onClose", false);
 };
 
 const initSwiper = async () => {

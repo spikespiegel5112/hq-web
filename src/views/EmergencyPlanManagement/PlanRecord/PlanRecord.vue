@@ -220,6 +220,7 @@ const handleReset = (formData: object) => {
 
 const handleClose = () => {
   state.dialogVisible = false;
+  global.$store.commit("app/updateTableLoading", false);
 };
 
 const handleSubmit = (formData: any) => {

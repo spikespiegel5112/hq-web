@@ -18,7 +18,9 @@
             <a-col :span="10">
               <a-form-item name="password" label="值班时间">
                 <a-range-picker
-                  show-time v-model:value="state.dutyTime" show-time />
+                  v-model:value="state.dutyTime"
+                  show-time
+                />
               </a-form-item>
             </a-col>
           </a-row>
@@ -80,7 +82,6 @@ const handleSearch = () => {
 
   const formData: any = JSON.parse(JSON.stringify(state.formData));
   formData.dutyTime = undefined;
-  ;
   emit("onSearch", {
     ...formData,
     dutyStartTime,

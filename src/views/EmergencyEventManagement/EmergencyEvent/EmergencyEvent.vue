@@ -262,6 +262,7 @@ const handleReset = (formData: object) => {
 const handleClose = () => {
   state.dialogVisible = false;
   state.dialogReviewVisible = false;
+  global.$store.commit("app/updateTableLoading", false);
 };
 
 const handleSubmit = (formData: any) => {
