@@ -96,7 +96,9 @@ const selectedRegion = ref("全部");
 const isActive = ref("p9");
 const areaMapAlarmInfoData = ref([]);
 
-const state = reactive({});
+const state = reactive({
+  upperWallList: [] as any,
+});
 
 // 定义 winContent 响应式数据
 const winContent = ref("");
@@ -187,7 +189,10 @@ onMounted(async () => {
 // 上墙功能
 const checkBtn = () => {
   console.log("点击了上墙");
-  videoUpperWall({})
+
+  videoUpperWall({
+    videoList: state.upperWallList
+  })
     .then((res: any) => {
       console.log("上墙res", res);
     })
@@ -290,9 +295,30 @@ const forCameraData = () => {
       };
 
       startLive(itemData);
+      mouseEvent(item, itemData);
     });
   });
 };
+
+// 启用鼠标回调
+const mouseEvent = (item: any, itemData: any) => {
+  (window as any).imosPlayer.setFloatEventCallback(itemData.id,{
+    callback: (event: any)=>{
+      if (event.Event === 2) {
+        const videoElement = document.querySelector('#' + itemData.id);
+        videoElement.style.border = "2px solid #ff0000";
+        let videoData = JSON.parse(JSON.stringify(item.ResItemV1));
+        let videoList = [];
+        videoList.push({resCode: videoData.ResCode, resName: videoData.ResName});
+        state.upperWallList = videoList;
+        console.log("123", state.upperWallList)
+        //console.log('123', item);
+      }
+      return false;
+    }
+  })
+};
+
 
 // 启动实况
 const startLive = (itemData: any) => {
