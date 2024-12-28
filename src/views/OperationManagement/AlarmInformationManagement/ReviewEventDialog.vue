@@ -240,7 +240,6 @@ const getData = async () => {
   })
     .then(async (response: any) => {
       response = response.data;
-      debugger
       state.disposalData = response;
       state.disposalList = response.disposalList;
       if (response.preplanResourceStepList) {

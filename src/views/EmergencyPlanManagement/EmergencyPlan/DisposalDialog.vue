@@ -329,20 +329,6 @@ const handleChangeDisposalStep = (value: any) => {
 
 const handleChangeAttachment = () => {};
 
-const getColor = () => {
-  let eventLevel: any[] = global.$store.state.dictionary.eventLevel;
-  eventLevel = eventLevel.map((item: any) => {
-    return {
-      ...item,
-      color: colorList.find((item2: any) => item2.title === item.label),
-    };
-  });
-  const colorItem = global.$store.state.dictionary.eventLevel.find(
-    (item) => item.value === state.formData.eventLevel
-  );
-  return colorItem;
-};
-
 onMounted(async () => {});
 
 onBeforeUnmount(() => {});
