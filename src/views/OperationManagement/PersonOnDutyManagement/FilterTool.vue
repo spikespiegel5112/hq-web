@@ -20,6 +20,7 @@
                 <a-range-picker
                   v-model:value="state.dutyTime"
                   show-time
+                  format="YYYY-MM-DD HH:mm:ss"
                 />
               </a-form-item>
             </a-col>

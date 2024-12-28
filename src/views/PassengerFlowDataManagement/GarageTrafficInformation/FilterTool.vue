@@ -25,6 +25,7 @@
                 <a-range-picker
                   v-model:value="state.statisticalTime"
                   show-time
+                  format="YYYY-MM-DD HH:mm:ss"
                   @change="handleChangeStatisticalTime"
                 />
               </a-form-item>

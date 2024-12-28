@@ -56,6 +56,7 @@
                   v-model:value="state.eventTime"
                   @change="handleChangeEventTime"
                   allow-clear
+                  format="YYYY-MM-DD HH:mm:ss"
                 />
               </a-form-item>
             </a-col>

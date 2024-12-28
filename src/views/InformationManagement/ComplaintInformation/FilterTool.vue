@@ -38,7 +38,7 @@
                 <a-range-picker
                   show-time
                   v-model="state.dateRange"
-                  format="YYYY-MM-DD"
+                  format="YYYY-MM-DD HH:mm:ss"
                   allow-clear
                 />
               </a-form-item>

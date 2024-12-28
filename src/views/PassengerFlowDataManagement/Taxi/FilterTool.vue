@@ -20,6 +20,7 @@
                 <a-time-range-picker
                   v-model:value="state.formData.ddddd"
                   show-time
+                  format="YYYY-MM-DD HH:mm:ss"
                 />
               </a-form-item>
             </a-col>

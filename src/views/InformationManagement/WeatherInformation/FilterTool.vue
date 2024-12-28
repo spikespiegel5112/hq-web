@@ -9,7 +9,7 @@
                 <a-range-picker
                   show-time
                   v-model:value="state.dataTime"
-                  format="YYYY-MM-DD"
+                  format="YYYY-MM-DD HH:mm:ss"
                   @change="handleChangeTime1"
                   allow-clear
                 />
