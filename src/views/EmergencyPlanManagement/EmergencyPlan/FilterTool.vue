@@ -44,7 +44,6 @@
                 <a-range-picker
                   show-time
                   v-model:value="state.planTime"
-                  format="YYYY-MM-DD"
                   @change="handleChangePlanTime"
                 />
               </a-form-item>

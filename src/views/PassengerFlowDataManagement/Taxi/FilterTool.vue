@@ -17,7 +17,10 @@
             </a-col>
             <a-col :span="8">
               <a-form-item name="password" label="查询时间">
-                <a-time-range-picker v-model:value="state.formData.ddddd" />
+                <a-time-range-picker
+                  v-model:value="state.formData.ddddd"
+                  show-time
+                />
               </a-form-item>
             </a-col>
           </a-row>
