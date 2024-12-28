@@ -74,9 +74,7 @@ import {
   screenBannerInfoRequest,
   getAreaMapAlarmInfoData,
 } from "@/api/management";
-import { log } from "console";
 import CryptoJS from "crypto-js"; // 导入 crypto-js
-import internal from "stream";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
