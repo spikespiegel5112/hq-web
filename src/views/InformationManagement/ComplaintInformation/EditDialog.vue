@@ -118,8 +118,7 @@
               :attachmentList="state.formData.attachmentList"
             />
             <template v-if="props.mode === 'review'">
-              <CommonUpload
-                disabled
+              <AttachmentReview
                 :attachmentList="state.formData.attachmentList"
               />
             </template>

@@ -42,6 +42,7 @@
             <a-date-picker
               v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.externalTime"
+              show-time
               format="YYYY-MM-DD HH:mm:ss"
               @change="handleChangeTime1"
             ></a-date-picker>
@@ -101,8 +102,7 @@
               :attachmentList="state.formData.attachmentList"
             />
             <template v-if="props.mode === 'review'">
-              <CommonUpload
-                disabled
+              <AttachmentReview
                 :attachmentList="state.formData.attachmentList"
               />
             </template>
