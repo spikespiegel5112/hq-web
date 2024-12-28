@@ -156,7 +156,7 @@ import {
   eventManageSuddenEventGetDisposalRequest,
   preplanPreplanGetStepPageRequest,
   eventManageSuddenEventGetPageRequest,
-  eventManageSuddenEventGetRecordPageRequest
+  eventManageSuddenEventGetRecordPageRequest,
 } from "@/api/management";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
@@ -237,7 +237,7 @@ const getData = async () => {
   global.$store.commit("app/updateTableLoading", true);
   state.formData.eventType = props.rowData.eventType;
   state.formData.seId = props.rowData.id;
-  eventManageSuddenEventGetRecordPageRequest({
+  eventManageSuddenEventGetPageRequest({
     id: props.rowData.eventAssociationId,
   })
     .then((response: any) => {
