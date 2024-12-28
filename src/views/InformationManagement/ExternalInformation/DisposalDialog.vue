@@ -24,6 +24,7 @@
           <a-form-item name="handlingTime" label="处置时间">
             <a-date-picker
               v-model:value="state.formData.handlingTime"
+              show-time
               format="YYYY-MM-DD HH:mm:ss"
               @change="handleChangeTime1"
             ></a-date-picker>
