@@ -2,7 +2,6 @@
   <div class="configurationcommon common_tab_container">
     <a-form
       ref="formDataRef"
-      :model="state.formData"
       autocomplete="off"
       :label-col="{ style: { width: '200px' } }"
     >
@@ -13,44 +12,42 @@
         }"
       >
         <CommonTitle title="订阅" />
-        <a-row :gutter="20">
-          <a-form-item label="区域人数统计订阅">
-            <a-button type="primary">订阅</a-button>
-          </a-form-item>
-        </a-row>
-        <a-row :gutter="20">
-          <a-form-item label="多拌线进出人数统计订阅">
-            <a-button type="primary">订阅</a-button>
-          </a-form-item>
-        </a-row>
-        <a-row :gutter="20">
-          <a-form-item label="单拌线进出人数统计订阅">
-            <a-button type="primary">订阅</a-button>
-          </a-form-item>
-        </a-row>
-        <a-row :gutter="20">
-          <a-form-item label="行为告警数据订阅">
-            <a-button type="primary">订阅</a-button>
+        <a-row :gutter="20" v-for="item in state.subscribeConfigList">
+          <a-form-item :label="item.label">
+            <a-button
+              v-if="item.configValue === 0"
+              type="primary"
+              @click="handleSubscribe(item)"
+            >
+              订阅
+            </a-button>
+            <a-button
+              v-else-if="item.configValue === 1"
+              class="cancelsubscribe"
+              type="primary"
+              @click="handleSubscribe(item)"
+            >
+              取消订阅
+            </a-button>
           </a-form-item>
         </a-row>
         <CommonTitle title="事件灯" />
         <a-row :gutter="20">
           <a-col :span="24">
-            <a-form-item name="username" label="蓄车场南存车数">
-              <a-radio-group v-model:value="value1" :options="plainOptions" />
+            <a-form-item name="" label="">
+              <a-radio-group
+                v-model:value="state.alarmFormData.configValue"
+                @change="handleChangeAlarmFormData"
+              >
+                <a-radio v-for="item in alarmList" :value="item.value">
+                  {{ item.label }}
+                </a-radio>
+              </a-radio-group>
             </a-form-item>
           </a-col>
         </a-row>
       </a-space>
     </a-form>
-
-    <a-row justify="end">
-      <a-col>
-        <a-button type="primary" @click="handleSubmit" :loading="state.loading">
-          确认
-        </a-button>
-      </a-col>
-    </a-row>
   </div>
 </template>
 
@@ -66,11 +63,12 @@ import {
   ref,
   nextTick,
 } from "vue";
-import type { Rule } from "ant-design-vue/es/form";
 
 import {
-  operationManagementOperationConfigGetListRequest,
   operationManagementOperationConfigConfigRequest,
+  operationManagementOperationConfigSubscribeConfigRequest,
+  operationManagementOperationConfigGetCommonListRequest,
+  operationManagementOperationConfigGetListRequest,
 } from "@/api/management.ts";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
@@ -91,9 +89,60 @@ const props = defineProps({
 
 const dataIndex = [] as any[];
 
+const alarmList = ref([
+  {
+    label: "自动",
+    value: 0,
+  },
+  {
+    label: "红灯",
+    value: 1,
+  },
+  {
+    label: "黄灯",
+    value: 2,
+  },
+  {
+    label: "绿灯",
+    value: 3,
+  },
+]);
+
 const state = reactive({
   visible: false,
-  formData: {} as any,
+  subscribeConfigList: [
+    {
+      label: "区域人数统计订阅",
+      configCode: "subscribe_region_person_count_statistics_subscribe",
+      configValue: null,
+      id: null,
+    },
+    {
+      label: "多拌线进出人数统计订阅",
+      configCode:
+        "subscribe_more_mixing_line_in_and_out_person_count_statistics_subscribe",
+      configValue: null,
+      id: null,
+    },
+    {
+      label: "单拌线进出人数统计订阅",
+      configCode:
+        "subscribe_single_mixing_line_in_and_out_person_count_statistics_subscribe",
+      configValue: null,
+      id: null,
+    },
+    {
+      label: "行为告警数据订阅",
+      configCode: "subscribe_behavior_alarm_data_subscribe",
+      configValue: null,
+      id: null,
+    },
+  ],
+  alarmFormData: {
+    configCode: "big_screen_alarm_light_control",
+    configValue: null,
+    id: null,
+  },
   loading: false,
 });
 
@@ -101,58 +150,29 @@ let queryFormData = reactive({
   dateType: null,
 } as any);
 
-const pagination = reactive({
-  ...global.$store.state.app.defaultPagination,
-});
-
 watch(
   () => props.dateType,
   (newValue: any, oldValue: any) => {}
 );
 
-const rules: Record<string, Rule[]> = {
-  username: [
-    {
-      required: true,
-      message: "请输入用户名",
-      trigger: "change",
-    },
-  ],
-  password: [
-    {
-      required: true,
-      message: "请输入密码",
-      trigger: "change",
-    },
-  ],
-  seconds: [
-    {
-      required: true,
-      message: "请输入验证码",
-      trigger: "change",
-    },
-  ],
-};
-
 const getData = () => {
   global.$store.commit("app/updateTableLoading", true);
-  operationManagementOperationConfigGetListRequest({
-    ...queryFormData,
-    ...pagination,
-  })
+  operationManagementOperationConfigGetCommonListRequest()
     .then((response: any) => {
-      
+      console.log(response);
+
       response = response.data;
-      dataIndex.push(
-        ...response.map((item: any) => {
-          return {
-            id: item.id,
-            configCode: item.configCode,
-          };
-        })
-      );
       response.forEach((item: any) => {
-        state.formData[item.configCode] = item.configValue;
+        if (item.configCode === state.alarmFormData.configCode) {
+          state.alarmFormData.configValue = item.configValue;
+          state.alarmFormData.id = item.id;
+        }
+        state.subscribeConfigList.forEach((item2: any) => {
+          if (item2.configCode === item.configCode) {
+            item2.configValue = item.configValue;
+            item2.id = item.id;
+          }
+        });
       });
     })
     .catch((error: any) => {
@@ -160,32 +180,34 @@ const getData = () => {
     });
 };
 
-const handleSubmit = () => {
-  state.loading = true;
-  const params = [] as any[];
-  Object.keys(state.formData).forEach((item: any) => {
-    params.push({
-      configCode: item,
-      configValue: state.formData[item],
-      dateType: props.dateType,
-      id: dataIndex.find((item2: any) => item2.configCode === item)?.id,
-    });
-  });
-  operationManagementOperationConfigConfigRequest(params)
+const handleSubscribe = (item: any) => {
+  item.configValue = item.configValue === 0 ? 1 : 0;
+  operationManagementOperationConfigSubscribeConfigRequest({
+    configCode: item.configCode,
+    configValue: item.configValue,
+    id: item.id,
+  })
     .then((response: any) => {
-      
-      global.$message.success("提交成功");
-      state.loading = false;
+      global.$message.success("修改成功");
     })
     .catch((error: any) => {
       console.log(error);
-      global.$message.error("提交失败");
-      state.loading = false;
+      global.$message.error("修改失败");
+    });
+};
+
+const handleChangeAlarmFormData = (value: any) => {
+  operationManagementOperationConfigConfigRequest([state.alarmFormData])
+    .then((response: any) => {
+      global.$message.success("修改成功");
+    })
+    .catch((error: any) => {
+      console.log(error);
+      global.$message.error("修改失败");
     });
 };
 
 onMounted(async () => {
-  queryFormData.dateType = props.dateType;
   getData();
 });
 
@@ -195,5 +217,8 @@ onBeforeUnmount(() => {});
 <style scoped lang="scss">
 .configurationcommon {
   padding: 0.3rem;
+  .cancelsubscribe {
+    background-color: orange;
+  }
 }
 </style>

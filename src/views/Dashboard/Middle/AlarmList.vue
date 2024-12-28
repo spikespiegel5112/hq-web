@@ -30,9 +30,7 @@ import {
   nextTick,
 } from "vue";
 
-import {
-  backendIndexPageEmergencyRequest,
-} from "@/api/management";
+import { backendIndexPageGetAlarmInfoDataRequest } from "@/api/management";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -107,11 +105,16 @@ watch(
 
 const getData = () => {
   global.$store.commit("app/updateTableLoading", true);
-  backendIndexPageEmergencyRequest({
-    hour: 1,
-    // queryDate: global.$dayjs().format("YYYY-MM-DD"),
-    queryDate: "2024-09-11",
-    timeType: state.timeType,
+  backendIndexPageGetAlarmInfoDataRequest({
+    alarmLevel: null,
+    
+    alarmTimeEnd: null,
+    alarmTimeStart: null,
+    
+    dateType: null,
+    page: 1,
+    pageSize: 10,
+    preplanResourceId: null,
   })
     .then((response: any) => {
       state.tableData = response.data;

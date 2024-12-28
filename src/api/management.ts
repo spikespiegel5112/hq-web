@@ -59,6 +59,15 @@ export const backendIndexPageEmergencyRequest = (params: any) => {
   });
 };
 
+// 首页-获取告警列表数据
+export const backendIndexPageGetAlarmInfoDataRequest = (params: any) => {
+  return service({
+    url: prefix + "/backend/indexPage/getAlarmInfoData",
+    method: "POST",
+    data: params,
+  });
+};
+
 // 后台管理-首页-事件处置列表
 export const backendIndexPageEmergencyResultRequest = (params: any) => {
   return service({
@@ -1018,6 +1027,39 @@ export const passengerFlowParkingPassengerFlowGetPageRequest = (
 
 // 运行管理-运行配置
 // Operation Config Controller
+
+// 查询常用配置列表
+export const operationManagementOperationConfigGetCommonListRequest = (
+  params: any
+) => {
+  return service({
+    url: prefix + "/operationManagement/operationConfig/getCommonList",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 常用配置-订阅
+export const operationManagementOperationConfigSubscribeConfigRequest = (
+  params: any
+) => {
+  return service({
+    url: prefix + "/operationManagement/operationConfig/subscribeConfig",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 常用配置-告警
+export const operationManagementOperationConfigAlarmLightConfigRequest = (
+  params: any
+) => {
+  return service({
+    url: prefix + "/operationManagement/operationConfig/alarmLightConfig",
+    method: "POST",
+    data: params,
+  });
+};
 
 // 配置
 export const operationManagementOperationConfigConfigRequest = (
