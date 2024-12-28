@@ -308,9 +308,7 @@ const mouseEvent = (item: any, itemData: any) => {
         const videoElement = document.querySelector('#' + itemData.id);
         videoElement.style.border = "2px solid #ff0000";
         let videoData = JSON.parse(JSON.stringify(item.ResItemV1));
-        let videoList = [];
-        videoList.push({resCode: videoData.ResCode, resName: videoData.ResName});
-        state.upperWallList = videoList;
+        state.upperWallList.push({resCode: videoData.ResCode, resName: videoData.ResName});
         console.log("123", state.upperWallList)
         //console.log('123', item);
       }
