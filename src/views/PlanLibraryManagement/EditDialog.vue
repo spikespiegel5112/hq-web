@@ -278,7 +278,6 @@ const handleSubmit = () => {
       global.$message.error("提交失败");
       emit("onClose");
     });
-  console.log(state.formData);
   // emit("onSubmit", state.formData);
 };
 

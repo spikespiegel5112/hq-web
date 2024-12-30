@@ -104,8 +104,6 @@ const handleChangeAttachment = (value: any) => {
 };
 
 const handleDeleteAttachment = (value: any) => {
-  console.log(props.attachmentList);
-
   let sliceIndex: number = 0;
 
   props.attachmentList.forEach((item: any, index: number) => {
@@ -119,11 +117,9 @@ const handleDeleteAttachment = (value: any) => {
     id: value.id,
   })
     .then((res: any) => {
-      console.log(res);
       global.$message.success("删除成功");
     })
     .catch((err: any) => {
-      console.log(err);
       global.$message.error("删除失败");
     });
 };

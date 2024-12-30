@@ -217,7 +217,6 @@ const dialogTitle: ComputedRef<string> = computed(() => {
 });
 
 const currentStepOrder = computed(() => {
-  console.log(state.disposalData);
   let result = 0;
   if (!!state.disposalList) {
     const disposalList = state.disposalList;
@@ -272,7 +271,6 @@ const getData = () => {
       Object.keys(state.formData).forEach((item: any) => {
         state.formData[item] = response[item];
       });
-      console.log(state.formData);
     })
     .catch((error: any) => {
       console.log(error);

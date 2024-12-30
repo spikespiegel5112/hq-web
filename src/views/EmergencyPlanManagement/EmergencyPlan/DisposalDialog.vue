@@ -203,7 +203,6 @@ const eventList = computed(() => {
 });
 
 const currentStepOrder = computed(() => {
-  console.log(state.disposalData);
   let result = 0;
   if (state.disposalData.disposalList) {
     const disposalList = state.disposalData.disposalList;
@@ -281,9 +280,6 @@ const getData = () => {
 };
 
 const getPlanData = () => {
-  console.log(props.rowData);
-  console.log(eventList.value);
-  console.log(global.$store.state.app.currentEventTypeList);
   state.planInfo = [];
   const planData: any = eventList.value.find(
     (item: any) => Number(item.value) === props.rowData.preplanResourceId

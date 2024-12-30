@@ -216,7 +216,6 @@ const dialogTitle: ComputedRef<string> = computed(() => {
 });
 
 const currentStepOrder = computed(() => {
-  console.log(state.disposalData);
   let result = 0;
   if (!!state.disposalList) {
     const disposalList = state.disposalList;

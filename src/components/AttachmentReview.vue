@@ -89,13 +89,11 @@ const checkFileType = (file: any) => {
   return result;
 };
 const handlePreview = (value: any) => {
-  console.log(value);
   state.previewVisible = true;
   state.currentAttachmentData = value;
 };
 
 const handleDownload = (value: any) => {
-  console.log(value);
   location.href = value.attachmentPath;
 };
 

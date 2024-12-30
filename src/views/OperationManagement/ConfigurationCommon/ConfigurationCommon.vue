@@ -159,8 +159,6 @@ const getData = () => {
   global.$store.commit("app/updateTableLoading", true);
   operationManagementOperationConfigGetCommonListRequest()
     .then((response: any) => {
-      console.log(response);
-
       response = response.data;
       response.forEach((item: any) => {
         if (item.configCode === state.alarmFormData.configCode) {

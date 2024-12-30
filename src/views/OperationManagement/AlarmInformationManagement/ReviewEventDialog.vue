@@ -210,7 +210,6 @@ const dialogTitle: ComputedRef<string> = computed(() => {
 });
 
 const currentStepOrder = computed(() => {
-  console.log(state.disposalData);
   let result = 0;
   if (!!state.disposalList) {
     const disposalList = state.disposalList;
@@ -254,7 +253,6 @@ const getData = async () => {
       Object.keys(state.formData).forEach((item: any) => {
         state.formData[item] = disposalData[item];
       });
-      console.log(state.formData);
       eventManageSuddenEventGetDisposalRequest({
         seId: props.rowData.eventAssociationId,
       })
