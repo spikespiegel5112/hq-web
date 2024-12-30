@@ -106,8 +106,8 @@ const defaultCameraList = ref("");
 
 // 声明 data 数组
 const alarmList = ref([
-  { name: "申虹国际大厦", top: "1.4rem", left: "1.4rem", isAlarm: false },
-  { name: "出租车市域铁", top: "1.4rem", left: "2rem", isAlarm: false },
+  { name: "申虹国际大厦", top: "1.85rem", left: "2.95rem", isAlarm: false },
+  { name: "出租车市域铁", top: "1.85rem", left: "3.82rem", isAlarm: false },
   { name: "蓄车场北", top: "0.8rem", left: "1.6rem", isAlarm: false },
   { name: "蓄车场南", top: "2.5rem", left: "1.7rem", isAlarm: false },
   { name: "P9P10停车库", top: "1.2rem", left: "0.9rem", isAlarm: false },
@@ -246,9 +246,9 @@ const loadScript = () => {
 const createPanelWindow = () => {
   return new Promise((resolve, reject) => {
     let videoDom = (window as any).imosPlayer.createPanelWindow();
-    videoDom.style.width = "140px";
-    videoDom.style.height = "150px";
-    videoDom.style.marginTop = "0.08rem";
+    videoDom.style.width = "160px";
+    videoDom.style.height = "110px";
+    videoDom.style.marginTop = "0.2rem";
     videoDom.style.overflow = "hidden"; // 确保子元素内部也隐藏溢出部分
 
     // 创建勾选框
@@ -292,6 +292,7 @@ const forCameraData = () => {
         id: videoDomId,
         ResCode: item.ResItemV1.ResCode,
         ResName: item.ResItemV1.ResName,
+        isActive: false,
       };
 
       startLive(itemData);
@@ -305,12 +306,17 @@ const mouseEvent = (item: any, itemData: any) => {
   (window as any).imosPlayer.setFloatEventCallback(itemData.id,{
     callback: (event: any)=>{
       if (event.Event === 2) {
-        const videoElement = document.querySelector('#' + itemData.id);
-        videoElement.style.border = "2px solid #ff0000";
+        itemData.isActive = !itemData.isActive;
+        let videoElement = document.getElementById(itemData.id);
         let videoData = JSON.parse(JSON.stringify(item.ResItemV1));
-        state.upperWallList.push({resCode: videoData.ResCode, resName: videoData.ResName});
+        if (itemData.isActive && videoElement) {
+          videoElement.style.border = "2px solid #ff0000";
+          state.upperWallList.push({resCode: videoData.ResCode, resName: videoData.ResName});
+        } else if (!itemData.isActive && videoElement) {
+          videoElement.style.border = "none";
+          state.upperWallList = state.upperWallList.filter((deleteItem) => deleteItem.resCode !== videoData.ResCode);
+        }
         console.log("123", state.upperWallList)
-        //console.log('123', item);
       }
       return false;
     }
@@ -476,8 +482,8 @@ onBeforeUnmount(() => {});
   // height: 2rem;
   margin-top: 0.5rem;
   img {
-    width: 100%;
-    height: 100%;
+    width: 4.67rem;
+    height: 4.11rem;
   }
 }
 .location {
