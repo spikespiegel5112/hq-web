@@ -128,14 +128,12 @@ const getData = () => {
   global.$store.commit("app/updateTableLoading", true);
   backendIndexPageTaxiVehicleMonitorRequest({})
     .then((response: any) => {
-      
       response = response.data;
 
       Object.keys(state).forEach((item: any) => {
         if (item === "northFirstTaxiBoardingPointWaitingTime") {
           // const aaa = response.northFirstTaxiBoardingPointWaitingTime;
           // const bbb = response.northFirstTaxiBoardingPointWaitingCount;
-
           // const ccc = response.northFirstTaxiBoardingPointWaitingCount;
           // const ddd = response.northFirstTaxiBoardingPointWaitingTime;
         }
@@ -168,8 +166,8 @@ onMounted(() => {
       span {
         display: inline-block;
         margin: 0.2rem 0.1rem 0 0.1rem;
-        width: 0.55rem;
-        height: 0.55rem;
+        width: 0.45rem;
+        height: 0.45rem;
         background-repeat: no-repeat;
         background-size: contain;
       }
@@ -185,16 +183,18 @@ onMounted(() => {
       margin: 0 0 0.1rem 0;
       justify-content: space-between;
       width: 100%;
-      height: 1.6rem;
+      height: 1.45rem;
       background-image: url("@/assets/taxi_bg.png");
-      background-size: 100%;
+      // background-size: 100%;
+      background-size: contain;
       background-repeat: no-repeat;
-      background-position: 0 -0.1rem;
+      // background-position: 0 -0.1rem;
+      background-position: center;
       > div {
         display: inline-block;
-        width: 2.35rem;
+        width: 1.6rem;
         ul {
-          padding: 0.2rem 0 0 0.2rem;
+          padding: 0.1rem 0 0 0.2rem;
           li {
             padding: 0.2rem 0 0 0;
             font-size: 0.15rem;
@@ -202,6 +202,7 @@ onMounted(() => {
         }
       }
       .left {
+        margin: 0 0 0 0.6rem;
         ul {
           li {
             .label {
@@ -214,6 +215,7 @@ onMounted(() => {
         }
       }
       .right {
+        margin: 0 1rem 0 0;
         ul {
           li {
             .label {

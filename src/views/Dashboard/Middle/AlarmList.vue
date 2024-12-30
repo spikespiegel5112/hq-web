@@ -3,7 +3,7 @@
     <div
       :style="{
         margin: '0.3rem 0 0 0',
-        height: 'calc(100% - 0.6rem)',
+        height: 'calc(100% - 0rem)',
         position: 'relative',
       }"
     >
@@ -13,7 +13,7 @@
         :dataModel="pageModel"
         :pagination="null"
         height="100%"
-        tableBodyHeight="calc(100%)"
+        tableBodyHeight="100%"
       />
     </div>
   </Block>
@@ -190,7 +190,7 @@ onBeforeUnmount(() => {});
         height: 100%;
       }
       .ant-table {
-        height: calc(100% - 0.6rem) !important;
+        height: calc(100% - 0.45rem) !important;
         background-color: transparent;
       }
       .ant-pagination {
