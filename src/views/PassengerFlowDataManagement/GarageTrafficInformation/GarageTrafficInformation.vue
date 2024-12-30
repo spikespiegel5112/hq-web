@@ -91,15 +91,8 @@ const pageModel = ref([
   {
     label: "图片",
     name: "imgInfo",
+    imagePreview: true,
     required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
-    label: "附件",
-    name: "attachment",
-    required: false,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,

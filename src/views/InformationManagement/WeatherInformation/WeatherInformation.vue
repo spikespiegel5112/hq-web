@@ -112,6 +112,14 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
+    label: "发布状态",
+    name: "publishStatus",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
     label: "操作",
     name: "operationColumn",
     tableVisible: true,
@@ -153,6 +161,7 @@ const getData = () => {
           warningLevel: global
             .$getDictionary("planLevel")
             .find((item2: any) => item2.value === item.warningLevel)?.label,
+          publishStatus: item.warningList.length > 0 ? "已发布" : "无",
         };
       });
     })

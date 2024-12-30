@@ -79,6 +79,11 @@
               </a>
             </a-space>
           </div>
+          <div v-else-if="item.imagePreview === true" class="imagePreview">
+            <a-image :src="scope.record[item.name]" :width="100" />
+            <!-- imagePreview -->
+          </div>
+
           <div v-else-if="!!item.tagConfig" class="taglist">
             <a-tag
               :color="
