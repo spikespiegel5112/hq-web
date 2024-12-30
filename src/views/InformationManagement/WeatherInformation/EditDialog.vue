@@ -6,6 +6,41 @@
         <span class="text"> {{ dialogTitle }}</span>
       </div>
     </template>
+    <a-row justify="center">
+      <a-col :span="22">
+        <div class="common_table_wrapper">
+          <a-table
+            class="common_basetable_wrapper"
+            :dataSource="props.rowData.warningList"
+            :columns="columns"
+            :pagination="false"
+          >
+            <template #bodyCell="{ text, record, index, column }">
+              <div
+                v-if="column.dataIndex === 'index'"
+                :style="{
+                  textAlign: 'center',
+                }"
+              >
+                {{ index + 1 }}
+              </div>
+              <div
+                v-if="column.dataIndex === 'warningLevel'"
+                :style="{
+                  textAlign: 'center',
+                }"
+              >
+                {{
+              global
+                .$getDictionary("planLevel")
+                .find((item:any) => item.value === record.warningLevel)?.label
+                }}
+              </div>
+            </template>
+          </a-table>
+        </div>
+      </a-col>
+    </a-row>
     <a-form
       :model="state.formData"
       ref="formDataRef"
@@ -48,21 +83,6 @@
       <a-row>
         <a-col :span="23">
           <a-form-item name="temperature" label="温度（℃）">
-            <!-- <a-select
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.warningType"
-              placeholder="请选择"
-              allow-clear
-            >
-              <a-select-option
-                v-for="item in global.$getDictionary(
-                  'weather_warning_warning_type_enum'
-                )"
-                :value="item.value"
-              >
-                {{ item.label }}
-              </a-select-option>
-            </a-select> -->
             <template v-if="props.mode === 'detail'">
               {{ state.formData.temperature }}
             </template>
@@ -87,49 +107,6 @@
             </a-select>
             <template v-if="props.mode === 'detail'">
               {{ state.formData.weather }}
-            </template>
-          </a-form-item>
-        </a-col>
-      </a-row>
-
-      <a-row>
-        <a-col :span="23">
-          <a-form-item name="warningType" label="预警类型">
-            <template v-if="props.mode === 'detail'">
-              {{ state.formData.warningType }}
-            </template>
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="23">
-          <a-form-item name="warningContent" label="预警内容">
-            <template v-if="props.mode === 'detail'">
-              {{ state.formData.warningContent }}
-            </template>
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="23">
-          <a-form-item name="warningLevel" label="级别">
-            <a-select
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.warningLevel"
-              placeholder="请选择"
-              allow-clear
-            >
-              <a-select-option
-                v-for="item in global.$getDictionary('planLevel')"
-                :value="item.value"
-              >
-                {{ item.label }}
-              </a-select-option>
-            </a-select>
-            <template v-if="props.mode === 'detail'">
-              {{ 
-                global.$getDictionary("planLevel").find((item2: any) => item2.value === state.formData.warningLevel)?.label
-              }}
             </template>
           </a-form-item>
         </a-col>
@@ -208,6 +185,15 @@ const pageModel = ref([
     formVisible: true,
     exportVisible: true,
   },
+  // {
+  //   label: "预警内容",
+  //   name: "warningContent",
+  //   required: true,
+  //   tableVisible: true,
+  //   formVisible: true,
+  //   exportVisible: true,
+  //   width: "10",
+  // },
   {
     label: "时间",
     name: "dataTime",

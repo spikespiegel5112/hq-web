@@ -195,6 +195,15 @@ const pageModel = ref([
     formVisible: true,
     exportVisible: true,
   },
+  // {
+  //   label: "预警内容",
+  //   name: "warningContent",
+  //   required: true,
+  //   tableVisible: true,
+  //   formVisible: true,
+  //   exportVisible: true,
+  //   width: "1rem",
+  // },
   {
     label: "时间",
     name: "dataTime",

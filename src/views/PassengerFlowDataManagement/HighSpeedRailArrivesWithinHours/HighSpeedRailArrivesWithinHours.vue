@@ -129,9 +129,11 @@ const getData = () => {
         (item: any, index: number) => {
           return {
             ...item,
-            statisticalDate: global
-              .$dayjs(item.statisticalDate)
-              .format("YYYY年M月DD日"),
+            statisticalBeginHour: global
+              .$getDictionary("railway_statistical_begin_hour")
+              .find(
+                (item2: any) => (item2) => item.value === item.statisticalBeginHour
+              ).label,
           };
         }
       );

@@ -209,10 +209,6 @@ const handleExpand = (expand: boolean, row: any) => {
   }
 };
 
-const handleExpandedRowsChange = (expandedRows: any) => {
-  console.log(expandedRows);
-};
-
 const handleAction = (action: any, column: any) => {};
 
 onMounted(async () => {

@@ -3,15 +3,17 @@
     <div
       :style="{
         margin: '0.3rem 0 0 0',
-        height: 'calc(100% - 0.6rem)',
+        height: 'calc(100% - 0rem)',
         position: 'relative',
       }"
     >
       <BaseTable
         :tableData="state.tableData"
+        :processedTableData="state.processedTableData"
         :dataModel="pageModel"
+        :pagination="null"
         height="100%"
-        tableBodyHeight="calc(100% - 0.4rem)"
+        tableBodyHeight="100%"
       />
     </div>
   </Block>
@@ -62,7 +64,7 @@ const pageModel = ref([
   },
   {
     label: "报警类型",
-    name: "dateType",
+    name: "alarmLevel",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -103,8 +105,20 @@ const pageModel = ref([
 
 const state = reactive({
   tableData: [] as any[],
+  processedTableData: [] as any[],
   dataModel: [] as any[],
   timeType: 1,
+});
+
+const pagination = reactive({
+  ...global.$store.state.app.defaultPagination,
+});
+
+const eventAllList = computed(() => {
+  return [
+    ...global.$store.state.app.currentEventTypeList[0].data,
+    ...global.$store.state.app.currentEventTypeList[1].data,
+  ];
 });
 
 watch(
@@ -121,14 +135,21 @@ const getData = () => {
     alarmLevel: null,
     alarmTimeEnd: null,
     alarmTimeStart: null,
-
     dateType: null,
-    page: 1,
-    pageSize: 10,
     preplanResourceId: null,
+    ...pagination,
   })
     .then((response: any) => {
       state.tableData = response.data;
+      const eventLevel = global.$getDictionary("eventLevel");
+      state.processedTableData = response.data.map((item: any) => {
+        return {
+          ...item,
+          alarmLevel: eventLevel.find(
+            (item2: any) => item.alarmLevel === Number(item2.value)
+          )?.label,
+        };
+      });
     })
     .catch((error: any) => {
       console.log(error);
@@ -161,7 +182,7 @@ onBeforeUnmount(() => {});
       );
     }
     :deep(.ant-table-wrapper) {
-      height: 100%;
+      height: calc(100% - 0.6rem);
       background-color: transparent;
       .ant-table-wrapper,
       .ant-spin-nested-loading,
@@ -169,48 +190,45 @@ onBeforeUnmount(() => {});
         height: 100%;
       }
       .ant-table {
-        height: calc(100% - 0.6rem) !important;
+        height: calc(100% - 0.45rem) !important;
         background-color: transparent;
       }
       .ant-pagination {
         margin: 0.1rem 0 0 0;
       }
-      .ant-table-container {
-        height: 100%;
-        .ant-table-tbody {
-          .ant-table-row {
-            &.table-striped,
-            &:hover {
-              transition: all 0.3s;
-              background-image: linear-gradient(
-                to right,
-                rgba(0, 67, 144, 0) 0%,
-                rgba(0, 67, 144, 1) 40%,
-                rgba(0, 67, 144, 1) 70%,
-                rgba(0, 67, 144, 0) 100%
-              );
-              > td {
-                background-color: transparent;
-              }
-            }
-            &:hover {
-              background-image: linear-gradient(
-                to right,
-                rgb(15, 83, 231) 0%,
-                rgba(15, 83, 231, 1) 100%
-              );
-            }
-            .ant-table-cell {
-              padding: 0.05rem;
+      .ant-table-tbody {
+        .ant-table-row {
+          &.table-striped,
+          &:hover {
+            transition: all 0.3s;
+            background-image: linear-gradient(
+              to right,
+              rgba(0, 67, 144, 0) 0%,
+              rgba(0, 67, 144, 1) 40%,
+              rgba(0, 67, 144, 1) 70%,
+              rgba(0, 67, 144, 0) 100%
+            );
+            > td {
+              background-color: transparent;
             }
           }
+          &:hover {
+            background-image: linear-gradient(
+              to right,
+              rgb(15, 83, 231) 0%,
+              rgba(15, 83, 231, 1) 100%
+            );
+          }
+          .ant-table-cell {
+            padding: 0.05rem;
+          }
         }
-        .ant-table-thead {
-          tr {
-            .ant-table-cell {
-              padding: 0.05rem;
-              background-color: #0023a6;
-            }
+      }
+      .ant-table-thead {
+        tr {
+          .ant-table-cell {
+            padding: 0.05rem;
+            background-color: #0023a6;
           }
         }
       }

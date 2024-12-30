@@ -79,6 +79,11 @@
               </a>
             </a-space>
           </div>
+          <div v-else-if="item.imagePreview === true" class="imagePreview">
+            <a-image :src="scope.record[item.name]" :width="100" />
+            <!-- imagePreview -->
+          </div>
+
           <div v-else-if="!!item.tagConfig" class="taglist">
             <a-tag
               :color="
@@ -136,7 +141,7 @@
       :pageSizeOptions="['10', '20', '30', '50', '100']"
       :total="pagination.total"
       :page-size="pagination.pageSize"
-      :show-total="(total) => `共 ${total} 条`"
+      :show-total="(total:number) => `共 ${total} 条`"
       @change="hangleChangePage"
     />
 

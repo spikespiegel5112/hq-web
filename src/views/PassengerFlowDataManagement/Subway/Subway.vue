@@ -114,7 +114,16 @@ const getData = () => {
   })
     .then((response: any) => {
       response = response.data;
-      state.tableData = response.list;
+      state.tableData = response.list.map((item: any) => {
+        return {
+          ...item,
+          metroStationCode: global
+            .$getDictionary("metro_station_code")
+            .find((item2: any) => {
+              return item2.value === item.metroStationCode;
+            })?.label,
+        };
+      });
       pagination.total = response.total;
     })
     .catch((error: any) => {
@@ -154,34 +163,11 @@ const handleClose = () => {
   state.dialogVisible = false;
 };
 
-const handleSubmit = (formData: any) => {
-  backendRailwayArriveSaveRailwayArriveRequest(formData)
-    .then((response: any) => {
-      global.$message.success("提交成功");
-      getData();
-    })
-    .catch((error: any) => {
-      console.log(error);
-      global.$message.error("提交失败");
-    });
-};
-
 const handleChangePage = (pagingData: any) => {
   pagination.page = pagingData.current;
   pagination.pageSize = pagingData.pageSize;
   pagination.total = pagingData.total;
   getData();
-};
-const handleDelete = (id: number) => {
-  infoManagementExternalInfoDeleteRequest({ id })
-    .then((response: any) => {
-      global.$message.success("删除成功");
-      getData();
-    })
-    .catch((error: any) => {
-      global.$message.error("删除失败");
-      console.log(error);
-    });
 };
 
 const handleUploaded = (response: any) => {

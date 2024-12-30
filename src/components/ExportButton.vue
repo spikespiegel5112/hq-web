@@ -57,7 +57,6 @@ watch(
 );
 
 const handleExport = () => {
-  console.log(props.queryFormData);
   props
     .action({
       ...props.queryFormData,

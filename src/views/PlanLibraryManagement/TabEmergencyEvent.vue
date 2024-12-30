@@ -292,7 +292,6 @@ const getDataPlan = (planId: number) => {
 };
 
 const handleExpandedRowsChange = (expandedRows: any) => {
-  console.log(expandedRows);
 };
 
 const handleAction = (action: any, record: any) => {

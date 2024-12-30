@@ -36,14 +36,12 @@ const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
 onMounted(async () => {
-  console.log(props.filePath);
   const video: any = document.getElementById("myVideo");
   video.currentTime = 0;
   video.play();
 });
 
 onBeforeUnmount(() => {
-  console.log(props.filePath);
 });
 
 watch(

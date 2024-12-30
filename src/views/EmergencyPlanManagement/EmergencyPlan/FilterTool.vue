@@ -5,9 +5,9 @@
         <a-col :span="21">
           <a-row :gutter="20">
             <a-col :span="6">
-              <a-form-item name="source" label="来源">
+              <a-form-item name="planSource" label="来源">
                 <a-select
-                  v-model:value="state.formData.externalSource"
+                  v-model:value="state.formData.planSource"
                   placeholder="请选择"
                 >
                   <a-select-option

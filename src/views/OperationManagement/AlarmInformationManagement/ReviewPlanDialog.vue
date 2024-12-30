@@ -217,7 +217,6 @@ const dialogTitle: ComputedRef<string> = computed(() => {
 });
 
 const currentStepOrder = computed(() => {
-  console.log(state.disposalData);
   let result = 0;
   if (!!state.disposalList) {
     const disposalList = state.disposalList;
@@ -272,25 +271,10 @@ const getData = () => {
       Object.keys(state.formData).forEach((item: any) => {
         state.formData[item] = response[item];
       });
-      console.log(state.formData);
     })
     .catch((error: any) => {
       console.log(error);
     });
-  // planManagementEmergencyPlanGetDisposalRequest({
-  //   id: props.rowData.eventAssociationId,
-  // })
-  //   .then(async (response: any) => {
-  //     response = response.data;
-  //     state.disposalData = response;
-  //     state.disposalList = response.disposalList;
-  //     response.preplanResourceStepList.forEach((item: any, index: number) => {
-  //       state.fileList.push(getCurrentStep(item));
-  //     });
-  //   })
-  //   .catch((error: any) => {
-  //     console.log(error);
-  //   });
 };
 
 const getStepData = (preplanResourceId: number) => {

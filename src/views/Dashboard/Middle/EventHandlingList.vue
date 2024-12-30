@@ -31,15 +31,15 @@
                 <span class="triangle"></span>
                 <ExclamationOutlined />
               </span>
-              {{ item.content }}
+              {{ item.eventContent }}
             </div>
             <div class="content">
               <div class="left">
                 <div class="type">
                   <label>上报类别：</label>
-                  <span>{{ item.infoType }}</span>
+                  <span>{{ item.eventType }}</span>
                 </div>
-                <div class="date">{{ item.dataTime }}</div>
+                <div class="date">{{ item.eventTime }}</div>
               </div>
               <div class="right">
                 <div class="status">
@@ -47,7 +47,7 @@
                   <span>
                     {{
                       global.$store.state.dictionary.disposalStatus.find(
-                          (item2:any) => item2.value === item.status
+                          (item2:any) => item2.value === item.eventStatus
                       )?.label
                     }}
                   </span>
@@ -93,7 +93,7 @@ const state = reactive({
 });
 
 const disposoedEventList = computed(() => {
-  return state.eventList.filter((item) => item.status === 2);
+  return state.eventList.filter((item) => item.eventStatus === 2);
 });
 
 watch(
@@ -106,13 +106,19 @@ watch(
 
 const getData = () => {
   global.$store.commit("app/updateTableLoading", true);
+  console.log(state.timeType);
+  const timeTypeList = ["day", "week", "month"];
   backendIndexPageSuddenEventRequest({
-    hour: 1,
     // queryDate: global.$dayjs().format("YYYY-MM-DD"),
-    timeType: state.timeType,
+    eventTimeBegin: global
+      .$dayjs()
+      .subtract(1, timeTypeList[state.timeType - 1])
+      .format("YYYY-MM-DD HH:mm:ss"),
+    eventTimeEnd: global.$dayjs().format("YYYY-MM-DD HH:mm:ss"),
   })
     .then((response: any) => {
-      state.eventList = response.data;
+      response = response.data;
+      state.eventList = response;
     })
     .catch((error: any) => {
       console.log(error);
