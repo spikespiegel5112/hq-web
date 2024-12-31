@@ -5,7 +5,7 @@
       <a-space size="middle" wrap>
         <ImportButton
           :action="`/api/manage/backend/railwayArrive/importPic`"
-          @onSuccess="handleUploaded"
+          @success="() => getData()"
         />
         <ExportButton
           :action="eventManageSuddenEventExportRequest"

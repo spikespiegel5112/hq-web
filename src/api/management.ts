@@ -111,6 +111,9 @@ export const backendRailwayArriveGetRailwayImportPicRequest = (params: any) => {
     url: prefix + "/backend/railwayArrive/importPic",
     method: "POST",
     data: params,
+    headers: {
+      "Content-Type": "multipart/form-data", // 设置请求头
+    },
   });
 };
 
@@ -612,34 +615,6 @@ export const infoManagementPublicSentimentInfoExportExcelRequest = (
 
 // 信息管理-投诉信息
 
-// 信息管理-投诉信息-删除
-export const infoManagementComplaintInfoDeleteRequest = (params: any) => {
-  return service({
-    url: prefix + "/infoManagement/complaintInfo/delete",
-    method: "POST",
-    data: params,
-  });
-};
-
-// 信息管理-投诉信息-处置
-export const infoManagementComplaintInfoHandleRequest = (params: any) => {
-  return service({
-    url: prefix + "/infoManagement/complaintInfo/handle",
-    method: "POST",
-    data: params,
-  });
-};
-
-// 信息管理-投诉信息-excel导出
-export const infoManagementComplaintInfoExportExcelRequest = (params: any) => {
-  return service({
-    url: prefix + "/infoManagement/complaintInfo/exportExcel",
-    method: "GET",
-    data: params,
-    responseType: "blob",
-  });
-};
-
 // 信息管理-天气信息
 
 // 信息管理-天气信息-根据Id查询
@@ -681,6 +656,46 @@ export const infoManagementWeatherInfoExportRequest = (params: any) => {
 
 // 信息管理-投诉信息
 
+// 信息管理-投诉信息-删除
+export const infoManagementComplaintInfoDeleteRequest = (params: any) => {
+  return service({
+    url: prefix + "/infoManagement/complaintInfo/delete",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 导入重要投诉--excel导入
+export const infoManagementComplaintInfoImportExcelRequest = (params: any) => {
+  return service({
+    url: prefix + "/import/importantComplaintInfo/importExcel",
+    method: "POST",
+    data: params,
+    headers: {
+      "Content-Type": "multipart/form-data", // 设置请求头
+    },
+  });
+};
+
+// 信息管理-投诉信息-处置
+export const infoManagementComplaintInfoHandleRequest = (params: any) => {
+  return service({
+    url: prefix + "/infoManagement/complaintInfo/handle",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 信息管理-投诉信息-excel导出
+export const infoManagementComplaintInfoExportExcelRequest = (params: any) => {
+  return service({
+    url: prefix + "/infoManagement/complaintInfo/exportExcel",
+    method: "GET",
+    data: params,
+    responseType: "blob",
+  });
+};
+
 // 根据Id查询
 export const infoManagementComplaintInfoGetOneByIdRequest = (params: any) => {
   return service({
@@ -694,15 +709,6 @@ export const infoManagementComplaintInfoGetOneByIdRequest = (params: any) => {
 export const infoManagementComplaintInfoGetPageRequest = (params: any) => {
   return service({
     url: prefix + "/infoManagement/complaintInfo/getPage",
-    method: "POST",
-    data: params,
-  });
-};
-
-// excel导入
-export const infoManagementComplaintInfoImportExcelRequest = (params: any) => {
-  return service({
-    url: prefix + "/infoManagement/complaintInfo/importExcel",
     method: "POST",
     data: params,
   });
@@ -861,6 +867,9 @@ export const planManagementEmergencyPlanImportExcelRequest = (params: any) => {
     url: prefix + "/planManagement/emergencyPlan/importExcel",
     method: "POST",
     data: params,
+    headers: {
+      "Content-Type": "multipart/form-data", // 设置请求头
+    },
   });
 };
 
@@ -936,6 +945,9 @@ export const operationManagementDutyStaffImportExcelRequest = (params: any) => {
     url: prefix + "/operationManagement/dutyStaff/importExcel",
     method: "POST",
     data: params,
+    headers: {
+      "Content-Type": "multipart/form-data", // 设置请求头
+    },
   });
 };
 
@@ -993,6 +1005,9 @@ export const operationManagementAlarmInfoImportExcelRequest = (params: any) => {
     url: prefix + "/operationManagement/alarmInfo/importExcel",
     method: "POST",
     data: params,
+    headers: {
+      "Content-Type": "multipart/form-data", // 设置请求头
+    },
   });
 };
 
@@ -1057,6 +1072,9 @@ export const operationManagementCalendarInfoImportExcelRequest = (
     url: prefix + "/operationManagement/calendarInfo/importExcel",
     method: "POST",
     data: params,
+    headers: {
+      "Content-Type": "multipart/form-data", // 设置请求头
+    },
   });
 };
 

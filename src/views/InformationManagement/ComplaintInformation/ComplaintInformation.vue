@@ -3,7 +3,10 @@
     <FilterTool @onSearch="handleSearch" @onReset="handleReset"></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
-        <a-button class="import">导入</a-button>
+        <ImportButton
+          :action="infoManagementComplaintInfoImportExcelRequest"
+          @success="() => getData()"
+        />
         <ExportButton
           :action="infoManagementComplaintInfoExportExcelRequest"
           :queryFormData="queryFormData"
@@ -64,6 +67,7 @@ import {
   infoManagementComplaintInfoSaveRequest,
   infoManagementComplaintInfoHandleRequest,
   infoManagementComplaintInfoExportExcelRequest,
+  infoManagementComplaintInfoImportExcelRequest,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";

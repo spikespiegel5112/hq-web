@@ -22,11 +22,10 @@ import {
   emit,
   nextTick,
 } from "vue";
-import type { UploadChangeParam } from "ant-design-vue";
 
 const emit = defineEmits<{
-  (e: "onSuccess", visible: boolean): void;
-  (e: "onError", visible: boolean): void;
+  (e: "success", visible: boolean): void;
+  (e: "error", visible: boolean): void;
 }>();
 
 const props = defineProps({
@@ -66,12 +65,16 @@ const handleImport = () => {
     props
       .action(formData)
       .then((response: any) => {
-        state.loading = false;
+        emit("success", response);
         global.$message.success("上传成功");
       })
       .catch((error: any) => {
         console.log(error);
+        emit("error", error);
         global.$message.error("上传失败");
+      })
+      .finally(() => {
+        state.loading = false;
       });
   });
 };
