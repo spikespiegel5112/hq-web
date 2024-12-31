@@ -127,7 +127,33 @@
             </span>
           </div>
           <div v-else>
-            {{ scope.record[item.name] }}
+            <div v-if="!!props.rows && typeof props.rows === 'number'">
+              <a-popover trigger="hover">
+                <template #content>
+                  <div
+                    :style="{
+                      width: '2.5rem',
+                    }"
+                  >
+                    {{ scope.record[item.name] }}
+                  </div>
+                </template>
+                <div
+                  :style="{
+                    display: '-webkit-box',
+                    '-webkit-box-orient': 'vertical',
+                    overflow: 'hidden',
+                    '-webkit-line-clamp': props.rows,
+                    'text-overflow': 'ellipsis',
+                  }"
+                >
+                  {{ scope.record[item.name] }}
+                </div>
+              </a-popover>
+            </div>
+            <div v-else>
+              {{ scope.record[item.name] }}
+            </div>
           </div>
         </template>
       </a-table-column>
@@ -193,6 +219,7 @@ const props = defineProps({
   processedTableData: { type: Array, default: null },
   tabTable: { type: Boolean, default: false },
   tableBodyHeight: { type: String || null, default: null },
+  rows: { type: Number, default: null },
   pagination: {
     type: [Object, Boolean],
     default: {

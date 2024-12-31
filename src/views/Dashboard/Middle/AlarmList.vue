@@ -12,6 +12,7 @@
         :processedTableData="state.processedTableData"
         :dataModel="pageModel"
         :pagination="null"
+        :rows="2"
         height="100%"
         tableBodyHeight="100%"
       />
