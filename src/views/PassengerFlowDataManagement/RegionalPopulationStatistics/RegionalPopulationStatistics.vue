@@ -3,11 +3,14 @@
     <FilterTool @onSearch="handleSearch" @onReset="handleReset"></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
-        <ImportButton
-          :action="`/api/manage/backend/railwayArrive/importPic`"
-          @onSuccess="handleUploaded"
+        <ExportButton
+          :action="passengerFlowAreaFlowExportRequest"
+          :queryFormData="queryFormData"
+          :pagination="{
+            ...pagination,
+            pageSize: 1000,
+          }"
         />
-        <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
     <BaseTable
@@ -45,6 +48,7 @@ import {
 import {
   passengerFlowAreaFlowGetPageRequest,
   passengerFlowAreaFlowGetCameraNameRequest,
+  passengerFlowAreaFlowExportRequest,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";

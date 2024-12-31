@@ -157,7 +157,7 @@ export const backendRailwayArriveDeleteRequest = (params: any) => {
 export const passengerFlowAreaFlowGetCameraNameRequest = (params: any) => {
   return service({
     url: prefix + "/passengerFlow/areaFlow/getCameraName",
-    method: "POST",
+    method: "GET",
     params,
   });
 };
@@ -170,6 +170,16 @@ export const passengerFlowAreaFlowGetPageRequest = (params: any) => {
     data: params,
   });
 };
+
+// 客流数据管理-区域客流-导出
+export const passengerFlowAreaFlowExportRequest = (params: any) => {
+  return service({
+    url: prefix + "/passengerFlow/areaFlow/export",
+    method: "POST",
+    data: params,
+  });
+};
+
 
 // 后台管理-小时客流
 export const backendIndexPageFlowHourlyRequest = (params: any) => {

@@ -11,13 +11,11 @@
                   placeholder="请选择"
                 >
                   <a-select-option
-                    v-for="item in global.$getDictionary(
-                      'railway_statistical_begin_hour'
-                    )"
-                    :key="item.value"
-                    :value="item.value"
+                    v-for="item in state.cameraList"
+                    :key="item"
+                    :value="item"
                   >
-                    {{ item.label }}
+                    {{ item }}
                   </a-select-option>
                 </a-select>
               </a-form-item>
@@ -61,6 +59,8 @@ import {
   nextTick,
 } from "vue";
 
+import { passengerFlowAreaFlowGetCameraNameRequest } from "@/api/management";
+
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
@@ -79,6 +79,7 @@ const state = reactive({
     analyzeTimeEnd: null,
   },
   analyzeTime: null,
+  cameraList: null
 });
 
 const handleSearch = () => {
@@ -102,7 +103,19 @@ const handleChangeTime1 = (data: any) => {
     .format("YYYY-MM-DD HH:mm:ss");
 };
 
-onMounted(async () => {});
+const getCameraList = () => {
+  passengerFlowAreaFlowGetCameraNameRequest({})
+    .then((response: any) => {
+      state.cameraList = response.data;
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+};
+
+onMounted(async () => {
+  getCameraList();
+});
 
 onBeforeUnmount(() => {});
 </script>
