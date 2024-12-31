@@ -94,12 +94,17 @@ watch(
 );
 
 const handleChangeAttachment = (value: any) => {
-  if (!!value.file.response) {
-    const response: any = value.file.response.data;
-    if (!Array.isArray(_modelValue.value)) {
-      _modelValue.value = [];
+  if (value.file.response) {
+    const response: any = value.file.response;
+    if (response.code === 0) {
+      if (!Array.isArray(_modelValue.value)) {
+        _modelValue.value = [];
+      }
+      _modelValue.value.push(response.data);
+      global.$message.success("上传成功");
+    } else {
+      global.$message.error("上传失败");
     }
-    _modelValue.value.push(response);
   }
 };
 

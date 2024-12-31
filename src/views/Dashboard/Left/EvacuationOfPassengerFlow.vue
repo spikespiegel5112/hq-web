@@ -19,7 +19,7 @@ import {
   nextTick,
 } from "vue";
 
-import { backendIndexPageFlowDistRequest } from "@/api/management.ts";
+import { backendIndexPageFlowHourlyRequest } from "@/api/management.ts";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -145,7 +145,7 @@ const setOption: EChartsOption = () => {
 const getData = () => {
   global.$store.commit("app/updateTableLoading", true);
   setOption();
-  backendIndexPageFlowDistRequest({
+  backendIndexPageFlowHourlyRequest({
     ...global.$store.state.app.currentQueryDateParams,
     ...global.$store.state.app.currentQueryHourParams,
     timeType: 1,

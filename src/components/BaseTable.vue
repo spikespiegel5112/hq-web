@@ -127,7 +127,7 @@
             </span>
           </div>
           <div v-else>
-            <div v-if="!!item.rows && typeof item.rows === 'number'">
+            <template v-if="!!item.rows && typeof item.rows === 'number'">
               <a-popover trigger="hover">
                 <template #content>
                   <div
@@ -142,15 +142,15 @@
                   :style="{
                     display: '-webkit-box',
                     '-webkit-box-orient': 'vertical',
+                    '-webkit-line-clamp': item.rows,
                     overflow: 'hidden',
-                    '-webkit-line-clamp': props.rows,
                     'text-overflow': 'ellipsis',
                   }"
                 >
                   {{ scope.record[item.name] }}
                 </div>
               </a-popover>
-            </div>
+            </template>
             <div v-else>
               {{ scope.record[item.name] }}
             </div>
@@ -219,7 +219,6 @@ const props = defineProps({
   processedTableData: { type: Array, default: null },
   tabTable: { type: Boolean, default: false },
   tableBodyHeight: { type: String || null, default: null },
-  rows: { type: Number, default: null },
   pagination: {
     type: [Object, Boolean],
     default: {

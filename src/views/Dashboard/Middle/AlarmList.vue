@@ -12,7 +12,6 @@
         :processedTableData="state.processedTableData"
         :dataModel="pageModel"
         :pagination="null"
-        :rows="2"
         height="100%"
         tableBodyHeight="100%"
       />
@@ -41,19 +40,7 @@ const global = currentInstance.appContext.config.globalProperties;
 const props = defineProps({
   timeType: { type: Number, default: 1, required: true },
 });
-// "id": 36,
-//             "preplanResourceId": 111,
-//             "eventAssociationId": 94,
-//             "": "区域人数统计超阈值范围告警",
-//             "": 0,
-//             "": "2024-12-28 19:39:35",
-//             "alarmLevel": 0,
-//             "alarmStatus": 1,
-//             "createBy": null,
-//             "createTime": "2024-12-27 22:03:22",
-//             "updateBy": null,
-//             "updateTime": "2024-12-27 22:03:22",
-//             "preplanEventType": null
+
 const pageModel = ref([
   {
     label: "序号",

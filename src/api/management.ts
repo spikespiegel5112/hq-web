@@ -478,6 +478,18 @@ export const eventManageSuddenEventSaveDisposalRequest = (params: any) => {
   });
 };
 
+// 事件管理-突发事件-报表导入
+export const eventManageSuddenEventImportRequest = (params: any) => {
+  return service({
+    url: prefix + "/eventManage/suddenEvent/import",
+    method: "POST",
+    data: params,
+    headers: {
+      "Content-Type": "multipart/form-data", // 设置请求头
+    },
+  });
+};
+
 // 信息管理-外部信息
 
 // 信息管理-外部信息-删除

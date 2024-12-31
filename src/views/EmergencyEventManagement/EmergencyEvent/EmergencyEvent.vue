@@ -3,7 +3,7 @@
     <FilterTool @onSearch="handleSearch" @onReset="handleReset"></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
-        <a-button class="import">导入</a-button>
+        <ImportButton action="/api/manage/eventManage/suddenEvent/import" />
         <ExportButton
           :action="eventManageSuddenEventExportRequest"
           :queryFormData="queryFormData"
@@ -74,6 +74,7 @@ import {
   eventManageSuddenEventSaveRequest,
   eventManageSuddenEventSaveDisposalRequest,
   eventManageSuddenEventExportRequest,
+  eventManageSuddenEventImportRequest,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
@@ -122,6 +123,7 @@ const pageModel = ref([
   {
     label: "事件内容",
     name: "eventContent",
+    rows: 2,
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -326,6 +328,25 @@ const handleSubmitDisposal = (formData: any) => {
       global.$message.error("提交失败");
       state.dialogDisposalVisible = false;
     });
+};
+
+const handleImport = () => {
+  // 假设你有一个文件input元素，比如<input type="file" id="fileInput">
+  // const fileInput = docuemnt.create;
+  // const fileInput: any = document.getElementById("fileInput");
+  // // 当用户选择文件后，触发上传
+  // fileInput.addEventListener("change", function () {
+  //   const file = this.files[0]; // 获取文件
+  //   const formData = new FormData(); // 创建FormData对象
+  //   formData.append("file", file); // 将文件添加到FormData对象中
+  //   eventManageSuddenEventImportRequest()
+  //     .then((response: any) => {
+  //       console.log(response);
+  //     })
+  //     .catch((error: any) => {
+  //       console.log(error);
+  //     });
+  // });
 };
 
 onMounted(async () => {
