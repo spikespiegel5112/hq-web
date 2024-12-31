@@ -131,7 +131,7 @@ onMounted(() => {
 
   .chart {
     width: 100%;
-    height: calc(100% - 0.35rem);
+    height: calc(100% - 0.25rem);
   }
 }
 </style>

@@ -26,7 +26,6 @@ export const getAreaMapAlarmInfoData = (params: any) => {
   });
 };
 
-
 // 大屏-突发事件
 export const backendIndexPageSuddenEventRequest = (params: any) => {
   return service({
@@ -35,7 +34,6 @@ export const backendIndexPageSuddenEventRequest = (params: any) => {
     data: params,
   });
 };
-
 
 // 附件
 // 下载
@@ -155,10 +153,19 @@ export const backendRailwayArriveDeleteRequest = (params: any) => {
   });
 };
 
-// 后台管理-客流疏散
-export const backendIndexPageFlowDistRequest = (params: any) => {
+// 客流数据管理-区域客流-相机名称查询
+export const passengerFlowAreaFlowGetCameraNameRequest = (params: any) => {
   return service({
-    url: prefix + "/backend/indexPage/flow/dist",
+    url: prefix + "/passengerFlow/areaFlow/getCameraName",
+    method: "POST",
+    params,
+  });
+};
+
+// 客流数据管理-区域客流-分页查询
+export const passengerFlowAreaFlowGetPageRequest = (params: any) => {
+  return service({
+    url: prefix + "/passengerFlow/areaFlow/getPage",
     method: "POST",
     data: params,
   });

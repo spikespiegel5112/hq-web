@@ -7,14 +7,6 @@
           :action="`/api/manage/backend/railwayArrive/importPic`"
           @onSuccess="handleUploaded"
         />
-        <ExportButton
-          :action="eventManageSuddenEventExportRequest"
-          :queryFormData="queryFormData"
-          :pagination="{
-            ...pagination,
-            pageSize: 1000,
-          }"
-        />
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
@@ -26,7 +18,6 @@
       @onEdit="handleEdit"
       @onReview="handleReview"
       @onChangePage="handleChangePage"
-      @onDelete="handleDelete"
     />
     <EditDialog
       :visible="state.dialogVisible"
@@ -34,7 +25,6 @@
       :dataModel="pageModel"
       :rowData="state.currentRowData"
       @onClose="handleClose"
-      @onSubmit="handleSubmit"
     />
   </div>
 </template>
@@ -53,11 +43,8 @@ import {
 } from "vue";
 
 import {
-  backendRailwayArriveGetRailwayArrivePagingRequest,
-  backendRailwayArriveRailwayArriveExportRequest,
-  backendRailwayArriveSaveRailwayArriveRequest,
-  backendRailwayArriveDeleteRequest,
-  eventManageSuddenEventExportRequest,
+  passengerFlowAreaFlowGetPageRequest,
+  passengerFlowAreaFlowGetCameraNameRequest,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
@@ -75,48 +62,32 @@ const pageModel = ref([
     exportVisible: false,
   },
   {
-    label: "日期",
-    name: "statisticalDate",
+    label: "计算时间",
+    name: "analyzeTime",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "统计开始时间",
-    name: "statisticalBeginHour",
+    label: "相机ID",
+    name: "cameraId",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "小时疏散数",
-    name: "dispersedHourlyPassengerCount",
+    label: "相机名称",
+    name: "cameraName",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "预测小时到达数",
-    name: "estimatedHourlyArrivePassengerCount",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
-    label: "出发列次",
-    name: "estimatedHourlyArrivePassengerCount",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
-    label: "到达列次",
-    name: "estimatedHourlyArrivePassengerCount",
+    label: "人员数量",
+    name: "personNum",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -151,7 +122,7 @@ const env = computed(() => {
 
 const getData = () => {
   global.$store.commit("app/updateTableLoading", true);
-  backendRailwayArriveGetRailwayArrivePagingRequest({
+  passengerFlowAreaFlowGetPageRequest({
     ...queryFormData,
     ...pagination,
   })
@@ -162,10 +133,9 @@ const getData = () => {
         (item: any, index: number) => {
           return {
             ...item,
-            statisticalBeginHour: global
-              .$getDictionary("railway_statistical_begin_hour")
-              .find((item2: any) => item2.value === item.statisticalBeginHour)
-              .label,
+            analyzeTime: global
+              .$dayjs(item.analyzeTime)
+              .format("YYYY-MM-DD HH:mm:ss"),
           };
         }
       );
@@ -207,48 +177,15 @@ const handleClose = () => {
   state.dialogVisible = false;
 };
 
-const handleSubmit = (formData: any) => {
-  backendRailwayArriveSaveRailwayArriveRequest(formData)
-    .then((response: any) => {
-      global.$message.success("提交成功");
-      getData();
-    })
-    .catch((error: any) => {
-      console.log(error);
-      global.$message.error("提交失败");
-    });
-};
-
 const handleChangePage = (pagingData: any) => {
   pagination.page = pagingData.current;
   pagination.pageSize = pagingData.pageSize;
   pagination.total = pagingData.total;
   getData();
 };
-const handleDelete = (id: number) => {
-  backendRailwayArriveDeleteRequest({ id })
-    .then((response: any) => {
-      global.$message.success("删除成功");
-      getData();
-    })
-    .catch((error: any) => {
-      global.$message.error("删除失败");
-      console.log(error);
-    });
-};
 
 const handleUploaded = (response: any) => {
   getData();
-};
-
-const handleExport = () => {
-  backendRailwayArriveRailwayArriveExportRequest()
-    .then((response: any) => {
-      global.$exportTable(response, global.$route);
-    })
-    .catch((error: any) => {
-      console.log(error);
-    });
 };
 
 onMounted(async () => {

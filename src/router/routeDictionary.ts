@@ -84,11 +84,11 @@ const routerDictionary = [
           },
           {
             title: "区域人数统计",
-            path: "Taxi",
-            name: "RegionalRealTimePassengerFlowTaxi",
+            path: "RegionalPopulationStatistics",
+            name: "RegionalPopulationStatistics",
             component: () =>
               import(
-                /* webpackChunkName: "Texi" */ "@/views/RegionalRealTimePassengerFlow/Taxi/Taxi.vue"
+                /* webpackChunkName: "RegionalPopulationStatistics" */ "@/views/PassengerFlowDataManagement/RegionalPopulationStatistics/RegionalPopulationStatistics.vue"
               ),
             meta: {
               title: "区域人数统计",
