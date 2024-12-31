@@ -3,7 +3,7 @@
     <FilterTool @onSearch="handleSearch" @onReset="handleReset"></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
-        <ImportButton action="/api/manage/eventManage/suddenEvent/import" />
+        <ImportButton :action="eventManageSuddenEventImportRequest" />
         <ExportButton
           :action="eventManageSuddenEventExportRequest"
           :queryFormData="queryFormData"

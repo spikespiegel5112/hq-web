@@ -1,15 +1,7 @@
 <template>
-  <a-upload
-    class="common_importantbutton_item"
-    v-model:file-list="fileList"
-    name="file"
-    :maxCount="1"
-    :action="props.action"
-    :headers="headers"
-    @change="handleChange"
-  >
-    <a-button class="import" :loading="state.loading">导入</a-button>
-  </a-upload>
+  <a-button class="common_importantbutton_item" @click="handleImport">
+    导入
+  </a-button>
 </template>
 
 <script lang="tsx" setup>
@@ -33,7 +25,11 @@ const emit = defineEmits<{
 }>();
 
 const props = defineProps({
-  action: { type: String, required: true, default: "" },
+  action: {
+    type: Function,
+    required: true,
+    default: () => {},
+  },
 });
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
@@ -52,6 +48,27 @@ watch(
 );
 
 const init = () => {};
+
+const handleImport = (value: any) => {
+  const inputEl = document.createElement("input");
+  inputEl.type = "file";
+  inputEl.click();
+  inputEl.addEventListener("change", (event) => {
+    const file: any = event.target.files[0]; //
+    const formData = new FormData();
+    formData.append("multipartFile", file);
+
+    props
+      .action(formData)
+      .then((response: any) => {
+        // global.$exportTable(response, global.$route);
+      })
+      .catch((error: any) => {
+        console.log(error);
+      });
+  });
+};
+
 const handleChange = (info: UploadChangeParam) => {
   console.log(info);
   const file = info.file;
