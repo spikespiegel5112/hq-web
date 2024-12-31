@@ -96,11 +96,11 @@ const routerDictionary = [
           },
           {
             title: "进出人数统计",
-            path: "ParkingGarage",
-            name: "ParkingGarage",
+            path: "NumberOfPeopleEnteringAndLeaving",
+            name: "NumberOfPeopleEnteringAndLeaving",
             component: () =>
               import(
-                /* webpackChunkName: "ParkingGarage" */ "@/views/RegionalRealTimePassengerFlow/ParkingGarage/ParkingGarage.vue"
+                /* webpackChunkName: "NumberOfPeopleEnteringAndLeaving" */ "@/views/PassengerFlowDataManagement/NumberOfPeopleEnteringAndLeaving/NumberOfPeopleEnteringAndLeaving.vue"
               ),
             meta: {
               title: "进出人数统计",

@@ -46,7 +46,7 @@ import {
 } from "vue";
 
 import {
-  passengerFlowAreaFlowGetPageRequest,
+  passengerFlowAreaAreaInOutFlowGetPageRequest,
   passengerFlowAreaFlowExportRequest,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
@@ -117,7 +117,7 @@ const env = computed(() => {
 
 const getData = () => {
   global.$store.commit("app/updateTableLoading", true);
-  passengerFlowAreaFlowGetPageRequest({
+  passengerFlowAreaAreaInOutFlowGetPageRequest({
     ...queryFormData,
     ...pagination,
   })

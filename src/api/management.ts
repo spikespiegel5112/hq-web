@@ -180,6 +180,37 @@ export const passengerFlowAreaFlowExportRequest = (params: any) => {
   });
 };
 
+// 客流数据管理-区域进出客流
+// Area In Out Flow Controller
+
+// 客流数据管理-区域进出客流-导出
+export const passengerFlowAreaAreaInOutFlowExportRequest = (params: any) => {
+  return service({
+    url: prefix + "/passengerFlow/areaInOutFlow/export",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 客流数据管理-区域进出客流-相机名称查询
+export const passengerFlowAreaAreaInOutFlowGetCameraNameRequest = (
+  params: any
+) => {
+  return service({
+    url: prefix + "/passengerFlow/areaInOutFlow/getCameraName",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 客流数据管理-区域进出客流-分页查询
+export const passengerFlowAreaAreaInOutFlowGetPageRequest = (params: any) => {
+  return service({
+    url: prefix + "/passengerFlow/areaInOutFlow/getPage",
+    method: "POST",
+    data: params,
+  });
+};
 
 // 后台管理-小时客流
 export const backendIndexPageFlowHourlyRequest = (params: any) => {
