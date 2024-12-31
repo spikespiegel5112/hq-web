@@ -74,6 +74,7 @@ const pageModel = ref([
   {
     label: "报警内容",
     name: "alarmContent",
+    rows: 2,
     required: true,
     tableVisible: true,
     formVisible: true,

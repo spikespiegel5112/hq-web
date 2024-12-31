@@ -127,7 +127,7 @@
             </span>
           </div>
           <div v-else>
-            <div v-if="!!props.rows && typeof props.rows === 'number'">
+            <div v-if="!!item.rows && typeof item.rows === 'number'">
               <a-popover trigger="hover">
                 <template #content>
                   <div
