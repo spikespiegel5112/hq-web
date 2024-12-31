@@ -1,5 +1,10 @@
 <template>
-  <a-button class="common_importantbutton_item" @click="handleImport">
+  <a-button
+    class="common_importantbutton_item"
+    type="primary"
+    :loading="state.loading"
+    @click="handleImport"
+  >
     导入
   </a-button>
 </template>
@@ -49,7 +54,7 @@ watch(
 
 const init = () => {};
 
-const handleImport = (value: any) => {
+const handleImport = () => {
   const inputEl = document.createElement("input");
   inputEl.type = "file";
   inputEl.click();
@@ -57,41 +62,18 @@ const handleImport = (value: any) => {
     const file: any = event.target.files[0]; //
     const formData = new FormData();
     formData.append("multipartFile", file);
-
+    state.loading = true;
     props
       .action(formData)
       .then((response: any) => {
-        // global.$exportTable(response, global.$route);
+        state.loading = false;
+        global.$message.success("上传成功");
       })
       .catch((error: any) => {
         console.log(error);
+        global.$message.error("上传失败");
       });
   });
-};
-
-const handleChange = (info: UploadChangeParam) => {
-  console.log(info);
-  const file = info.file;
-  if (file.status === "uploading") {
-    state.loading = true;
-    emit("onSuccess", true);
-  }
-  if (file.status === "done") {
-    if (file.response.code === 0) {
-      global.$message.success(`上传成功`);
-      emit("onSuccess", file.response);
-    } else if (file.response.code === 501) {
-      global.$message.error("上传失败");
-      emit("onError", file.response);
-    }
-    emit("onSuccess", false);
-    state.loading = false;
-  } else if (file.status === "error") {
-    global.$message.error("上传失败");
-    emit("onError", file.response);
-    emit("onSuccess", false);
-    state.loading = false;
-  }
 };
 
 onMounted(async () => {
