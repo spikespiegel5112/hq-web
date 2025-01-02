@@ -39,26 +39,14 @@ export default defineConfig({
       ],
       dts: "src/components.d.ts",
     }),
-    // Components({
-    //   // allow auto load markdown components under `./src/components/`
-    //   extensions: ["vue", "md"],
-    //   // allow auto import and register components used in markdown
-    //   include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
-    //   resolvers: [
-    //     ElementPlusResolver({
-    //       importStyle: "sass",
-    //     }),
-    //   ],
-    //   dts: "src/components.d.ts",
+    // legacy({
+    //   targets: ["ie >= 11"],
+    //   additionalLegacyPolyfills: ["regenerator-runtime/runtime"], // 可选
+    //   // 下面是其他选项
+    //   polyfills: ["es.promise", "es.symbol"], // 指定 polyfills
+    //   modernPolyfills: true, // 添加现代浏览器所需的 polyfills
+    //   // corejs: 3, // core-js 版本号
     // }),
-    legacy({
-      targets: ["ie >= 11"],
-      additionalLegacyPolyfills: ["regenerator-runtime/runtime"], // 可选
-      // 下面是其他选项
-      polyfills: ["es.promise", "es.symbol"], // 指定 polyfills
-      modernPolyfills: true, // 添加现代浏览器所需的 polyfills
-      // corejs: 3, // core-js 版本号
-    }),
     requireTransform(),
   ],
   resolve: {
@@ -68,14 +56,14 @@ export default defineConfig({
     },
   },
   css: {
-    preprocessorOptions: {
-      scss: {
-        sassOptions: {
-          // 消除启动时对过时sass API使用的报警
-          silenceDeprecations: ["legacy-js-api"],
-        },
-      },
-    },
+    // preprocessorOptions: {
+    //   scss: {
+    //     sassOptions: {
+    //       // 消除启动时对过时sass API使用的报警
+    //       silenceDeprecations: ["legacy-js-api"],
+    //     },
+    //   },
+    // },
   },
   define: {
     "process.env": {},
