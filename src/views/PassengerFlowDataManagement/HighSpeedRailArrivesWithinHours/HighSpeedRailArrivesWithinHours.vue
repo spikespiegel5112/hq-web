@@ -8,7 +8,7 @@
           @success="() => getData()"
         />
         <ExportButton
-          :action="eventManageSuddenEventExportRequest"
+          :action="backendRailwayArriveRailwayArriveExportRequest"
           :queryFormData="queryFormData"
           :pagination="{
             ...pagination,

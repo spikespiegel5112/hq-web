@@ -3,6 +3,10 @@
     <FilterTool @onSearch="handleSearch" @onReset="handleReset"></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
+        <ImportButton
+          :action="importParkingVehicleMonitorImportExcelRequest"
+          @success="() => getData()"
+        />
         <ExportButton
           :action="passengerFlowParkingPassengerFlowExportRequest"
           :queryFormData="queryFormData"
@@ -53,6 +57,7 @@ const global = currentInstance.appContext.config.globalProperties;
 import {
   passengerFlowParkingPassengerFlowGetPageRequest,
   passengerFlowParkingPassengerFlowExportRequest,
+  importParkingVehicleMonitorImportExcelRequest,
 } from "@/api/management";
 
 const pageModel = ref([

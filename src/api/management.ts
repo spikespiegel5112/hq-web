@@ -112,7 +112,7 @@ export const backendRailwayArriveGetRailwayImportPicRequest = (params: any) => {
     method: "POST",
     data: params,
     headers: {
-      "Content-Type": "multipart/form-data", // 设置请求头
+      "Content-Type": "multipart/form-data",
     },
   });
 };
@@ -178,8 +178,9 @@ export const passengerFlowAreaFlowGetPageRequest = (params: any) => {
 export const passengerFlowAreaFlowExportRequest = (params: any) => {
   return service({
     url: prefix + "/passengerFlow/areaFlow/export",
-    method: "POST",
-    data: params,
+    method: "GET",
+    params,
+    responseType: "blob",
   });
 };
 
@@ -219,6 +220,15 @@ export const passengerFlowAreaAreaInOutFlowGetPageRequest = (params: any) => {
 export const backendIndexPageFlowHourlyRequest = (params: any) => {
   return service({
     url: prefix + "/backend/indexPage/flow/hourly",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 后台管理-小时客流（新）
+export const backendIndexPageFlowHourlyNewRequest = (params: any) => {
+  return service({
+    url: prefix + "/backend/indexPage/flow/hourlyNew",
     method: "POST",
     data: params,
   });
@@ -488,7 +498,7 @@ export const eventManageSuddenEventImportRequest = (params: any) => {
     method: "POST",
     data: params,
     headers: {
-      "Content-Type": "multipart/form-data", // 设置请求头
+      "Content-Type": "multipart/form-data",
     },
   });
 };
@@ -672,7 +682,7 @@ export const infoManagementComplaintInfoImportExcelRequest = (params: any) => {
     method: "POST",
     data: params,
     headers: {
-      "Content-Type": "multipart/form-data", // 设置请求头
+      "Content-Type": "multipart/form-data",
     },
   });
 };
@@ -868,7 +878,7 @@ export const planManagementEmergencyPlanImportExcelRequest = (params: any) => {
     method: "POST",
     data: params,
     headers: {
-      "Content-Type": "multipart/form-data", // 设置请求头
+      "Content-Type": "multipart/form-data",
     },
   });
 };
@@ -946,7 +956,7 @@ export const operationManagementDutyStaffImportExcelRequest = (params: any) => {
     method: "POST",
     data: params,
     headers: {
-      "Content-Type": "multipart/form-data", // 设置请求头
+      "Content-Type": "multipart/form-data",
     },
   });
 };
@@ -1006,7 +1016,7 @@ export const operationManagementAlarmInfoImportExcelRequest = (params: any) => {
     method: "POST",
     data: params,
     headers: {
-      "Content-Type": "multipart/form-data", // 设置请求头
+      "Content-Type": "multipart/form-data",
     },
   });
 };
@@ -1073,7 +1083,7 @@ export const operationManagementCalendarInfoImportExcelRequest = (
     method: "POST",
     data: params,
     headers: {
-      "Content-Type": "multipart/form-data", // 设置请求头
+      "Content-Type": "multipart/form-data",
     },
   });
 };
@@ -1089,6 +1099,18 @@ export const operationManagementCalendarInfoSaveRequest = (params: any) => {
 
 // 客流数据管理-车库流量信息
 // Parking Flow Controller
+
+// 停车库车辆监测-excel导入
+export const importParkingVehicleMonitorImportExcelRequest = (params: any) => {
+  return service({
+    url: prefix + "/import/parkingVehicleMonitor/importExcel",
+    method: "POST",
+    params,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
 
 // 客流数据管理-车库流量信息-导出
 export const passengerFlowParkingPassengerFlowExportRequest = (params: any) => {
