@@ -91,19 +91,19 @@ const dataIndex = [] as any[];
 
 const alarmList = ref([
   {
-    label: "自动",
+    label: "绿灯",
     value: 0,
   },
   {
-    label: "红灯",
+    label: "黄灯",
     value: 1,
   },
   {
-    label: "黄灯",
+    label: "红灯",
     value: 2,
   },
   {
-    label: "绿灯",
+    label: "自动",
     value: 3,
   },
 ]);
