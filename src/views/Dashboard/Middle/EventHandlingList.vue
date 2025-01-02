@@ -109,12 +109,8 @@ const getData = () => {
   console.log(state.timeType);
   const timeTypeList = ["day", "week", "month"];
   backendIndexPageSuddenEventRequest({
-    // queryDate: global.$dayjs().format("YYYY-MM-DD"),
-    eventTimeBegin: global
-      .$dayjs()
-      .subtract(1, timeTypeList[state.timeType - 1])
-      .format("YYYY-MM-DD HH:mm:ss"),
-    eventTimeEnd: global.$dayjs().format("YYYY-MM-DD HH:mm:ss"),
+    queryDate: global.$dayjs().format("YYYY-MM-DD"),
+    timeType: state.timeType,
   })
     .then((response: any) => {
       response = response.data;

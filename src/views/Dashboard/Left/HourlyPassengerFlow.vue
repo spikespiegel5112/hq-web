@@ -84,7 +84,7 @@ const setOption: EChartsOption = () => {
     },
     series: [
       {
-        name: "Access From",
+        name: "",
         type: "pie",
         radius: ["50%", "60%"],
         center: ["30%", "45%"],
@@ -113,7 +113,6 @@ const setOption: EChartsOption = () => {
               name: item.title,
             };
           }),
-      
       },
     ],
   };
