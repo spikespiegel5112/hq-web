@@ -68,6 +68,7 @@ const global = currentInstance.appContext.config.globalProperties;
 const emit = defineEmits<{
   (e: "onSearch", formData: object): void;
   (e: "onReset", formData: object): void;
+  (e: "update:modelValue", formData: object): void;
 }>();
 
 const formDataRef: any = ref(null);
@@ -94,6 +95,14 @@ const eventList = computed(() => {
   return result;
 });
 
+watch(
+  () => state.formData,
+  (newValue: any, oldValue: any) => {
+    emit("update:modelValue", newValue);
+  },
+  { deep: true }
+);
+
 const handleSearch = () => {
   emit("onSearch", state.formData);
 };
@@ -115,7 +124,9 @@ const handleChangePlanTime = (value: any) => {
     .format("YYYY-MM-DD HH:mm:ss");
 };
 
-onMounted(async () => {});
+onMounted(async () => {
+  emit("update:modelValue", state.formData);
+});
 
 onBeforeUnmount(() => {});
 </script>

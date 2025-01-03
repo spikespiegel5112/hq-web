@@ -41,7 +41,7 @@ export const attachmentDownloadRequest = (params: any) => {
   return service({
     url: prefix + "/attachment/download",
     method: "GET",
-    data: params,
+    params,
     responseType: "blob",
   });
 };
@@ -105,6 +105,17 @@ export const backendRailwayArriveGetRailwayArrivePagingRequest = (
   });
 };
 
+// 区域小时客流-铁路到达-图片导入
+export const backendRailwayArriveImportPicRequest = (
+  params: any
+) => {
+  return service({
+    url: prefix + "/backend/railwayArrive/importPic",
+    method: "POST",
+    data: params,
+  });
+};
+
 // 后台管理-铁路到达-图片导入
 export const backendRailwayArriveGetRailwayImportPicRequest = (params: any) => {
   return service({
@@ -122,7 +133,7 @@ export const backendRailwayArriveRailwayArriveExportRequest = (params: any) => {
   return service({
     url: prefix + "/backend/railwayArrive/railwayArriveExport",
     method: "GET",
-    data: params,
+    params,
     responseType: "blob",
   });
 };
@@ -618,7 +629,7 @@ export const infoManagementPublicSentimentInfoExportExcelRequest = (
   return service({
     url: prefix + "/infoManagement/publicSentimentInfo/exportExcel",
     method: "GET",
-    data: params,
+    params,
     responseType: "blob",
   });
 };
@@ -659,7 +670,7 @@ export const infoManagementWeatherInfoExportRequest = (params: any) => {
   return service({
     url: prefix + "/infoManagement/weatherInfo/export",
     method: "GET",
-    data: params,
+    params,
     responseType: "blob",
   });
 };
@@ -701,7 +712,7 @@ export const infoManagementComplaintInfoExportExcelRequest = (params: any) => {
   return service({
     url: prefix + "/infoManagement/complaintInfo/exportExcel",
     method: "GET",
-    data: params,
+    params,
     responseType: "blob",
   });
 };
@@ -758,7 +769,7 @@ export const preplanPreplanExportRequest = (params: any) => {
   return service({
     url: prefix + "/preplan/preplan/export",
     method: "GET",
-    data: params,
+    params,
     responseType: "blob",
   });
 };
@@ -768,7 +779,7 @@ export const preplanPreplanExportStepRequest = (params: any) => {
   return service({
     url: prefix + "/preplan/preplan/exportStep",
     method: "GET",
-    data: params,
+    params,
     responseType: "blob",
   });
 };
@@ -825,7 +836,7 @@ export const planManagementEmergencyPlanExportExcelRequest = (params: any) => {
   return service({
     url: prefix + "/planManagement/emergencyPlan/exportExcel",
     method: "GET",
-    data: params,
+    params,
     responseType: "blob",
   });
 };
@@ -837,7 +848,7 @@ export const planManagementEmergencyPlanExportRecordExcelRequest = (
   return service({
     url: prefix + "/planManagement/emergencyPlan/exportRecordExcel",
     method: "GET",
-    data: params,
+    params,
     responseType: "blob",
   });
 };
@@ -926,7 +937,7 @@ export const operationManagementDutyStaffExportExcelRequest = (params: any) => {
   return service({
     url: prefix + "/operationManagement/dutyStaff/exportExcel",
     method: "GET",
-    data: params,
+    params,
     responseType: "blob",
   });
 };
@@ -986,7 +997,7 @@ export const operationManagementAlarmInfoExportExcelRequest = (params: any) => {
   return service({
     url: prefix + "/operationManagement/alarmInfo/exportExcel",
     method: "GET",
-    data: params,
+    params,
     responseType: "blob",
   });
 };
@@ -1049,7 +1060,7 @@ export const operationManagementCalendarInfoExportExcelRequest = (
   return service({
     url: prefix + "/operationManagement/calendarInfo/exportExcel",
     method: "GET",
-    data: params,
+    params,
     responseType: "blob",
   });
 };

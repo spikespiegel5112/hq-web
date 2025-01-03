@@ -1,6 +1,10 @@
 <template>
   <div class="common_table_wrapper">
-    <FilterTool @onSearch="handleSearch" @onReset="handleReset"></FilterTool>
+    <FilterTool
+      @onSearch="handleSearch"
+      @onReset="handleReset"
+      v-model="queryFormData"
+    ></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
         <ExportButton

@@ -1,10 +1,14 @@
 <template>
   <div class="common_table_wrapper">
-    <FilterTool @onSearch="handleSearch" @onReset="handleReset"></FilterTool>
+    <FilterTool
+      @onSearch="handleSearch"
+      @onReset="handleReset"
+      v-model="queryFormData"
+    ></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
         <ImportButton
-          :action="`/api/manage/backend/railwayArrive/importPic`"
+          :action="backendRailwayArriveImportPicRequest"
           @success="() => getData()"
         />
         <ExportButton
@@ -58,6 +62,7 @@ import {
   backendRailwayArriveSaveRailwayArriveRequest,
   backendRailwayArriveDeleteRequest,
   eventManageSuddenEventExportRequest,
+  backendRailwayArriveImportPicRequest,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
@@ -148,6 +153,13 @@ const pagination = reactive({
 const env = computed(() => {
   return import.meta.env;
 });
+
+watch(
+  () => queryFormData,
+  (newValue: any, oldValue: any) => {
+    debugger;
+  }
+);
 
 const getData = () => {
   global.$store.commit("app/updateTableLoading", true);

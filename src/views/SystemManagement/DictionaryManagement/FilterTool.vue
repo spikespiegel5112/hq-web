@@ -77,6 +77,7 @@ const props = defineProps({
 const emit = defineEmits<{
   (e: "onSearch", formData: object): void;
   (e: "onReset", formData: object): void;
+  (e: "update:modelValue", formData: object): void;
 }>();
 
 const formDataRef: any = ref(null);
@@ -94,6 +95,14 @@ watch(
   (newValue: any, oldValue: any) => {
     importDictionary(newValue);
   }
+);
+
+watch(
+  () => state.formData,
+  (newValue: any, oldValue: any) => {
+    emit("update:modelValue", newValue);
+  },
+  { deep: true }
 );
 
 const handleSearch = () => {

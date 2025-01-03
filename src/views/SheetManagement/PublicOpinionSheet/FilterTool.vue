@@ -73,6 +73,7 @@ const global = currentInstance.appContext.config.globalProperties;
 const emit = defineEmits<{
   (e: "onSearch", formData: object): void;
   (e: "onReset", formData: object): void;
+  (e: "update:modelValue", formData: object): void;
 }>();
 
 const formDataRef: any = ref(null);
@@ -90,7 +91,9 @@ const handleReset = () => {
   emit("onReset", formData);
 };
 
-onMounted(async () => {});
+onMounted(async () => {
+  emit("update:modelValue", state.formData);
+});
 
 onBeforeUnmount(() => {});
 </script>

@@ -6,7 +6,6 @@
           <a-row :gutter="20">
             <a-col :span="7">
               <a-form-item name="statisticalBeginHour" label="统计开始时间">
-                <!-- railway_statistical_begin_hour -->
                 <a-select
                   v-model:value="state.formData.statisticalBeginHour"
                   placeholder="请选择"
@@ -66,9 +65,17 @@ import {
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
+const props = defineProps({
+  modelValue: {
+    type: [Boolean, Object],
+    default: false,
+  },
+});
+
 const emit = defineEmits<{
   (e: "onSearch", formData: object): void;
   (e: "onReset", formData: object): void;
+  (e: "update:modelValue", formData: object): void;
 }>();
 
 const formDataRef: any = ref(null);
@@ -82,6 +89,14 @@ const state = reactive({
   },
   statisticalDate: [],
 });
+
+watch(
+  () => state.formData,
+  (newValue: any, oldValue: any) => {
+    emit("update:modelValue", newValue);
+  },
+  { deep: true }
+);
 
 const handleSearch = () => {
   emit("onSearch", state.formData);
@@ -104,7 +119,9 @@ const handleChangeStatisticalDate = (data: any) => {
     .format("YYYY-MM-DD");
 };
 
-onMounted(async () => {});
+onMounted(async () => {
+  emit("update:modelValue", state.formData);
+});
 
 onBeforeUnmount(() => {});
 </script>

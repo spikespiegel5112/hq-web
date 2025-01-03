@@ -67,6 +67,7 @@ const global = currentInstance.appContext.config.globalProperties;
 const emit = defineEmits<{
   (e: "onSearch", formData: object): void;
   (e: "onReset", formData: object): void;
+  (e: "update:modelValue", formData: object): void;
 }>();
 
 const formDataRef: any = ref(null);
@@ -79,8 +80,16 @@ const state = reactive({
     analyzeTimeEnd: null,
   },
   analyzeTime: null,
-  cameraList: null
+  cameraList: null,
 });
+
+watch(
+  () => state.formData,
+  (newValue: any, oldValue: any) => {
+    emit("update:modelValue", newValue);
+  },
+  { deep: true }
+);
 
 const handleSearch = () => {
   emit("onSearch", state.formData);
