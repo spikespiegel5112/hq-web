@@ -5,6 +5,7 @@
       @onReset="handleReset"
       v-model="queryFormData"
     ></FilterTool>
+
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
         <ExportButton
@@ -12,7 +13,7 @@
           :queryFormData="queryFormData"
           :pagination="{
             ...pagination,
-            pageSize: 1000,
+            pageSize: null,
           }"
         />
       </a-space>

@@ -1201,3 +1201,45 @@ export const operationManagementOperationConfigGetListRequest = (
     data: params,
   });
 };
+
+// 客流数据管理-出租车
+// Taxi Parking Controller
+
+// 客流数据管理-出租车客流-导出
+export const passengerFlowTaxiParkingExportRequest = (params: any) => {
+  return service({
+    url: prefix + "/passengerFlow/taxiParking/export",
+    method: "GET",
+    params,
+  });
+};
+
+// 客流数据管理-出租车-分页查询
+export const passengerFlowTaxiParkingGetPageRequest = (params: any) => {
+  return service({
+    url: prefix + "/passengerFlow/taxiParking/getPage",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 客流数据管理-蓄车场
+// Storage Controller
+
+// 客流数据管理-蓄车场-导出
+export const passengerFlowStorageExportRequest = (params: any) => {
+  return service({
+    url: prefix + "/passengerFlow/storage/export",
+    method: "GET",
+    params,
+  });
+};
+
+// 客流数据管理-蓄车场-分页查询
+export const passengerFlowStorageGetPageRequest = (params: any) => {
+  return service({
+    url: prefix + "/passengerFlow/storage/getPage",
+    method: "POST",
+    data: params,
+  });
+};

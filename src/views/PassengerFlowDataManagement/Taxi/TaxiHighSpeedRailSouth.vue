@@ -1,21 +1,25 @@
 <template>
   <div class="common_table_wrapper">
-    <FilterTool       @onSearch="handleSearch"       @onReset="handleReset"       v-model="queryFormData"     ></FilterTool>
+    <FilterTool
+      @onSearch="handleSearch"
+      @onReset="handleReset"
+      v-model="queryFormData"
+    ></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
-                 <!-- <ExportButton
-          :action="eventManageSuddenEventExportRequest"
+        <ExportButton
+          :action="passengerFlowStorageExportRequest"
           :queryFormData="queryFormData"
           :pagination="{
             ...pagination,
             pageSize: 1000,
           }"
-        /> -->
-        <a-button class="add" @click="handleAdd">新增</a-button>
+        />
       </a-space>
     </div>
     <BaseTable
       :tableData="state.tableData"
+      :processedTableData="state.processedTableData"
       :dataModel="pageModel"
       tabTable
       @onEdit="handleEdit"
@@ -44,12 +48,20 @@ import {
   nextTick,
 } from "vue";
 
+import {
+  passengerFlowStorageExportRequest,
+  passengerFlowStorageGetPageRequest,
+} from "@/api/management";
 
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
+
+const props = defineProps({
+  parkCode: { type: String, required: true, default: "" },
+});
 
 const pageModel = ref([
   {
@@ -61,49 +73,42 @@ const pageModel = ref([
     exportVisible: false,
   },
   {
-    label: "报警类型",
-    name: "higywayCode",
+    label: "进场数量",
+    name: "arriveNum",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "报警内容",
-    name: "highwayName",
+    label: "离场数量",
+    name: "leaveNum",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "报警时间",
-    name: "bridgeCode",
+    label: "车场编码",
+    name: "parkCode",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "报警地点",
-    name: "bridgeName",
+    label: "统计时间",
+    name: "time",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
-  },
-  {
-    label: "操作",
-    name: "operationColumn",
-    tableVisible: true,
-    exportVisible: false,
-    fixed: "right",
-    actions: ["edit", "review", "delete"],
   },
 ]);
 
 const state = reactive({
   tableData: [] as any[],
+  processedTableData: [] as any[],
   dialogVisible: false,
   dialogMode: null as string | null,
   currentRowData: {},
@@ -116,17 +121,30 @@ const pagination = reactive({
 });
 
 const getData = () => {
+  queryFormData.parkCode = props.parkCode;
   global.$store.commit("app/updateTableLoading", true);
-  const result = [] as any[];
-  for (let index = 0; index < 30; index++) {
-    result.push({
-      higywayCode: "aaa",
-      highwayName: "aaa",
-      bridgeCode: "aaa",
-      bridgeName: "aaa",
+  passengerFlowStorageGetPageRequest({
+    ...queryFormData,
+    ...pagination,
+    parkCode: props.parkCode,
+  })
+    .then((response: any) => {
+      state.tableData = response.data.list;
+      state.processedTableData = response.data.list.map((item: any) => {
+        return {
+          ...item,
+          parkCode: global
+            .$getDictionary("storage_park_code")
+            .find((item2: any) => {
+              return item2.value === item.parkCode;
+            })?.label,
+        };
+      });
+      pagination.total = response.total;
+    })
+    .catch((error: any) => {
+      console.log(error);
     });
-  }
-  state.tableData = result;
 };
 
 const handleEdit = (rowData: any) => {

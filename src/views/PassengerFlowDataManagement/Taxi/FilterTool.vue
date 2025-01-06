@@ -4,23 +4,13 @@
       <a-row>
         <a-col :span="21">
           <a-row :gutter="20">
-            <a-col :span="8">
-              <a-form-item name="statisticalBeginHour" label="时段">
-                <a-time-picker
-                  v-model:value="state.formData.statisticalBeginHour"
-                  format="HH:mm:ss"
-                  valueFormat="HH"
-                  :minute-step="60"
-                  :second-step="60"
-                />
-              </a-form-item>
-            </a-col>
-            <a-col :span="8">
+            <a-col :span="10">
               <a-form-item name="password" label="查询时间">
-                <a-time-range-picker
-                  v-model:value="state.formData.ddddd"
+                <a-range-picker
+                  v-model:value="state.time"
                   show-time
                   format="YYYY-MM-DD HH:mm:ss"
+                  @change="handleChangeTime1"
                 />
               </a-form-item>
             </a-col>
@@ -67,7 +57,12 @@ const formDataRef: any = ref(null);
 
 const state = reactive({
   visible: false,
-  formData: {},
+  formData: {
+    parkCode: null,
+    timeBegin: null,
+    timeEnd: null,
+  } as any,
+  time: [],
 });
 
 watch(
@@ -86,10 +81,20 @@ const handleReset = () => {
   formDataRef.value.resetFields();
   const formData: any = Object.keys(state.formData).forEach((item: any) => {
     state.formData[item] = global.$isEmpty(state.formData[item])
-      ? undefined
+      ? null
       : state.formData[item];
   });
   emit("onReset", formData);
+};
+
+const handleChangeTime1 = (value: any) => {
+  state.formData.timeBegin = global
+    .$dayjs(value[0])
+    .format("YYYY-MM-DD HH:mm:ss");
+
+  state.formData.timeEnd = global
+    .$dayjs(value[1])
+    .format("YYYY-MM-DD HH:mm:ss");
 };
 
 onMounted(async () => {

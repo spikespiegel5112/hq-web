@@ -134,7 +134,7 @@ const handleReset = () => {
   formDataRef.value.resetFields();
   const formData: any = Object.keys(state.formData).forEach((item: any) => {
     state.formData[item] = global.$isEmpty(state.formData[item])
-      ? undefined
+      ? null
       : state.formData[item];
   });
   state.eventTime = [];

@@ -60,7 +60,7 @@ const handleExport = () => {
   props
     .action({
       ...props.queryFormData,
-      ...props.pagination,
+      // ...props.pagination,
     })
     .then((response: any) => {
       global.$exportTable(response, global.$route);
