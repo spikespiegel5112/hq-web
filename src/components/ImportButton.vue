@@ -59,11 +59,11 @@ watch(
 const init = () => {};
 
 const handleImport = () => {
-  const loading = global.$message.loading("上传中...", 0);
   const inputEl = document.createElement("input");
   inputEl.type = "file";
   inputEl.click();
   inputEl.addEventListener("change", (event) => {
+    const loading = global.$message.loading("上传中...", 0);
     const file: any = event.target.files[0]; //
     const formData = new FormData();
     formData.append("file", file);
@@ -72,7 +72,6 @@ const handleImport = () => {
       .action(formData)
       .then((response: any) => {
         emit("success", response);
-        global.$message.success("上传成功");
         loading();
       })
       .catch((error: any) => {
