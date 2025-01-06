@@ -59,7 +59,7 @@ watch(
 const init = () => {};
 
 const handleImport = () => {
-  global.$message.success("上传中...", 0);
+  const loading = global.$message.loading("上传中...", 0);
   const inputEl = document.createElement("input");
   inputEl.type = "file";
   inputEl.click();
@@ -73,11 +73,13 @@ const handleImport = () => {
       .then((response: any) => {
         emit("success", response);
         global.$message.success("上传成功");
+        loading();
       })
       .catch((error: any) => {
         console.log(error);
         emit("error", error);
         global.$message.error("上传失败");
+        loading();
       })
       .finally(() => {
         state.loading = false;
