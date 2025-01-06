@@ -59,6 +59,18 @@ const routerDictionary = [
             },
           },
           {
+            title: "网约车",
+            path: "OnlineCarHailing",
+            name: "OnlineCarHailing",
+            component: () =>
+              import(
+                /* webpackChunkName: "OnlineCarHailing" */ "@/views/PassengerFlowDataManagement/OnlineCarHailing/OnlineCarHailing.vue"
+              ),
+            meta: {
+              title: "网约车",
+            },
+          },
+          {
             title: "地铁",
             path: "Subway",
             name: "Subway",

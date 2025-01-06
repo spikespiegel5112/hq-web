@@ -1,5 +1,5 @@
 <template>
-  <div class="operationmanagementconfigurment">
+  <div class="operationmanagementconfigration">
     <a-form
       ref="formDataRef"
       :model="state.formData"
@@ -655,7 +655,7 @@ onBeforeUnmount(() => {});
 .common_tab_container {
   background-color: transparent !important;
 }
-.operationmanagementconfigurment {
+.operationmanagementconfigration {
   margin: 0.1rem 0;
   padding: 0.3rem 0;
   background-color: #010f27;

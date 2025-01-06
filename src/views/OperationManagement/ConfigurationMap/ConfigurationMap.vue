@@ -1,95 +1,10 @@
 <template>
-  <div class="operationmanagementconfigurment">
-    <a-form
-      ref="formDataRef"
-      :model="state.formData"
-      autocomplete="off"
-      :rules="rules"
-      :label-col="{ style: { width: '200px' } }"
-    >
-      <a-space direction="vertical">
-        <CommonTitle title="客流國値" />
-        <a-row :gutter="20">
-          <a-col :span="12">
-            <a-form-item name="username" label="P9进/出场车流阈值">
-              <a-input
-                v-model:value="state.formData.username"
-                placeholder="请输入"
-              >
-                <template #prefix>
-                  <span class="username"></span>
-                </template>
-              </a-input>
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item name="username" label="P10进/出场车流阈值">
-              <a-input
-                v-model:value="state.formData.username"
-                placeholder="请输入"
-              >
-                <template #prefix>
-                  <span class="username"></span>
-                </template>
-              </a-input>
-            </a-form-item>
-          </a-col>
-        </a-row>
-        <a-row :gutter="20">
-          <a-col :span="12">
-            <a-form-item name="username" label="P9进/出场车流阈值">
-              <a-input
-                v-model:value="state.formData.username"
-                placeholder="请输入"
-              >
-                <template #prefix>
-                  <span class="username"></span>
-                </template>
-              </a-input>
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item name="username" label="P10进/出场车流阈值">
-              <a-input
-                v-model:value="state.formData.username"
-                placeholder="请输入"
-              >
-                <template #prefix>
-                  <span class="username"></span>
-                </template>
-              </a-input>
-            </a-form-item>
-          </a-col>
-        </a-row>
-        <CommonTitle title="客流國値" />
-        <a-row :gutter="20">
-          <a-col :span="12">
-            <a-form-item name="username" label="P9进/出场车流阈值">
-              <a-input
-                v-model:value="state.formData.username"
-                placeholder="请输入"
-              >
-                <template #prefix>
-                  <span class="username"></span>
-                </template>
-              </a-input>
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item name="username" label="P10进/出场车流阈值">
-              <a-input
-                v-model:value="state.formData.username"
-                placeholder="请输入"
-              >
-                <template #prefix>
-                  <span class="username"></span>
-                </template>
-              </a-input>
-            </a-form-item>
-          </a-col>
-        </a-row>
-      </a-space>
-    </a-form>
+  <div class="mapconfigration">
+    <iframe
+      class="content"
+      src="http://10.141.10.13/#/?shareLogin&GNKh3QOOIeEbZ0goH7xWu1D67svaWIorQYwwk4JuYztmRG+8m7sEEyMsJA4bFzkExcYMlFSFsrcuMNZKkzQfR7o3aEAyeht9lt4yi7b08iE="
+      frameborder="0"
+    ></iframe>
   </div>
 </template>
 
@@ -140,7 +55,8 @@ const rules: Record<string, Rule[]> = {
 };
 
 const getData = () => {
-  global.$store.commit("app/updateTableLoading", true);};
+  global.$store.commit("app/updateTableLoading", true);
+};
 
 const handleSubmit = () => {};
 onMounted(async () => {
@@ -151,9 +67,38 @@ onBeforeUnmount(() => {});
 </script>
 
 <style scoped lang="scss">
-.operationmanagementconfigurment {
+.mapconfigration {
   margin: 0.1rem;
   padding: 0.3rem;
   background-color: #010f27;
+  .content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: calc(100vh - 2.3rem);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 50px 50px 100px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    pointer-events: visible;
+
+    .main {
+      display: flex;
+      padding: 1.45rem 0 0 0;
+      width: 100%;
+      justify-content: space-between;
+      position: relative;
+
+      .middle {
+        margin: 1rem 0 0 0;
+        z-index: 2;
+      }
+
+      .right {
+        z-index: 1;
+        // margin: 0 0.6rem 0 0;
+      }
+    }
+  }
 }
 </style>

@@ -1243,3 +1243,37 @@ export const passengerFlowStorageGetPageRequest = (params: any) => {
     data: params,
   });
 };
+
+// 客流数据管理-网约车
+// E Hailing Parking Controller
+
+// 客流数据管理-网约车-导出
+export const passengerFloweEHailingParkingExportRequest = (params: any) => {
+  return service({
+    url: prefix + "/passengerFlow/eHailingParking/export",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 客流数据管理-网约车-类型查询
+export const passengerFloweEHailingParkingGetCapPlaceRequest = (
+  params: any
+) => {
+  return service({
+    url: prefix + "/passengerFlow/eHailingParking/getCapPlace",
+    method: "GET",
+    data: params,
+  });
+};
+
+// 客流数据管理-网约车-分页查询
+export const passengerFloweEHailingParkingGetPageRequest = (
+  params: any
+) => {
+  return service({
+    url: prefix + "/passengerFlow/eHailingParking/getPage",
+    method: "POST",
+    data: params,
+  });
+};
