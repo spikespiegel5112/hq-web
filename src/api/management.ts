@@ -106,18 +106,7 @@ export const backendRailwayArriveGetRailwayArrivePagingRequest = (
 };
 
 // 区域小时客流-铁路到达-图片导入
-export const backendRailwayArriveImportPicRequest = (
-  params: any
-) => {
-  return service({
-    url: prefix + "/backend/railwayArrive/importPic",
-    method: "POST",
-    data: params,
-  });
-};
-
-// 后台管理-铁路到达-图片导入
-export const backendRailwayArriveGetRailwayImportPicRequest = (params: any) => {
+export const backendRailwayArriveImportPicRequest = (params: any) => {
   return service({
     url: prefix + "/backend/railwayArrive/importPic",
     method: "POST",
