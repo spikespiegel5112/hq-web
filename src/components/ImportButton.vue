@@ -59,6 +59,7 @@ watch(
 const init = () => {};
 
 const handleImport = () => {
+  global.$message.success("上传中...", 0);
   const inputEl = document.createElement("input");
   inputEl.type = "file";
   inputEl.click();
