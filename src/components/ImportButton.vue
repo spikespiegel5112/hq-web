@@ -60,7 +60,7 @@ const handleImport = () => {
   inputEl.addEventListener("change", (event) => {
     const file: any = event.target.files[0]; //
     const formData = new FormData();
-    formData.append("multipartFile", file);
+    formData.append("file", file);
     state.loading = true;
     props
       .action(formData)
