@@ -5,7 +5,7 @@
     :loading="state.loading"
     @click="handleImport"
   >
-    导入
+    {{ props.label }}
   </a-button>
 </template>
 
@@ -29,6 +29,11 @@ const emit = defineEmits<{
 }>();
 
 const props = defineProps({
+  label: {
+    type: String,
+    required: true,
+    default: "上传",
+  },
   action: {
     type: Function,
     required: true,

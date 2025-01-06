@@ -8,8 +8,9 @@
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
         <ImportButton
+          label="导入"
           :action="backendRailwayArriveImportPicRequest"
-          @success="() => getData()"
+          @success="(response:any) => saveMulripleData(response)"
         />
         <ExportButton
           :action="backendRailwayArriveRailwayArriveExportRequest"
@@ -63,6 +64,7 @@ import {
   backendRailwayArriveDeleteRequest,
   eventManageSuddenEventExportRequest,
   backendRailwayArriveImportPicRequest,
+  backendRailwayArriveSaveRailwayArriveBatchRequest,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
@@ -185,6 +187,34 @@ const getData = () => {
     })
     .catch((error: any) => {
       console.log(error);
+    });
+};
+
+const saveMulripleData = (formData: any) => {
+  const payload = [] as any[];
+  formData = formData.data;
+  formData.forEach((item: any) => {
+    payload.push({
+      dispersedHourlyPassengerCount: item.dispersedHourlyPassengerCount,
+      estimatedHourlyArrivePassengerCount:
+        item.estimatedHourlyArrivePassengerCount,
+      id: item.id,
+      railwayArrive: item.railwayArrive,
+      railwayDeparture: item.railwayDeparture,
+      statisticalBeginHour: item.statisticalBeginHour,
+      statisticalDate: item.statisticalDate,
+    });
+  });
+
+  backendRailwayArriveSaveRailwayArriveBatchRequest(payload)
+    .then((response: any) => {
+      response = response.data;
+      global.$message.success("导入成功");
+      getData()
+    })
+    .catch((error: any) => {
+      console.log(error);
+      global.$message.error("导入失败");
     });
 };
 
