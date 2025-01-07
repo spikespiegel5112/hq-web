@@ -145,11 +145,6 @@ const getData = () => {
           capFlag: global
             .$getDictionary("entranceAndExitType")
             .find((item2: any) => item2.value === item.capFlag)?.label,
-          capPlace: global
-            .$getDictionary("storage_park_code")
-            .find((item2: any) => {
-              return item2.value === item.capPlace;
-            })?.label,
         };
       });
       pagination.total = response.total;
