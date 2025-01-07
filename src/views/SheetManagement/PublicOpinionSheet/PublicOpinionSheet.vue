@@ -7,10 +7,6 @@
                  <!-- <ExportButton
           :action="eventManageSuddenEventExportRequest"
           :queryFormData="queryFormData"
-          :pagination="{
-            ...pagination,
-            pageSize: 1000,
-          }"
         /> -->
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>

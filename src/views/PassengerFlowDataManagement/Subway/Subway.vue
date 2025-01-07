@@ -6,10 +6,6 @@
         <ExportButton
           :action="passengerFlowMetroPassengerFlowExportRequest"
           :queryFormData="queryFormData"
-          :pagination="{
-            ...pagination,
-            pageSize: 1000,
-          }"
         />
       </a-space>
     </div>

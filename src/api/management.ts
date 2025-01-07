@@ -1244,8 +1244,6 @@ export const passengerFlowStorageGetPageRequest = (params: any) => {
   });
 };
 
-
-
 // 客流数据管理-蓄车场-统计查询
 export const passengerFlowStorageGetStatisticsRequest = (params: any) => {
   return service({
@@ -1254,8 +1252,6 @@ export const passengerFlowStorageGetStatisticsRequest = (params: any) => {
     data: params,
   });
 };
-
-
 
 // 客流数据管理-网约车
 // E Hailing Parking Controller
@@ -1281,9 +1277,7 @@ export const passengerFloweEHailingParkingGetCapPlaceRequest = (
 };
 
 // 客流数据管理-网约车-分页查询
-export const passengerFloweEHailingParkingGetPageRequest = (
-  params: any
-) => {
+export const passengerFloweEHailingParkingGetPageRequest = (params: any) => {
   return service({
     url: prefix + "/passengerFlow/eHailingParking/getPage",
     method: "POST",

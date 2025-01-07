@@ -10,10 +10,6 @@
         <ExportButton
           :action="eventManageSuddenEventExportRecordRequest"
           :queryFormData="queryFormData"
-          :pagination="{
-            ...pagination,
-            pageSize: 1000,
-          }"
         />
       </a-space>
     </div>

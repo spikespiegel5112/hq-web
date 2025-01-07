@@ -84,6 +84,9 @@ const handleReset = () => {
       ? null
       : state.formData[item];
   });
+  state.formData.timeBegin = null;
+  state.formData.timeEnd = null;
+  state.time = [];
   emit("onReset", formData);
 };
 

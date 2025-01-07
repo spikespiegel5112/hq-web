@@ -14,10 +14,6 @@
             ...queryFormData,
             preplanType: global.$store.state.app.emergencyPlanType,
           }"
-          :pagination="{
-            ...pagination,
-            pageSize: 1000,
-          }"
         />
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
