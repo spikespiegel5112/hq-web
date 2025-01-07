@@ -248,6 +248,7 @@ const handleSubmit = (formData: any) => {
     .then((response: any) => {
       global.$message.success("提交成功");
       state.dialogVisible = false;
+      getData();
     })
     .catch((error: any) => {
       console.log(error);

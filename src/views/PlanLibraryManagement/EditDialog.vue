@@ -108,6 +108,8 @@ import { PlusCircleOutlined, MinusCircleOutlined } from "@ant-design/icons-vue";
 import {
   preplanPreplanSaveWithPreplanStepRequest,
   eventManageSuddenEventExportRequest,
+  preplanPreplanDeleteRequest,
+  preplanPreplanDeleteStepRequest,
 } from "@/api/management";
 
 const columns = [
@@ -263,7 +265,6 @@ const handleSubmit = () => {
       item.id = undefined;
     });
   }
-
   preplanPreplanSaveWithPreplanStepRequest({
     ...state.formData,
   })
@@ -296,13 +297,36 @@ const handleAdd = (value: any) => {
 };
 
 const handleMinus = (value: any) => {
-  console.log(value);
-  const currentStepListData = JSON.parse(
-    JSON.stringify(state.formData.stepList)
-  );
-  if (currentStepListData.length > 1) {
-    currentStepListData.pop();
-    state.formData.stepList = currentStepListData;
+  const stepList = state.formData.stepList;
+  const lastStepData = stepList[stepList.length - 1];
+  const popOperation = () => {
+    const currentStepListData = JSON.parse(
+      JSON.stringify(state.formData.stepList)
+    );
+    if (currentStepListData.length > 1) {
+      currentStepListData.pop();
+      state.formData.stepList = currentStepListData;
+    }
+  };
+  if (!!lastStepData.id) {
+    global.$confirm({
+      title: "提示",
+      content: "确认删除？",
+      onOk: () => {
+        preplanPreplanDeleteStepRequest({
+          id: lastStepData.id,
+        })
+          .then((response: any) => {
+            popOperation();
+            global.$message.success("删除成功");
+          })
+          .catch((error: any) => {
+            console.log(error);
+          });
+      },
+    });
+  } else {
+    popOperation();
   }
 };
 
