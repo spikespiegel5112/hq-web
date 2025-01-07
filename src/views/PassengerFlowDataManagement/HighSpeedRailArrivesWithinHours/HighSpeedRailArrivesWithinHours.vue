@@ -158,9 +158,7 @@ const env = computed(() => {
 
 watch(
   () => queryFormData,
-  (newValue: any, oldValue: any) => {
-    debugger;
-  }
+  (newValue: any, oldValue: any) => {}
 );
 
 const getData = () => {
@@ -210,7 +208,7 @@ const saveMulripleData = (formData: any) => {
     .then((response: any) => {
       response = response.data;
       global.$message.success("导入成功");
-      getData()
+      getData();
     })
     .catch((error: any) => {
       console.log(error);

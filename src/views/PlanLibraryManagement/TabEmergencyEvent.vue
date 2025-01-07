@@ -189,9 +189,11 @@ const pagination = reactive({
   ...global.$store.state.app.defaultPagination,
 });
 
-const getData = () => {
+const getData = async () => {
   global.$store.commit("app/updateTableLoading", true);
   pagination.total = undefined;
+  state.tableData = [];
+  await nextTick();
   preplanPreplanGetPageRequest({
     ...queryFormData,
     ...pagination,
@@ -245,7 +247,7 @@ const handleSubmit = (formData: any) => {
   preplanPreplanSaveRequest(formData)
     .then((response: any) => {
       global.$message.success("提交成功");
-      getData();
+      state.dialogVisible = false;
     })
     .catch((error: any) => {
       console.log(error);

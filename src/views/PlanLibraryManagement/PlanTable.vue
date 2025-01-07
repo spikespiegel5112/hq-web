@@ -7,7 +7,6 @@
     :pagination="false"
     tableBodyHeight="calc(100% - 0.4rem)"
     @onEdit="handleEdit"
-    @onReview="handleReview"
     @onDelete="handleDelete"
   />
 </template>
@@ -107,13 +106,25 @@ watch(
   }
 );
 
+const getDataPromise = () => {
+  return new Promise((resolve, reject) => {
+    preplanPreplanGetStepPageRequest({
+      prId: props.planId,
+      pageSize: 1000,
+    })
+      .then((response: any) => {
+        resolve(response);
+      })
+      .catch((error: any) => {
+        reject(error);
+      });
+  });
+};
+
 const getData = () => {
   global.$store.commit("app/updateTableLoading", true);
   pagination.total = undefined;
-  preplanPreplanGetStepPageRequest({
-    prId: props.planId,
-    pageSize: 1000,
-  })
+  getDataPromise()
     .then((response: any) => {
       response = response.data;
       state.tableData = response.list;
@@ -129,12 +140,6 @@ const handleEdit = (rowData: any) => {
   state.dialogMode = "edit";
   state.currentRowData = rowData;
   emit("onEdit", state.tableData);
-};
-
-const handleReview = (rowData: any) => {
-  state.dialogVisible = true;
-  state.dialogMode = "review";
-  state.currentRowData = rowData;
 };
 
 const handleDelete = (id: number) => {
@@ -163,15 +168,6 @@ const transformPageModel = () => {
   });
   return result;
 };
-
-const handleExpand = (expand: boolean, row: any) => {
-  console.log(row);
-  if (!!expand) {
-    getData(row.id);
-  }
-};
-
-const handleAction = (action: any, column: any) => {};
 
 onMounted(async () => {
   transformPageModel();

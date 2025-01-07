@@ -6,8 +6,7 @@
     @cancel="handleClose"
   >
     <template #title>
-           <CommonTitle :title="dialogTitle" />
-
+      <CommonTitle :title="dialogTitle" />
     </template>
     <a-form
       :model="state.formData"
@@ -106,7 +105,9 @@ import {
 import type { Rule, RuleObject } from "ant-design-vue/es/form";
 import { PlusCircleOutlined, MinusCircleOutlined } from "@ant-design/icons-vue";
 
-import { preplanPreplanSaveWithPreplanStepRequest  ,eventManageSuddenEventExportRequest
+import {
+  preplanPreplanSaveWithPreplanStepRequest,
+  eventManageSuddenEventExportRequest,
 } from "@/api/management";
 
 const columns = [
@@ -267,33 +268,23 @@ const handleSubmit = () => {
     ...state.formData,
   })
     .then((response: any) => {
-      
       global.$message.success("提交成功");
-      emit("onClose");
+      emit("onSubmit", state.formData);
     })
     .catch((error: any) => {
       console.log(error);
       global.$message.error("提交失败");
       emit("onClose");
     });
-  // emit("onSubmit", state.formData);
-};
-
-const save = (value: any) => {
-  console.log(value);
-};
-const cancel = (value: any) => {
-  console.log(value);
-};
-const edit = (value: any) => {
-  console.log(value);
 };
 
 const handleAdd = (value: any) => {
   console.log(value);
   const tableDataLength = state.tableData.length;
-
-  state.formData.stepList.push({
+  const currentStepListData = JSON.parse(
+    JSON.stringify(state.formData.stepList)
+  );
+  currentStepListData.push({
     eventType: null,
     preplanType: null,
     stepContent: null,
@@ -301,7 +292,9 @@ const handleAdd = (value: any) => {
     stepOrder: tableDataLength,
     stepOrderDesc: null,
   });
+  state.formData.stepList = currentStepListData;
 };
+
 const handleMinus = (value: any) => {
   console.log(value);
   const currentStepListData = JSON.parse(
