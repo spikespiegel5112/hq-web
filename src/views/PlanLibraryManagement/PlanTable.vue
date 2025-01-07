@@ -28,7 +28,7 @@ import {
 } from "vue";
 
 import {
-  preplanPreplanDeleteRequest,
+  preplanPreplanDeleteStepRequest,
   preplanPreplanSaveRequest,
   preplanPreplanGetStepPageRequest,
   eventManageSuddenEventExportRequest,
@@ -138,7 +138,7 @@ const handleReview = (rowData: any) => {
 };
 
 const handleDelete = (id: number) => {
-  preplanPreplanDeleteRequest({
+  preplanPreplanDeleteStepRequest({
     id,
   })
     .then((response: any) => {
