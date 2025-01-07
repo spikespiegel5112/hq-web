@@ -269,7 +269,6 @@ const handleSubmit = () => {
     ...state.formData,
   })
     .then((response: any) => {
-      global.$message.success("提交成功");
       emit("onSubmit", state.formData);
     })
     .catch((error: any) => {

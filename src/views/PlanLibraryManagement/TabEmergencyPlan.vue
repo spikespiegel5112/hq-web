@@ -1,6 +1,10 @@
 <template>
   <div class="common_table_wrapper">
-    <FilterTool       @onSearch="handleSearch"       @onReset="handleReset"       v-model="queryFormData"     ></FilterTool>
+    <FilterTool
+      @onSearch="handleSearch"
+      @onReset="handleReset"
+      v-model="queryFormData"
+    ></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
         <a-button class="import">导入</a-button>
@@ -120,6 +124,7 @@ import {
   nextTick,
   toRaw,
 } from "vue";
+import { CaretRightOutlined } from "@ant-design/icons-vue";
 
 import {
   preplanPreplanGetPageRequest,
@@ -128,8 +133,6 @@ import {
   preplanPreplanGetStepPageRequest,
   eventManageSuddenEventExportRequest,
 } from "@/api/management";
-
-import { CaretRightOutlined } from "@ant-design/icons-vue";
 
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
@@ -187,9 +190,11 @@ const pagination = reactive({
   ...global.$store.state.app.defaultPagination,
 });
 
-const getData = () => {
+const getData = async () => {
   global.$store.commit("app/updateTableLoading", true);
   pagination.total = undefined;
+  state.tableData = [];
+  await nextTick();
   preplanPreplanGetPageRequest({
     ...queryFormData,
     ...pagination,
@@ -199,6 +204,7 @@ const getData = () => {
       response = response.data;
       state.tableData = response.list;
       pagination.total = response.total;
+      global.$store.commit("app/updateTableLoading", false);
     })
     .catch((error: any) => {
       console.log(error);
@@ -242,6 +248,7 @@ const handleSubmit = (formData: any) => {
   preplanPreplanSaveRequest(formData)
     .then((response: any) => {
       global.$message.success("提交成功");
+      state.dialogVisible = false;
       getData();
     })
     .catch((error: any) => {
@@ -274,27 +281,7 @@ const handleExpand = (expand: boolean, row: any) => {
   row.expand = expand;
 };
 
-const getDataPlan = (planId: number) => {
-  pagination.total = undefined;
-  preplanPreplanGetStepPageRequest({
-    ...{
-      prId: planId,
-    },
-    ...pagination,
-    pageSize: 1000,
-  })
-    .then((response: any) => {
-      response = response.data;
-      state.tableDataPlan = response.list;
-      pagination.total = response.total;
-    })
-    .catch((error: any) => {
-      console.log(error);
-    });
-};
-
-const handleExpandedRowsChange = (expandedRows: any) => {
-};
+const handleExpandedRowsChange = (expandedRows: any) => {};
 
 const handleAction = (action: any, record: any) => {
   switch (action) {

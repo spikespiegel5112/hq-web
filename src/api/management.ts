@@ -1244,6 +1244,19 @@ export const passengerFlowStorageGetPageRequest = (params: any) => {
   });
 };
 
+
+
+// 客流数据管理-蓄车场-统计查询
+export const passengerFlowStorageGetStatisticsRequest = (params: any) => {
+  return service({
+    url: prefix + "/passengerFlow/storage/getStatistics",
+    method: "POST",
+    data: params,
+  });
+};
+
+
+
 // 客流数据管理-网约车
 // E Hailing Parking Controller
 

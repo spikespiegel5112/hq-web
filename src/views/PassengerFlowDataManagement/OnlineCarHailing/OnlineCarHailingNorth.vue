@@ -142,6 +142,9 @@ const getData = () => {
       state.processedTableData = response.data.list.map((item: any) => {
         return {
           ...item,
+          capFlag: global
+            .$getDictionary("entranceAndExitType")
+            .find((item2: any) => item2.value === item.capFlag)?.label,
           capPlace: global
             .$getDictionary("storage_park_code")
             .find((item2: any) => {

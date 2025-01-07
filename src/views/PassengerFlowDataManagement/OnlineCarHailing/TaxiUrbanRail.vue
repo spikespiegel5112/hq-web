@@ -23,6 +23,7 @@
       :dataModel="pageModel"
       tabTable
       @onEdit="handleEdit"
+      @onChangePage="handleChangePage"
     />
     <EditDialog
       :visible="state.dialogVisible"
@@ -51,6 +52,7 @@ import {
 import {
   passengerFlowStorageExportRequest,
   passengerFlowStorageGetPageRequest,
+  passengerFlowStorageGetStatisticsRequest,
 } from "@/api/management";
 
 import FilterTool from "./FilterTool.vue";
@@ -130,6 +132,7 @@ const getData = () => {
   })
     .then((response: any) => {
       state.tableData = response.data.list;
+
       state.processedTableData = response.data.list.map((item: any) => {
         return {
           ...item,
@@ -141,6 +144,16 @@ const getData = () => {
         };
       });
       pagination.total = response.total;
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+};
+
+const getStatisticData = () => {
+  passengerFlowStorageGetStatisticsRequest()
+    .then((response: any) => {
+      debugger;
     })
     .catch((error: any) => {
       console.log(error);
@@ -187,9 +200,9 @@ const handleChangePage = (pagingData: any) => {
   getData();
 };
 
-const handleDelete = (id: number) => {};
 onMounted(async () => {
   getData();
+  getStatisticData();
 });
 
 onBeforeUnmount(() => {});
