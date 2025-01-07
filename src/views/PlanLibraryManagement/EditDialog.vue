@@ -301,14 +301,10 @@ const handleMinus = (value: any) => {
     JSON.stringify(state.formData.stepList)
   );
   if (currentStepListData.length > 1) {
-    currentStepListData.shift();
+    currentStepListData.pop();
     state.formData.stepList = currentStepListData;
   }
 };
-
-const handleChangeEventTime = (date: any) => {};
-
-const handleChangeAttachment = () => {};
 
 onMounted(async () => {});
 
