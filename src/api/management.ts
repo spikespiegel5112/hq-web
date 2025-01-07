@@ -191,8 +191,9 @@ export const passengerFlowAreaFlowExportRequest = (params: any) => {
 export const passengerFlowAreaAreaInOutFlowExportRequest = (params: any) => {
   return service({
     url: prefix + "/passengerFlow/areaInOutFlow/export",
-    method: "POST",
-    data: params,
+    method: "GET",
+    params,
+    responseType: "blob",
   });
 };
 
@@ -1211,6 +1212,7 @@ export const passengerFlowTaxiParkingExportRequest = (params: any) => {
     url: prefix + "/passengerFlow/taxiParking/export",
     method: "GET",
     params,
+    responseType: "blob",
   });
 };
 
@@ -1232,6 +1234,7 @@ export const passengerFlowStorageExportRequest = (params: any) => {
     url: prefix + "/passengerFlow/storage/export",
     method: "GET",
     params,
+    responseType: "blob",
   });
 };
 

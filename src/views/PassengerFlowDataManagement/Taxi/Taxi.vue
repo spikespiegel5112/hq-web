@@ -8,15 +8,15 @@
       >
         <TaxiHighSpeedRailSouth
           v-if="state.activeKey === 'TaxiHighSpeedRailSouth'"
-          :parkingLotId="item.value"
+          :parkCode="item.value"
         />
         <TaxiHighSpeedRailNorth
           v-if="state.activeKey === 'TaxiHighSpeedRailNorth'"
-          :parkingLotId="item.value"
+          :parkCode="item.value"
         />
         <TaxiUrbanRail
           v-if="state.activeKey === 'TaxiUrbanRail'"
-          :parkingLotId="item.value"
+          :parkCode="item.value"
         />
       </a-tab-pane>
     </a-tabs>

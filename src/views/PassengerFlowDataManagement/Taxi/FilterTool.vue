@@ -79,6 +79,7 @@ const handleSearch = () => {
 
 const handleReset = () => {
   formDataRef.value.resetFields();
+
   state.formData.timeBegin = null;
   state.formData.timeEnd = null;
   state.time = [];
