@@ -8,7 +8,7 @@
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
         <ExportButton
-          :action="passengerFlowStorageExportRequest"
+          :action="passengerFlowTaxiParkingExportRequest"
           :queryFormData="queryFormData"
         />
       </a-space>
@@ -19,6 +19,7 @@
       :dataModel="pageModel"
       tabTable
       @onEdit="handleEdit"
+      @onChangePage="handleChangePage"
     />
     <EditDialog
       :visible="state.dialogVisible"
@@ -45,8 +46,8 @@ import {
 } from "vue";
 
 import {
-  passengerFlowStorageExportRequest,
-  passengerFlowStorageGetPageRequest,
+  passengerFlowTaxiParkingExportRequest,
+  passengerFlowTaxiParkingGetPageRequest,
 } from "@/api/management";
 
 import FilterTool from "./FilterTool.vue";
@@ -56,7 +57,7 @@ const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
 const props = defineProps({
-  parkCode: { type: String, required: true, default: "" },
+  parkingLotId: { type: String, required: true, default: "" },
 });
 
 const pageModel = ref([
@@ -69,24 +70,8 @@ const pageModel = ref([
     exportVisible: false,
   },
   {
-    label: "进场数量",
-    name: "arriveNum",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
-    label: "离场数量",
-    name: "leaveNum",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
-    label: "车场编码",
-    name: "parkCode",
+    label: "车场ID",
+    name: "parkingLotId",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -94,7 +79,23 @@ const pageModel = ref([
   },
   {
     label: "统计时间",
-    name: "time",
+    name: "statisticalTime",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "小时入场数",
+    name: "taxiHourInTotal",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "小时出场数",
+    name: "taxiHourOutTotal",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -117,22 +118,22 @@ const pagination = reactive({
 });
 
 const getData = () => {
-  queryFormData.parkCode = props.parkCode;
+  queryFormData.parkingLotId = props.parkingLotId;
   global.$store.commit("app/updateTableLoading", true);
-  passengerFlowStorageGetPageRequest({
+  passengerFlowTaxiParkingGetPageRequest({
     ...queryFormData,
     ...pagination,
-    parkCode: props.parkCode,
+    parkingLotId: props.parkingLotId,
   })
     .then((response: any) => {
       state.tableData = response.data.list;
       state.processedTableData = response.data.list.map((item: any) => {
         return {
           ...item,
-          parkCode: global
+          parkingLotId: global
             .$getDictionary("storage_park_code")
             .find((item2: any) => {
-              return item2.value === item.parkCode;
+              return item2.value === item.parkingLotId;
             })?.label,
         };
       });
@@ -147,17 +148,6 @@ const handleEdit = (rowData: any) => {
   state.dialogVisible = true;
   state.dialogMode = "edit";
   state.currentRowData = rowData;
-};
-
-const handleReview = (rowData: any) => {
-  state.dialogVisible = true;
-  state.dialogMode = "review";
-  state.currentRowData = rowData;
-};
-
-const handleAdd = () => {
-  state.dialogVisible = true;
-  state.dialogMode = "add";
 };
 
 const handleSearch = (formData: object) => {
@@ -183,7 +173,6 @@ const handleChangePage = (pagingData: any) => {
   getData();
 };
 
-const handleDelete = (id: number) => {};
 onMounted(async () => {
   getData();
 });

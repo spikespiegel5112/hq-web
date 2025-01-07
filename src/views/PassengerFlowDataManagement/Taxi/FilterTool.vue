@@ -5,7 +5,7 @@
         <a-col :span="21">
           <a-row :gutter="20">
             <a-col :span="10">
-              <a-form-item name="password" label="查询时间">
+              <a-form-item name="time" label="查询时间">
                 <a-range-picker
                   v-model:value="state.time"
                   show-time
@@ -79,15 +79,10 @@ const handleSearch = () => {
 
 const handleReset = () => {
   formDataRef.value.resetFields();
-  const formData: any = Object.keys(state.formData).forEach((item: any) => {
-    state.formData[item] = global.$isEmpty(state.formData[item])
-      ? null
-      : state.formData[item];
-  });
   state.formData.timeBegin = null;
   state.formData.timeEnd = null;
   state.time = [];
-  emit("onReset", formData);
+  emit("onReset", state.formData);
 };
 
 const handleChangeTime1 = (value: any) => {

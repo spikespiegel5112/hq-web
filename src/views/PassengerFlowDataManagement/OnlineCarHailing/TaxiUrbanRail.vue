@@ -149,7 +149,7 @@ const getData = () => {
 const getStatisticData = () => {
   passengerFlowStorageGetStatisticsRequest()
     .then((response: any) => {
-      debugger;
+      ;
     })
     .catch((error: any) => {
       console.log(error);
