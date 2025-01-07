@@ -137,44 +137,6 @@ const handleReview = (rowData: any) => {
   state.currentRowData = rowData;
 };
 
-const handleAdd = () => {
-  state.dialogVisible = true;
-  state.dialogMode = "add";
-};
-
-const handleSearch = (formData: object) => {
-  queryFormData = formData;
-  getData();
-};
-
-const handleReset = (formData: object) => {
-  queryFormData = formData;
-  getData();
-};
-
-const handleClose = () => {
-  state.dialogVisible = false;
-};
-
-const handleSubmit = (formData: any) => {
-  preplanPreplanSaveRequest(formData)
-    .then((response: any) => {
-      global.$message.success("提交成功");
-      getData();
-    })
-    .catch((error: any) => {
-      console.log(error);
-      global.$message.error("提交失败");
-    });
-};
-
-const handleChangePage = (pagingData: any) => {
-  pagination.page = pagingData.current;
-  pagination.pageSize = pagingData.pageSize;
-  pagination.total = pagingData.total;
-  getData();
-};
-
 const handleDelete = (id: number) => {
   preplanPreplanDeleteRequest({
     id,
@@ -226,8 +188,8 @@ onBeforeUnmount(() => {});
   &.plantable {
     :deep(.ant-table-wrapper) {
       height: auto !important;
-      .ant-btn{
-        color: #44E9E7;
+      .ant-btn {
+        color: #44e9e7;
       }
     }
   }

@@ -3,21 +3,17 @@
     <a-tabs v-model="state.activeKey" @change="handleChangeTab">
       <a-tab-pane
         v-for="item in state.parkingLotData"
-        :key="item.value"
-        :tab="item.label"
+        :key="item"
+        :tab="item"
       >
-        <!-- <OnlineCarHailingSouth
-          v-if="state.activeKey === 'OnlineCarHailingSouth'"
-          :parkCode="item.value"
+        <OnlineCarHailingSouth
+          v-if="state.activeKey === '北蓄车场'"
+          :capPlace="item"
         />
         <OnlineCarHailingNorth
-          v-if="state.activeKey === 'OnlineCarHailingNorth'"
-          :parkCode="item.value"
+          v-if="state.activeKey === '南蓄车场'"
+          :capPlace="item"
         />
-        <TaxiUrbanRail
-          v-if="state.activeKey === 'TaxiUrbanRail'"
-          :parkCode="item.value"
-        /> -->
       </a-tab-pane>
     </a-tabs>
   </div>
@@ -40,7 +36,6 @@ import { passengerFloweEHailingParkingGetCapPlaceRequest } from "@/api/managemen
 
 import OnlineCarHailingNorth from "./OnlineCarHailingNorth.vue";
 import OnlineCarHailingSouth from "./OnlineCarHailingSouth.vue";
-import TaxiUrbanRail from "./TaxiUrbanRail.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -61,30 +56,27 @@ const componentMap = ref([
 ]);
 
 const state = reactive({
-  activeKey: "OnlineCarHailingSouth" as string | undefined,
+  activeKey: "" as string | undefined,
   parkingLotData: [] as any[],
 });
 
 const getParkingLotData = () => {
-  state.parkingLotData = global.$getDictionary("storage_park_code");
-};
-
-const getData = () => {
   passengerFloweEHailingParkingGetCapPlaceRequest()
-    .then((response: any) => {})
+    .then((response: any) => {
+      state.parkingLotData = response.data;
+      state.activeKey = state.parkingLotData[0];
+    })
     .catch((error: any) => {
       console.log(error);
     });
 };
 
 const handleChangeTab = (value: any) => {
-  state.activeKey = componentMap.value.find(
-    (item: any) => item.code === value
-  )?.componentName;
+  state.activeKey = value;
 };
 
 onMounted(async () => {
-  getData();
+  getParkingLotData();
 });
 
 onBeforeUnmount(() => {});

@@ -50,7 +50,10 @@
               </a-select-option>
             </a-select>
             <template v-if="props.mode === 'review'">
-              {{ state.formData.statisticalBeginHour }}
+              {{global.$getDictionary(
+                  'railway_statistical_begin_hour'
+                ).find((item:any)=>item.value===state.formData.statisticalBeginHour)?.label
+              }}
             </template>
           </a-form-item>
         </a-col>

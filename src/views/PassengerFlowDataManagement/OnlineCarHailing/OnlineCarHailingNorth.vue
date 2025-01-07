@@ -51,7 +51,7 @@ import {
 
 import {
   passengerFlowStorageExportRequest,
-  passengerFlowStorageGetPageRequest,
+  passengerFloweEHailingParkingGetPageRequest,
 } from "@/api/management";
 
 import FilterTool from "./FilterTool.vue";
@@ -61,7 +61,7 @@ const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
 const props = defineProps({
-  parkCode: { type: String, required: true, default: "" },
+  capPlace: { type: String, required: true, default: "" },
 });
 
 const pageModel = ref([
@@ -74,32 +74,40 @@ const pageModel = ref([
     exportVisible: false,
   },
   {
-    label: "进场数量",
-    name: "arriveNum",
+    label: "类型",
+    name: "capFlag",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "离场数量",
-    name: "leaveNum",
+    label: "出入口名称",
+    name: "capPlace",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "车场编码",
-    name: "parkCode",
+    label: "抓拍时间",
+    name: "capTime",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "统计时间",
-    name: "time",
+    label: "图片链接",
+    name: "imgInfo",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "车牌号",
+    name: "plateNo",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -122,22 +130,22 @@ const pagination = reactive({
 });
 
 const getData = () => {
-  queryFormData.parkCode = props.parkCode;
+  queryFormData.capPlace = props.capPlace;
   global.$store.commit("app/updateTableLoading", true);
-  passengerFlowStorageGetPageRequest({
+  passengerFloweEHailingParkingGetPageRequest({
     ...queryFormData,
     ...pagination,
-    parkCode: props.parkCode,
+    capPlace: props.capPlace,
   })
     .then((response: any) => {
       state.tableData = response.data.list;
       state.processedTableData = response.data.list.map((item: any) => {
         return {
           ...item,
-          parkCode: global
+          capPlace: global
             .$getDictionary("storage_park_code")
             .find((item2: any) => {
-              return item2.value === item.parkCode;
+              return item2.value === item.capPlace;
             })?.label,
         };
       });
@@ -152,17 +160,6 @@ const handleEdit = (rowData: any) => {
   state.dialogVisible = true;
   state.dialogMode = "edit";
   state.currentRowData = rowData;
-};
-
-const handleReview = (rowData: any) => {
-  state.dialogVisible = true;
-  state.dialogMode = "review";
-  state.currentRowData = rowData;
-};
-
-const handleAdd = () => {
-  state.dialogVisible = true;
-  state.dialogMode = "add";
 };
 
 const handleSearch = (formData: object) => {
@@ -188,7 +185,6 @@ const handleChangePage = (pagingData: any) => {
   getData();
 };
 
-const handleDelete = (id: number) => {};
 onMounted(async () => {
   getData();
 });

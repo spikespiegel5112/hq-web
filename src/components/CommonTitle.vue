@@ -33,6 +33,7 @@ const global = currentInstance.appContext.config.globalProperties;
 <style scoped lang="scss">
 .common_title_item {
   display: flex;
+  margin:0 0 0.2rem 0;
   width: 100%;
   height: 0.25rem;
   position: relative;
@@ -50,7 +51,6 @@ const global = currentInstance.appContext.config.globalProperties;
     margin: 0 0 0 0.1rem;
     font-size: 0.25rem;
     color: #fff;
-    line-height: 0.5rem;
   }
 }
 </style>

@@ -7,7 +7,7 @@
             <a-col :span="10">
               <a-form-item name="password" label="查询时间">
                 <a-range-picker
-                  v-model:value="state.time"
+                  v-model:value="state.statisticalTime"
                   show-time
                   format="YYYY-MM-DD HH:mm:ss"
                   @change="handleChangeTime1"
@@ -58,11 +58,11 @@ const formDataRef: any = ref(null);
 const state = reactive({
   visible: false,
   formData: {
-    parkCode: null,
-    timeBegin: null,
-    timeEnd: null,
+    capPlace: null,
+    statisticalTimeBegin: null,
+    statisticalTimeEnd: null,
   } as any,
-  time: [],
+  statisticalTime: [],
 });
 
 watch(
@@ -88,11 +88,11 @@ const handleReset = () => {
 };
 
 const handleChangeTime1 = (value: any) => {
-  state.formData.timeBegin = global
+  state.formData.statisticalTimeBegin = global
     .$dayjs(value[0])
     .format("YYYY-MM-DD HH:mm:ss");
 
-  state.formData.timeEnd = global
+  state.formData.statisticalTimeEnd = global
     .$dayjs(value[1])
     .format("YYYY-MM-DD HH:mm:ss");
 };

@@ -1,10 +1,8 @@
 <template>
   <a-modal v-model:open="state.visible" @cancel="handleClose" width="16rem">
     <template #title>
-      <div class="common_dislogtitle_item">
-        <span class="sequre"></span>
-        <span class="text"> {{ dialogTitle }}</span>
-      </div>
+           <CommonTitle :title="dialogTitle" />
+
     </template>
     <div class="maincontent">
       <a-row :gutter="30">

@@ -6,9 +6,7 @@
     @cancel="handleClose"
   >
     <template #title>
-      <span class="square"></span>
-      <span></span>
-      事件处置
+      <CommonTitle title="事件处置" />
     </template>
     <a-form
       :model="state.formData"
