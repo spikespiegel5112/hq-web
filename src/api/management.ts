@@ -274,6 +274,15 @@ export const passengerFlowMetroPassengerFlowGetPageRequest = (params: any) => {
   });
 };
 
+// 客流数据管理-地铁客流-当日地铁客流统计
+export const passengerFlowMetroPassengerFlowGetStatisticsRequest = (params: any) => {
+  return service({
+    url: prefix + "/passengerFlow/metroPassengerFlow/getStatistics",
+    method: "POST",
+    data: params,
+  });
+};
+
 // 获取系统数据字典项列表(新)
 export const dictionaryManageGetDictListRequest = (params: any) => {
   return service({

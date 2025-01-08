@@ -1,5 +1,6 @@
 <template>
   <div class="common_table_wrapper">
+    <Statistic :statisticData="state.statisticData" />
     <FilterTool
       @onSearch="handleSearch"
       @onReset="handleReset"
@@ -24,6 +25,7 @@
       :processedTableData="state.processedTableData"
       :dataModel="pageModel"
       :pagination="pagination"
+      statisticTable
       @onEdit="handleEdit"
       @onReview="handleReview"
       @onChangePage="handleChangePage"
@@ -61,7 +63,9 @@ import {
   eventManageSuddenEventExportRequest,
   backendRailwayArriveImportPicRequest,
   backendRailwayArriveSaveRailwayArriveBatchRequest,
+  passengerFlowMetroPassengerFlowGetStatisticsRequest,
 } from "@/api/management";
+import Statistic from "./Statistic.vue";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
 
@@ -141,6 +145,7 @@ const state = reactive({
   dialogVisible: false,
   dialogMode: null as string | null,
   currentRowData: {},
+  statisticData: {},
 });
 
 let queryFormData = reactive({} as any);
@@ -178,6 +183,18 @@ const getData = () => {
         }
       );
       pagination.total = response.total;
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+};
+
+const getStatisticData = () => {
+  passengerFlowMetroPassengerFlowGetStatisticsRequest({
+    ...queryFormData,
+  })
+    .then((response: any) => {
+      state.statisticData = response.data;
     })
     .catch((error: any) => {
       console.log(error);
@@ -273,22 +290,9 @@ const handleDelete = (id: number) => {
     });
 };
 
-const handleUploaded = (response: any) => {
-  getData();
-};
-
-const handleExport = () => {
-  backendRailwayArriveRailwayArriveExportRequest()
-    .then((response: any) => {
-      global.$exportTable(response, global.$route);
-    })
-    .catch((error: any) => {
-      console.log(error);
-    });
-};
-
 onMounted(async () => {
   getData();
+  getStatisticData();
 });
 
 onBeforeUnmount(() => {});

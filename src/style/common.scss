@@ -6,6 +6,14 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "LEEFONTMENGHEI";
+  src: url("@/assets/font/LEEFONTMENGHEI.ttf");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 .ant-tabs > .ant-tabs-nav,
 .ant-tabs > div > .ant-tabs-nav {
   margin: 0;

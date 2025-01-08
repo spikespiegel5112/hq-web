@@ -10,6 +10,9 @@
       :scroll="{
         y: tableBodyHeight,
       }"
+      :style="{
+        height: tableBodyHeight,
+      }"
     >
       <a-table-column
         v-for="(item, index) in innerDataModel.filter(
@@ -218,6 +221,7 @@ const props = defineProps({
   height: { type: String, default: "" },
   processedTableData: { type: Array, default: null },
   tabTable: { type: Boolean, default: false },
+  statisticTable: { type: Boolean, default: false },
   tableBodyHeight: { type: String || null, default: null },
   pagination: {
     type: [Object, Boolean],
@@ -301,12 +305,27 @@ const state = reactive({
 });
 
 const tableHeight = computed(() => {
+  const offsetTabTable = 0.6;
+  const offsetStatisticTable = 3;
+  let offset = 3.8;
   if (props.tabTable) {
-    return "calc(100vh - 4.8rem)";
-  } else {
-    return "calc(100vh - 4.1rem)";
+    offset += offsetTabTable;
   }
+  if (props.statisticTable) {
+    offset += offsetStatisticTable;
+  }
+
+  let result = `calc(100vh - ${offset}rem)`;
+  return result;
 });
+
+const tableBodyHeight = computed(() => {
+  let result = tableHeight.value;
+  if (props.tableBodyHeight) {
+    result = props.tableBodyHeight;
+  }
+  return result;
+}) as any;
 
 const parsedColumnWidth = (item: any) => {
   let result;
@@ -380,13 +399,9 @@ const actualTableData = computed(() => {
   return result;
 }) as any;
 
-const tableBodyHeight = computed(() => {
-  let result = tableHeight.value;
-  if (props.tableBodyHeight) {
-    result = props.tableBodyHeight;
-  }
-  return result;
-}) as any;
+const parseTableWrapperHeight = computed(() => {
+  return props.statisticTable ? "calc(100vh - 6.7rem)" : "calc(100vh - 3.7rem)";
+});
 
 watch(
   () => props.tableData,
@@ -475,7 +490,6 @@ const handlePreview = (scope: any, type: string) => {
   );
   state.dialogVisible = true;
   state.attachmentList = imageList;
-
   state.currentPreviewFileType = type;
 };
 
@@ -530,7 +544,6 @@ onMounted(() => {});
     }
   }
   :deep(.ant-table-wrapper) {
-    height: calc(100vh - 3.7rem);
     background-color: transparent;
 
     .ant-table {
