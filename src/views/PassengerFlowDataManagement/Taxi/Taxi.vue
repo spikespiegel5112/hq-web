@@ -9,14 +9,17 @@
         <TaxiHighSpeedRailSouth
           v-if="state.activeKey === 'TaxiHighSpeedRailSouth'"
           :parkCode="item.value"
+          :statisticData="state.statisticData"
         />
         <TaxiHighSpeedRailNorth
           v-if="state.activeKey === 'TaxiHighSpeedRailNorth'"
           :parkCode="item.value"
+          :statisticData="state.statisticData"
         />
         <TaxiUrbanRail
           v-if="state.activeKey === 'TaxiUrbanRail'"
           :parkCode="item.value"
+          :statisticData="state.statisticData"
         />
       </a-tab-pane>
     </a-tabs>
@@ -40,6 +43,8 @@ import TaxiHighSpeedRailNorth from "./TaxiHighSpeedRailNorth.vue";
 import TaxiHighSpeedRailSouth from "./TaxiHighSpeedRailSouth.vue";
 import TaxiUrbanRail from "./TaxiUrbanRail.vue";
 
+import { passengerFlowStorageGetStatisticsRequest } from "@/api/management";
+
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
@@ -61,6 +66,7 @@ const componentMap = ref([
 const state = reactive({
   activeKey: "TaxiHighSpeedRailNorth" as string | undefined,
   parkingLotData: [] as any[],
+  statisticData: {},
 });
 
 const getParkingLotData = () => {
@@ -73,8 +79,19 @@ const handleChangeTab = (value: any) => {
   )?.componentName;
 };
 
+const getStatisticData = () => {
+  passengerFlowStorageGetStatisticsRequest({})
+    .then((response: any) => {
+      state.statisticData = response.data;
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+};
+
 onMounted(async () => {
   getParkingLotData();
+  getStatisticData();
 });
 
 onBeforeUnmount(() => {});

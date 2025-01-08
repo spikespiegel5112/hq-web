@@ -1,5 +1,6 @@
 <template>
   <div class="common_table_wrapper">
+    <Statistic :statisticData="props.statisticData" />
     <FilterTool
       @onSearch="handleSearch"
       @onReset="handleReset"
@@ -18,6 +19,7 @@
       :processedTableData="state.processedTableData"
       :dataModel="pageModel"
       tabTable
+      statisticTable
       @onEdit="handleEdit"
       @onChangePage="handleChangePage"
     />
@@ -52,12 +54,14 @@ import {
 
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
+import Statistic from "./Statistic.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
 const props = defineProps({
   parkCode: { type: String, required: true, default: "" },
+  statisticData: { type: Object, required: true, default: {} },
 });
 
 const pageModel = ref([

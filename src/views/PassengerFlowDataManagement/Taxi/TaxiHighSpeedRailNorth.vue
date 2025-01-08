@@ -1,6 +1,6 @@
 <template>
   <div class="common_table_wrapper">
-    <Statistic :statisticData="state.statisticData" />
+    <Statistic :statisticData="props.statisticData" />
     <FilterTool
       @onSearch="handleSearch"
       @onReset="handleReset"
@@ -55,7 +55,6 @@ import {
 import {
   passengerFlowStorageExportRequest,
   passengerFlowStorageGetPageRequest,
-  passengerFlowStorageGetStatisticsRequest,
 } from "@/api/management";
 
 import FilterTool from "./FilterTool.vue";
@@ -67,6 +66,7 @@ const global = currentInstance.appContext.config.globalProperties;
 
 const props = defineProps({
   parkCode: { type: String, required: true, default: "" },
+  statisticData: { type: Object, required: true, default: {} },
 });
 
 const pageModel = ref([

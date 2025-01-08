@@ -1,0 +1,262 @@
+<template>
+  <a-modal
+    v-model:open="state.visible"
+    :title="dialogTitle"
+    width="9rem"
+    @cancel="handleClose"
+  >
+    <a-form
+      :model="state.formData"
+      ref="formDataRef"
+      autocomplete="off"
+      :disabled="props.mode === 'review'"
+      :rules="rules"
+      :label-col="{ style: { width: '150px' } }"
+    >
+      <a-row>
+        <a-col :span="11">
+          <a-form-item name="statisticalDate" label="今日出发列次">
+            <a-input
+              v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
+              placeholder="请输入"
+            >
+            </a-input>
+          </a-form-item>
+        </a-col>
+        <a-col :span="11">
+          <a-form-item name="statisticalDate" label="今日出发人数">
+            <a-input
+              v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
+              placeholder="请输入"
+            >
+            </a-input>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="11">
+          <a-form-item name="statisticalDate" label="今日到达列次">
+            <a-input
+              v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
+              placeholder="请输入"
+            >
+            </a-input>
+          </a-form-item>
+        </a-col>
+        <a-col :span="11">
+          <a-form-item name="statisticalDate" label="今日到达人数">
+            <a-input
+              v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
+              placeholder="请输入"
+            >
+            </a-input>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="11">
+          <a-form-item name="statisticalDate" label="今日出港架次">
+            <a-input
+              v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
+              placeholder="请输入"
+            >
+            </a-input>
+          </a-form-item>
+        </a-col>
+        <a-col :span="11">
+          <a-form-item name="statisticalDate" label="今日出港人数">
+            <a-input
+              v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
+              placeholder="请输入"
+            >
+            </a-input>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="11">
+          <a-form-item name="statisticalDate" label="今日进港架次">
+            <a-input
+              v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
+              placeholder="请输入"
+            >
+            </a-input>
+          </a-form-item>
+        </a-col>
+        <a-col :span="11">
+          <a-form-item name="statisticalDate" label="今日进港人数">
+            <a-input
+              v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
+              placeholder="请输入"
+            >
+            </a-input>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="statisticalDate" label="内容">
+            <a-textarea
+              v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
+              placeholder="请输入"
+            >
+            </a-textarea>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="attachment" label="附件">
+            <CommonUpload :attachmentList="state.formData.attachmentList" />
+          </a-form-item>
+        </a-col>
+      </a-row>
+    </a-form>
+    <template #footer>
+      <a-row>
+        <a-col :span="22">
+          <a-button key="back" @click="handleClose">取消</a-button>
+          <a-button key="submit" type="primary" @click="handleSubmit">
+            确认
+          </a-button>
+        </a-col>
+      </a-row>
+    </template>
+  </a-modal>
+</template>
+
+<script lang="tsx" setup>
+import {
+  reactive,
+  watch,
+  computed,
+  onMounted,
+  onBeforeUnmount,
+  getCurrentInstance,
+  ComponentInternalInstance,
+  ref,
+  nextTick,
+  onUnmounted,
+} from "vue";
+
+import type { Rule, RuleObject } from "ant-design-vue/es/form";
+
+const currentInstance = getCurrentInstance() as ComponentInternalInstance;
+const global = currentInstance.appContext.config.globalProperties;
+
+const formDataRef = ref();
+
+const emit = defineEmits<{
+  (e: "onClose"): void;
+  (e: "onSubmit", formData: any): void;
+}>();
+
+const props = defineProps({
+  visible: { type: Boolean, required: true, default: false },
+  mode: { type: [String, null], required: true, default: null },
+  rowData: { type: Object, required: true, default: () => {} },
+  dataModel: { type: Array, required: true, default: () => [] },
+});
+
+let state = reactive({
+  visible: false,
+  formData: {
+    id: null as number | null | undefined,
+    dispersedHourlyPassengerCount: null,
+    estimatedHourlyArrivePassengerCount: null,
+    statisticalBeginHour: null,
+    statisticalDate: null,
+  } as any,
+});
+
+const dialogTitle: ComputedRef<string> = computed(() => {
+  return global.$store.state.dictionary.dialogMode.find(
+    (item: any) => item.value === props.mode
+  )?.title;
+});
+
+const rules: ComputedRef<RuleObject[]> = computed(() => {
+  const validateNumber = (rule: any, value: any, callback: any) => {
+    if (isNaN(Number(value))) {
+      callback(new Error("请输入数字值"));
+    } else {
+      callback();
+    }
+  };
+  const result: any = {};
+  Object.keys(state.formData).forEach((item) => {
+    const dataModelInfo = props.dataModel.find(
+      (item2: any) => item2.name === item
+    ) as any;
+    if (!!dataModelInfo) {
+      result[item] = [];
+      if (dataModelInfo.required) {
+        result[item].push({
+          required: true,
+          message: "请输入" + dataModelInfo.label,
+          trigger: "change",
+        });
+        if (props.mode === "review") result[item] = false;
+      }
+      if (dataModelInfo.dataType === "number") {
+        result[item].push({ validator: validateNumber, trigger: "change" });
+      }
+    }
+  });
+  return result;
+});
+
+watch(
+  () => props.visible,
+  async (newValue: any) => {
+    state.visible = newValue;
+    if (!!newValue) {
+      await nextTick();
+      if (["edit", "review", "disposal"].some((item) => item === props.mode)) {
+        const formData = JSON.parse(JSON.stringify(props.rowData));
+        formData.statisticalDate = global.$dayjs(formData.statisticalDate);
+        state.formData = formData;
+      }
+    }
+  }
+);
+
+const handleClose = () => {
+  formDataRef.value.resetFields();
+  emit("onClose");
+};
+
+const handleSubmit = () => {
+  // statisticalBeginHour = Number(statisticalBeginHour);
+  let statisticalDate = global
+    .$dayjs(state.formData.statisticalDate)
+    .format("YYYY-MM-DD");
+
+  if (props.mode === "add") {
+    state.formData.id = undefined;
+  }
+  formDataRef.value
+    .validate()
+    .then(() => {
+      emit("onSubmit", {
+        ...state.formData,
+        // statisticalBeginHour,
+        statisticalDate,
+      });
+      handleClose();
+    })
+    .catch((error: any) => {
+      console.log("error", error);
+    });
+};
+
+const handleChangeStatisticalBeginHour = (value: any) => {
+  state.formData.statisticalBeginHour = value;
+};
+
+onMounted(async () => {});
+
+onBeforeUnmount(() => {});
+</script>
+
+<style scoped lang="scss"></style>

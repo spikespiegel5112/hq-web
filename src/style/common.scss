@@ -13,7 +13,11 @@
   font-style: normal;
   font-display: swap;
 }
-
+.ant-btn {
+  &.yellow {
+    background-color: #ce9b00;
+  }
+}
 .ant-tabs > .ant-tabs-nav,
 .ant-tabs > div > .ant-tabs-nav {
   margin: 0;

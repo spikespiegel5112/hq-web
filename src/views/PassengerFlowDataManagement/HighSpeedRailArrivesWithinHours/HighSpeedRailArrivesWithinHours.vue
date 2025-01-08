@@ -17,6 +17,9 @@
           :action="backendRailwayArriveRailwayArriveExportRequest"
           :queryFormData="queryFormData"
         />
+        <a-button class="yellow" @click="handleAddSummarizedData">
+          新增汇总数据
+        </a-button>
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
@@ -38,6 +41,11 @@
       :rowData="state.currentRowData"
       @onClose="handleClose"
       @onSubmit="handleSubmit"
+    />
+    <SummarizeDataDialog
+      :visible="state.dialogSummarizeDataVisible"
+      @onClose="handleClose"
+      @onSubmit="handleSubmitSummarizeData"
     />
   </div>
 </template>
@@ -68,6 +76,7 @@ import {
 import Statistic from "./Statistic.vue";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
+import SummarizeDataDialog from "./SummarizeDataDialog.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -143,6 +152,7 @@ const state = reactive({
   tableData: [] as any[],
   processedTableData: [] as any[],
   dialogVisible: false,
+  dialogSummarizeDataVisible: false,
   dialogMode: null as string | null,
   currentRowData: {},
   statisticData: {},
@@ -241,6 +251,10 @@ const handleReview = (currentRowData: any) => {
   state.currentRowData = currentRowData;
 };
 
+const handleAddSummarizedData = () => {
+  state.dialogSummarizeDataVisible = true;
+};
+
 const handleAdd = () => {
   state.dialogVisible = true;
   state.dialogMode = "add";
@@ -258,9 +272,22 @@ const handleReset = (formData: object) => {
 
 const handleClose = () => {
   state.dialogVisible = false;
+  state.dialogSummarizeDataVisible = false;
 };
 
 const handleSubmit = (formData: any) => {
+  backendRailwayArriveSaveRailwayArriveRequest(formData)
+    .then((response: any) => {
+      global.$message.success("提交成功");
+      getData();
+    })
+    .catch((error: any) => {
+      console.log(error);
+      global.$message.error("提交失败");
+    });
+};
+
+const handleSubmitSummarizeData = (formData: any) => {
   backendRailwayArriveSaveRailwayArriveRequest(formData)
     .then((response: any) => {
       global.$message.success("提交成功");
