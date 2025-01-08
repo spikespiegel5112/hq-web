@@ -1,10 +1,8 @@
 <template>
-  <a-modal
-    v-model:open="state.visible"
-    :title="dialogTitle"
-    width="9rem"
-    @cancel="handleClose"
-  >
+  <a-modal v-model:open="state.visible" width="11rem" @cancel="handleClose">
+    <template #title>
+      <CommonTitle title="新增汇总数据" />
+    </template>
     <a-form
       :model="state.formData"
       ref="formDataRef"
@@ -16,80 +14,80 @@
       <a-row>
         <a-col :span="11">
           <a-form-item name="statisticalDate" label="今日出发列次">
-            <a-input
+            <a-input-number
               v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
               placeholder="请输入"
             >
-            </a-input>
+            </a-input-number>
           </a-form-item>
         </a-col>
         <a-col :span="11">
           <a-form-item name="statisticalDate" label="今日出发人数">
-            <a-input
+            <a-input-number
               v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
               placeholder="请输入"
             >
-            </a-input>
+            </a-input-number>
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="11">
           <a-form-item name="statisticalDate" label="今日到达列次">
-            <a-input
+            <a-input-number
               v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
               placeholder="请输入"
             >
-            </a-input>
+            </a-input-number>
           </a-form-item>
         </a-col>
         <a-col :span="11">
           <a-form-item name="statisticalDate" label="今日到达人数">
-            <a-input
+            <a-input-number
               v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
               placeholder="请输入"
             >
-            </a-input>
+            </a-input-number>
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="11">
           <a-form-item name="statisticalDate" label="今日出港架次">
-            <a-input
+            <a-input-number
               v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
               placeholder="请输入"
             >
-            </a-input>
+            </a-input-number>
           </a-form-item>
         </a-col>
         <a-col :span="11">
           <a-form-item name="statisticalDate" label="今日出港人数">
-            <a-input
+            <a-input-number
               v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
               placeholder="请输入"
             >
-            </a-input>
+            </a-input-number>
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="11">
           <a-form-item name="statisticalDate" label="今日进港架次">
-            <a-input
+            <a-input-number
               v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
               placeholder="请输入"
             >
-            </a-input>
+            </a-input-number>
           </a-form-item>
         </a-col>
         <a-col :span="11">
           <a-form-item name="statisticalDate" label="今日进港人数">
-            <a-input
+            <a-input-number
               v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
               placeholder="请输入"
             >
-            </a-input>
+            </a-input-number>
           </a-form-item>
         </a-col>
       </a-row>
@@ -99,6 +97,7 @@
             <a-textarea
               v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
               placeholder="请输入"
+              :rows="4"
             >
             </a-textarea>
           </a-form-item>
