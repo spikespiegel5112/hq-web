@@ -32,7 +32,7 @@ const props = defineProps({
   label: {
     type: String,
     required: true,
-    default: "上传",
+    default: "导入",
   },
   action: {
     type: Function,
@@ -65,20 +65,41 @@ const handleImport = () => {
   inputEl.addEventListener("change", (event) => {
     const loading = global.$message.loading("上传中...", 0);
     const file: any = event.target.files[0]; //
+    const fileName = file.name;
     const formData = new FormData();
     formData.append("file", file);
+    formData.append("file", fileName);
     state.loading = true;
+    loading();
+    actionPromise(formData)
+      .then((response: any) => {
+        global.$message.success("导入成功");
+        emit("success", response);
+      })
+      .catch((error: any) => {
+        emit("error", error);
+        if (error.message) {
+          global.$message.error(error.message);
+        } else {
+          global.$message.error("上传失败");
+        }
+      });
+  });
+};
+
+const actionPromise = (formData: any) => {
+  return new Promise((resolve, reject) => {
     props
       .action(formData)
       .then((response: any) => {
-        emit("success", response);
-        loading();
+        const code = response.code;
+        if (code === 400) {
+          reject(response);
+        }
+        resolve(response);
       })
       .catch((error: any) => {
-        console.log(error);
-        emit("error", error);
-        global.$message.error("上传失败");
-        loading();
+        reject(error);
       })
       .finally(() => {
         state.loading = false;

@@ -1,8 +1,7 @@
 <template>
   <a-modal v-model:open="state.visible" @cancel="handleClose" width="9rem">
     <template #title>
-           <CommonTitle :title="dialogTitle" />
-
+      <CommonTitle :title="dialogTitle" />
     </template>
     <a-form
       :model="state.formData"

@@ -1,9 +1,16 @@
 <template>
   <div class="common_table_wrapper">
-    <FilterTool       @onSearch="handleSearch"       @onReset="handleReset"       v-model="queryFormData"     ></FilterTool>
+    <FilterTool
+      @onSearch="handleSearch"
+      @onReset="handleReset"
+      v-model="queryFormData"
+    ></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
-        <a-button class="import">导入</a-button>
+        <ImportButton
+          :action="infoManagementExternalInfoImportExcelRequest"
+          @success="() => getData()"
+        />
         <ExportButton
           :action="infoManagementExternalInfoExportExcelRequest"
           :queryFormData="queryFormData"
@@ -60,6 +67,7 @@ import {
   infoManagementExternalInfoDeleteRequest,
   infoManagementExternalInfoHandleRequest,
   infoManagementExternalInfoExportExcelRequest,
+  infoManagementExternalInfoImportExcelRequest,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";

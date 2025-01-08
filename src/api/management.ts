@@ -275,7 +275,9 @@ export const passengerFlowMetroPassengerFlowGetPageRequest = (params: any) => {
 };
 
 // 客流数据管理-地铁客流-当日地铁客流统计
-export const passengerFlowMetroPassengerFlowGetStatisticsRequest = (params: any) => {
+export const passengerFlowMetroPassengerFlowGetStatisticsRequest = (
+  params: any
+) => {
   return service({
     url: prefix + "/passengerFlow/metroPassengerFlow/getStatistics",
     method: "POST",
@@ -567,6 +569,18 @@ export const infoManagementExternalInfoExportExcelRequest = (params: any) => {
     method: "GET",
     params,
     responseType: "blob",
+  });
+};
+
+// 信息管理-外部信息-excel导入
+export const infoManagementExternalInfoImportExcelRequest = (params: any) => {
+  return service({
+    url: prefix + "/infoManagement/externalInfo/importExcel",
+    method: "POST",
+    data: params,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
   });
 };
 
