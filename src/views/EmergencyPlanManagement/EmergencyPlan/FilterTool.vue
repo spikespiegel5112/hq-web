@@ -9,6 +9,7 @@
                 <a-select
                   v-model:value="state.formData.planSource"
                   placeholder="请选择"
+                  allow-clear
                 >
                   <a-select-option
                     v-for="item in global.$getDictionary(
@@ -119,7 +120,6 @@ watch(
   },
   { deep: true }
 );
-
 
 watch(
   () => state.formData,

@@ -1,11 +1,13 @@
 <template>
   <a-modal
     v-model:open="state.visible"
-    :title="dialogTitle"
     @cancel="handleClose"
     @ok="handleSubmit"
     width="9rem"
   >
+    <template #title>
+      <CommonTitle :title="dialogTitle" />
+    </template>
     <a-form
       ref="formDataRef"
       :model="state.formData"

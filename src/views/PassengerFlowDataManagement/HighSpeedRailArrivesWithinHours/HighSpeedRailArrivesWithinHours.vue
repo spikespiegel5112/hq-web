@@ -124,7 +124,7 @@ const pageModel = ref([
   },
   {
     label: "出发列次",
-    name: "estimatedHourlyArrivePassengerCount",
+    name: "railwayDeparture",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -132,7 +132,7 @@ const pageModel = ref([
   },
   {
     label: "到达列次",
-    name: "estimatedHourlyArrivePassengerCount",
+    name: "railwayArrive",
     required: true,
     tableVisible: true,
     formVisible: true,

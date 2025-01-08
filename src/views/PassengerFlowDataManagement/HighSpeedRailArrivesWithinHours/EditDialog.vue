@@ -1,10 +1,12 @@
 <template>
   <a-modal
     v-model:open="state.visible"
-    :title="dialogTitle"
     width="9rem"
     @cancel="handleClose"
   >
+    <template #title>
+      <CommonTitle :title="dialogTitle" />
+    </template>
     <a-form
       :model="state.formData"
       ref="formDataRef"
@@ -50,7 +52,8 @@
               </a-select-option>
             </a-select>
             <template v-if="props.mode === 'review'">
-              {{global.$getDictionary(
+              {{
+              global.$getDictionary(
                   'railway_statistical_begin_hour'
                 ).find((item:any)=>item.value===state.formData.statisticalBeginHour)?.label
               }}
@@ -94,36 +97,30 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item
-            name="estimatedHourlyArrivePassengerCount"
-            label="出发列次"
-          >
+          <a-form-item name="railwayDeparture" label="出发列次">
             <a-input-number
               v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
+              v-model:value="state.formData.railwayDeparture"
               placeholder="请输入"
             >
             </a-input-number>
             <template v-if="props.mode === 'review'">
-              {{ state.formData.estimatedHourlyArrivePassengerCount }}
+              {{ state.formData.railwayDeparture }}
             </template>
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item
-            name="estimatedHourlyArrivePassengerCount"
-            label="到达列次"
-          >
+          <a-form-item name="railwayArrive" label="到达列次">
             <a-input-number
               v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
+              v-model:value="state.formData.railwayArrive"
               placeholder="请输入"
             >
             </a-input-number>
             <template v-if="props.mode === 'review'">
-              {{ state.formData.estimatedHourlyArrivePassengerCount }}
+              {{ state.formData.railwayArrive }}
             </template>
           </a-form-item>
         </a-col>
@@ -192,6 +189,8 @@ let state = reactive({
     id: null as number | null | undefined,
     dispersedHourlyPassengerCount: null,
     estimatedHourlyArrivePassengerCount: null,
+    railwayArrive: null,
+    railwayDeparture: null,
     statisticalBeginHour: null,
     statisticalDate: null,
   } as any,

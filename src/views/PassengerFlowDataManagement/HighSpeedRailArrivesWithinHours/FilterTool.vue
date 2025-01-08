@@ -9,6 +9,7 @@
                 <a-select
                   v-model:value="state.formData.statisticalBeginHour"
                   placeholder="请选择"
+                  allow-clear
                 >
                   <a-select-option
                     v-for="item in global.$getDictionary(
@@ -29,6 +30,7 @@
                   v-model:value="state.statisticalDate"
                   format="YYYY-MM-DD HH:mm:ss"
                   @change="handleChangeStatisticalDate"
+                  allow-clear
                 />
               </a-form-item>
             </a-col>

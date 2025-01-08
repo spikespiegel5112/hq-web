@@ -6,8 +6,7 @@
     @cancel="handleClose"
   >
     <template #title>
-           <CommonTitle :title="dialogTitle" />
-
+      <CommonTitle :title="dialogTitle" />
     </template>
     <a-form
       :model="state.formData"

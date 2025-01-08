@@ -1,10 +1,12 @@
 <template>
   <a-modal
     v-model:open="state.visible"
-    :title="dialogTitle"
     width="9rem"
     @cancel="handleClose"
   >
+    <template #title>
+      <CommonTitle :title="dialogTitle" />
+    </template>
     <a-form
       :model="state.formData"
       ref="formDataRef"
@@ -201,7 +203,6 @@ watch(
       await nextTick();
       if (["edit", "review", "disposal"].some((item) => item === props.mode)) {
         const formData = JSON.parse(JSON.stringify(props.rowData));
-        
 
         formData.statisticalDate = global.$dayjs(
           formData.statisticalDate.toString()
