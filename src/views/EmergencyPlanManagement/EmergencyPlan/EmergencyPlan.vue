@@ -1,9 +1,16 @@
 <template>
   <div class="common_table_wrapper">
-    <FilterTool       @onSearch="handleSearch"       @onReset="handleReset"       v-model="queryFormData"     ></FilterTool>
+    <FilterTool
+      @onSearch="handleSearch"
+      @onReset="handleReset"
+      v-model="queryFormData"
+    ></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
-        <a-button class="import">导入</a-button>
+        <ImportButton
+          :action="planManagementEmergencyPlanImportExcelRequest"
+          @success="() => getData()"
+        />
         <ExportButton
           :action="planManagementEmergencyPlanExportExcelRequest"
           :queryFormData="queryFormData"
@@ -70,6 +77,7 @@ import {
   planManagementEmergencyPlanSaveRequest,
   planManagementEmergencyPlanSaveDisposalRequest,
   planManagementEmergencyPlanExportExcelRequest,
+  planManagementEmergencyPlanImportExcelRequest,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
