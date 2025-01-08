@@ -156,6 +156,15 @@ export const backendRailwayArriveDeleteRequest = (params: any) => {
   });
 };
 
+// 区域小时客流-铁路到达-保存今日客流预测汇总信息
+export const backendRailwayArriveSaveTodayFlowRequest = (params: any) => {
+  return service({
+    url: prefix + "/backend/railwayArrive/saveTodayFlow",
+    method: "POST",
+    data: params,
+  });
+};
+
 // 客流数据管理-区域客流-相机名称查询
 export const passengerFlowAreaFlowGetCameraNameRequest = (params: any) => {
   return service({

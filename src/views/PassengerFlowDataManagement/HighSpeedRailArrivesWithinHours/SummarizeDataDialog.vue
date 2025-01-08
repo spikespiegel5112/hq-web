@@ -7,24 +7,31 @@
       :model="state.formData"
       ref="formDataRef"
       autocomplete="off"
-      :disabled="props.mode === 'review'"
       :rules="rules"
       :label-col="{ style: { width: '150px' } }"
     >
       <a-row>
         <a-col :span="11">
-          <a-form-item name="statisticalDate" label="今日出发列次">
+          <a-form-item
+            name="estimatedDepartedTodayTrainsCount"
+            label="今日出发列次"
+          >
             <a-input-number
-              v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
+              v-model:value="state.formData.estimatedDepartedTodayTrainsCount"
               placeholder="请输入"
             >
             </a-input-number>
           </a-form-item>
         </a-col>
         <a-col :span="11">
-          <a-form-item name="statisticalDate" label="今日出发人数">
+          <a-form-item
+            name="estimatedDepartedTodayPassengerCount"
+            label="今日出发人数"
+          >
             <a-input-number
-              v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
+              v-model:value="
+                state.formData.estimatedDepartedTodayPassengerCount
+              "
               placeholder="请输入"
             >
             </a-input-number>
@@ -33,18 +40,24 @@
       </a-row>
       <a-row>
         <a-col :span="11">
-          <a-form-item name="statisticalDate" label="今日到达列次">
+          <a-form-item
+            name="estimatedArrivedTodayTrainsCount"
+            label="今日到达列次"
+          >
             <a-input-number
-              v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
+              v-model:value="state.formData.estimatedArrivedTodayTrainsCount"
               placeholder="请输入"
             >
             </a-input-number>
           </a-form-item>
         </a-col>
         <a-col :span="11">
-          <a-form-item name="statisticalDate" label="今日到达人数">
+          <a-form-item
+            name="estimatedArrivedTodayPassengerCount"
+            label="今日到达人数"
+          >
             <a-input-number
-              v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
+              v-model:value="state.formData.estimatedArrivedTodayPassengerCount"
               placeholder="请输入"
             >
             </a-input-number>
@@ -53,18 +66,26 @@
       </a-row>
       <a-row>
         <a-col :span="11">
-          <a-form-item name="statisticalDate" label="今日出港架次">
+          <a-form-item
+            name="estimatedDepartedTodayFlightCount"
+            label="今日出港架次"
+          >
             <a-input-number
-              v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
+              v-model:value="state.formData.estimatedDepartedTodayFlightCount"
               placeholder="请输入"
             >
             </a-input-number>
           </a-form-item>
         </a-col>
         <a-col :span="11">
-          <a-form-item name="statisticalDate" label="今日出港人数">
+          <a-form-item
+            name="estimatedDepartedTodayFlightPassengerCount"
+            label="今日出港人数"
+          >
             <a-input-number
-              v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
+              v-model:value="
+                state.formData.estimatedDepartedTodayFlightPassengerCount
+              "
               placeholder="请输入"
             >
             </a-input-number>
@@ -73,18 +94,26 @@
       </a-row>
       <a-row>
         <a-col :span="11">
-          <a-form-item name="statisticalDate" label="今日进港架次">
+          <a-form-item
+            name="estimatedArrivedTodayFlightCount"
+            label="今日进港架次"
+          >
             <a-input-number
-              v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
+              v-model:value="state.formData.estimatedArrivedTodayFlightCount"
               placeholder="请输入"
             >
             </a-input-number>
           </a-form-item>
         </a-col>
         <a-col :span="11">
-          <a-form-item name="statisticalDate" label="今日进港人数">
+          <a-form-item
+            name="estimatedArrivedTodayFlightPassengerCount"
+            label="今日进港人数"
+          >
             <a-input-number
-              v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
+              v-model:value="
+                state.formData.estimatedArrivedTodayFlightPassengerCount
+              "
               placeholder="请输入"
             >
             </a-input-number>
@@ -92,24 +121,23 @@
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="22">
-          <a-form-item name="statisticalDate" label="内容">
-            <a-textarea
-              v-model:value="state.formData.estimatedHourlyArrivePassengerCount"
-              placeholder="请输入"
-              :rows="4"
-            >
-            </a-textarea>
+        <a-col :span="11">
+          <a-form-item name="statisticalDate" label="统计日期">
+            <a-date-picker
+              v-model:value="state.formData.statisticalDate"
+              format="YYYY-MM-DD"
+            ></a-date-picker>
           </a-form-item>
         </a-col>
       </a-row>
-      <a-row>
+
+      <!-- <a-row>
         <a-col :span="22">
           <a-form-item name="attachment" label="附件">
             <CommonUpload :attachmentList="state.formData.attachmentList" />
           </a-form-item>
         </a-col>
-      </a-row>
+      </a-row> -->
     </a-form>
     <template #footer>
       <a-row>
@@ -152,26 +180,24 @@ const emit = defineEmits<{
 
 const props = defineProps({
   visible: { type: Boolean, required: true, default: false },
-  mode: { type: [String, null], required: true, default: null },
-  rowData: { type: Object, required: true, default: () => {} },
-  dataModel: { type: Array, required: true, default: () => [] },
+  rowData: { type: Object, required: false, default: () => {} },
+  dataModel: { type: Array, required: false, default: () => [] },
 });
 
 let state = reactive({
   visible: false,
   formData: {
     id: null as number | null | undefined,
-    dispersedHourlyPassengerCount: null,
-    estimatedHourlyArrivePassengerCount: null,
-    statisticalBeginHour: null,
+    estimatedArrivedTodayFlightCount: null,
+    estimatedArrivedTodayFlightPassengerCount: null,
+    estimatedArrivedTodayPassengerCount: null,
+    estimatedArrivedTodayTrainsCount: null,
+    estimatedDepartedTodayFlightCount: null,
+    estimatedDepartedTodayFlightPassengerCount: null,
+    estimatedDepartedTodayPassengerCount: null,
+    estimatedDepartedTodayTrainsCount: null,
     statisticalDate: null,
   } as any,
-});
-
-const dialogTitle: ComputedRef<string> = computed(() => {
-  return global.$store.state.dictionary.dialogMode.find(
-    (item: any) => item.value === props.mode
-  )?.title;
 });
 
 const rules: ComputedRef<RuleObject[]> = computed(() => {
@@ -195,7 +221,6 @@ const rules: ComputedRef<RuleObject[]> = computed(() => {
           message: "请输入" + dataModelInfo.label,
           trigger: "change",
         });
-        if (props.mode === "review") result[item] = false;
       }
       if (dataModelInfo.dataType === "number") {
         result[item].push({ validator: validateNumber, trigger: "change" });
@@ -209,14 +234,6 @@ watch(
   () => props.visible,
   async (newValue: any) => {
     state.visible = newValue;
-    if (!!newValue) {
-      await nextTick();
-      if (["edit", "review", "disposal"].some((item) => item === props.mode)) {
-        const formData = JSON.parse(JSON.stringify(props.rowData));
-        formData.statisticalDate = global.$dayjs(formData.statisticalDate);
-        state.formData = formData;
-      }
-    }
   }
 );
 
@@ -231,9 +248,6 @@ const handleSubmit = () => {
     .$dayjs(state.formData.statisticalDate)
     .format("YYYY-MM-DD");
 
-  if (props.mode === "add") {
-    state.formData.id = undefined;
-  }
   formDataRef.value
     .validate()
     .then(() => {

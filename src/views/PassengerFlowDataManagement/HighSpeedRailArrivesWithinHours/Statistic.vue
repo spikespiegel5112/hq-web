@@ -9,7 +9,7 @@
         </div>
       </li>
       <li>
-        <div class="title">今日累计到达</div>
+        <div class="title">今日累计出发</div>
         <div class="content">
           <span class="value">{{ props.statisticData.outTotal }}</span>
           <span class="unit">人次</span>

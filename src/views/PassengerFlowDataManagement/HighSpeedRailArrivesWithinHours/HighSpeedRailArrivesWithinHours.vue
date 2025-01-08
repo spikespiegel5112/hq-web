@@ -68,11 +68,12 @@ import {
   backendRailwayArriveRailwayArriveExportRequest,
   backendRailwayArriveSaveRailwayArriveRequest,
   backendRailwayArriveDeleteRequest,
-  eventManageSuddenEventExportRequest,
+  backendRailwayArriveSaveTodayFlowRequest,
   backendRailwayArriveImportPicRequest,
   backendRailwayArriveSaveRailwayArriveBatchRequest,
   passengerFlowMetroPassengerFlowGetStatisticsRequest,
 } from "@/api/management";
+
 import Statistic from "./Statistic.vue";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
@@ -288,7 +289,7 @@ const handleSubmit = (formData: any) => {
 };
 
 const handleSubmitSummarizeData = (formData: any) => {
-  backendRailwayArriveSaveRailwayArriveRequest(formData)
+  backendRailwayArriveSaveTodayFlowRequest(formData)
     .then((response: any) => {
       global.$message.success("提交成功");
       getData();
