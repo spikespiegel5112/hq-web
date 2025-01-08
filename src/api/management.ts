@@ -647,6 +647,20 @@ export const infoManagementPublicSentimentInfoExportExcelRequest = (
   });
 };
 
+// 信息管理-舆情信息-excel导入
+export const infoManagementPublicSentimentInfoImportExcelRequest = (
+  params: any
+) => {
+  return service({
+    url: prefix + "/infoManagement/publicSentimentInfo/importExcel",
+    method: "POST",
+    data: params,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
+
 // 信息管理-投诉信息
 
 // 信息管理-天气信息
@@ -702,7 +716,7 @@ export const infoManagementComplaintInfoDeleteRequest = (params: any) => {
 // 导入重要投诉--excel导入
 export const infoManagementComplaintInfoImportExcelRequest = (params: any) => {
   return service({
-    url: prefix + "/import/importantComplaintInfo/importExcel",
+    url: prefix + "/infoManagement/complaintInfo/importExcel",
     method: "POST",
     data: params,
     headers: {

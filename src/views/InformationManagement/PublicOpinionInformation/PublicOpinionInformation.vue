@@ -1,9 +1,16 @@
 <template>
   <div class="common_table_wrapper">
-    <FilterTool       @onSearch="handleSearch"       @onReset="handleReset"       v-model="queryFormData"     ></FilterTool>
+    <FilterTool
+      @onSearch="handleSearch"
+      @onReset="handleReset"
+      v-model="queryFormData"
+    ></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
-        <a-button class="import">导入</a-button>
+        <ImportButton
+          :action="infoManagementPublicSentimentInfoImportExcelRequest"
+          @success="() => getData()"
+        />
         <ExportButton
           :action="infoManagementPublicSentimentInfoExportExcelRequest"
           :queryFormData="queryFormData"
@@ -60,6 +67,7 @@ import {
   infoManagementPublicSentimentInfoGetPageRequest,
   infoManagementPublicSentimentInfoSaveRequest,
   infoManagementPublicSentimentInfoExportExcelRequest,
+  infoManagementPublicSentimentInfoImportExcelRequest,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
@@ -175,6 +183,7 @@ const getData = () => {
     .then((response: any) => {
       response = response.data;
       state.tableData = response.list;
+      pagination.total = response.total;
       state.processedTableData = response.list.map((item: any) => {
         return {
           ...item,

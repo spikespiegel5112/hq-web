@@ -65,10 +65,8 @@ const handleImport = () => {
   inputEl.addEventListener("change", (event) => {
     const loading = global.$message.loading("上传中...", 0);
     const file: any = event.target.files[0]; //
-    const fileName = file.name;
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("file", fileName);
     state.loading = true;
     loading();
     actionPromise(formData)
