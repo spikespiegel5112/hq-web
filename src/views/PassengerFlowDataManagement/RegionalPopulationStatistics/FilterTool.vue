@@ -80,7 +80,7 @@ const state = reactive({
     analyzeTimeEnd: null,
   },
   analyzeTime: null,
-  cameraList: null
+  cameraList: null,
 });
 
 watch(
@@ -124,6 +124,7 @@ const getCameraList = () => {
 
 onMounted(async () => {
   getCameraList();
+  emit("update:modelValue", state.formData);
 });
 
 onBeforeUnmount(() => {});

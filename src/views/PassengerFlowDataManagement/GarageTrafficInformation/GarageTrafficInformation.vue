@@ -1,5 +1,6 @@
 <template>
   <div class="common_table_wrapper">
+    <Statistic :statisticData="state.statisticData" />
     <FilterTool
       @onSearch="handleSearch"
       @onReset="handleReset"
@@ -17,6 +18,7 @@
       :tableData="state.tableData"
       :dataModel="pageModel"
       :pagination="pagination"
+      statisticTable
       @onEdit="handleEdit"
       @onChangePage="handleChangePage"
     />
@@ -46,6 +48,7 @@ import {
 
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
+import Statistic from "./Statistic.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -53,7 +56,7 @@ const global = currentInstance.appContext.config.globalProperties;
 import {
   passengerFlowParkingPassengerFlowGetPageRequest,
   passengerFlowParkingPassengerFlowExportRequest,
-  importParkingVehicleMonitorImportExcelRequest,
+  passengerFlowParkingPassengerFlowGetStatisticsRequest,
 } from "@/api/management";
 
 const pageModel = ref([
@@ -105,6 +108,7 @@ const state = reactive({
   dialogVisible: false,
   dialogMode: null as string | null,
   currentRowData: {},
+  statisticData: {},
 });
 
 let queryFormData = reactive({} as any);
@@ -132,26 +136,24 @@ const getData = () => {
       };
     });
     state.tableData = response.list;
-
     pagination.total = response.total;
   });
+};
+
+const getStatisticData = () => {
+  passengerFlowParkingPassengerFlowGetStatisticsRequest({})
+    .then((response: any) => {
+      state.statisticData = response.data;
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
 };
 
 const handleEdit = (rowData: any) => {
   state.dialogVisible = true;
   state.dialogMode = "edit";
   state.currentRowData = rowData;
-};
-
-const handleReview = (rowData: any) => {
-  state.dialogVisible = true;
-  state.dialogMode = "review";
-  state.currentRowData = rowData;
-};
-
-const handleAdd = () => {
-  state.dialogVisible = true;
-  state.dialogMode = "add";
 };
 
 const handleSearch = (formData: object) => {
@@ -177,8 +179,9 @@ const handleChangePage = (pagingData: any) => {
   getData();
 };
 
-const handleDelete = (id: number) => {};
-onMounted(async () => {});
+onMounted(async () => {
+  getStatisticData();
+});
 
 onBeforeUnmount(() => {});
 </script>

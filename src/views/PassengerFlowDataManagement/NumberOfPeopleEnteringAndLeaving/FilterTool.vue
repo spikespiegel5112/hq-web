@@ -73,7 +73,6 @@ const emit = defineEmits<{
 const formDataRef: any = ref(null);
 
 const state = reactive({
-  visible: false,
   formData: {
     cameraName: null,
     analyzeTimeBegin: null,
@@ -113,7 +112,7 @@ const handleChangeTime1 = (data: any) => {
 };
 
 const getCameraList = () => {
-  passengerFlowAreaAreaInOutFlowGetCameraNameRequest({})
+  passengerFlowAreaAreaInOutFlowGetCameraNameRequest()
     .then((response: any) => {
       state.cameraList = response.data;
     })
@@ -124,6 +123,7 @@ const getCameraList = () => {
 
 onMounted(async () => {
   getCameraList();
+  emit("update:modelValue", state.formData);
 });
 
 onBeforeUnmount(() => {});

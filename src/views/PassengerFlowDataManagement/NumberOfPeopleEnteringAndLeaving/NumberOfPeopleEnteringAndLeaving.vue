@@ -1,6 +1,10 @@
 <template>
   <div class="common_table_wrapper">
-    <FilterTool       @onSearch="handleSearch"       @onReset="handleReset"       v-model="queryFormData"     ></FilterTool>
+    <FilterTool
+      @onSearch="handleSearch"
+      @onReset="handleReset"
+      v-model="queryFormData"
+    ></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
         <ExportButton
@@ -85,8 +89,16 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "人员数量",
-    name: "personNum",
+    label: "进入人员数量",
+    name: "personIn",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "离开人员数量",
+    name: "personOut",
     required: true,
     tableVisible: true,
     formVisible: true,

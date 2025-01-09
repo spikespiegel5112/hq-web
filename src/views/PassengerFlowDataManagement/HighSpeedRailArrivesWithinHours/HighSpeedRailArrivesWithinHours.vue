@@ -306,6 +306,7 @@ const handleChangePage = (pagingData: any) => {
   pagination.total = pagingData.total;
   getData();
 };
+
 const handleDelete = (id: number) => {
   backendRailwayArriveDeleteRequest({ id })
     .then((response: any) => {

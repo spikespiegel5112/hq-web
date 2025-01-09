@@ -212,7 +212,7 @@ export const passengerFlowAreaAreaInOutFlowGetCameraNameRequest = (
 ) => {
   return service({
     url: prefix + "/passengerFlow/areaInOutFlow/getCameraName",
-    method: "POST",
+    method: "GET",
     data: params,
   });
 };
@@ -1197,6 +1197,17 @@ export const passengerFlowParkingPassengerFlowGetPageRequest = (
 ) => {
   return service({
     url: prefix + "/passengerFlow/parkingPassengerFlow/getPage",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 客流数据管理-车库流量信息-统计查询
+export const passengerFlowParkingPassengerFlowGetStatisticsRequest = (
+  params: any
+) => {
+  return service({
+    url: prefix + "/passengerFlow/parkingPassengerFlow/getStatistics",
     method: "POST",
     data: params,
   });

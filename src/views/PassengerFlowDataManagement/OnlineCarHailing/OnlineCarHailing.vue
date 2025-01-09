@@ -6,9 +6,18 @@
         :key="item.value"
         :tab="item.label"
       >
-        <OnlineCarHailingSouth v-if="state.activeKey === 0" :capPlace="item" />
-        <OnlineCarHailingNorth v-if="state.activeKey === 1" :capPlace="item" />
-        <OnlineCarHailingNorth v-if="state.activeKey === 2" :capPlace="item" />
+        <OnlineCarHailingSouth
+          v-if="state.activeKey === 0"
+          :capPlace="item.value"
+        />
+        <OnlineCarHailingNorth
+          v-if="state.activeKey === 1"
+          :capPlace="item.value"
+        />
+        <OnlineCarHailingP9
+          v-if="state.activeKey === 2"
+          :capPlace="item.value"
+        />
       </a-tab-pane>
     </a-tabs>
   </div>
@@ -27,10 +36,9 @@ import {
   nextTick,
 } from "vue";
 
-import { passengerFloweEHailingParkingGetCapPlaceRequest } from "@/api/management";
-
 import OnlineCarHailingNorth from "./OnlineCarHailingNorth.vue";
 import OnlineCarHailingSouth from "./OnlineCarHailingSouth.vue";
+import OnlineCarHailingP9 from "./OnlineCarHailingP9.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -55,24 +63,11 @@ const state = reactive({
   parkingLotData: [] as any[],
 });
 
-const getParkingLotData = () => {
-  passengerFloweEHailingParkingGetCapPlaceRequest()
-    .then((response: any) => {
-      state.parkingLotData = response.data;
-      state.activeKey = state.parkingLotData[0];
-    })
-    .catch((error: any) => {
-      console.log(error);
-    });
-};
-
 const handleChangeTab = (value: any) => {
   state.activeKey = value;
 };
 
-onMounted(async () => {
-  getParkingLotData();
-});
+onMounted(async () => {});
 
 onBeforeUnmount(() => {});
 </script>

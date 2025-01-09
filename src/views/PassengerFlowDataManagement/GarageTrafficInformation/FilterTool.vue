@@ -126,6 +126,7 @@ const handleChangeStatisticalTime = () => {
 
 onMounted(async () => {
   getCapPlaceList();
+  emit("update:modelValue", state.formData);
 });
 
 onBeforeUnmount(() => {});

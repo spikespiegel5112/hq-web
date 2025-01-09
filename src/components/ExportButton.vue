@@ -1,5 +1,7 @@
 <template>
-  <a-button class="export" @click="handleExport">导出</a-button>
+  <a-button class="export" @click="handleExport" :loading="state.loading">
+    导出
+  </a-button>
 </template>
 
 <script lang="tsx" setup>
@@ -57,12 +59,16 @@ watch(
 );
 
 const handleExport = () => {
+  state.loading = true;
+  const loading = global.$message.loading("处理中...", 0);
   props
     .action({
       ...props.queryFormData,
       // ...props.pagination,
     })
     .then((response: any) => {
+      loading();
+      state.loading = false;
       global.$exportTable(response, global.$route);
     })
     .catch((error: any) => {
