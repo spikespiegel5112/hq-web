@@ -1,15 +1,14 @@
 <template>
   <div class="common_tab_container">
     <a-tabs v-model="state.activeKey" @change="handleChangeTab">
-      <a-tab-pane v-for="item in state.parkingLotData" :key="item" :tab="item">
-        <OnlineCarHailingSouth
-          v-if="state.activeKey === '北蓄车场'"
-          :capPlace="item"
-        />
-        <OnlineCarHailingNorth
-          v-if="state.activeKey === '南蓄车场'"
-          :capPlace="item"
-        />
+      <a-tab-pane
+        v-for="item in global.$getDictionary('e_hailling_cap_place')"
+        :key="item.value"
+        :tab="item.label"
+      >
+        <OnlineCarHailingSouth v-if="state.activeKey === 0" :capPlace="item" />
+        <OnlineCarHailingNorth v-if="state.activeKey === 1" :capPlace="item" />
+        <OnlineCarHailingNorth v-if="state.activeKey === 2" :capPlace="item" />
       </a-tab-pane>
     </a-tabs>
   </div>
@@ -52,7 +51,7 @@ const componentMap = ref([
 ]);
 
 const state = reactive({
-  activeKey: "" as string | undefined,
+  activeKey: 0,
   parkingLotData: [] as any[],
 });
 
