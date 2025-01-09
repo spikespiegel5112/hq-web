@@ -11,7 +11,7 @@
       @preview="handlePreview"
       @download="handleDownload"
     >
-      <template #slot:itemRender> aaa </template>
+      <template #slot:itemRender> </template>
       <!-- http://localhost:9009/manage/attachment/download?id=191 -->
     </a-upload>
     <a-image
@@ -69,25 +69,6 @@ watch(
   }
 );
 
-const checkFileType = (file: any) => {
-  let result = "";
-  const attachmentName = file.attachmentName;
-  const fileSufix = attachmentName.split(".")[1];
-
-  const imageType = ["png", "jpg", "jpeg", "gif", "bmp"];
-  const videoType = ["mp4", "avi", "mov", "wmv", "flv", "rmvb", "3gp"];
-  const fileType = ["xls", "xlsx", "pdf", "doc", "docx", "ppt", "pptx", "txt"];
-  if (imageType.includes(fileSufix)) {
-    result = "image";
-  }
-  if (videoType.includes(fileSufix)) {
-    result = "video";
-  }
-  if (fileType.includes(fileSufix)) {
-    result = "file";
-  }
-  return result;
-};
 const handlePreview = (value: any) => {
   state.previewVisible = true;
   state.currentAttachmentData = value;
@@ -100,7 +81,7 @@ const handleDownload = (value: any) => {
 const parseAttachmentList = () => {
   state.attachmentList = props.attachmentList.map(
     (item: any, index: number) => {
-      const fileType = checkFileType(item);
+      const fileType = global.$checkFileType(item);
       let previewImagePath = "";
       switch (fileType) {
         case "file":
@@ -110,7 +91,7 @@ const parseAttachmentList = () => {
           previewImagePath = global.$getImageUrl("@/assets/file_icon.png");
           break;
         default:
-          previewImagePath = `${global.$getBaseUrl()}/attachment/download?id=${item.id}`;
+          previewImagePath = checkUniViewImage(item);
           break;
       }
 
@@ -123,6 +104,20 @@ const parseAttachmentList = () => {
       };
     }
   );
+};
+
+const checkUniViewImage = (item: any) => {
+  let result: string;
+  const baseUrl =
+    global.$store.state.app.envMode.MODE === "test"
+      ? "http://localhost:9009/manage"
+      : "";
+  if (item.createBy === "uniview") {
+    result = item.attachmentPath;
+  } else {
+    result = `${global.$getBaseUrl()}/attachment/download?id=${item.id}`;
+  }
+  return result;
 };
 
 onMounted(() => {

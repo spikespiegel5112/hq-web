@@ -122,8 +122,22 @@ const getImgUrl = (item: any) => {
   if (item.directLocation) {
     return item.attachmentName;
   } else {
-    return `${global.$getBaseUrl()}/attachment/download?id=${item.id}`;
+    return checkUniViewImage(item);
   }
+};
+
+const checkUniViewImage = (item: any) => {
+  let result: string;
+  const baseUrl =
+    global.$store.state.app.envMode.MODE === "test"
+      ? "http://localhost:9009/manage"
+      : "";
+  if (item.createBy === "uniview") {
+    result = item.attachmentPath;
+  } else {
+    result = `${global.$getBaseUrl()}/attachment/download?id=${item.id}`;
+  }
+  return result;
 };
 
 const handleClose = () => {

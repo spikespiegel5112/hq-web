@@ -148,9 +148,7 @@ const getData = () => {
 
 const getStatisticData = () => {
   passengerFlowStorageGetStatisticsRequest()
-    .then((response: any) => {
-      debugger;
-    })
+    .then((response: any) => {})
     .catch((error: any) => {
       console.log(error);
     });
@@ -160,17 +158,6 @@ const handleEdit = (rowData: any) => {
   state.dialogVisible = true;
   state.dialogMode = "edit";
   state.currentRowData = rowData;
-};
-
-const handleReview = (rowData: any) => {
-  state.dialogVisible = true;
-  state.dialogMode = "review";
-  state.currentRowData = rowData;
-};
-
-const handleAdd = () => {
-  state.dialogVisible = true;
-  state.dialogMode = "add";
 };
 
 const handleSearch = (formData: object) => {

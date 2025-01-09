@@ -292,6 +292,35 @@ const _utils = {
     const env = import.meta.env;
     return env.VITE_BASE_URL + "/manage";
   },
+
+  $checkFileType: (fileName: any) => {
+    let result = "";
+    const attachmentName = fileName;
+    const fileSufix = attachmentName.split(".")[1];
+
+    const imageType = ["png", "jpg", "jpeg", "gif", "bmp"];
+    const videoType = ["mp4", "avi", "mov", "wmv", "flv", "rmvb", "3gp"];
+    const fileType = [
+      "xls",
+      "xlsx",
+      "pdf",
+      "doc",
+      "docx",
+      "ppt",
+      "pptx",
+      "txt",
+    ];
+    if (imageType.includes(fileSufix)) {
+      result = "image";
+    }
+    if (videoType.includes(fileSufix)) {
+      result = "video";
+    }
+    if (fileType.includes(fileSufix)) {
+      result = "file";
+    }
+    return result;
+  },
 } as any;
 
 const result = {
@@ -313,6 +342,7 @@ const result = {
       _utils["$getAllDictionary"];
     app.config.globalProperties["$checkEditable"] = _utils["$checkEditable"];
     app.config.globalProperties["$getBaseUrl"] = _utils["$getBaseUrl"];
+    app.config.globalProperties["$checkFileType"] = _utils["$checkFileType"];
   },
 } as any;
 

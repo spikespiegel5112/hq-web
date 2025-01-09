@@ -115,6 +115,13 @@ const menuList = computed(() => {
   return result;
 });
 
+watch(
+  () => global.$route,
+  (newValue: any, oldValue: any) => {
+    initMenu();
+  }
+);
+
 const initMenu = () => {
   let result: any;
   const looper = (children: any[]) => {

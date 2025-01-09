@@ -8,6 +8,9 @@
       action="/api/manage/attachment/upload"
       :headers="{}"
       :disabled="props.disabled"
+      :showUploadList="{
+        showDownloadIcon: false,
+      }"
       @change="handleChangeAttachment"
       @remove="handleDeleteAttachment"
     >
@@ -15,6 +18,17 @@
         <upload-outlined></upload-outlined>
         上传
       </a-button>
+      <template #itemRender="{ file, actions }">
+        {{ file }}
+        <a-space>
+          <template v-if="global.$checkFileType(file.name) === 'image'">
+            <a-image :width="200" :src="global.$getImageUrl(file.name)" />
+          </template>
+          <a-button type="link" @click="actions.remove">
+            <DeleteOutlined />
+          </a-button>
+        </a-space>
+      </template>
     </a-upload>
   </div>
 </template>
@@ -32,7 +46,7 @@ import {
   nextTick,
   defineEmits,
 } from "vue";
-import { UploadOutlined } from "@ant-design/icons-vue";
+import { UploadOutlined, DeleteOutlined } from "@ant-design/icons-vue";
 
 import { attachmentDeleteRequest } from "@/api/management";
 
@@ -73,10 +87,6 @@ watch(
   () => props.attachmentList,
   (newValue: any, oldValue: any) => {
     state.fileList = [];
-    const baseUrl =
-      global.$store.state.app.envMode.MODE === "test"
-        ? "http://localhost:9009/manage"
-        : "";
 
     newValue.forEach((item: any, index: number) => {
       state.fileList.push({
@@ -84,8 +94,11 @@ watch(
         uid: index,
         name: item.attachmentName,
         status: "done",
-        url: `${baseUrl}/attachment/download?id=${item.id}`,
+        deleteAble: checkUniView(item),
+        url: checkUniViewImage(item),
+        // url: `${baseUrl}/attachment/download?id=${item.id}`,
       });
+      debugger
     });
   },
   {
@@ -93,7 +106,29 @@ watch(
   }
 );
 
+const checkUniView = (item: any) => {
+  return item.createBy !== "uniview";
+};
+
+const checkUniViewImage = (item: any) => {
+  let result: string;
+  const baseUrl =
+    global.$store.state.app.envMode.MODE === "test"
+      ? "http://localhost:9009/manage"
+      : "";
+  if (checkUniView(item)) {
+    result = item.attachmentPath;
+  } else {
+    result = `${baseUrl}/attachment/download?id=${item.id}`;
+  }
+  return result;
+};
+
 const handleChangeAttachment = (value: any) => {
+  if (!value.deleteAble) {
+    global.$message.error("系统文件，无法删除");
+    return;
+  }
   if (value.file.response) {
     const response: any = value.file.response;
     if (response.code === 0) {
@@ -109,6 +144,10 @@ const handleChangeAttachment = (value: any) => {
 };
 
 const handleDeleteAttachment = (value: any) => {
+  if (!value.deleteAble) {
+    global.$message.error("系统文件，无法删除");
+    return;
+  }
   let sliceIndex: number = 0;
 
   props.attachmentList.forEach((item: any, index: number) => {
@@ -118,15 +157,15 @@ const handleDeleteAttachment = (value: any) => {
   });
 
   props.attachmentList.splice(sliceIndex, 1);
-  attachmentDeleteRequest({
-    id: value.id,
-  })
-    .then((res: any) => {
-      global.$message.success("删除成功");
-    })
-    .catch((err: any) => {
-      global.$message.error("删除失败");
-    });
+  // attachmentDeleteRequest({
+  //   id: value.id,
+  // })
+  //   .then((res: any) => {
+  //     global.$message.success("删除成功");
+  //   })
+  //   .catch((err: any) => {
+  //     global.$message.error("删除失败");
+  //   });
 };
 
 const initFileList = () => {

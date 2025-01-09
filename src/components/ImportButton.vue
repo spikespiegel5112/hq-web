@@ -31,7 +31,7 @@ const emit = defineEmits<{
 const props = defineProps({
   label: {
     type: String,
-    required: true,
+    required: false,
     default: "导入",
   },
   action: {
