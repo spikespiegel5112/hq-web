@@ -192,15 +192,15 @@ const handleDeleteAttachment = (value: any) => {
   });
 
   props.attachmentList.splice(sliceIndex, 1);
-  // attachmentDeleteRequest({
-  //   id: value.id,
-  // })
-  //   .then((res: any) => {
-  //     global.$message.success("删除成功");
-  //   })
-  //   .catch((err: any) => {
-  //     global.$message.error("删除失败");
-  //   });
+  attachmentDeleteRequest({
+    id: value.id,
+  })
+    .then((res: any) => {
+      global.$message.success("删除成功");
+    })
+    .catch((err: any) => {
+      global.$message.error("删除失败");
+    });
 };
 
 const initFileList = () => {

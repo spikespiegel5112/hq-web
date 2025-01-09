@@ -81,7 +81,7 @@ const handleDownload = (value: any) => {
 const parseAttachmentList = () => {
   state.attachmentList = props.attachmentList.map(
     (item: any, index: number) => {
-      const fileType = global.$checkFileType(item);
+      const fileType = global.$checkFileType(item.attachmentName);
       let previewImagePath = "";
       switch (fileType) {
         case "file":
