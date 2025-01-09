@@ -217,7 +217,7 @@ const routerDictionary = [
         title: "预案管理",
         path: "EmergencyPlanManagement",
         name: "EmergencyPlanManagement",
-        icon: "/src/assets/menu_informationmanagement.png",
+        icon: "/src/assets/menu_emergencyplanmanagement.png",
         component: () =>
           import(/* webpackChunkName: "RouterView" */ "@/views/RouterView.vue"),
         children: [
@@ -288,7 +288,7 @@ const routerDictionary = [
                 /* webpackChunkName: "CalendarInformationManagement" */ "@/views/OperationManagement/CalendarInformationManagement/CalendarInformationManagement.vue"
               ),
             meta: {
-              title: "告警信息管理",
+              title: "日历信息管理",
             },
           },
           {
