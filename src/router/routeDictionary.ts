@@ -324,7 +324,7 @@ const routerDictionary = [
                 /* webpackChunkName: "ConfigurationMap" */ "@/views/OperationManagement/ConfigurationMap/ConfigurationMap.vue"
               ),
             meta: {
-              title: "阈值配置",
+              title: "地图配置",
             },
           },
         ],

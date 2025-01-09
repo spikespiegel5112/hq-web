@@ -19,15 +19,30 @@
         上传
       </a-button>
       <template #itemRender="{ file, actions }">
-        {{ file }}
-        <a-space>
-          <template v-if="global.$checkFileType(file.name) === 'image'">
-            <a-image :width="200" :src="global.$getImageUrl(file.name)" />
+        <div class="filelist_wrapper">
+          <div v-if="global.$checkFileType(file.name) === 'image'">
+            <a-image
+              v-if="file.createBy === 'uniview'"
+              width="1rem"
+              height="1rem"
+              :src="file.attachmentPath"
+            />
+            <a-image
+              v-else
+              :width="200"
+              :src="global.$getImageUrl(file.name)"
+            />
+            <a-button class="deletebutton" type="link" @click="actions.remove">
+              <DeleteOutlined />
+            </a-button>
+          </div>
+          <template v-else-if="global.$checkFileType(file.name) === 'file'">
+            aaaa
+            <a-button class="deletebutton" type="link" @click="actions.remove">
+              <DeleteOutlined />
+            </a-button>
           </template>
-          <a-button type="link" @click="actions.remove">
-            <DeleteOutlined />
-          </a-button>
-        </a-space>
+        </div>
       </template>
     </a-upload>
   </div>
@@ -90,6 +105,7 @@ watch(
 
     newValue.forEach((item: any, index: number) => {
       state.fileList.push({
+        ...item,
         id: item.id,
         uid: index,
         name: item.attachmentName,
@@ -98,7 +114,6 @@ watch(
         url: checkUniViewImage(item),
         // url: `${baseUrl}/attachment/download?id=${item.id}`,
       });
-      debugger
     });
   },
   {
@@ -125,10 +140,6 @@ const checkUniViewImage = (item: any) => {
 };
 
 const handleChangeAttachment = (value: any) => {
-  if (!value.deleteAble) {
-    global.$message.error("系统文件，无法删除");
-    return;
-  }
   if (value.file.response) {
     const response: any = value.file.response;
     if (response.code === 0) {
@@ -187,7 +198,7 @@ onMounted(() => {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.common_block_item {
+.common_upload_item {
   background-size: 100%;
   background-repeat: no-repeat;
   background-position: 0 0.1rem;
@@ -205,6 +216,16 @@ onMounted(() => {
       rgba(68, 121, 255, 1),
       rgba(68, 121, 255, 0)
     );
+  }
+  .filelist_wrapper {
+    > div {
+      display: inline-block;
+      position: relative;
+      .deletebutton {
+        position: absolute;
+        right: 0;
+      }
+    }
   }
 }
 </style>

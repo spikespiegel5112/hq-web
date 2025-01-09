@@ -5,7 +5,7 @@ import {
   RouteRecordRaw,
 } from "vue-router";
 
-import routeDictionary from "./routeDictionary";
+import routeDictionary from "@/router/routeDictionary";
 const routes: Array<RouteRecordRaw> = routeDictionary;
 
 const router = createRouter({
