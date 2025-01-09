@@ -1,35 +1,43 @@
 <template>
   <div class="common_filtertool_wrapper">
-    <a-form :model="formData" autocomplete="off" ref="formDataRef">
+    <a-form :model="state.formData" autocomplete="off" ref="formDataRef">
       <a-row>
         <a-col :span="21">
           <a-row :gutter="20">
             <a-col :span="6">
               <a-form-item name="userName" label="来源种类">
-                <a-input v-model:value="formData.userName" placeholder="请输入">
-
+                <a-input
+                  v-model:value="state.formData.userName"
+                  placeholder="请输入"
+                >
                 </a-input>
               </a-form-item>
             </a-col>
 
             <a-col :span="6">
               <a-form-item name="password" label="事件级别">
-                <a-input v-model:value="formData.password" placeholder="请输入">
-                  
+                <a-input
+                  v-model:value="state.formData.password"
+                  placeholder="请输入"
+                >
                 </a-input>
               </a-form-item>
             </a-col>
             <a-col :span="6">
               <a-form-item name="password" label="事件状态">
-                <a-input v-model:value="formData.password" placeholder="请输入">
-                  
+                <a-input
+                  v-model:value="state.formData.password"
+                  placeholder="请输入"
+                >
                 </a-input>
               </a-form-item>
             </a-col>
             <a-col :span="6">
               <a-form-item name="password" label="日期">
-                <a-input v-model:value="formData.password" placeholder="请输入">
-                  
+                <a-input
+                  v-model:value="state.formData.password"
+                  placeholder="请输入"
+                >
                 </a-input>
               </a-form-item>
             </a-col>
@@ -74,18 +82,20 @@ const emit = defineEmits<{
 
 const formDataRef: any = ref(null);
 
-const formData = reactive({
-  userName: null,
-  password: null,
+const state = reactive({
+  formData: {
+    userName: null,
+    password: null,
+  },
 });
 
 const handleSearch = () => {
-  emit("onSearch", formData);
+  emit("onSearch", state.formData);
 };
 
 const handleReset = () => {
   formDataRef.value.resetFields();
-  emit("onReset", formData);
+  emit("onReset", state.formData);
 };
 
 onMounted(async () => {

@@ -55,6 +55,7 @@ import {
 import {
   passengerFlowStorageExportRequest,
   passengerFlowStorageGetPageRequest,
+  passengerFlowStorageGetStatisticsRequest,
 } from "@/api/management";
 
 import FilterTool from "./FilterTool.vue";

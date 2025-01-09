@@ -6,7 +6,7 @@
           <a-row :gutter="20">
             <a-col :span="6">
               <a-form-item name="userName" label="来源种类">
-                <a-input v-model:value="formData.userName" placeholder="请输入">
+                <a-input v-model:value="state.formData.userName" placeholder="请输入">
 
                 </a-input>
               </a-form-item>
@@ -14,21 +14,21 @@
 
             <a-col :span="6">
               <a-form-item name="password" label="事件级别">
-                <a-input v-model:value="formData.password" placeholder="请输入">
+                <a-input v-model:value="state.formData.password" placeholder="请输入">
                   
                 </a-input>
               </a-form-item>
             </a-col>
             <a-col :span="6">
               <a-form-item name="password" label="事件状态">
-                <a-input v-model:value="formData.password" placeholder="请输入">
+                <a-input v-model:value="state.formData.password" placeholder="请输入">
                   
                 </a-input>
               </a-form-item>
             </a-col>
             <a-col :span="6">
               <a-form-item name="password" label="日期">
-                <a-input v-model:value="formData.password" placeholder="请输入">
+                <a-input v-model:value="state.formData.password" placeholder="请输入">
                   
                 </a-input>
               </a-form-item>

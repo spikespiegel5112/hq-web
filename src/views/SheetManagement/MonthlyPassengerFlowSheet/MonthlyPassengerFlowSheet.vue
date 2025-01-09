@@ -1,10 +1,14 @@
 <template>
   <div class="common_table_wrapper">
-    <FilterTool       @onSearch="handleSearch"       @onReset="handleReset"       v-model="queryFormData"     ></FilterTool>
+    <FilterTool
+      @onSearch="handleSearch"
+      @onReset="handleReset"
+      v-model="queryFormData"
+    ></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
         <a-button class="import">导入</a-button>
-                 <!-- <ExportButton
+        <!-- <ExportButton
           :action="eventManageSuddenEventExportRequest"
           :queryFormData="queryFormData"
         /> -->
@@ -45,7 +49,6 @@ import {
   nextTick,
 } from "vue";
 
-
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
 
@@ -62,7 +65,7 @@ const pageModel = ref([
     exportVisible: false,
   },
   {
-    label: "出租车",
+    label: "来源种类",
     name: "higywayCode",
     required: true,
     tableVisible: true,
@@ -70,7 +73,7 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "网约车",
+    label: "事件级别",
     name: "highwayName",
     required: true,
     tableVisible: true,
@@ -78,7 +81,7 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "停车库",
+    label: "事件状态",
     name: "bridgeCode",
     required: true,
     tableVisible: true,
@@ -86,7 +89,7 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "地铁",
+    label: "日期",
     name: "bridgeName",
     required: true,
     tableVisible: true,
@@ -94,15 +97,7 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "其他",
-    name: "bridgeName",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
-    label: "统计日期",
+    label: "内容",
     name: "bridgeName",
     required: true,
     tableVisible: true,
@@ -135,14 +130,7 @@ const pagination = reactive({
 const getData = () => {
   global.$store.commit("app/updateTableLoading", true);
   const result = [] as any[];
-  for (let index = 0; index < 30; index++) {
-    result.push({
-      higywayCode: "aaa",
-      highwayName: "aaa",
-      bridgeCode: "aaa",
-      bridgeName: "aaa",
-    });
-  }
+
   state.tableData = result;
 };
 

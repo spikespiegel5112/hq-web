@@ -1333,3 +1333,51 @@ export const passengerFloweEHailingParkingGetPageRequest = (params: any) => {
     data: params,
   });
 };
+
+// 系统管理-用户
+// Sys User Controller
+
+// 删除
+export const sysSysUserDelete = (params: any) => {
+  return service({
+    url: prefix + "/sys/sysUser/delete",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 批量删除
+export const sysSysUserDeletes = (params: any) => {
+  return service({
+    url: prefix + "/sys/sysUser/deletes",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 根据Id查询
+export const sysSysUserGetOneById = (params: any) => {
+  return service({
+    url: prefix + "/sys/sysUser/getOneById",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 分页查询
+export const sysSysUserGetPage = (params: any) => {
+  return service({
+    url: prefix + "/sys/sysUser/getPage",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 保存
+export const sysSysUserSave = (params: any) => {
+  return service({
+    url: prefix + "/sys/sysUser/save",
+    method: "POST",
+    data: params,
+  });
+};

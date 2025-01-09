@@ -1,39 +1,43 @@
 <template>
   <div class="common_filtertool_wrapper">
-    <a-form       :model="state.formData"
-      autocomplete="off"
-      ref="formDataRef"
-  
-    >
+    <a-form :model="state.formData" autocomplete="off" ref="formDataRef">
       <a-row>
         <a-col :span="21">
           <a-row :gutter="20">
             <a-col :span="6">
               <a-form-item name="userName" label="区域">
-                <a-input v-model:value="formData.userName" placeholder="请输入">
-
+                <a-input
+                  v-model:value="state.formData.userName"
+                  placeholder="请输入"
+                >
                 </a-input>
               </a-form-item>
             </a-col>
 
             <a-col :span="6">
               <a-form-item name="password" label="舆情来源">
-                <a-input v-model:value="formData.password" placeholder="请输入">
-                  
+                <a-input
+                  v-model:value="state.formData.password"
+                  placeholder="请输入"
+                >
                 </a-input>
               </a-form-item>
             </a-col>
             <a-col :span="6">
               <a-form-item name="password" label="敏感程度">
-                <a-input v-model:value="formData.password" placeholder="请输入">
-                  
+                <a-input
+                  v-model:value="state.formData.password"
+                  placeholder="请输入"
+                >
                 </a-input>
               </a-form-item>
             </a-col>
             <a-col :span="6">
               <a-form-item name="password" label="日期">
-                <a-input v-model:value="formData.password" placeholder="请输入">
-                  
+                <a-input
+                  v-model:value="state.formData.password"
+                  placeholder="请输入"
+                >
                 </a-input>
               </a-form-item>
             </a-col>
@@ -78,8 +82,10 @@ const emit = defineEmits<{
 
 const formDataRef: any = ref(null);
 
-const formData = reactive({
-  dicName: null,
+const state = reactive({
+  formData: {
+    dicName: null,
+  },
 });
 
 const handleSearch = () => {

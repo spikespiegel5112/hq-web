@@ -1,10 +1,14 @@
 <template>
   <div class="common_table_wrapper">
-    <FilterTool       @onSearch="handleSearch"       @onReset="handleReset"       v-model="queryFormData"     ></FilterTool>
+    <FilterTool
+      @onSearch="handleSearch"
+      @onReset="handleReset"
+      v-model="queryFormData"
+    ></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
         <a-button class="import">导入</a-button>
-                 <!-- <ExportButton
+        <!-- <ExportButton
           :action="eventManageSuddenEventExportRequest"
           :queryFormData="queryFormData"
         /> -->
@@ -45,7 +49,6 @@ import {
   nextTick,
 } from "vue";
 
-
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
 
@@ -62,7 +65,7 @@ const pageModel = ref([
     exportVisible: false,
   },
   {
-    label: "进站数",
+    label: "来源种类",
     name: "higywayCode",
     required: true,
     tableVisible: true,
@@ -70,7 +73,7 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "出站数",
+    label: "事件级别",
     name: "highwayName",
     required: true,
     tableVisible: true,
@@ -78,7 +81,7 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "开始时间",
+    label: "事件状态",
     name: "bridgeCode",
     required: true,
     tableVisible: true,
@@ -86,7 +89,15 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "结束时间",
+    label: "日期",
+    name: "bridgeName",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
+    label: "内容",
     name: "bridgeName",
     required: true,
     tableVisible: true,
@@ -119,14 +130,7 @@ const pagination = reactive({
 const getData = () => {
   global.$store.commit("app/updateTableLoading", true);
   const result = [] as any[];
-  for (let index = 0; index < 30; index++) {
-    result.push({
-      higywayCode: "aaa",
-      highwayName: "aaa",
-      bridgeCode: "aaa",
-      bridgeName: "aaa",
-    });
-  }
+
   state.tableData = result;
 };
 
