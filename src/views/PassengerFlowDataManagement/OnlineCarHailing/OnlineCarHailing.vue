@@ -1,11 +1,7 @@
 <template>
   <div class="common_tab_container">
     <a-tabs v-model="state.activeKey" @change="handleChangeTab">
-      <a-tab-pane
-        v-for="item in state.parkingLotData"
-        :key="item"
-        :tab="item"
-      >
+      <a-tab-pane v-for="item in state.parkingLotData" :key="item" :tab="item">
         <OnlineCarHailingSouth
           v-if="state.activeKey === '北蓄车场'"
           :capPlace="item"

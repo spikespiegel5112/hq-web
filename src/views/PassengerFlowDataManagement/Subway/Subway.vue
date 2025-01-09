@@ -1,23 +1,18 @@
 <template>
-  <div class="common_table_wrapper">
-    <FilterTool       @onSearch="handleSearch"       @onReset="handleReset"       v-model="queryFormData"     ></FilterTool>
-    <div class="common_tableoperation_wrapper">
-      <a-space size="middle" wrap>
-        <ExportButton
-          :action="passengerFlowMetroPassengerFlowExportRequest"
-          :queryFormData="queryFormData"
+  <div class="common_tab_container">
+    <a-tabs v-model="state.activeKey" @change="handleChangeTab">
+      <a-tab-pane
+        v-for="item in global.$getDictionary('metro_station_code')"
+        :key="item.value"
+        :tab="item.label"
+      >
+        <SubwayTrain v-if="state.activeKey === '05-19-10'" :capPlace="item" />
+        <SubwayTerminal2
+          v-if="state.activeKey === '04-17-03'"
+          :capPlace="item"
         />
-      </a-space>
-    </div>
-    <BaseTable
-      :tableData="state.tableData"
-      :dataModel="pageModel"
-      :pagination="pagination"
-      :loading="global.$store.state.app.tableLoading"
-      @onEdit="handleEdit"
-      @onReview="handleReview"
-      @onChangePage="handleChangePage"
-    />
+      </a-tab-pane>
+    </a-tabs>
   </div>
 </template>
 
@@ -34,158 +29,39 @@ import {
   nextTick,
 } from "vue";
 
-import {
-  passengerFlowMetroPassengerFlowGetPageRequest,
-  backendRailwayArriveRailwayArriveExportRequest,
-  backendRailwayArriveSaveRailwayArriveRequest,
-  passengerFlowMetroPassengerFlowExportRequest,
-  eventManageSuddenEventExportRequest,
-} from "@/api/management";
-import FilterTool from "./FilterTool.vue";
+import { passengerFloweEHailingParkingGetCapPlaceRequest } from "@/api/management";
+
+import SubwayTerminal2 from "./SubwayTerminal2.vue";
+import SubwayTrain from "./SubwayTrain.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
-const pageModel = ref([
+const componentMap = ref([
   {
-    label: "序号",
-    name: "index",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: false,
+    code: "P-TPL-RailwayS",
+    componentName: "SubwayTrain",
   },
   {
-    label: "小时进站数",
-    name: "metroHourInTotal",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
+    code: "P-TPL-RailwayN",
+    componentName: "SubwayTerminal2",
   },
   {
-    label: "小时出站数",
-    name: "metroHourOutTotal",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
-    label: "地铁站",
-    name: "metroStationCode",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
-    label: "统计时间",
-    name: "statisticalTime",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
+    code: "P-TPL-UrbanRailway",
+    componentName: "TaxiUrbanRail",
   },
 ]);
 
 const state = reactive({
-  tableData: [] as any[],
-  dialogVisible: false,
-  dialogMode: null as string | null,
-  currentRowData: {},
+  activeKey: "05-19-10" as string | undefined,
+  parkingLotData: [] as any[],
 });
 
-let queryFormData = reactive({} as any);
-
-const pagination = reactive({
-  ...global.$store.state.app.defaultPagination,
-});
-
-const getData = () => {
-  global.$store.commit("app/updateTableLoading", true);
-  passengerFlowMetroPassengerFlowGetPageRequest({
-    ...queryFormData,
-    ...pagination,
-  })
-    .then((response: any) => {
-      response = response.data;
-      state.tableData = response.list.map((item: any) => {
-        return {
-          ...item,
-          metroStationCode: global
-            .$getDictionary("metro_station_code")
-            .find((item2: any) => {
-              return item2.value === item.metroStationCode;
-            })?.label,
-        };
-      });
-      pagination.total = response.total;
-    })
-    .catch((error: any) => {
-      console.log(error);
-    });
+const handleChangeTab = (value: any) => {
+  state.activeKey = value;
 };
 
-const handleEdit = (currentRowData: any) => {
-  state.dialogVisible = true;
-  state.dialogMode = "edit";
-  state.currentRowData = currentRowData;
-};
-
-const handleReview = (currentRowData: any) => {
-  state.dialogVisible = true;
-  state.dialogMode = "review";
-  state.currentRowData = currentRowData;
-};
-
-const handleAdd = () => {
-  state.dialogVisible = true;
-  state.dialogMode = "add";
-};
-
-const handleSearch = (formData: object) => {
-  global.$store.commit("app/updateTableLoading", true);
-  queryFormData = formData;
-  getData();
-};
-
-const handleReset = (formData: object) => {
-  queryFormData = formData;
-  getData();
-};
-
-const handleClose = () => {
-  state.dialogVisible = false;
-};
-
-const handleChangePage = (pagingData: any) => {
-  pagination.page = pagingData.current;
-  pagination.pageSize = pagingData.pageSize;
-  pagination.total = pagingData.total;
-  getData();
-};
-
-const handleUploaded = (response: any) => {
-  getData();
-};
-
-const handleExport = () => {
-  backendRailwayArriveRailwayArriveExportRequest({
-    ...queryFormData,
-    ...pagination,
-  })
-    .then((response: any) => {
-      global.$exportTable(response, global.$route);
-    })
-    .catch((error: any) => {
-      console.log(error);
-    });
-};
-
-onMounted(async () => {
-  getData();
-});
+onMounted(async () => {});
 
 onBeforeUnmount(() => {});
 </script>

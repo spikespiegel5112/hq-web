@@ -1,5 +1,6 @@
 <template>
   <div class="common_table_wrapper">
+    <Statistic :statisticData="state.statisticData" />
     <FilterTool
       @onSearch="handleSearch"
       @onReset="handleReset"
@@ -8,30 +9,22 @@
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
         <ExportButton
-          :action="passengerFlowStorageExportRequest"
+          :action="passengerFlowMetroPassengerFlowExportRequest"
           :queryFormData="queryFormData"
-          :pagination="{
-            ...pagination,
-            pageSize: null,
-          }"
         />
       </a-space>
     </div>
     <BaseTable
       :tableData="state.tableData"
-      :processedTableData="state.processedTableData"
       :dataModel="pageModel"
+      :pagination="pagination"
+      :loading="global.$store.state.app.tableLoading"
       tabTable
+      statisticTable
       @onEdit="handleEdit"
+      @onReview="handleReview"
+      @onChangePage="handleChangePage"
     />
-    <EditDialog
-      :visible="state.dialogVisible"
-      :mode="state.dialogMode"
-      :dataModel="pageModel"
-      :rowData="state.currentRowData"
-      @onClose="handleClose"
-      @onSubmit="handleSubmit"
-    ></EditDialog>
   </div>
 </template>
 
@@ -49,18 +42,20 @@ import {
 } from "vue";
 
 import {
-  passengerFlowStorageExportRequest,
-  passengerFloweEHailingParkingGetPageRequest,
+  passengerFlowMetroPassengerFlowGetPageRequest,
+  passengerFlowMetroPassengerFlowgGetStatisticsRequest,
+  backendRailwayArriveSaveRailwayArriveRequest,
+  passengerFlowMetroPassengerFlowExportRequest,
+  eventManageSuddenEventExportRequest,
 } from "@/api/management";
-
 import FilterTool from "./FilterTool.vue";
-import EditDialog from "./EditDialog.vue";
+import Statistic from "./Statistic.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
 const props = defineProps({
-  capPlace: { type: String, required: true, default: "" },
+  capPlace: { type: Object, default: null, required: true },
 });
 
 const pageModel = ref([
@@ -73,40 +68,32 @@ const pageModel = ref([
     exportVisible: false,
   },
   {
-    label: "类型",
-    name: "capFlag",
+    label: "小时进站数",
+    name: "metroHourInTotal",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "出入口名称",
-    name: "capPlace",
+    label: "小时出站数",
+    name: "metroHourOutTotal",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "抓拍时间",
-    name: "capTime",
+    label: "地铁站",
+    name: "metroStationCode",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "图片链接",
-    name: "imgInfo",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
-    label: "车牌号",
-    name: "plateNo",
+    label: "统计时间",
+    name: "statisticalTime",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -116,10 +103,10 @@ const pageModel = ref([
 
 const state = reactive({
   tableData: [] as any[],
-  processedTableData: [] as any[],
   dialogVisible: false,
   dialogMode: null as string | null,
   currentRowData: {},
+  statisticData: {},
 });
 
 let queryFormData = reactive({} as any);
@@ -129,21 +116,21 @@ const pagination = reactive({
 });
 
 const getData = () => {
-  queryFormData.capPlace = props.capPlace;
   global.$store.commit("app/updateTableLoading", true);
-  passengerFloweEHailingParkingGetPageRequest({
+  passengerFlowMetroPassengerFlowGetPageRequest({
     ...queryFormData,
     ...pagination,
-    capPlace: props.capPlace,
   })
     .then((response: any) => {
-      state.tableData = response.data.list;
-      state.processedTableData = response.data.list.map((item: any) => {
+      response = response.data;
+      state.tableData = response.list.map((item: any) => {
         return {
           ...item,
-          capFlag: global
-            .$getDictionary("entranceAndExitType")
-            .find((item2: any) => item2.value === item.capFlag)?.label,
+          metroStationCode: global
+            .$getDictionary("metro_station_code")
+            .find((item2: any) => {
+              return item2.value === item.metroStationCode;
+            })?.label,
         };
       });
       pagination.total = response.total;
@@ -153,13 +140,20 @@ const getData = () => {
     });
 };
 
-const handleEdit = (rowData: any) => {
+const handleEdit = (currentRowData: any) => {
   state.dialogVisible = true;
   state.dialogMode = "edit";
-  state.currentRowData = rowData;
+  state.currentRowData = currentRowData;
+};
+
+const handleReview = (currentRowData: any) => {
+  state.dialogVisible = true;
+  state.dialogMode = "review";
+  state.currentRowData = currentRowData;
 };
 
 const handleSearch = (formData: object) => {
+  global.$store.commit("app/updateTableLoading", true);
   queryFormData = formData;
   getData();
 };
@@ -169,12 +163,6 @@ const handleReset = (formData: object) => {
   getData();
 };
 
-const handleClose = () => {
-  state.dialogVisible = false;
-};
-
-const handleSubmit = () => {};
-
 const handleChangePage = (pagingData: any) => {
   pagination.page = pagingData.current;
   pagination.pageSize = pagingData.pageSize;
@@ -182,8 +170,21 @@ const handleChangePage = (pagingData: any) => {
   getData();
 };
 
+const getStatisticData = () => {
+  passengerFlowMetroPassengerFlowgGetStatisticsRequest({
+    metroStationCode: props.capPlace.value,
+  })
+    .then((response: any) => {
+      state.statisticData = response.data;
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+};
+
 onMounted(async () => {
   getData();
+  getStatisticData();
 });
 
 onBeforeUnmount(() => {});

@@ -4,23 +4,6 @@
       <a-row>
         <a-col :span="21">
           <a-row :gutter="20">
-            <a-col :span="8">
-              <a-form-item name="metroStationCode" label="地铁站编码">
-                <a-select
-                  v-model:value="state.formData.metroStationCode"
-                  placeholder="请选择"
-                >
-                  <a-select-option
-                    v-for="item in global.$getDictionary('metro_station_code')"
-                    :key="item.value"
-                    :value="item.value"
-                  >
-                    {{ item.label }}
-                  </a-select-option>
-                </a-select>
-              </a-form-item>
-            </a-col>
-
             <a-col :span="10">
               <a-form-item name="statisticalTime" label="查询时间">
                 <a-range-picker
