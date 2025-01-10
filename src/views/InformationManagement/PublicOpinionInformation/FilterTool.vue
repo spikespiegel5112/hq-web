@@ -52,11 +52,9 @@
             </a-col>
             <a-col :span="10">
               <a-form-item name="publicSentimentTime" label="舆情发生时间">
-                <a-range-picker
-                  show-time
-                  v-model:value="state.publicSentimentTime"
-                  format="YYYY-MM-DD HH:mm:ss"
-                  allow-clear
+                <el-date-picker
+                  type="datetimerange"
+                  v-model="state.publicSentimentTime"
                   @change="handleChangeTime1"
                 />
               </a-form-item>

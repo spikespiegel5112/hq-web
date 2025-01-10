@@ -51,12 +51,10 @@
 
             <a-col :span="10">
               <a-form-item name="eventTime" label="接收时间">
-                <a-range-picker
-                  show-time
-                  v-model:value="state.eventTime"
+                <el-date-picker
+                  type="datetimerange"
+                  v-model="state.eventTime"
                   @change="handleChangeEventTime"
-                  allow-clear
-                  format="YYYY-MM-DD HH:mm:ss"
                 />
               </a-form-item>
             </a-col>

@@ -28,14 +28,8 @@
                 <el-date-picker
                   type="datetimerange"
                   v-model="state.statisticalDate"
-                />
-                <!-- <a-range-picker
-                  show-time
-                  v-model:value="state.statisticalDate"
-                  format="YYYY-MM-DD HH:mm:ss"
                   @change="handleChangeStatisticalDate"
-                  allow-clear
-                /> -->
+                />
               </a-form-item>
             </a-col>
           </a-row>

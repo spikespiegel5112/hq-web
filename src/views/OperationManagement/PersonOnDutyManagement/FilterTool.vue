@@ -17,11 +17,7 @@
 
             <a-col :span="10">
               <a-form-item name="password" label="值班时间">
-                <a-range-picker
-                  v-model:value="state.dutyTime"
-                  show-time
-                  format="YYYY-MM-DD HH:mm:ss"
-                />
+                <el-date-picker type="datetimerange" v-model="state.dutyTime" />
               </a-form-item>
             </a-col>
           </a-row>

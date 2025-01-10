@@ -1,8 +1,7 @@
 <template>
   <a-modal v-model:open="state.visible" @cancel="handleClose" width="12rem">
     <template #title>
-           <CommonTitle :title="dialogTitle" />
-
+      <CommonTitle :title="dialogTitle" />
     </template>
     <a-form
       :model="state.formData"
@@ -82,13 +81,11 @@
             label="值班时间"
             :label-col="{ style: { width: '100px' } }"
           >
-            <a-range-picker
-                  show-time
+            <el-date-picker
               v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.dutyTime"
-              format="YYYY-MM-DD"
+              type="datetimerange"
+              v-model="state.dutyTime"
               @change="handleChangeDutyTime"
-              allow-clear
             />
             <template v-if="props.mode === 'review'">
               {{

@@ -23,11 +23,10 @@
             </a-col>
             <a-col :span="9">
               <a-form-item name="alarmTime" label="日期">
-                <a-range-picker
-                  show-time
-                  v-model:value="state.alarmTime"
-                  allow-clear
-                  @change="handleChangeDateTime1"
+                <el-date-picker
+                  type="datetimerange"
+                  v-model="state.alarmTime"
+                  @change="handleChangeTime1"
                 />
               </a-form-item>
             </a-col>
@@ -138,7 +137,7 @@ const handleReset = () => {
   emit("onReset", state.formData);
 };
 
-const handleChangeDateTime1 = (value: any) => {
+const handleChangeTime1 = (value: any) => {
   const alarmTimeStart = global.$dayjs(value[0]).format("YYYY-MM-DD HH:mm:ss");
   const alarmTimeEnd = global.$dayjs(value[1]).format("YYYY-MM-DD HH:mm:ss");
   state.formData.alarmTimeStart = alarmTimeStart;

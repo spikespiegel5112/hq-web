@@ -35,11 +35,9 @@
 
             <a-col :span="8">
               <a-form-item name="time" label="投诉时间">
-                <a-range-picker
-                  show-time
+                <el-date-picker
+                  type="datetimerange"
                   v-model="state.dateRange"
-                  format="YYYY-MM-DD HH:mm:ss"
-                  allow-clear
                 />
               </a-form-item>
             </a-col>

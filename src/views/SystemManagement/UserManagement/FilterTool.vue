@@ -49,12 +49,10 @@
             </a-col>
             <a-col :span="9">
               <a-form-item name="loginTime" label="登录时间">
-                <a-range-picker
-                  show-time
-                  v-model:value="state.loginTime"
+                <el-date-picker
+                  type="datetimerange"
+                  v-model="state.loginTime"
                   @change="handleChangeTime1"
-                  allow-clear
-                  format="YYYY-MM-DD HH:mm:ss"
                 />
               </a-form-item>
             </a-col>

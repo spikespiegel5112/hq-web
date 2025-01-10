@@ -22,9 +22,9 @@
             </a-col>
             <a-col :span="10">
               <a-form-item name="analyzeTime" label="查询时间">
-                <a-range-picker
-                  v-model:value="state.analyzeTime"
-                  show-time
+                <el-date-picker
+                  type="datetimerange"
+                  v-model="state.analyzeTime"
                   @change="handleChangeTime1"
                 />
               </a-form-item>

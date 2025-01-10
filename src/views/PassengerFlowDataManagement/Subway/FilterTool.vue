@@ -6,10 +6,9 @@
           <a-row :gutter="20">
             <a-col :span="10">
               <a-form-item name="statisticalTime" label="查询时间">
-                <a-range-picker
-                  show-time
-                  v-model:value="state.statisticalTime"
-                  allow-clear
+                <el-date-picker
+                  type="datetimerange"
+                  v-model="state.statisticalTime"
                   @change="handleChangeTime1"
                 />
               </a-form-item>

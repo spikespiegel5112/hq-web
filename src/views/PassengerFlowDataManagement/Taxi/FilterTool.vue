@@ -6,10 +6,9 @@
           <a-row :gutter="20">
             <a-col :span="10">
               <a-form-item name="time" label="查询时间">
-                <a-range-picker
-                  v-model:value="state.time"
-                  show-time
-                  format="YYYY-MM-DD HH:mm:ss"
+                <el-date-picker
+                  type="datetimerange"
+                  v-model="state.time"
                   @change="handleChangeTime1"
                 />
               </a-form-item>

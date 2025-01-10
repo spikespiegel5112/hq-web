@@ -42,10 +42,9 @@
 
             <a-col :span="10">
               <a-form-item name="externalTime" label="信息上报时间">
-                <a-range-picker
-                  show-time
-                  v-model:value="state.externalTime"
-                  format="YYYY-MM-DD HH:mm:ss"
+                <el-date-picker
+                  type="datetimerange"
+                  v-model="state.externalTime"
                   @change="handleChangeTime1"
                 />
               </a-form-item>
