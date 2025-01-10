@@ -1,8 +1,7 @@
 <template>
   <a-modal v-model:open="state.visible" @cancel="handleClose" width="16rem">
     <template #title>
-           <CommonTitle :title="dialogTitle" />
-
+      <CommonTitle :title="dialogTitle" />
     </template>
     <div class="maincontent">
       <a-row :gutter="30">
@@ -335,6 +334,7 @@ onBeforeUnmount(() => {});
           width: 100%;
           .time {
             display: inline-block;
+            margin: 0 05rem 0 0 0;
             width: 1rem;
           }
           .content {
