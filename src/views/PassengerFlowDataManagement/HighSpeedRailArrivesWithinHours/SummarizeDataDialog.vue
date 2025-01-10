@@ -121,20 +121,14 @@
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="11">
-          <a-form-item name="statisticalDate" label="内容">
-            <a-date-picker
-              v-model:value="state.formData.statisticalDate"
-              format="YYYY-MM-DD"
-            ></a-date-picker>
-          </a-form-item>
-        </a-col>
-      </a-row>
-
-      <a-row>
         <a-col :span="22">
-          <a-form-item name="attachment" label="附件">
-            <CommonUpload :attachmentList="state.formData.attachmentList" />
+          <a-form-item name="content" label="内容">
+            <a-textarea
+              v-model:value="state.content"
+              format="YYYY-MM-DD"
+              :rows="5"
+            ></a-textarea>
+            <a-button @click="handleIdentification">识别</a-button>
           </a-form-item>
         </a-col>
       </a-row>
@@ -168,6 +162,8 @@ import {
 
 import type { Rule, RuleObject } from "ant-design-vue/es/form";
 
+import { backendRailwayArriveImportTodayFlowByStringRequest } from "@/api/management";
+
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
@@ -198,6 +194,7 @@ let state = reactive({
     estimatedDepartedTodayTrainsCount: null,
     statisticalDate: null,
   } as any,
+  content: "",
 });
 
 const rules: ComputedRef<RuleObject[]> = computed(() => {
@@ -263,8 +260,38 @@ const handleSubmit = () => {
     });
 };
 
-const handleChangeStatisticalBeginHour = (value: any) => {
-  state.formData.statisticalBeginHour = value;
+const handleIdentification = () => {
+  // 【枢纽应急响应中心】1月7日，虹桥高铁预计今日出发424列次、15.4万人，到达429列次、13.1万人；虹桥机场预计今日出港372架次、6.02万人，进港376架次、6.07万人。
+  backendRailwayArriveImportTodayFlowByStringRequest({
+    dataStr: state.content,
+  })
+    .then((response: any) => {
+      response = response.data;
+      state.formData = {
+        ...state.formData,
+        estimatedArrivedTodayFlightCount:
+          response.estimatedArrivedTodayFlightCount,
+        estimatedArrivedTodayFlightPassengerCount:
+          response.estimatedArrivedTodayFlightPassengerCount,
+        estimatedArrivedTodayPassengerCount:
+          response.estimatedArrivedTodayPassengerCount,
+        estimatedArrivedTodayTrainsCount:
+          response.estimatedArrivedTodayTrainsCount,
+        estimatedDepartedTodayFlightCount:
+          response.estimatedDepartedTodayFlightCount,
+        estimatedDepartedTodayFlightPassengerCount:
+          response.estimatedDepartedTodayFlightPassengerCount,
+        estimatedDepartedTodayPassengerCount:
+          response.estimatedDepartedTodayPassengerCount,
+        estimatedDepartedTodayTrainsCount:
+          response.estimatedDepartedTodayTrainsCount,
+        statisticalDate: response.statisticalDate,
+      };
+      global.$message.success("识别完成");
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
 };
 
 onMounted(async () => {});

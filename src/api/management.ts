@@ -117,6 +117,17 @@ export const backendRailwayArriveImportPicRequest = (params: any) => {
   });
 };
 
+// 区域小时客流-铁路到达-导入今日客流预测汇总信息
+export const backendRailwayArriveImportTodayFlowByStringRequest = (
+  params: any
+) => {
+  return service({
+    url: prefix + "/backend/railwayArrive/importTodayFlowByString",
+    method: "POST",
+    data: params,
+  });
+};
+
 // 后台管理-铁路到达-报表导出
 export const backendRailwayArriveRailwayArriveExportRequest = (params: any) => {
   return service({

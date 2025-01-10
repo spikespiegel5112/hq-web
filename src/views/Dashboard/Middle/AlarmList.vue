@@ -104,9 +104,7 @@ const pagination = reactive({
   ...global.$store.state.app.defaultPagination,
 });
 
-const handleReview = (item: any) => {
-  debugger;
-};
+const handleReview = (item: any) => {};
 
 watch(
   () => props.timeType,
@@ -137,7 +135,6 @@ const getData = () => {
           )?.label,
         };
       });
-      debugger
     })
     .catch((error: any) => {
       console.log(error);
