@@ -40,11 +40,11 @@
       <a-row :gutter="20">
         <a-col :span="11">
           <a-form-item name="phoneNumber" label="手机号码">
-            <a-input-number
+            <a-input
               v-model:value="state.formData.phoneNumber"
               placeholder="请输入"
             >
-            </a-input-number>
+            </a-input>
           </a-form-item>
         </a-col>
         <a-col :span="11">
