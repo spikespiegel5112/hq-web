@@ -146,7 +146,7 @@ const getData = () => {
             .$getDictionary("entranceAndExitType")
             .find((item2: any) => item2.value === item.capFlag)?.label,
           capPlace: global
-            .$getDictionary("e_hailling_cap_place", "string")
+            .$getDictionary("e_hailling_cap_place")
             .find((item2: any) => item2.value === item.capPlace)?.label,
         };
       });
