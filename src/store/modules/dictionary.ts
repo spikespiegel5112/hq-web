@@ -55,6 +55,63 @@ const dictionary = {
         name: "eventDisposal",
         color: "font-color-red",
       },
+      {
+        label: "分配角色",
+        name: "distributeRole",
+        color: null,
+      },
+
+      {
+        label: "下载",
+        name: "download",
+        color: null,
+      },
+      {
+        label: "预览",
+        name: "preview",
+        color: null,
+      },
+      {
+        label: "定位",
+        name: "locate",
+        color: null,
+      },
+      {
+        label: "详情",
+        name: "review",
+        color: null,
+      },
+      {
+        label: "详情",
+        name: "detail",
+        color: null,
+      },
+      {
+        label: "编辑",
+        name: "edit",
+        color: null,
+      },
+
+      {
+        label: "事件处置",
+        name: "eventDisposal",
+        color: null,
+      },
+      {
+        label: "处置",
+        name: "disposal",
+        color: null,
+      },
+      {
+        label: "发布预警",
+        name: "issueWarning",
+        color: null,
+      },
+      {
+        label: "删除",
+        name: "delete",
+        color: "font-color-red",
+      },
     ],
     dialogMode: [
       {

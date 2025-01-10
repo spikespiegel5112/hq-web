@@ -182,7 +182,7 @@ const handleClose = () => {
 };
 
 const handleSubmit = (formData: any) => {
-  sysSysUserSave(formData)
+  sysSysUserSaveRequest(formData)
     .then((response: any) => {
       global.$message.success("提交成功");
       getData();
@@ -202,7 +202,7 @@ const handleChangePage = (pagingData: any) => {
 };
 
 const handleDelete = (id: number) => {
-  sysSysUserDelete({
+  sysSysUserDeleteRequest({
     id,
   })
     .then((response: any) => {

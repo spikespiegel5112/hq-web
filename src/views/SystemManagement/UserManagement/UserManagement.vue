@@ -18,6 +18,7 @@
       @onReview="handleReview"
       @onChangePage="handleChangePage"
       @onDelete="handleDelete"
+      @onDistributeRole="handleDistributeRole"
     />
     <EditDialog
       :visible="state.dialogVisible"
@@ -27,6 +28,10 @@
       @onClose="handleClose"
       @onSubmit="handleSubmit"
     ></EditDialog>
+    <DistributeDialog
+      :visible="state.dialogDistributeVisible"
+      @onClose="handleCloseDistributeDialog"
+    ></DistributeDialog>
   </div>
 </template>
 
@@ -44,13 +49,14 @@ import {
 } from "vue";
 
 import {
-  sysSysUserGetPage,
-  sysSysUserSave,
-  sysSysUserDelete,
-  sysSysUserDeletes,
+  sysSysUserGetPageRequest,
+  sysSysUserSaveRequest,
+  sysSysUserDeleteRequest,
+  sysSysUserDeletesRequest,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
+import DistributeDialog from "./DistributeDialog.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -121,22 +127,23 @@ const pageModel = ref([
       ],
     },
   },
-
   {
     label: "操作",
     name: "operationColumn",
     tableVisible: true,
     exportVisible: false,
     fixed: "right",
-    actions: ["edit", "delete"],
+    actions: ["edit", "delete", "distributeRole"],
   },
 ]);
 
 const state = reactive({
   tableData: [] as any[],
   dialogVisible: false,
+  dialogDistributeVisible: false,
   dialogMode: null as string | null,
   currentRowData: {},
+  allRoleData: [] as any[],
 });
 
 let queryFormData = reactive({} as any);
@@ -148,7 +155,7 @@ const pagination = reactive({
 const getData = () => {
   global.$store.commit("app/updateTableLoading", true);
   pagination.total = undefined;
-  sysSysUserGetPage({
+  sysSysUserGetPageRequest({
     ...queryFormData,
     ...pagination,
   })
@@ -193,8 +200,12 @@ const handleClose = () => {
   state.dialogVisible = false;
 };
 
+const handleCloseDistributeDialog = () => {
+  state.dialogDistributeVisible = false;
+};
+
 const handleSubmit = (formData: any) => {
-  sysSysUserSave(formData)
+  sysSysUserSaveRequest(formData)
     .then((response: any) => {
       global.$message.success("提交成功");
       getData();
@@ -206,6 +217,10 @@ const handleSubmit = (formData: any) => {
     });
 };
 
+const handleDistributeRole = () => {
+  state.dialogDistributeVisible = true;
+};
+
 const handleChangePage = (pagingData: any) => {
   pagination.page = pagingData.current;
   pagination.pageSize = pagingData.pageSize;
@@ -214,7 +229,7 @@ const handleChangePage = (pagingData: any) => {
 };
 
 const handleDelete = (id: number) => {
-  sysSysUserDelete({
+  sysSysUserDeleteRequest({
     id,
   })
     .then((response: any) => {

@@ -110,7 +110,7 @@
             <span
               v-for="(action, index) in item.actions"
               :class="
-                state.actionDictionary.find((item2:any) => item2.name === action)?.color
+                global.$store.state.dictionary.actionDictionary.find((item2:any) => item2.name === action)?.color
               "
             >
               <a-divider
@@ -124,7 +124,7 @@
                 @click.stop="handleAction(action, scope)"
               >
                 {{
-                  typeof action==='object'? action.title: state.actionDictionary.find((item2:any) => item2.name === action).label
+                  typeof action==='object'? action.title: global.$store.state.dictionary.actionDictionary.find((item2:any) => item2.name === action).label
                 }}
               </a-button>
             </span>
@@ -209,6 +209,7 @@ const emit = defineEmits<{
   (e: "onDelete", id: number, row: object): void;
   (e: "onDisposal", row: object): void;
   (e: "onIssueWarning", row: object): void;
+  (e: "onDistributeRole", row: object): void;
 }>();
 
 const props = defineProps({
@@ -247,58 +248,7 @@ const pagination = reactive({
 const state = reactive({
   originalTableData: [],
   loading: true,
-  actionDictionary: [
-    {
-      label: "下载",
-      name: "download",
-      color: null,
-    },
-    {
-      label: "预览",
-      name: "preview",
-      color: null,
-    },
-    {
-      label: "定位",
-      name: "locate",
-      color: null,
-    },
-    {
-      label: "详情",
-      name: "review",
-      color: null,
-    },
-    {
-      label: "详情",
-      name: "detail",
-      color: null,
-    },
-    {
-      label: "编辑",
-      name: "edit",
-      color: null,
-    },
-    {
-      label: "事件处置",
-      name: "eventDisposal",
-      color: null,
-    },
-    {
-      label: "处置",
-      name: "disposal",
-      color: null,
-    },
-    {
-      label: "发布预警",
-      name: "issueWarning",
-      color: null,
-    },
-    {
-      label: "删除",
-      name: "delete",
-      color: "font-color-red",
-    },
-  ] as any[],
+  actionDictionary: [] as any[],
   dialogVisible: false,
   attachmentList: [] as any[],
   currentPreviewFileType: "",
@@ -479,6 +429,8 @@ const handleAction = (action: any, scope: any) => {
     emit("onDisposal", state.originalTableData[scope.index]);
   } else if (action === "issueWarning") {
     emit("onIssueWarning", state.originalTableData[scope.index]);
+  } else if (action === "distributeRole") {
+    emit("onDistributeRole", state.originalTableData[scope.index]);
   }
 };
 

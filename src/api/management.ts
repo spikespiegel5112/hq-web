@@ -1383,7 +1383,7 @@ export const passengerFloweEHailingParkingGetPageRequest = (params: any) => {
 // Sys User Controller
 
 // 删除
-export const sysSysUserDelete = (params: any) => {
+export const sysSysUserDeleteRequest = (params: any) => {
   return service({
     url: prefix + "/sys/sysUser/delete",
     method: "POST",
@@ -1392,7 +1392,7 @@ export const sysSysUserDelete = (params: any) => {
 };
 
 // 批量删除
-export const sysSysUserDeletes = (params: any) => {
+export const sysSysUserDeletesRequest = (params: any) => {
   return service({
     url: prefix + "/sys/sysUser/deletes",
     method: "POST",
@@ -1410,7 +1410,7 @@ export const sysSysUserGetOneById = (params: any) => {
 };
 
 // 分页查询
-export const sysSysUserGetPage = (params: any) => {
+export const sysSysUserGetPageRequest = (params: any) => {
   return service({
     url: prefix + "/sys/sysUser/getPage",
     method: "POST",
@@ -1419,7 +1419,7 @@ export const sysSysUserGetPage = (params: any) => {
 };
 
 // 保存
-export const sysSysUserSave = (params: any) => {
+export const sysSysUserSaveRequest = (params: any) => {
   return service({
     url: prefix + "/sys/sysUser/save",
     method: "POST",
@@ -1470,6 +1470,15 @@ export const sysSysRoleGetPage = (params: any) => {
 export const sysSysRoleSave = (params: any) => {
   return service({
     url: prefix + "/sys/sysRole/save",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 保存
+export const sysSysRoleGetAllRequest = (params: any) => {
+  return service({
+    url: prefix + "/sys/sysRole/getAll",
     method: "POST",
     data: params,
   });

@@ -136,7 +136,7 @@ onMounted(() => {
     .arrow {
       display: inline-block;
       margin: 0 0.3rem 0 0.1rem;
-      width: 1rem;
+      width: 1.3rem;
       height: 1rem;
       background-image: url("@/assets/header_title_arrow.png");
       background-repeat: no-repeat;
