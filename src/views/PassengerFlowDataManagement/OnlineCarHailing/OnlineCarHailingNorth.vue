@@ -99,6 +99,7 @@ const pageModel = ref([
   {
     label: "图片链接",
     name: "imgInfo",
+    imagePreview: true,
     required: true,
     tableVisible: true,
     formVisible: true,

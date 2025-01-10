@@ -14,11 +14,23 @@
                 </a-input>
               </a-form-item>
             </a-col>
-
+            <a-col :span="6">
+              <a-form-item name="hocStaffName" label="HOC值班人员姓名">
+                <a-input
+                  v-model:value="state.formData.hocStaffName"
+                  placeholder="请输入"
+                  allow-clear
+                >
+                </a-input>
+              </a-form-item>
+            </a-col>
             <a-col :span="10">
               <a-form-item name="password" label="值班时间">
-                <el-date-picker type="datetimerange"
-                  placeholder="请选择" v-model="state.dutyTime" />
+                <el-date-picker
+                  type="datetimerange"
+                  placeholder="请选择"
+                  v-model="state.dutyTime"
+                />
               </a-form-item>
             </a-col>
           </a-row>
@@ -67,6 +79,7 @@ const state = reactive({
     dutyStartTime: null,
     dutyEndTime: null,
     staffName: null,
+    hocStaffName: null,
   },
   dutyTime: [] as any[],
 });
