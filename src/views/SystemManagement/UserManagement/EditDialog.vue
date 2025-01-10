@@ -3,7 +3,7 @@
     v-model:open="state.visible"
     @cancel="handleClose"
     @ok="handleSubmit"
-    width="9rem"
+    width="12rem"
   >
     <template #title>
       <CommonTitle :title="dialogTitle" />
@@ -18,44 +18,54 @@
       }"
     >
       <a-row :gutter="20">
-        <a-col :span="12">
-          <a-form-item name="dicName" label="字典项名称">
+        <a-col :span="11">
+          <a-form-item name="username" label="用户名">
             <a-input
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.dicName"
+              v-model:value="state.formData.username"
               placeholder="请输入"
             >
             </a-input>
           </a-form-item>
         </a-col>
-        <a-col :span="12">
-          <a-form-item name="code" label="字典编码">
-            <a-input v-model:value="state.formData.code" placeholder="请输入">
-            </a-input>
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row :gutter="20">
-        <a-col :span="12">
-          <a-form-item name="label" label="字典标签">
-            <a-input v-model:value="state.formData.label" placeholder="请输入">
-            </a-input>
-          </a-form-item>
-        </a-col>
-        <a-col :span="12">
-          <a-form-item name="value" label="字典值">
-            <a-input v-model:value="state.formData.value" placeholder="请输入">
-            </a-input>
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row :gutter="20">
-        <a-col :span="22">
-          <a-form-item name="remark" label="字典详细信息">
-            <a-textarea
-              v-model:value="state.formData.remark"
+        <a-col :span="11">
+          <a-form-item name="nickName" label="别名">
+            <a-input
+              v-model:value="state.formData.nickName"
               placeholder="请输入"
-              :rows="4"
+            >
+            </a-input>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row :gutter="20">
+        <a-col :span="11">
+          <a-form-item name="phoneNumber" label="手机号码">
+            <a-input-number
+              v-model:value="state.formData.phoneNumber"
+              placeholder="请输入"
+            >
+            </a-input-number>
+          </a-form-item>
+        </a-col>
+        <a-col :span="11">
+          <a-form-item name="password" label="密码">
+            <a-input
+              v-model:value="state.formData.password"
+              placeholder="请输入"
+            >
+            </a-input>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row :gutter="20">
+        <a-col :span="11">
+          <a-form-item name="userStatus" label="用户状态">
+            <a-switch
+              v-model:checked="state.formData.userStatus"
+              :checkedValue="1"
+              :unCheckedValue="0"
+              checkedChildren="启用"
+              unCheckedChildren="停用"
             />
           </a-form-item>
         </a-col>
@@ -92,6 +102,7 @@ const emit = defineEmits<{
 const props = defineProps({
   visible: { type: Boolean, required: true, default: false },
   mode: { type: [String, null], required: true, default: null },
+  rowData: { type: Object, required: true, default: null },
   dataModel: { type: Array, required: true, default: () => [] as any[] },
 });
 
@@ -99,11 +110,12 @@ const state: UnwrapRef<any> = reactive({
   visible: false,
   formData: {
     id: null as number | null | undefined,
-    code: null,
-    dicName: null,
-    label: null,
-    remark: null,
-    value: null,
+    loginTime: null,
+    nickName: null,
+    password: null,
+    phoneNumber: null,
+    userStatus: "0",
+    username: null,
   },
 });
 

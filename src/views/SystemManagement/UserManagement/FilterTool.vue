@@ -1,13 +1,61 @@
 <template>
   <div class="common_filtertool_wrapper">
-    <a-form :model="formData" autocomplete="off" ref="formDataRef">
+    <a-form :model="state.formData" autocomplete="off" ref="formDataRef">
       <a-row>
         <a-col :span="21">
           <a-row :gutter="20">
-            <a-col :span="6">
-              <a-form-item name="name" label="角色名称">
-                <a-input v-model:value="formData.name" placeholder="请输入">
+            <a-col :span="3">
+              <a-form-item name="nickName" label="昵称">
+                <a-input
+                  v-model:value="state.formData.nickName"
+                  placeholder="请输入"
+                >
                 </a-input>
+              </a-form-item>
+            </a-col>
+            <a-col :span="4">
+              <a-form-item name="phoneNumber" label="手机号">
+                <a-input
+                  v-model:value="state.formData.phoneNumber"
+                  placeholder="请输入"
+                >
+                </a-input>
+              </a-form-item>
+            </a-col>
+            <a-col :span="4">
+              <a-form-item name="userStatus" label="用户状态">
+                <a-select
+                  v-model:value="state.formData.userStatus"
+                  placeholder="请选择"
+                >
+                  <a-select-option
+                    v-for="item in global.$getDictionary('userStatus')"
+                    :key="item.value"
+                    :value="item.value"
+                  >
+                    {{ item.label }}
+                  </a-select-option>
+                </a-select>
+              </a-form-item>
+            </a-col>
+            <a-col :span="4">
+              <a-form-item name="username" label="用户名">
+                <a-input
+                  v-model:value="state.formData.username"
+                  placeholder="请输入"
+                >
+                </a-input>
+              </a-form-item>
+            </a-col>
+            <a-col :span="9">
+              <a-form-item name="loginTime" label="登录时间">
+                <a-range-picker
+                  show-time
+                  v-model:value="state.loginTime"
+                  @change="handleChangeTime1"
+                  allow-clear
+                  format="YYYY-MM-DD HH:mm:ss"
+                />
               </a-form-item>
             </a-col>
           </a-row>
@@ -51,17 +99,34 @@ const emit = defineEmits<{
 
 const formDataRef: any = ref(null);
 
-const formData = reactive({
-  name: null,
+const state = reactive({
+  formData: {
+    loginTimeEnd: null,
+    loginTimeStart: null,
+    nickName: null,
+    phoneNumber: null,
+    userStatus: null,
+    username: null,
+  },
+  loginTime: null,
 });
 
 const handleSearch = () => {
-  emit("onSearch", formData);
+  emit("onSearch", state.formData);
 };
 
 const handleReset = () => {
   formDataRef.value.resetFields();
-  emit("onReset", formData);
+  emit("onReset", state.formData);
+};
+
+const handleChangeTime1 = (date: any) => {
+  state.formData.loginTimeStart = global
+    .$dayjs(date[0])
+    .format("YYYY-MM-DD HH:mm:ss");
+  state.formData.loginTimeEnd = global
+    .$dayjs(date[1])
+    .format("YYYY-MM-DD HH:mm:ss");
 };
 
 onMounted(async () => {

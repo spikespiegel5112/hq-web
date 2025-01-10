@@ -14,6 +14,7 @@
         :pagination="null"
         height="100%"
         tableBodyHeight="100%"
+        @onReview="handleReview"
       />
     </div>
   </Block>
@@ -103,12 +104,9 @@ const pagination = reactive({
   ...global.$store.state.app.defaultPagination,
 });
 
-const eventAllList = computed(() => {
-  return [
-    ...global.$store.state.app.currentEventTypeList[0].data,
-    ...global.$store.state.app.currentEventTypeList[1].data,
-  ];
-});
+const handleReview = (item: any) => {
+  debugger;
+};
 
 watch(
   () => props.timeType,
@@ -139,6 +137,7 @@ const getData = () => {
           )?.label,
         };
       });
+      debugger
     })
     .catch((error: any) => {
       console.log(error);

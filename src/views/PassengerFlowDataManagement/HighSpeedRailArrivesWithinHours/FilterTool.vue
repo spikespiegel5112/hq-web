@@ -112,12 +112,12 @@ const handleReset = () => {
   emit("onReset", state.formData);
 };
 
-const handleChangeStatisticalDate = (data: any) => {
+const handleChangeStatisticalDate = (date: any) => {
   state.formData.statisticalDateBegin = global
-    .$dayjs(data[0])
+    .$dayjs(date[0])
     .format("YYYY-MM-DD");
   state.formData.statisticalDateEnd = global
-    .$dayjs(data[1])
+    .$dayjs(date[1])
     .format("YYYY-MM-DD");
 };
 

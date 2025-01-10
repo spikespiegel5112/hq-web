@@ -103,12 +103,12 @@ const handleReset = () => {
   emit("onReset", state.formData);
 };
 
-const handleChangeTime1 = (data: any) => {
+const handleChangeTime1 = (date: any) => {
   state.formData.analyzeTimeBegin = global
-    .$dayjs(data[0])
+    .$dayjs(date[0])
     .format("YYYY-MM-DD HH:mm:ss");
   state.formData.analyzeTimeEnd = global
-    .$dayjs(data[1])
+    .$dayjs(date[1])
     .format("YYYY-MM-DD HH:mm:ss");
 };
 

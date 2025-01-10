@@ -122,7 +122,7 @@
       </a-row>
       <a-row>
         <a-col :span="11">
-          <a-form-item name="statisticalDate" label="统计日期">
+          <a-form-item name="statisticalDate" label="内容">
             <a-date-picker
               v-model:value="state.formData.statisticalDate"
               format="YYYY-MM-DD"
@@ -131,13 +131,13 @@
         </a-col>
       </a-row>
 
-      <!-- <a-row>
+      <a-row>
         <a-col :span="22">
           <a-form-item name="attachment" label="附件">
             <CommonUpload :attachmentList="state.formData.attachmentList" />
           </a-form-item>
         </a-col>
-      </a-row> -->
+      </a-row>
     </a-form>
     <template #footer>
       <a-row>

@@ -93,20 +93,19 @@ onBeforeUnmount(() => {});
       display: flex;
       align-items: center;
       width: 6rem;
-      height: 2rem;
-      background-image: url("@/assets/taxi_statistic/bg.png");
-      background-size: contain;
-      background-repeat: no-repeat;
+      position: relative;
       .icon {
         display: flex;
         margin: 0 0 0 0.2rem;
-        width: 1.5rem;
-        height: 1.5rem;
+        width: 2rem;
+        height: 2rem;
         justify-content: center;
         align-items: center;
         background-image: url("@/assets/taxi_statistic/circle.png");
         background-size: contain;
         background-repeat: no-repeat;
+        position: absolute;
+        left: 0;
         .taxi {
           width: 0.7rem;
           height: 0.7rem;
@@ -116,10 +115,16 @@ onBeforeUnmount(() => {});
         }
       }
       .right {
+        width: 100%;
+        background-image: url("@/assets/taxi_statistic/bg.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        margin: 0 0 0 2rem;
         .title {
           display: flex;
           align-items: center;
-          margin: 0.2rem 0.35rem 0 0.35rem;
+          justify-content: center;
+          margin: 0.2rem 0 0 0;
           font-size: 0.25rem;
           color: #00c3ff;
           .circle {

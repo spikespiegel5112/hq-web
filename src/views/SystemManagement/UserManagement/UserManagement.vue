@@ -1,13 +1,12 @@
 <template>
   <div class="common_table_wrapper">
-    <FilterTool       @onSearch="handleSearch"       @onReset="handleReset"       v-model="queryFormData"     ></FilterTool>
+    <FilterTool
+      @onSearch="handleSearch"
+      @onReset="handleReset"
+      v-model="queryFormData"
+    ></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
-        <a-button class="import">导入</a-button>
-                 <!-- <ExportButton
-          :action="eventManageSuddenEventExportRequest"
-          :queryFormData="queryFormData"
-        /> -->
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
@@ -18,12 +17,15 @@
       @onEdit="handleEdit"
       @onReview="handleReview"
       @onChangePage="handleChangePage"
+      @onDelete="handleDelete"
     />
     <EditDialog
       :visible="state.dialogVisible"
       :mode="state.dialogMode"
       :dataModel="pageModel"
+      :rowData="state.currentRowData"
       @onClose="handleClose"
+      @onSubmit="handleSubmit"
     ></EditDialog>
   </div>
 </template>
@@ -41,7 +43,11 @@ import {
   nextTick,
 } from "vue";
 
-import { userManageQueryAllUserRequest  ,eventManageSuddenEventExportRequest
+import {
+  sysSysUserGetPage,
+  sysSysUserSave,
+  sysSysUserDelete,
+  sysSysUserDeletes,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
@@ -59,52 +65,70 @@ const pageModel = ref([
     exportVisible: false,
   },
   {
-    label: "人员姓名",
-    name: "higywayCode",
+    label: "用户名",
+    name: "username",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+
+  {
+    label: "别名",
+    name: "nickName",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "性别",
-    name: "highwayName",
+    label: "密码",
+    name: "password",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "手机号",
-    name: "bridgeCode",
+    label: "手机号码",
+    name: "phoneNumber",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "职称",
-    name: "bridgeName",
-    required: true,
+    label: "登录时间",
+    name: "loginTime",
+    required: false,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "单位",
-    name: "bridgeName",
+    label: "用户状态",
+    name: "userStatus",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
+    tagConfig: {
+      val: "userStatus",
+      dictionary: global.$store.state.dictionary.userStatus,
+      colorList: [
+        { value: 1, color: "success" },
+        { value: 0, color: "warning" },
+      ],
+    },
   },
+
   {
     label: "操作",
     name: "operationColumn",
     tableVisible: true,
     exportVisible: false,
     fixed: "right",
-    actions: ["edit"],
+    actions: ["edit", "delete"],
   },
 ]);
 
@@ -124,7 +148,7 @@ const pagination = reactive({
 const getData = () => {
   global.$store.commit("app/updateTableLoading", true);
   pagination.total = undefined;
-  userManageQueryAllUserRequest({
+  sysSysUserGetPage({
     ...queryFormData,
     ...pagination,
   })
@@ -169,7 +193,17 @@ const handleClose = () => {
   state.dialogVisible = false;
 };
 
-const handleSubmit = () => {};
+const handleSubmit = (formData: any) => {
+  sysSysUserSave(formData)
+    .then((response: any) => {
+      global.$message.success("提交成功");
+      getData();
+    })
+    .catch((error: any) => {
+      console.log(error);
+      global.$message.error("提交失败");
+    });
+};
 
 const handleChangePage = (pagingData: any) => {
   pagination.page = pagingData.current;
@@ -178,7 +212,19 @@ const handleChangePage = (pagingData: any) => {
   getData();
 };
 
-const handleDelete = (id: number) => {};
+const handleDelete = (id: number) => {
+  sysSysUserDelete({
+    id,
+  })
+    .then((response: any) => {
+      global.$message.success("删除成功");
+      getData();
+    })
+    .catch((error: any) => {
+      global.$message.error("删除失败");
+      console.log(error);
+    });
+};
 
 onMounted(async () => {
   getData();

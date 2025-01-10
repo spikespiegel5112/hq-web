@@ -91,36 +91,6 @@
           </a-form-item>
         </a-col>
       </a-row>
-      <a-row>
-        <a-col :span="22">
-          <a-form-item name="railwayDeparture" label="出发列次">
-            <a-input-number
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.railwayDeparture"
-              placeholder="请输入"
-            >
-            </a-input-number>
-            <template v-if="props.mode === 'review'">
-              {{ state.formData.railwayDeparture }}
-            </template>
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="22">
-          <a-form-item name="railwayArrive" label="到达列次">
-            <a-input-number
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.railwayArrive"
-              placeholder="请输入"
-            >
-            </a-input-number>
-            <template v-if="props.mode === 'review'">
-              {{ state.formData.railwayArrive }}
-            </template>
-          </a-form-item>
-        </a-col>
-      </a-row>
     </a-form>
     <template #footer>
       <a-row>
