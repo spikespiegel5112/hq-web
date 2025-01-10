@@ -30,6 +30,7 @@
     ></EditDialog>
     <DistributeDialog
       :visible="state.dialogDistributeVisible"
+      :rowData="state.currentRowData"
       @onClose="handleCloseDistributeDialog"
     ></DistributeDialog>
   </div>
@@ -175,6 +176,11 @@ const handleEdit = (rowData: any) => {
   state.currentRowData = rowData;
 };
 
+const handleDistributeRole = (rowData: any) => {
+  state.dialogDistributeVisible = true;
+  state.currentRowData = rowData;
+};
+
 const handleReview = (rowData: any) => {
   state.dialogVisible = true;
   state.dialogMode = "review";
@@ -215,10 +221,6 @@ const handleSubmit = (formData: any) => {
       console.log(error);
       global.$message.error(error.message);
     });
-};
-
-const handleDistributeRole = () => {
-  state.dialogDistributeVisible = true;
 };
 
 const handleChangePage = (pagingData: any) => {

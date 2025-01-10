@@ -1,8 +1,8 @@
 <template>
   <a-modal
     v-model:open="state.visible"
-    @cancel="handleClose"
     width="12rem"
+    @cancel="handleClose"
     @ok="handleDistributeRole"
   >
     <template #title>
@@ -10,10 +10,9 @@
     </template>
     <div class="content">
       <a-transfer
-        v-model:target-keys="targetKeys"
-        v-model:selected-keys="selectedKeys"
+        v-model:target-keys="state.targetKeys"
+        v-model:selectedKeys="state.selectedKeys"
         :data-source="state.allRoleData"
-        :one-way="true"
         :titles="['Source', 'Target']"
         :render="(item:any) => item.title"
         :disabled="disabled"
@@ -39,8 +38,12 @@ import {
   nextTick,
 } from "vue";
 import type { UnwrapRef } from "vue";
-import type { Rule, RuleObject } from "ant-design-vue/es/form";
-import { sysSysRoleGetAllRequest } from "@/api/management";
+
+import {
+  sysSysRoleGetAllRequest,
+  sysSysUserAllocateRoleRequest,
+  sysSysUserGetOneByIdRequest,
+} from "@/api/management";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -53,6 +56,7 @@ const emit = defineEmits<{
 
 const props = defineProps({
   visible: { type: Boolean, required: true, default: false },
+  rowData: { type: Object, required: true, default: {} },
 });
 
 const disabled = ref<boolean>(false);
@@ -80,6 +84,9 @@ const state: UnwrapRef<any> = reactive({
     userStatus: "0",
     username: null,
   },
+  allRoleData: [] as any[],
+  targetKeys: [] as any[],
+  selectedKeys: [] as any[],
 });
 
 watch(
@@ -87,6 +94,7 @@ watch(
   async (newValue: any) => {
     state.visible = newValue;
     getAllRoleData();
+    getDistributedRolesDataByUserId();
   }
 );
 
@@ -104,6 +112,7 @@ const handleSelectChange = (
   sourceSelectedKeys: string[],
   targetSelectedKeys: string[]
 ) => {
+  // state.targetKeys = targetSelectedKeys;
   console.log("sourceSelectedKeys: ", sourceSelectedKeys);
   console.log("targetSelectedKeys: ", targetSelectedKeys);
 };
@@ -133,7 +142,34 @@ const getAllRoleData = () => {
     });
 };
 
-const handleDistributeRole = () => {};
+const getDistributedRolesDataByUserId = () => {
+  sysSysUserGetOneByIdRequest({
+    id: props.rowData.id,
+  })
+    .then((response: any) => {
+      console.log(response);
+      response = response.data;
+      state.targetKeys = response.sysRoleList.map((item: any) => item.id);
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+};
+
+const handleDistributeRole = () => {
+  sysSysUserAllocateRoleRequest({
+    roleIdList: state.targetKeys,
+    userId: props.rowData.id,
+  })
+    .then((response: any) => {
+      global.$message.success("操作成功");
+      getAllRoleData();
+    })
+    .catch((error: any) => {
+      console.log(error);
+      global.$message.error("操作失败");
+    });
+};
 
 onMounted(async () => {});
 

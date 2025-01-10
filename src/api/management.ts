@@ -1382,6 +1382,15 @@ export const passengerFloweEHailingParkingGetPageRequest = (params: any) => {
 // 系统管理-用户
 // Sys User Controller
 
+// 分配角色
+export const sysSysUserAllocateRoleRequest = (params: any) => {
+  return service({
+    url: prefix + "/sys/sysUser/allocateRole",
+    method: "POST",
+    data: params,
+  });
+};
+
 // 删除
 export const sysSysUserDeleteRequest = (params: any) => {
   return service({
@@ -1401,7 +1410,7 @@ export const sysSysUserDeletesRequest = (params: any) => {
 };
 
 // 根据Id查询
-export const sysSysUserGetOneById = (params: any) => {
+export const sysSysUserGetOneByIdRequest = (params: any) => {
   return service({
     url: prefix + "/sys/sysUser/getOneById",
     method: "POST",
