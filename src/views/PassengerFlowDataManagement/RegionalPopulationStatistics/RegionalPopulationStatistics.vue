@@ -69,7 +69,7 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "相机ID",
+    label: "相机编码",
     name: "cameraId",
     required: true,
     tableVisible: true,
