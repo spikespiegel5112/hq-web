@@ -105,15 +105,11 @@
                     </div>
                     <div
                       v-if="
-                        !!state.fileList[index] &&
-                        !!state.fileList[index].attachmentList &&
-                        state.fileList[index].attachmentList.length > 0
+                        !!item.attachmentList && item.attachmentList.length > 0
                       "
                       class="attachment"
                     >
-                      <AttachmentReview
-                        :attachmentList="state.fileList[index].attachmentList"
-                      />
+                      <AttachmentReview :attachmentList="item.attachmentList" />
                     </div>
                   </div>
                 </div>

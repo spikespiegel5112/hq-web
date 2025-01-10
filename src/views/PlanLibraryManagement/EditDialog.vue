@@ -136,7 +136,7 @@ const columns = [
     width: "40%",
     formType: "textarea",
   },
-];
+] as any[]
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
