@@ -41,6 +41,7 @@
               <a-form-item name="eventTime" label="时间">
                 <el-date-picker
                   type="datetimerange"
+                  placeholder="请选择"
                   v-model="state.eventTime"
                   @change="handleChangeInfoEventTime"
                 />

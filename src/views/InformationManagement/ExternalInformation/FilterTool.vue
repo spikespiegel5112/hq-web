@@ -44,6 +44,7 @@
               <a-form-item name="externalTime" label="信息上报时间">
                 <el-date-picker
                   type="datetimerange"
+                  placeholder="请选择"
                   v-model="state.externalTime"
                   @change="handleChangeTime1"
                 />

@@ -1,13 +1,12 @@
 <template>
   <div class="common_table_wrapper">
-    <FilterTool       @onSearch="handleSearch"       @onReset="handleReset"       v-model="queryFormData"     ></FilterTool>
+    <FilterTool
+      @onSearch="handleSearch"
+      @onReset="handleReset"
+      v-model="queryFormData"
+    ></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
-        <a-button class="import">导入</a-button>
-                 <!-- <ExportButton
-          :action="eventManageSuddenEventExportRequest"
-          :queryFormData="queryFormData"
-        /> -->
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
@@ -15,7 +14,6 @@
       :tableData="state.tableData"
       :dataModel="pageModel"
       :pagination="pagination"
-      tabTable
       @onEdit="handleEdit"
       @onReview="handleReview"
       @onChangePage="handleChangePage"
@@ -45,7 +43,11 @@ import {
   nextTick,
 } from "vue";
 
-import { roleManageQueryAllRoleRequest  ,eventManageSuddenEventExportRequest
+import {
+  sysSysRoleGetPage,
+  sysSysRoleSave,
+  sysSysRoleDelete,
+  sysSysRoleDeletes,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
@@ -63,52 +65,53 @@ const pageModel = ref([
     exportVisible: false,
   },
   {
-    label: "来源种类",
-    name: "higywayCode",
+    label: "角色描述",
+    name: "roleDesc",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "事件级别",
-    name: "highwayName",
+    label: "角色名称",
+    name: "roleName",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "事件状态",
-    name: "bridgeCode",
+    label: "角色顺序",
+    name: "roleSort",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "日期",
-    name: "bridgeName",
+    label: "角色状态",
+    name: "roleStatus",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
+    tagConfig: {
+      val: "roleStatus",
+      dictionary: global.$store.state.dictionary.userStatus,
+      colorList: [
+        { value: 1, color: "success" },
+        { value: 0, color: "warning" },
+      ],
+    },
   },
-  {
-    label: "内容",
-    name: "bridgeName",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
+
   {
     label: "操作",
     name: "operationColumn",
     tableVisible: true,
     exportVisible: false,
     fixed: "right",
-    actions: ["edit", "review", "delete"],
+    actions: ["edit", "delete"],
   },
 ]);
 
@@ -128,7 +131,7 @@ const pagination = reactive({
 const getData = () => {
   global.$store.commit("app/updateTableLoading", true);
   pagination.total = undefined;
-  roleManageQueryAllRoleRequest({
+  sysSysRoleGetPage({
     ...queryFormData,
     ...pagination,
   })
@@ -173,7 +176,18 @@ const handleClose = () => {
   state.dialogVisible = false;
 };
 
-const handleSubmit = () => {};
+const handleSubmit = (formData: any) => {
+  sysSysRoleSave(formData)
+    .then((response: any) => {
+      global.$message.success("提交成功");
+      getData();
+      handleClose();
+    })
+    .catch((error: any) => {
+      console.log(error);
+      global.$message.error(error.message);
+    });
+};
 
 const handleChangePage = (pagingData: any) => {
   pagination.page = pagingData.current;
@@ -182,7 +196,20 @@ const handleChangePage = (pagingData: any) => {
   getData();
 };
 
-const handleDelete = (id: number) => {};
+const handleDelete = (id: number) => {
+  sysSysRoleDelete({
+    id,
+  })
+    .then((response: any) => {
+      global.$message.success("删除成功");
+      getData();
+    })
+    .catch((error: any) => {
+      global.$message.error("删除失败");
+      console.log(error);
+    });
+};
+
 onMounted(async () => {
   getData();
 });

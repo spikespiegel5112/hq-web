@@ -1414,3 +1414,51 @@ export const sysSysUserSave = (params: any) => {
     data: params,
   });
 };
+
+// 系统管理-角色
+// Sys Role Controller
+
+// 删除
+export const sysSysRoleDelete = (params: any) => {
+  return service({
+    url: prefix + "/sys/sysRole/delete",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 批量删除
+export const sysSysRoleDeletes = (params: any) => {
+  return service({
+    url: prefix + "/sys/sysRole/deletes",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 根据Id查询
+export const sysSysRoleGetOneById = (params: any) => {
+  return service({
+    url: prefix + "/sys/sysRole/getOneById",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 分页查询
+export const sysSysRoleGetPage = (params: any) => {
+  return service({
+    url: prefix + "/sys/sysRole/getPage",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 保存
+export const sysSysRoleSave = (params: any) => {
+  return service({
+    url: prefix + "/sys/sysRole/save",
+    method: "POST",
+    data: params,
+  });
+};

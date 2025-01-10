@@ -24,6 +24,7 @@
               <a-form-item name="analyzeTime" label="查询时间">
                 <el-date-picker
                   type="datetimerange"
+                  placeholder="请选择"
                   v-model="state.analyzeTime"
                   @change="handleChangeTime1"
                 />

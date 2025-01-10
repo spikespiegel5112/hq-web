@@ -25,6 +25,7 @@
               <a-form-item name="alarmTime" label="日期">
                 <el-date-picker
                   type="datetimerange"
+                  placeholder="请选择"
                   v-model="state.alarmTime"
                   @change="handleChangeTime1"
                 />

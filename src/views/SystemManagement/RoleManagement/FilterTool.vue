@@ -1,52 +1,32 @@
 <template>
   <div class="common_filtertool_wrapper">
-    <a-form :model="formData" autocomplete="off" ref="formDataRef">
+    <a-form :model="state.formData" autocomplete="off" ref="formDataRef">
       <a-row>
         <a-col :span="21">
           <a-row :gutter="20">
-            <a-col :span="6">
-              <a-form-item name="userName" label="来源种类">
+            <a-col :span="5">
+              <a-form-item name="roleName" label="角色名称">
                 <a-input
-                  v-model="formData.userName"
+                  v-model:value="state.formData.roleName"
                   placeholder="请输入"
-                  allow-clear
                 >
-
                 </a-input>
               </a-form-item>
             </a-col>
-
-            <a-col :span="6">
-              <a-form-item name="password" label="事件级别">
-                <a-input
-                  v-model="formData.password"
-                  placeholder="请输入"
-                  allow-clear
+            <a-col :span="5">
+              <a-form-item name="roleStatus" label="角色状态">
+                <a-select
+                  v-model:value="state.formData.roleStatus"
+                  placeholder="请选择"
                 >
-                  
-                </a-input>
-              </a-form-item>
-            </a-col>
-            <a-col :span="6">
-              <a-form-item name="password" label="事件状态">
-                <a-input
-                  v-model="formData.password"
-                  placeholder="请输入"
-                  allow-clear
-                >
-                  
-                </a-input>
-              </a-form-item>
-            </a-col>
-            <a-col :span="6">
-              <a-form-item name="password" label="日期">
-                <a-input
-                  v-model="formData.password"
-                  placeholder="请输入"
-                  allow-clear
-                >
-                  
-                </a-input>
+                  <a-select-option
+                    v-for="item in global.$getDictionary('roleStatus')"
+                    :key="item.value"
+                    :value="item.value"
+                  >
+                    {{ item.label }}
+                  </a-select-option>
+                </a-select>
               </a-form-item>
             </a-col>
           </a-row>
@@ -79,8 +59,6 @@ import {
   nextTick,
 } from "vue";
 
-
-
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
@@ -92,20 +70,21 @@ const emit = defineEmits<{
 
 const formDataRef: any = ref(null);
 
-const formData = reactive({
-  userName: null,
-  password: null,
+const state = reactive({
+  formData: {
+    roleName: null,
+    roleStatus: null,
+  },
+  loginTime: null,
 });
 
-
-
 const handleSearch = () => {
-  emit("onSearch", formData);
+  emit("onSearch", state.formData);
 };
 
 const handleReset = () => {
   formDataRef.value.resetFields();
-  emit("onReset", formData);
+  emit("onReset", state.formData);
 };
 
 onMounted(async () => {

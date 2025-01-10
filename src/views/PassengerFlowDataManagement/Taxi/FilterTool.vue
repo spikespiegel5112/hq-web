@@ -8,6 +8,7 @@
               <a-form-item name="time" label="查询时间">
                 <el-date-picker
                   type="datetimerange"
+                  placeholder="请选择"
                   v-model="state.time"
                   @change="handleChangeTime1"
                 />

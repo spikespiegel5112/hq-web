@@ -53,6 +53,7 @@
               <a-form-item name="eventTime" label="接收时间">
                 <el-date-picker
                   type="datetimerange"
+                  placeholder="请选择"
                   v-model="state.eventTime"
                   @change="handleChangeEventTime"
                 />

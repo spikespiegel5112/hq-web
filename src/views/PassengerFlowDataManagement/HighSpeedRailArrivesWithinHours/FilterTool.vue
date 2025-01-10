@@ -27,6 +27,7 @@
               <a-form-item name="statisticalDate" label="查询时间">
                 <el-date-picker
                   type="datetimerange"
+                  placeholder="请选择"
                   v-model="state.statisticalDate"
                   @change="handleChangeStatisticalDate"
                 />

@@ -51,6 +51,7 @@
               <a-form-item name="loginTime" label="登录时间">
                 <el-date-picker
                   type="datetimerange"
+                  placeholder="请选择"
                   v-model="state.loginTime"
                   @change="handleChangeTime1"
                 />
