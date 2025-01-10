@@ -19,26 +19,18 @@
     >
       <a-row :gutter="20">
         <a-col :span="11">
-          <a-form-item name="username" label="用户名">
-            <template v-if="props.mode === 'edit'">
-              {{ state.formData.username }}
-            </template>
+          <a-form-item name="roleName" label="角色名称">
             <a-input
-              v-else
-              v-model:value="state.formData.username"
+              v-model:value="state.formData.roleName"
               placeholder="请输入"
             >
             </a-input>
           </a-form-item>
         </a-col>
         <a-col :span="11">
-          <a-form-item name="password" label="密码">
-            <template v-if="props.mode === 'edit'">
-              {{ state.formData.username }}
-            </template>
+          <a-form-item name="roleSort" label="角色顺序">
             <a-input
-              v-else
-              v-model:value="state.formData.password"
+              v-model:value="state.formData.roleSort"
               placeholder="请输入"
             >
             </a-input>
@@ -47,34 +39,25 @@
       </a-row>
       <a-row :gutter="20">
         <a-col :span="11">
-          <a-form-item name="nickName" label="昵称">
-            <a-input
-              v-model:value="state.formData.nickName"
-              placeholder="请输入"
-            >
-            </a-input>
-          </a-form-item>
-        </a-col>
-        <a-col :span="11">
-          <a-form-item name="phoneNumber" label="手机号码">
-            <a-input
-              v-model:value="state.formData.phoneNumber"
-              placeholder="请输入"
-            >
-            </a-input>
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row :gutter="20">
-        <a-col :span="11">
-          <a-form-item name="userStatus" label="用户状态">
+          <a-form-item name="roleStatus" label="角色状态">
             <a-switch
-              v-model:checked="state.formData.userStatus"
+              v-model:checked="state.formData.roleStatus"
               :checkedValue="1"
               :unCheckedValue="0"
               checkedChildren="启用"
               unCheckedChildren="停用"
             />
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="roleDesc" label="角色描述">
+            <a-textarea
+              v-model:value="state.formData.roleDesc"
+              placeholder="请输入"
+            >
+            </a-textarea>
           </a-form-item>
         </a-col>
       </a-row>
@@ -118,12 +101,10 @@ const state: UnwrapRef<any> = reactive({
   visible: false,
   formData: {
     id: null as number | null | undefined,
-    loginTime: null,
-    nickName: null,
-    password: null,
-    phoneNumber: null,
-    userStatus: "0",
-    username: null,
+    roleDesc: null,
+    roleName: null,
+    roleSort: null,
+    roleStatus: 0,
   },
 });
 
