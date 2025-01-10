@@ -5,18 +5,12 @@
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
-    <a-tree
-      checkable
-      v-model:expandedKeys="state.expandedKeys"
-      v-model:selectedKeys="state.selectedKeys"
-      v-model:checkedKeys="state.checkedKeys"
-      :tree-data="state.treeData"
-    >
-      <template #title="{ title, key }">
-        <span v-if="key === '0-0-1-0'" style="color: #1890ff">{{ title }}</span>
-        <template v-else>{{ title }}</template>
-      </template>
-    </a-tree>
+    <a-table
+      :columns="columns"
+      :data-source="state.treeData"
+      :row-selection="rowSelection"
+    />
+
     <EditDialog
       :visible="state.dialogVisible"
       :mode="state.dialogMode"
@@ -47,11 +41,72 @@ import {
   sysSysMenuGetPageRequest,
   sysSysMenuSaveRequest,
 } from "@/api/management";
+
+interface DataItem {
+  key: number;
+  name: string;
+  age: number;
+  address: string;
+  children?: DataItem[];
+}
+
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
+
+const columns = [
+  {
+    title: "菜单名称",
+    dataIndex: "menuName",
+    key: "menuName",
+  },
+  {
+    title: "菜单描述",
+    dataIndex: "menuDesc",
+    key: "menuDesc",
+  },
+  {
+    title: "菜单排序",
+    dataIndex: "menuSort",
+    key: "menuSort",
+  },
+  {
+    title: "菜单图标",
+    dataIndex: "menuIcon",
+    key: "menuIcon",
+  },
+  {
+    title: "权限编码",
+    dataIndex: "permissionCode",
+    key: "permissionCode",
+  },
+];
+
+const rowSelection = ref({
+  checkStrictly: false,
+  onChange: (
+    selectedRowKeys: (string | number)[],
+    selectedRows: DataItem[]
+  ) => {
+    console.log(
+      `selectedRowKeys: ${selectedRowKeys}`,
+      "selectedRows: ",
+      selectedRows
+    );
+  },
+  onSelect: (record: DataItem, selected: boolean, selectedRows: DataItem[]) => {
+    console.log(record, selected, selectedRows);
+  },
+  onSelectAll: (
+    selected: boolean,
+    selectedRows: DataItem[],
+    changeRows: DataItem[]
+  ) => {
+    console.log(selected, selectedRows, changeRows);
+  },
+});
 
 const state = reactive({
   treeData: [] as any[],

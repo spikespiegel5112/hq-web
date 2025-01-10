@@ -466,18 +466,7 @@ const routerDictionary = [
               title: "菜单管理",
             },
           },
-          {
-            title: "权限管理",
-            path: "PermissionManagement",
-            name: "PermissionManagement",
-            component: () =>
-              import(
-                /* webpackChunkName: "PermissionManagement" */ "@/views/SystemManagement/PermissionManagement/PermissionManagement.vue"
-              ),
-            meta: {
-              title: "权限管理",
-            },
-          },
+
           {
             title: "字典参数管理",
             path: "DictionaryManagement",
