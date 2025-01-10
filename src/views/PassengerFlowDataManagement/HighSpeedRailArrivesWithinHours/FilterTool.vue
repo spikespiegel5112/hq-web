@@ -25,13 +25,17 @@
             </a-col>
             <a-col :span="10">
               <a-form-item name="statisticalDate" label="查询时间">
-                <a-range-picker
+                <el-date-picker
+                  type="datetimerange"
+                  v-model="state.statisticalDate"
+                />
+                <!-- <a-range-picker
                   show-time
                   v-model:value="state.statisticalDate"
                   format="YYYY-MM-DD HH:mm:ss"
                   @change="handleChangeStatisticalDate"
                   allow-clear
-                />
+                /> -->
               </a-form-item>
             </a-col>
           </a-row>

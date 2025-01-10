@@ -1,4 +1,4 @@
-import { createApp } from 'vue/dist/vue.esm-bundler';
+import { createApp } from "vue/dist/vue.esm-bundler";
 import App from "@/App.vue";
 import router from "@/router";
 import utils from "@/utils/utils";
@@ -6,6 +6,7 @@ import service from "@/utils/service";
 import Antd from "ant-design-vue";
 import "ant-design-vue/dist/reset.css";
 import vuescroll from "vuescroll";
+
 const app = createApp(App);
 
 import { store, key } from "@/store";
@@ -47,6 +48,11 @@ import {
   DataZoomComponent,
   DataZoomComponentOption,
 } from "echarts/components";
+import 'element-plus/theme-chalk/dark/css-vars.css'
+
+import { ElDatePicker } from "element-plus";
+
+app.component("ElDatePicker", ElDatePicker);
 
 import { CustomChart } from "echarts/charts";
 

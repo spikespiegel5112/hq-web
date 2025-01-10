@@ -128,7 +128,9 @@
               format="YYYY-MM-DD"
               :rows="5"
             ></a-textarea>
-            <a-button @click="handleIdentification">识别</a-button>
+            <a-button type="primary" @click="handleIdentification">
+              识别
+            </a-button>
           </a-form-item>
         </a-col>
       </a-row>

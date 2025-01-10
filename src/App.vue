@@ -17,9 +17,11 @@
         // fontSize: 20,
       }"
     >
-      <transition name="fade">
-        <component :is="Component" />
-      </transition>
+      <el-config-provider>
+        <transition name="fade">
+          <component :is="Component" />
+        </transition>
+      </el-config-provider>
     </a-config-provider>
   </router-view>
 </template>
@@ -38,6 +40,7 @@ import {
 import { theme } from "ant-design-vue";
 import zhCN from "ant-design-vue/es/locale/zh_CN";
 import type { MappingAlgorithm } from "antd/es/config-provider/context";
+import { ElConfigProvider } from "element-plus";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
