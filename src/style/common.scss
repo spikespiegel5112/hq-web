@@ -206,6 +206,7 @@ input:focus {
   border: 1px solid #004390;
   border-radius: 0.1rem;
   .ant-spin-container {
+    overflow: hidden;
     .ant-table {
       background-color: #041335;
       .ant-table-container {
@@ -435,7 +436,8 @@ input:focus {
     background-color: transparent;
     .common_basetable_wrapper {
       .ant-table-wrapper {
-        height: calc(100vh - 4.4rem);
+        overflow: hidden;
+        // height: calc(100vh - 4.4rem);
       }
     }
   }

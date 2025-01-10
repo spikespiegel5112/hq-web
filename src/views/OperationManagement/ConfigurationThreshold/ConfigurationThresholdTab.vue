@@ -600,7 +600,6 @@ const getData = () => {
     ...pagination,
   })
     .then((response: any) => {
-      
       response = response.data;
       dataIndex.push(
         ...response.map((item: any) => {
@@ -632,7 +631,6 @@ const handleSubmit = () => {
   });
   operationManagementOperationConfigConfigRequest(params)
     .then((response: any) => {
-      
       global.$message.success("提交成功");
       state.loading = false;
     })

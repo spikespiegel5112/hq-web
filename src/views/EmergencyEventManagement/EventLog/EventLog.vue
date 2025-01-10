@@ -17,7 +17,6 @@
       :tableData="state.tableData"
       :dataModel="pageModel"
       :pagination="pagination"
-      tabTable
       @onEdit="handleEdit"
       @onReview="handleReview"
       @onChangePage="handleChangePage"

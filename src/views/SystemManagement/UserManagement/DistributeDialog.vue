@@ -13,7 +13,7 @@
         v-model:target-keys="state.targetKeys"
         v-model:selectedKeys="state.selectedKeys"
         :data-source="state.allRoleData"
-        :titles="['Source', 'Target']"
+        :titles="['待分配角色', '已分配角色']"
         :render="(item:any) => item.title"
         :disabled="disabled"
         @change="handleChange"
@@ -61,10 +61,6 @@ const props = defineProps({
 
 const disabled = ref<boolean>(false);
 
-const targetKeys = ref<string[]>([]);
-
-const selectedKeys = ref<string[]>(["1", "4"]);
-
 interface MockData {
   key: string;
   title: string;
@@ -93,6 +89,7 @@ watch(
   () => props.visible,
   async (newValue: any) => {
     state.visible = newValue;
+    state.selectedKeys = [];
     getAllRoleData();
     getDistributedRolesDataByUserId();
   }

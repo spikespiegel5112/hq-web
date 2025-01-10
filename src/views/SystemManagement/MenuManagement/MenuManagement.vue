@@ -1,20 +1,51 @@
 <template>
   <div class="common_table_wrapper">
-    <div class="common_tableoperation_wrapper">
-      <a-space size="middle" wrap>
-        <a-button class="add" @click="handleAdd">新增</a-button>
-      </a-space>
-    </div>
-    <a-table
-      :columns="columns"
-      :data-source="state.treeData"
-      :row-selection="rowSelection"
-    />
+    <a-tree
+      class="tree"
+      v-model:selectedKeys="state.selectedKeys"
+      v-model:checkedKeys="state.checkedKeys"
+      default-expand-all
+      checkable
+      :tree-data="state.treeData"
+    >
+      <template #title="record" #default="scope">
+        <div class="node">
+          <span class="title">
+            {{ record.title }}
+          </span>
+          <a-button
+            type="link"
+            @click="handleEditNode(record, record.id, '编辑', 'edit')"
+          >
+            编辑
+          </a-button>
+          <a-button
+            type="link"
+            @click="handleEditNode(record, record.id, '添加子节点', 'add')"
+          >
+            添加子节点
+          </a-button>
+          <a-button
+            type="link"
+            @click="
+              handleEditNode(record, record.parentId, '添加平级节点', 'add')
+            "
+          >
+            添加平级节点
+          </a-button>
+          <a-button type="link" danger @click="handleDeleteNode(record)">
+            删除
+          </a-button>
+        </div>
+      </template>
 
+      <template #slot:custom="{ title, key, aaa, bbb, ccc }"> dsadas </template>
+    </a-tree>
     <EditDialog
       :visible="state.dialogVisible"
       :mode="state.dialogMode"
       :rowData="state.currentRowData"
+      :title="state.currentDialogTitle"
       @onClose="handleClose"
       @onSubmit="handleSubmit"
     ></EditDialog>
@@ -35,11 +66,10 @@ import {
 } from "vue";
 
 import {
-  sysSysMenuDeleteRequest,
-  sysSysMenuDeletes,
   sysSysMenuGetOneByIdRequest,
-  sysSysMenuGetPageRequest,
+  sysSysMenuGetMenuTreeRequest,
   sysSysMenuSaveRequest,
+  sysSysMenuDeleteRequest,
 } from "@/api/management";
 
 interface DataItem {
@@ -50,7 +80,6 @@ interface DataItem {
   children?: DataItem[];
 }
 
-import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
@@ -81,6 +110,11 @@ const columns = [
     title: "权限编码",
     dataIndex: "permissionCode",
     key: "permissionCode",
+  },
+  {
+    title: "操作",
+    dataIndex: "operation",
+    key: "operation",
   },
 ];
 
@@ -116,6 +150,7 @@ const state = reactive({
   dialogVisible: false,
   dialogMode: null as string | null,
   currentRowData: {},
+  currentDialogTitle: "",
 });
 
 let queryFormData = reactive({} as any);
@@ -127,62 +162,81 @@ const pagination = reactive({
 const getData = () => {
   global.$store.commit("app/updateTableLoading", true);
   pagination.total = undefined;
-  sysSysMenuGetPageRequest({
+  sysSysMenuGetMenuTreeRequest({
     ...queryFormData,
     ...pagination,
   })
     .then((response: any) => {
-      response = response.data.list;
-      response = response.map((item: any) => {
-        return {
-          ...item,
-          title: item.menuName,
-          key: item.id,
-          disabled: false,
-        };
-      });
-      state.treeData = response;
+      response = response.data;
+      const looper = (children: any[]) => {
+        const result = [] as any;
+        children.forEach((item: any) => {
+          if (item.children instanceof Array && item.children.length > 0) {
+            result.push({
+              ...item,
+              title: item.menuName,
+              key: item.id,
+              disabled: false,
+              children: looper(item.children),
+            });
+          } else {
+            result.push({
+              ...item,
+              title: item.menuName,
+              key: item.id,
+              disabled: false,
+            });
+          }
+        });
+        return result;
+      };
+      let result: any[] = looper(response);
 
-      pagination.total = response.total;
+      state.treeData = result;
     })
     .catch((error: any) => {
       console.log(error);
     });
 };
 
-const handleEdit = (rowData: any) => {
-  state.dialogVisible = true;
-  state.dialogMode = "edit";
-  state.currentRowData = rowData;
-};
-
-const handleReview = (rowData: any) => {
-  state.dialogVisible = true;
-  state.dialogMode = "review";
-  state.currentRowData = rowData;
-};
-
-const handleAdd = () => {
-  state.dialogVisible = true;
-  state.dialogMode = "add";
-};
-
-const handleSearch = (formData: object) => {
-  queryFormData = formData;
-  getData();
-};
-
-const handleReset = (formData: object) => {
-  queryFormData = formData;
-  getData();
-};
-
 const handleClose = () => {
   state.dialogVisible = false;
 };
 
+const handleEditNode = (
+  record: any,
+  parentId: number | null,
+  title: string,
+  type: string
+) => {
+  state.dialogVisible = true;
+  state.dialogMode = type;
+  state.currentDialogTitle = title;
+  state.currentRowData = record;
+};
+
+const handleDeleteNode = (record: any) => {
+  global.$confirm({
+    title: "提示",
+    content: "确认删除？",
+    onOk: () => {
+      sysSysMenuDeleteRequest({
+        id: record.id,
+      })
+        .then((response: any) => {
+          global.$message.success("删除成功");
+          getData();
+        })
+        .catch((error: any) => {
+          global.$message.error("删除失败");
+          console.log(error);
+        });
+    },
+  });
+};
+
 const handleSubmit = (formData: any) => {
-  sysSysUserSaveRequest(formData)
+  sysSysMenuSaveRequest(formData)
     .then((response: any) => {
       global.$message.success("提交成功");
       getData();
@@ -202,7 +256,7 @@ const handleChangePage = (pagingData: any) => {
 };
 
 const handleDelete = (id: number) => {
-  sysSysUserDeleteRequest({
+  sysSysMenuDeleteRequest({
     id,
   })
     .then((response: any) => {
@@ -222,4 +276,37 @@ onMounted(async () => {
 onBeforeUnmount(() => {});
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+:deep(.ant-tree) {
+  height: 10.5rem;
+  .ant-tree-list {
+    height: 100%;
+    .ant-tree-list-holder {
+      height: 100%;
+      max-height: 100% !important;
+      .ant-tree-treenode {
+        width: 100%;
+        .ant-tree-node-content-wrapper {
+          width: 100%;
+          .ant-tree-title {
+            width: 100%;
+            .node {
+              display: flex;
+              width: 100%;
+              align-items: center;
+              .title {
+                display: inline-block;
+                flex: 1;
+              }
+              .operation {
+                display: inline-block;
+                width: 3rem;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+</style>

@@ -23,7 +23,6 @@
       :processedTableData="state.processedTableData"
       :dataModel="pageModel"
       :pagination="pagination"
-      tabTable
       @onEdit="handleEdit"
       @onReview="handleReview"
       @onChangePage="handleChangePage"
@@ -83,7 +82,6 @@ import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
 import DisposalDialog from "./DisposalDialog.vue";
 import ReviewDialog from "./ReviewDialog.vue";
-import { dictionaryManageSaveDictItemRequest } from "../../../api/management";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;

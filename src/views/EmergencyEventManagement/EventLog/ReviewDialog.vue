@@ -1,8 +1,7 @@
 <template>
   <a-modal v-model:open="state.visible" @cancel="handleClose" width="16rem">
     <template #title>
-           <CommonTitle :title="dialogTitle" />
-
+      <CommonTitle :title="dialogTitle" />
     </template>
     <div class="maincontent">
       <a-row :gutter="30">
@@ -77,8 +76,7 @@
           <vue-scroll class="right">
             <a-timeline mode="left">
               <a-timeline-item
-                v-for="(item, index) in state.disposalData
-                  .disposalList"
+                v-for="(item, index) in state.disposalData.disposalList"
               >
                 <template #dot>
                   <span>{{ index + 1 }}</span>

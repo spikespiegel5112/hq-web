@@ -454,6 +454,15 @@ export const sysSysMenuGetPageRequest = (params: any) => {
   });
 };
 
+// 获取菜单树
+export const sysSysMenuGetMenuTreeRequest = (params: any) => {
+  return service({
+    url: prefix + "/sys/sysMenu/getMenuTree",
+    method: "POST",
+    data: params,
+  });
+};
+
 // 保存
 export const sysSysMenuSaveRequest = (params: any) => {
   return service({
