@@ -74,7 +74,7 @@ const pageModel = ref([
   },
 
   {
-    label: "别名",
+    label: "昵称",
     name: "nickName",
     required: true,
     tableVisible: true,
@@ -198,6 +198,7 @@ const handleSubmit = (formData: any) => {
     .then((response: any) => {
       global.$message.success("提交成功");
       getData();
+      handleClose();
     })
     .catch((error: any) => {
       console.log(error);

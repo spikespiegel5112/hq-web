@@ -20,7 +20,11 @@
       <a-row :gutter="20">
         <a-col :span="11">
           <a-form-item name="username" label="用户名">
+            <template v-if="props.mode === 'edit'">
+              {{ state.formData.username }}
+            </template>
             <a-input
+              v-else
               v-model:value="state.formData.username"
               placeholder="请输入"
             >
@@ -28,9 +32,13 @@
           </a-form-item>
         </a-col>
         <a-col :span="11">
-          <a-form-item name="nickName" label="别名">
+          <a-form-item name="password" label="密码">
+            <template v-if="props.mode === 'edit'">
+              {{ state.formData.username }}
+            </template>
             <a-input
-              v-model:value="state.formData.nickName"
+              v-else
+              v-model:value="state.formData.password"
               placeholder="请输入"
             >
             </a-input>
@@ -39,18 +47,18 @@
       </a-row>
       <a-row :gutter="20">
         <a-col :span="11">
-          <a-form-item name="phoneNumber" label="手机号码">
+          <a-form-item name="nickName" label="昵称">
             <a-input
-              v-model:value="state.formData.phoneNumber"
+              v-model:value="state.formData.nickName"
               placeholder="请输入"
             >
             </a-input>
           </a-form-item>
         </a-col>
         <a-col :span="11">
-          <a-form-item name="password" label="密码">
+          <a-form-item name="phoneNumber" label="手机号码">
             <a-input
-              v-model:value="state.formData.password"
+              v-model:value="state.formData.phoneNumber"
               placeholder="请输入"
             >
             </a-input>
@@ -166,6 +174,8 @@ watch(
         const formData = JSON.parse(JSON.stringify(props.rowData));
         state.formData = formData;
       }
+    } else {
+      handleClose();
     }
   }
 );
@@ -183,7 +193,6 @@ const handleSubmit = () => {
     .validate()
     .then(() => {
       emit("onSubmit", state.formData);
-      handleClose();
     })
     .catch((error: any) => {
       console.log("error", error);
