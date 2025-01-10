@@ -415,37 +415,49 @@ export const roleManageQueryAllRoleRequest = (params: any) => {
   });
 };
 
+// 系统管理-菜单
+// Sys Menu Controller
+
 // 系统管理-菜单管理-删除菜单
-export const nodeManageDeleteNodeRequest = (params: any) => {
+export const sysSysMenuDeleteRequest = (params: any) => {
   return service({
-    url: prefix + "/sys/node/manage/deleteNode",
+    url: prefix + "/sys/sysMenu/delete",
     method: "POST",
     data: params,
   });
 };
 
-// 系统管理-菜单管理-条件查询菜单
-export const nodeManageQueryAllNodeRequest = (params: any) => {
+// 批量删除
+export const sysSysMenuDeletes = (params: any) => {
   return service({
-    url: prefix + "/sys/node/manage/queryAllNode",
+    url: prefix + "/sys/sysMenu/deletes",
     method: "POST",
     data: params,
   });
 };
 
-// 系统管理-菜单管理-父菜单筛选器
-export const nodeManageQueryParentNodeRequest = (params: any) => {
+// 根据Id查询
+export const sysSysMenuGetOneByIdRequest = (params: any) => {
   return service({
-    url: prefix + "/sys/node/manage/queryParentNode",
+    url: prefix + "/sys/sysMenu/getOneById",
     method: "GET",
     data: params,
   });
 };
 
-// 系统管理-菜单管理-保存菜单
-export const nodeManageSaveSysNodeRequest = (params: any) => {
+// 分页查询
+export const sysSysMenuGetPageRequest = (params: any) => {
   return service({
-    url: prefix + "/sys/node/manage/saveSysNode",
+    url: prefix + "/sys/sysMenu/getPage",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 保存
+export const sysSysMenuSaveRequest = (params: any) => {
+  return service({
+    url: prefix + "/sys/sysMenu/save",
     method: "POST",
     data: params,
   });

@@ -1,24 +1,29 @@
 <template>
   <div class="common_table_wrapper">
-    <FilterTool       @onSearch="handleSearch"       @onReset="handleReset"       v-model="queryFormData"     ></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
-        <a-button class="import">导入</a-button>
-                 <!-- <ExportButton
-          :action="eventManageSuddenEventExportRequest"
-          :queryFormData="queryFormData"
-        /> -->
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
-    <a-table
-      :columns="columns"
-      :data-source="state.tableData"
-      :row-selection="rowSelection"
-      :scroll="{
-        y: tableBodyHeight,
-      }"
-    />
+    <a-tree
+      checkable
+      v-model:expandedKeys="state.expandedKeys"
+      v-model:selectedKeys="state.selectedKeys"
+      v-model:checkedKeys="state.checkedKeys"
+      :tree-data="state.treeData"
+    >
+      <template #title="{ title, key }">
+        <span v-if="key === '0-0-1-0'" style="color: #1890ff">{{ title }}</span>
+        <template v-else>{{ title }}</template>
+      </template>
+    </a-tree>
+    <EditDialog
+      :visible="state.dialogVisible"
+      :mode="state.dialogMode"
+      :rowData="state.currentRowData"
+      @onClose="handleClose"
+      @onSubmit="handleSubmit"
+    ></EditDialog>
   </div>
 </template>
 
@@ -35,113 +40,24 @@ import {
   nextTick,
 } from "vue";
 
-
+import {
+  sysSysMenuDeleteRequest,
+  sysSysMenuDeletes,
+  sysSysMenuGetOneByIdRequest,
+  sysSysMenuGetPageRequest,
+  sysSysMenuSaveRequest,
+} from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
-import routeDictionary from "@/router/routeDictionary";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
-interface DataItem {
-  key: number;
-  name: string;
-  age: number;
-  address: string;
-  children?: DataItem[];
-}
-
-const pageModel = ref([
-  {
-    label: "序号",
-    name: "index",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: false,
-  },
-  {
-    label: "菜单名称",
-    name: "title",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
-    label: "排序图标",
-    name: "icon",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
-    label: "权限标识",
-    name: "bridgeCode",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
-    label: "组件路径",
-    name: "path",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
-    label: "状态",
-    name: "status",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
-    label: "创建时间",
-    name: "createTime",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
-  {
-    label: "操作",     name: "operationColumn",     tableVisible: true,     exportVisible: false,     fixed: "right",
-    actions: ["edit", "delete"],
-  },
-]);
-
-const rowSelection = ref({
-  checkStrictly: true,
-  onChange: (
-    selectedRowKeys: (string | number)[],
-    selectedRows: DataItem[]
-  ) => {
-    console.log(
-      `selectedRowKeys: ${selectedRowKeys}`,
-      "selectedRows: ",
-      selectedRows
-    );
-  },
-  onSelect: (record: DataItem, selected: boolean, selectedRows: DataItem[]) => {
-    console.log(record, selected, selectedRows);
-  },
-  onSelectAll: (
-    selected: boolean,
-    selectedRows: DataItem[],
-    changeRows: DataItem[]
-  ) => {
-    console.log(selected, selectedRows, changeRows);
-  },
-});
-
-const columns = ref([] as any[]);
-
 const state = reactive({
-  tableData: [] as any[],
+  treeData: [] as any[],
+  expandedKeys: null,
+  selectedKeys: null,
+  checkedKeys: null,
   dialogVisible: false,
   dialogMode: null as string | null,
   currentRowData: {},
@@ -153,16 +69,30 @@ const pagination = reactive({
   ...global.$store.state.app.defaultPagination,
 });
 
-const tableBodyHeight = computed(() => {
-  let result = "calc(100vh - 4rem)";
-  return result;
-}) as any;
-
 const getData = () => {
   global.$store.commit("app/updateTableLoading", true);
-  state.tableData = routeDictionary.find(
-    (item: any) => item.name === "layout"
-  ).children;
+  pagination.total = undefined;
+  sysSysMenuGetPageRequest({
+    ...queryFormData,
+    ...pagination,
+  })
+    .then((response: any) => {
+      response = response.data.list;
+      response = response.map((item: any) => {
+        return {
+          ...item,
+          title: item.menuName,
+          key: item.id,
+          disabled: false,
+        };
+      });
+      state.treeData = response;
+
+      pagination.total = response.total;
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
 };
 
 const handleEdit = (rowData: any) => {
@@ -196,7 +126,18 @@ const handleClose = () => {
   state.dialogVisible = false;
 };
 
-const handleSubmit = () => {};
+const handleSubmit = (formData: any) => {
+  sysSysUserSave(formData)
+    .then((response: any) => {
+      global.$message.success("提交成功");
+      getData();
+      handleClose();
+    })
+    .catch((error: any) => {
+      console.log(error);
+      global.$message.error(error.message);
+    });
+};
 
 const handleChangePage = (pagingData: any) => {
   pagination.page = pagingData.current;
@@ -205,33 +146,25 @@ const handleChangePage = (pagingData: any) => {
   getData();
 };
 
-const handleDelete = (id: number) => {};
-
-const init = () => {
-  columns.value = pageModel.value.map((item: any) => {
-    return {
-      ...item,
-      title: item.label,
-      dataIndex: item.name,
-      key: item.name,
-    };
-  });
+const handleDelete = (id: number) => {
+  sysSysUserDelete({
+    id,
+  })
+    .then((response: any) => {
+      global.$message.success("删除成功");
+      getData();
+    })
+    .catch((error: any) => {
+      global.$message.error("删除失败");
+      console.log(error);
+    });
 };
 
 onMounted(async () => {
-  init();
   getData();
 });
 
 onBeforeUnmount(() => {});
 </script>
 
-<style scoped lang="scss">
-.ant-table {
-  .ant-table-container {
-    .ant-table-body {
-      height: calc(-4rem + 100vh);
-    }
-  }
-}
-</style>
+<style scoped lang="scss"></style>
