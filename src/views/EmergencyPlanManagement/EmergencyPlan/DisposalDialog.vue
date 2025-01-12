@@ -36,11 +36,16 @@
       <a-row>
         <a-col :span="22">
           <a-form-item label="预案等级">
-            {{
-              global
-                .$getDictionary("planLevel")
-                .find((item) => item.value === props.rowData.planLevel)?.label
-            }}
+            <span
+              :style="{
+                color: global.$getColorInfoByValue(props.rowData.planLevel)
+                  ?.color,
+              }"
+            >
+              {{
+                global.$getColorInfoByValue(props.rowData.planLevel)?.label
+              }}
+            </span>
           </a-form-item>
         </a-col>
       </a-row>

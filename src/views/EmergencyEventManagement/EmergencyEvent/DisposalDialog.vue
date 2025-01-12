@@ -33,13 +33,16 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="eventTime" label="事件等级">
+          <a-form-item name="eventLevel" label="事件等级">
             <span
               :style="{
-                color: getColor().color,
+                color: global.$getColorInfoByValue(state.formData.eventLevel)
+                  ?.color,
               }"
             >
-              {{ getColor().label }}
+              {{
+                global.$getColorInfoByValue(state.formData.eventLevel)?.label
+              }}
             </span>
           </a-form-item>
         </a-col>
@@ -179,21 +182,6 @@ let state = reactive({
   disposalData: {} as any,
 });
 
-const colorList: any[] = [
-  {
-    label: "红色",
-    color: "red",
-  },
-  {
-    label: "黄色",
-    color: "yellow",
-  },
-  {
-    label: "绿色",
-    color: "green",
-  },
-];
-
 const eventList = computed(() => {
   return global.$store.state.app.currentEventTypeList.find(
     (item: any) => item.type === global.$store.state.app.emergencyEventType
@@ -306,22 +294,6 @@ const handleChangeDisposalStep = (value: any) => {
     stepOrder: planInfo.stepOrder,
     stepOrderDesc: planInfo.stepOrderDesc,
   };
-};
-
-const handleChangeAttachment = () => {};
-
-const getColor = () => {
-  let eventLevel: any[] = global.$store.state.dictionary.eventLevel;
-  eventLevel = eventLevel.map((item: any) => {
-    return {
-      ...item,
-      color: colorList.find((item2: any) => item2.title === item.label),
-    };
-  });
-  const colorItem = global.$store.state.dictionary.eventLevel.find(
-    (item) => item.value === state.formData.eventLevel
-  );
-  return colorItem;
 };
 
 onMounted(async () => {});

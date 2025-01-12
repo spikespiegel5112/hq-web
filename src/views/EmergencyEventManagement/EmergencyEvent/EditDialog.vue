@@ -70,20 +70,18 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="eventLevel" label="等级">
-            <a-select
-              v-if="global.$checkEditable(props.mode)"
+          <a-form-item name="eventLevel" label="事件等级">
+            <a-radio-group
               v-model:value="state.formData.eventLevel"
-              placeholder="请选择"
+              buttonStyle="solid"
             >
-              <a-select-option
-                v-for="item in global.$store.state.dictionary.eventLevel"
-                :key="item.value"
+              <a-radio-button
+                v-for="item in global.$getDictionary('eventLevel')"
                 :value="item.value"
               >
                 {{ item.label }}
-              </a-select-option>
-            </a-select>
+              </a-radio-button>
+            </a-radio-group>
           </a-form-item>
         </a-col>
       </a-row>

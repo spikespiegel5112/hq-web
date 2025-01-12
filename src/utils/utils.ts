@@ -9,6 +9,7 @@ interface DAMNU_ENABLE {
 }
 const _utils = {
   $message: messageApi,
+
   $getLightBlubImageUrlByColor(color: string) {
     return _utils.$getImageUrl(`/src/assets/lightbulb-${color}@2x.png`);
   },
@@ -321,6 +322,27 @@ const _utils = {
     }
     return result;
   },
+  $getColorInfoByValue(colorValue: string) {
+    const colorList: any[] = [
+      {
+        label: "绿色",
+        color: "green",
+        value: 0,
+      },
+      {
+        label: "黄色",
+        color: "yellow",
+        value: 1,
+      },
+      {
+        label: "红色",
+        color: "red",
+        value: 2,
+      },
+    ];
+    const color = colorList.find((item: any) => item.value === colorValue);
+    return color;
+  },
 } as any;
 
 const result = {
@@ -343,6 +365,8 @@ const result = {
     app.config.globalProperties["$checkEditable"] = _utils["$checkEditable"];
     app.config.globalProperties["$getBaseUrl"] = _utils["$getBaseUrl"];
     app.config.globalProperties["$checkFileType"] = _utils["$checkFileType"];
+    app.config.globalProperties["$getColorInfoByValue"] =
+      _utils["$getColorInfoByValue"];
   },
 } as any;
 
