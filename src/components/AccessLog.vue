@@ -1,25 +1,29 @@
 <template>
-  <div class="common_accesslog_wrapper">
+  <div class="common_accesslog_wrapper" ref="accesslogRef">
     <vue-scroll>
       <a-space>
-        <div
-          class="route"
-          :class="item.active ? 'active' : ''"
-          v-for="item in state.accessLogList"
+        <template
+          v-for="item in state.routeList.filter((item:any)=>item.isUsed)"
           @auxclick="handleMouseClick(item)"
         >
-          <a class="title" href="javascript:;" @click="handleNavigate(item)">
-            {{ item.meta.title }}
-          </a>
-          <a class="close" href="javascript:;" @click="handleClose(item)">
-            <div class="idle">
-              <CloseOutlined />
-            </div>
-            <div class="hover">
-              <CloseCircleFilled />
-            </div>
-          </a>
-        </div>
+          <div
+            class="route"
+            :class="item.active ? 'active' : ''"
+            ref="routeRef"
+          >
+            <a class="title" href="javascript:;" @click="handleNavigate(item)">
+              {{ item.title }}
+            </a>
+            <a class="close" href="javascript:;" @click="handleClose(item)">
+              <div class="idle">
+                <CloseOutlined />
+              </div>
+              <div class="hover">
+                <CloseCircleFilled />
+              </div>
+            </a>
+          </div>
+        </template>
       </a-space>
     </vue-scroll>
   </div>
@@ -38,42 +42,62 @@ import {
 } from "vue";
 import { CloseOutlined, CloseCircleFilled } from "@ant-design/icons-vue";
 
+import routeDictionary from "@/router/routeDictionary";
+
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
-const formDataRef = ref();
+const accesslogRef = ref();
+const routeRef = ref();
 
 const state = reactive({
   accessLogList: [] as any[],
+  routeList: [] as any[],
+  currentLogWidth: 0,
 });
 
 watch(
   () => global.$route,
   (newValue: any, oldValue: any) => {
     recordRoute(newValue);
+    handleNavigate(newValue);
+    measureWidth();
   }
 );
 
-const recordRoute = (newValue: any) => {
-  const matchedRouteList = newValue.matched;
-  const newRoute = matchedRouteList.filter((item1: any) => {
-    return (
-      !state.accessLogList.find((item2: any) => item2.name === item1.name) &&
-      item1.name !== "layout"
-    );
+const initRouteList = () => {
+  let result = [] as any[];
+  const looper = (children: any[]) => {
+    children.forEach((item: any, index: number) => {
+      result.push({
+        ...item,
+        isUsed: index < 30,
+        active: false,
+      });
+      if (item.children instanceof Array && item.children.length > 0) {
+        looper(item.children);
+      }
+    });
+  };
+  looper(routeDictionary.find((item: any) => item.name === "layout").children);
+  result = result.filter((item: any) => {
+    return !item.children;
   });
-  if (newRoute.length > 0) {
-    const lastOne = newRoute[newRoute.length - 1];
-    if (lastOne.meta.title) {
-      state.accessLogList.push(lastOne);
+  state.routeList = result;
+};
+
+const recordRoute = (newValue: any) => {
+  state.routeList.forEach((item: any) => {
+    if (item.name === newValue.name) {
+      item.isUsed = true;
     }
-  }
-  state.accessLogList.forEach((item: any) => {
-    item.active = newValue.name === item.name;
   });
 };
 
 const handleNavigate = (routeData: any) => {
+  state.routeList.forEach((item: any) => {
+    item.active = routeData.name === item.name;
+  });
   global.$router.push({
     name: routeData.name,
   });
@@ -93,22 +117,59 @@ const handleClose = (routeData: any) => {
   state.accessLogList.splice(indexToDelete, 1);
 };
 
+const measureWidth = () => {
+  console.log(accesslogRef);
+  console.log(routeRef.value);
+
+  const accesslogWraperWidth = accesslogRef.value.clientWidth;
+  const accesslogContentEl = document.querySelectorAll(".__panel")[1];
+
+  if (!!routeRef.value) {
+    const activeLog = routeRef.value.find((item: any) => {
+      console.log(JSON.stringify(item.classList));
+      return Object.values(item.classList).some(
+        (item2: string) => item2 === "active"
+      );
+    });
+    const activeLogOffsetLeft: number = activeLog.offsetLeft;
+
+    state.currentLogWidth = routeRef.value.reduce((sum: number, cur: any) => {
+      return cur.clientWidth + sum;
+    }, 0);
+  }
+  console.log(accesslogWraperWidth);
+  console.log(state.currentLogWidth);
+  // accesslogRef.value.scrollLeft = 100;
+  // accesslogRef.value.scrollRight = 100;
+  // accesslogContentEl.scrollBy({
+  //   right: 200,
+  //   behavior: "smooth",
+  // });
+
+
+  if (state.currentLogWidth > accesslogWraperWidth) {
+    // accesslogContentEl.scrollRight = -400;
+    accesslogContentEl.scrollLeft = 400;
+  }
+
+  accesslogRef.value.addEventListener("wheel", function (event) {
+    event.preventDefault();
+    console.log(event);
+
+    var delta = Math.max(-1, Math.min(1, event.wheelDelta || -event.detail));
+    accesslogRef.value.scrollLeft -= delta * 40; // 调整滚动位置的速度
+  });
+};
+
 const init = () => {
   recordRoute(global.$route);
+  handleNavigate(global.$route);
+  measureWidth();
 };
 
 onMounted(async () => {
+  initRouteList();
   init();
-  // for (let index = 0; index < 100; index++) {
-  //   state.accessLogList.push({
-  //     title: "客流月报表",
-  //     path: "MonthlyPassengerFlowSheet",
-  //     name: "MonthlyPassengerFlowSheet",
-  //     meta: {
-  //       title: "客流月报表",
-  //     },
-  //   });
-  // }
 });
 
 onBeforeUnmount(() => {});
