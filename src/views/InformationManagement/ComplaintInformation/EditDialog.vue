@@ -1,8 +1,7 @@
 <template>
   <a-modal v-model:open="state.visible" @cancel="handleClose" width="9rem">
     <template #title>
-           <CommonTitle :title="dialogTitle" />
-
+      <CommonTitle :title="dialogTitle" />
     </template>
     <a-form
       :model="state.formData"
@@ -19,9 +18,7 @@
               placeholder="请选择"
             >
               <a-select-option
-                v-for="item in global.$getDictionary(
-                  'manageRegion'
-                )"
+                v-for="item in global.$getDictionary('manageRegion')"
                 :value="item.value"
               >
                 {{ item.label }}
@@ -49,7 +46,8 @@
               </a-select-option>
             </a-select>
             <template v-if="props.mode === 'review'">
-              {{ global.$getDictionary('complaintType').find((item:any)=>item.value===state.formData.complaintType)?.label }}
+              {{ state.formData.complaintType }}
+              {{ global.$getDictionary('complaintType' ).find((item:any)=>item.value==state.formData.complaintType)?.label }}
             </template>
           </a-form-item>
         </a-col>
@@ -212,8 +210,11 @@ watch(
           ),
         };
         Object.keys(state.formData).forEach((item: string) => {
-          state.formData[item] = !!rowData[item] ? rowData[item] : undefined;
+          state.formData[item] = global.$isNotEmpty(rowData[item])
+            ? rowData[item]
+            : undefined;
         });
+        console.log(state.formData);
       }
     }
   }

@@ -1,6 +1,10 @@
 <template>
   <div class="common_table_wrapper">
-    <FilterTool       @onSearch="handleSearch"       @onReset="handleReset"       v-model="queryFormData"     ></FilterTool>
+    <FilterTool
+      @onSearch="handleSearch"
+      @onReset="handleReset"
+      v-model="queryFormData"
+    ></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
         <ImportButton
@@ -176,14 +180,14 @@ const getData = () => {
           ...item,
           handlingStatus: global
             .$getDictionary("disposalStatus")
-            .find((item2: any) => item2.value === item.handlingStatus).label,
+            .find((item2: any) => item2.value === item.handlingStatus)?.label,
           complaintType: global
             .$getDictionary("complaintType")
-            .find((item2: any) => item2.value === item.handlingStatus).label,
+            .find((item2: any) => item2.value === item.complaintType)?.label,
           complaintSensitive: global
             .$getDictionary("sensitivity")
             .find((item2: any) => item2.value === item.complaintSensitive)
-            .label,
+            ?.label,
         };
       });
     })

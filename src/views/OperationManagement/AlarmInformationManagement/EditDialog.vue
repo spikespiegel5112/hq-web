@@ -246,7 +246,9 @@ watch(
           "YYYY-MM-DD HH:mm:ss"
         );
         Object.keys(state.formData).forEach((item: string) => {
-          state.formData[item] = !!rowData[item] ? rowData[item] : undefined;
+          state.formData[item] = global.$isNotEmpty(rowData[item])
+            ? rowData[item]
+            : undefined;
         });
       }
     }
