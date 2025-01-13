@@ -170,7 +170,6 @@ let state = reactive({
   formData: {
     id: null as number | null | undefined,
     attachmentList: [] as any[],
-
     disposalTime: null,
     seId: null,
     stepContent: null,
@@ -222,6 +221,7 @@ watch(
       const formData = JSON.parse(JSON.stringify(props.rowData));
       state.formData = {
         ...formData,
+        seId: props.rowData.id,
         eventTime: global.$dayjs(formData.eventTime),
         attachmentList: [],
         stepContent: null,
@@ -269,7 +269,6 @@ const handleClose = () => {
 };
 
 const handleSubmit = () => {
-  state.formData.id = undefined;
   formDataRef.value
     .validate()
     .then(() => {
