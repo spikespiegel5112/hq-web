@@ -595,7 +595,7 @@ onMounted(() => {});
         border-color: #f56c6c;
         background-color: rgb(245, 108, 108, 0.2);
       }
-      &.ant-tag-error {
+      &.ant-tag-success {
         border-color: green;
         background-color: rgb(0, 128, 0, 0.2);
       }

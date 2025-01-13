@@ -140,6 +140,13 @@ const pageModel = ref([
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
+    tagConfig: {
+      colorList: [
+        { value: "未处置", color: "error" },
+        { value: "处置中", color: "warning" },
+        { value: "已处置", color: "success" },
+      ],
+    },
   },
   {
     label: "附件",
