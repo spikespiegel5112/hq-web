@@ -5,9 +5,7 @@
     width="12rem"
     @cancel="handleClose"
   >
-    <template #title>
-      <CommonTitle title="事件处置" />
-    </template>
+    <CommonTitle title="事件处置" />
     <a-form
       :model="state.formData"
       ref="formDataRef"
@@ -36,13 +34,11 @@
           <a-form-item name="eventLevel" label="事件等级">
             <span
               :style="{
-                color: global.$getColorInfoByValue(state.formData.eventLevel)
+                color: global.$getColorInfoByValue(props.rowData.eventLevel)
                   ?.color,
               }"
             >
-              {{
-                global.$getColorInfoByValue(state.formData.eventLevel)?.label
-              }}
+              {{ global.$getColorInfoByValue(props.rowData.eventLevel)?.label }}
             </span>
           </a-form-item>
         </a-col>
@@ -128,10 +124,8 @@ import {
 import type { Rule, RuleObject } from "ant-design-vue/es/form";
 
 import {
-  eventManageSuddenEventSaveDisposalRequest,
   eventManageSuddenEventGetDisposalRequest,
   preplanPreplanGetStepPageRequest,
-  eventManageSuddenEventExportRequest,
 } from "@/api/management";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
@@ -162,7 +156,7 @@ let state = reactive({
       attachmentPath: null,
       createBy: null,
       createTime: null,
-      id: 0,
+      id: null,
       updateBy: null,
       updateTime: null,
     },
@@ -170,8 +164,8 @@ let state = reactive({
   formData: {
     id: null as number | null | undefined,
     attachmentList: [] as any[],
-    disposalTime: null,
     seId: null,
+    disposalTime: null,
     stepContent: null,
     stepName: null,
     stepOrder: null,
@@ -211,6 +205,17 @@ const rules: Record<string, Rule[]> = {
   ],
 };
 
+const currentStepOrder = computed(() => {
+  let result = 0;
+  if (state.disposalData.disposalList) {
+    const disposalList = state.disposalData.disposalList;
+    let orderList = disposalList.map((item: any) => item.stepOrder);
+    orderList = Array.from(new Set(orderList));
+    result = Math.max(...orderList);
+  }
+  return result;
+});
+
 watch(
   () => props.visible,
   async (newValue: any) => {
@@ -247,6 +252,7 @@ const getData = () => {
 };
 
 const getPlanData = () => {
+  state.planInfo = [];
   const planData: any = eventList.value.find(
     (item: any) => Number(item.value) === props.rowData.prId
   );

@@ -126,7 +126,6 @@ import type { Rule, RuleObject } from "ant-design-vue/es/form";
 import {
   planManagementEmergencyPlanGetDisposalRequest,
   preplanPreplanGetStepPageRequest,
-  eventManageSuddenEventExportRequest,
 } from "@/api/management";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
@@ -142,7 +141,6 @@ const emit = defineEmits<{
 
 const props = defineProps({
   visible: { type: Boolean, required: true, default: false },
-  mode: { type: [String, null], required: true, default: null },
   rowData: { type: Object, required: true, default: () => {} },
   dataModel: { type: Array, required: true, default: () => [] },
 });
@@ -166,18 +164,20 @@ let state = reactive({
   formData: {
     id: null as number | null | undefined,
     attachmentList: [] as any[],
-
-    emergencyPlanId: null,
-
     disposalTime: null,
     stepContent: null,
     stepName: null,
     stepOrder: null,
     stepOrderDesc: null,
-    attachmentAssociationCode: null,
   } as any,
   fileList: [] as any[],
   disposalData: {} as any,
+});
+
+const eventList = computed(() => {
+  return global.$store.state.app.currentEventTypeList.find(
+    (item: any) => item.type === global.$store.state.app.emergencyPlanType
+  )?.data;
 });
 
 const rules: Record<string, Rule[]> = {
@@ -204,12 +204,6 @@ const rules: Record<string, Rule[]> = {
   ],
 };
 
-const eventList = computed(() => {
-  return global.$store.state.app.currentEventTypeList.find(
-    (item: any) => item.type === global.$store.state.app.emergencyPlanType
-  )?.data;
-});
-
 const currentStepOrder = computed(() => {
   let result = 0;
   if (state.disposalData.disposalList) {
@@ -231,10 +225,9 @@ watch(
       const formData = JSON.parse(JSON.stringify(props.rowData));
       state.formData = {
         ...formData,
-        emergencyPlanId: props.rowData.id,
+        eventTime: global.$dayjs(formData.eventTime),
         attachmentList: [],
         stepContent: null,
-        // eventTime: global.$dayjs(props.rowData.eventTime),
       };
     }
   }
