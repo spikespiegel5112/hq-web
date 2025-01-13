@@ -106,6 +106,25 @@
               }}
             </a-tag>
           </div>
+          <div v-else-if="!!item.colorConfig" class="taglist">
+            <span
+              :style="{
+                color: item.colorConfig.colorList.find(
+                  (item2) => item2.value === scope.record[item.name]
+                )?.color,
+              }"
+            >
+              {{
+                !!item.colorConfig.val
+                  ? item.colorConfig.dictionary.find((item2) => {
+                      const result =
+                        item2.value === scope.record[item.tagConfig.val];
+                      return result;
+                    })?.label
+                  : scope.record[item.name]
+              }}
+            </span>
+          </div>
           <div v-else-if="item.name === 'operationColumn'" class="operation">
             <span
               v-for="(action, index) in item.actions"

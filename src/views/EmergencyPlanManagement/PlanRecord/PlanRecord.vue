@@ -1,6 +1,10 @@
 <template>
   <div class="common_table_wrapper">
-    <FilterTool       @onSearch="handleSearch"       @onReset="handleReset"       v-model="queryFormData"     ></FilterTool>
+    <FilterTool
+      @onSearch="handleSearch"
+      @onReset="handleReset"
+      v-model="queryFormData"
+    ></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
         <ExportButton
@@ -96,6 +100,13 @@ const pageModel = ref([
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
+    colorConfig: {
+      colorList: [
+        { value: "绿色", color: "chartreuse" },
+        { value: "黄色", color: "yellow" },
+        { value: "红色", color: "red" },
+      ],
+    },
   },
   {
     label: "发生时间",

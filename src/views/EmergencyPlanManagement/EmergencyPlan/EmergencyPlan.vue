@@ -129,6 +129,13 @@ const pageModel = ref([
     formVisible: true,
     exportVisible: true,
     width: "1rem",
+    colorConfig: {
+      colorList: [
+        { value: "绿色", color: "chartreuse" },
+        { value: "黄色", color: "yellow" },
+        { value: "红色", color: "red" },
+      ],
+    },
   },
   {
     label: "发生时间",

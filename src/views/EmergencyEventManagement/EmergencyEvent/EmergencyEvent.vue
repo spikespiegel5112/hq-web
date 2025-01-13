@@ -132,13 +132,20 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "等级",
+    label: "事件等级",
     name: "eventLevel",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
     width: "1rem",
+    colorConfig: {
+      colorList: [
+        { value: "绿色", color: "chartreuse" },
+        { value: "黄色", color: "yellow" },
+        { value: "红色", color: "red" },
+      ],
+    },
   },
   {
     label: "突发事件编码",
@@ -177,7 +184,7 @@ const pageModel = ref([
   {
     label: "附件",
     name: "attachment",
-    required: false,
+    required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
