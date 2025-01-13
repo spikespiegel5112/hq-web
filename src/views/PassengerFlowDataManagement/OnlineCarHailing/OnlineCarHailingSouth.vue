@@ -61,7 +61,7 @@ const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
 const props = defineProps({
-  capPlace: { type: String, required: true, default: "" },
+  capPlace: { type: Number, required: true, default: null },
 });
 
 const pageModel = ref([

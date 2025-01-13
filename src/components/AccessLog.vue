@@ -11,7 +11,7 @@
             :class="item.active ? 'active' : ''"
             ref="routeRef"
           >
-            <a class="title" href="javascript:;" @click="handleNavigate(item)">
+            <a class="title" href="javascript:;" @click="handleChooseTag(item)">
               {{ item.title }}
             </a>
             <a class="close" href="javascript:;" @click="handleClose(item)">
@@ -54,14 +54,15 @@ const state = reactive({
   accessLogList: [] as any[],
   routeList: [] as any[],
   currentLogWidth: 0,
+  autoCoordinate: true,
 });
 
 watch(
   () => global.$route,
   (newValue: any, oldValue: any) => {
+    state.autoCoordinate = true;
     recordRoute(newValue);
     handleNavigate(newValue);
-    measureWidth();
   }
 );
 
@@ -71,7 +72,7 @@ const initRouteList = () => {
     children.forEach((item: any, index: number) => {
       result.push({
         ...item,
-        isUsed: index < 30,
+        isUsed: false,
         active: false,
       });
       if (item.children instanceof Array && item.children.length > 0) {
@@ -94,6 +95,11 @@ const recordRoute = (newValue: any) => {
   });
 };
 
+const handleChooseTag = (routeData: any) => {
+  state.autoCoordinate = false;
+  handleNavigate(routeData);
+};
+
 const handleNavigate = (routeData: any) => {
   state.routeList.forEach((item: any) => {
     item.active = routeData.name === item.name;
@@ -101,10 +107,7 @@ const handleNavigate = (routeData: any) => {
   global.$router.push({
     name: routeData.name,
   });
-};
-
-const handleMouseClick = (routeData: any) => {
-  handleClose(routeData);
+  measurementWidth();
 };
 
 const handleClose = (routeData: any) => {
@@ -117,9 +120,13 @@ const handleClose = (routeData: any) => {
   state.accessLogList.splice(indexToDelete, 1);
 };
 
-const measureWidth = () => {
+const measurementWidth = async () => {
+  if (!state.autoCoordinate) {
+    return;
+  }
   console.log(accesslogRef);
   console.log(routeRef.value);
+  await nextTick();
 
   const accesslogWraperWidth = accesslogRef.value.clientWidth;
   const accesslogContentEl = document.querySelectorAll(".__panel")[1];
@@ -137,34 +144,47 @@ const measureWidth = () => {
       return cur.clientWidth + sum;
     }, 0);
   }
-  console.log(accesslogWraperWidth);
-  console.log(state.currentLogWidth);
-  // accesslogRef.value.scrollLeft = 100;
-  // accesslogRef.value.scrollRight = 100;
-  // accesslogContentEl.scrollBy({
-  //   right: 200,
-  //   behavior: "smooth",
-  // });
-
+  // console.log("accesslogWraperWidth");
+  // console.log(accesslogWraperWidth);
+  // console.log("state.currentLogWidth");
+  // console.log(state.currentLogWidth);
 
   if (state.currentLogWidth > accesslogWraperWidth) {
-    // accesslogContentEl.scrollRight = -400;
-    accesslogContentEl.scrollLeft = 400;
-  }
+    let reduceFlag = true;
+    let scrollLeft = 0;
+    routeRef.value.forEach((item: any, index: number) => {
+      if (
+        Object.values(item.classList).some(
+          (item2: string) => item2 === "active"
+        )
+      ) {
+        reduceFlag = false;
+      }
+      if (reduceFlag) {
+        scrollLeft += index - 1 <= 0 ? 0 : item.clientWidth + 26;
+      }
+    });
+    console.log("scrollLeft");
+    console.log(scrollLeft);
+    if (scrollLeft < accesslogWraperWidth) {
+      scrollLeft = 0;
+    }
 
-  accesslogRef.value.addEventListener("wheel", function (event) {
+    accesslogContentEl.scrollLeft =
+      Math.floor(scrollLeft / accesslogWraperWidth) * accesslogWraperWidth;
+  }
+  accesslogRef.value.addEventListener("wheel", function (event: any) {
     event.preventDefault();
-    console.log(event);
 
     var delta = Math.max(-1, Math.min(1, event.wheelDelta || -event.detail));
-    accesslogRef.value.scrollLeft -= delta * 40; // 调整滚动位置的速度
+    accesslogContentEl.scrollLeft -= delta * 20; // 调整滚动位置的速度
   });
 };
 
 const init = () => {
   recordRoute(global.$route);
   handleNavigate(global.$route);
-  measureWidth();
+  measurementWidth();
 };
 
 onMounted(async () => {
