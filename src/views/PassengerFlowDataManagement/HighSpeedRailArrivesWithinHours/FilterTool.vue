@@ -89,7 +89,7 @@ const state = reactive({
     statisticalDateBegin: null,
     statisticalDateEnd: null,
   },
-  statisticalDate: [],
+  statisticalDate: [] as any[],
 });
 
 watch(
@@ -115,13 +115,19 @@ const handleReset = () => {
 const handleChangeStatisticalDate = (date: any) => {
   state.formData.statisticalDateBegin = global
     .$dayjs(date[0])
-    .format("YYYY-MM-DD");
+    .format("YYYY-MM-DD HH:mm:ss");
   state.formData.statisticalDateEnd = global
     .$dayjs(date[1])
-    .format("YYYY-MM-DD");
+    .format("YYYY-MM-DD HH:mm:ss");
+    debugger
 };
 
 onMounted(async () => {
+  state.statisticalDate = [
+    global.$dayjs().startOf('day'),
+    global.$dayjs().endOf("day"),
+  ] as any[];
+  handleChangeStatisticalDate(state.statisticalDate)
   emit("update:modelValue", state.formData);
 });
 

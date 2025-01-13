@@ -83,13 +83,7 @@
                 </template>
                 <div class="node">
                   <div class="time">
-                    {{
-                      !!state.disposalList[index]
-                        ? global
-                            .$dayjs(state.disposalList[index]?.disposalTime)
-                            .format("HH:mm")
-                        : ""
-                    }}
+                    {{ getDispoaslTime(index) }}
                   </div>
                   <div class="content">
                     <div class="top">
@@ -285,6 +279,20 @@ const getCurrentStep = (currentPreplanData: any) => {
     return currentPreplanData.stepOrder === item.stepOrder;
   });
   return _result || result;
+};
+
+const getDispoaslTime = (index: number) => {
+  let result = "";
+  state.disposalList[index];
+  if (state.disposalList[index]) {
+    const disposalTime = state.disposalList[index].disposalTime;
+    if (!!disposalTime) {
+      result = global
+        .$dayjs(state.disposalList[index].disposalTime)
+        .format("HH:mm");
+    }
+  }
+  return result;
 };
 
 onMounted(() => {
