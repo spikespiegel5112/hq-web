@@ -24,7 +24,9 @@
       :dataModel="pageModel"
       tabTable
       statisticTable
+      :pagination="pagination"
       @onEdit="handleEdit"
+      @onChangePage="handleChangePage"
     />
     <EditDialog
       :visible="state.dialogVisible"
@@ -144,8 +146,9 @@ const getData = () => {
     capPlace: props.capPlace,
   })
     .then((response: any) => {
-      state.tableData = response.data.list;
-      state.processedTableData = response.data.list.map((item: any) => {
+      response = response.data;
+      state.tableData = response.list;
+      state.processedTableData = response.list.map((item: any) => {
         return {
           ...item,
           capFlag: global
