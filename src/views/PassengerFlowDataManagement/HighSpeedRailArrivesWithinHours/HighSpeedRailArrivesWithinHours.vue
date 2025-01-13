@@ -44,6 +44,7 @@
     />
     <SummarizeDataDialog
       :visible="state.dialogSummarizeDataVisible"
+      :statisticData="state.statisticData"
       @onClose="handleClose"
       @onSubmit="handleSubmitSummarizeData"
     />
@@ -71,7 +72,7 @@ import {
   backendRailwayArriveSaveTodayFlowRequest,
   backendRailwayArriveImportPicRequest,
   backendRailwayArriveSaveRailwayArriveBatchRequest,
-  passengerFlowMetroPassengerFlowGetStatisticsRequest,
+  backendRailwayArriveGetTodayFlowRequest,
 } from "@/api/management";
 
 import Statistic from "./Statistic.vue";
@@ -164,9 +165,6 @@ let queryFormData = reactive({} as any);
 const pagination = reactive({
   ...global.$store.state.app.defaultPagination,
 });
-const env = computed(() => {
-  return import.meta.env;
-});
 
 watch(
   () => queryFormData,
@@ -201,7 +199,7 @@ const getData = () => {
 };
 
 const getStatisticData = () => {
-  passengerFlowMetroPassengerFlowGetStatisticsRequest({
+  backendRailwayArriveGetTodayFlowRequest({
     ...queryFormData,
   })
     .then((response: any) => {
@@ -293,6 +291,7 @@ const handleSubmitSummarizeData = (formData: any) => {
     .then((response: any) => {
       global.$message.success("提交成功");
       getData();
+      getStatisticData()
     })
     .catch((error: any) => {
       console.log(error);

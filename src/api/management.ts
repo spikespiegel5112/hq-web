@@ -94,12 +94,23 @@ export const backendIndexPageEmergencyResultRequest = (params: any) => {
   });
 };
 
-// 后台管理-铁路到达-分页查询
+// 区域小时客流-铁路到达-分页查询
 export const backendRailwayArriveGetRailwayArrivePagingRequest = (
   params: any
 ) => {
   return service({
     url: prefix + "/backend/railwayArrive/getRailwayArrivePaging",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 区域小时客流-铁路到达-查询今日客流预测汇总信息
+export const backendRailwayArriveGetTodayFlowRequest = (
+  params: any
+) => {
+  return service({
+    url: prefix + "/backend/railwayArrive/getTodayFlow",
     method: "POST",
     data: params,
   });

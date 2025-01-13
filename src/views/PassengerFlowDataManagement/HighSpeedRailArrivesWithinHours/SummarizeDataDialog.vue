@@ -164,7 +164,10 @@ import {
 
 import type { Rule, RuleObject } from "ant-design-vue/es/form";
 
-import { backendRailwayArriveImportTodayFlowByStringRequest } from "@/api/management";
+import {
+  backendRailwayArriveImportTodayFlowByStringRequest,
+  backendRailwayArriveGetTodayFlowRequest,
+} from "@/api/management";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -180,6 +183,7 @@ const props = defineProps({
   visible: { type: Boolean, required: true, default: false },
   rowData: { type: Object, required: false, default: () => {} },
   dataModel: { type: Array, required: false, default: () => [] },
+  statisticData: { type: Object, required: false, default: () => {} },
 });
 
 let state = reactive({
@@ -242,7 +246,6 @@ const handleClose = () => {
 };
 
 const handleSubmit = () => {
-  // statisticalBeginHour = Number(statisticalBeginHour);
   let statisticalDate = global
     .$dayjs(state.formData.statisticalDate)
     .format("YYYY-MM-DD");
@@ -252,8 +255,8 @@ const handleSubmit = () => {
     .then(() => {
       emit("onSubmit", {
         ...state.formData,
-        // statisticalBeginHour,
         statisticalDate,
+        id: props.statisticData.id,
       });
       handleClose();
     })
@@ -263,7 +266,7 @@ const handleSubmit = () => {
 };
 
 const handleIdentification = () => {
-  // 【枢纽应急响应中心】1月7日，虹桥高铁预计今日出发424列次、15.4万人，到达429列次、13.1万人；虹桥机场预计今日出港372架次、6.02万人，进港376架次、6.07万人。
+  // 【枢纽应急响应中心】1月13日，虹桥高铁预计今日出发424列次、15.4万人，到达429列次、13.1万人；虹桥机场预计今日出港372架次、6.02万人，进港376架次、6.07万人。
   backendRailwayArriveImportTodayFlowByStringRequest({
     dataStr: state.content,
   })
@@ -288,8 +291,20 @@ const handleIdentification = () => {
         estimatedDepartedTodayTrainsCount:
           response.estimatedDepartedTodayTrainsCount,
         statisticalDate: response.statisticalDate,
+        id: props.statisticData.id,
       };
+      getStatisticData();
       global.$message.success("识别完成");
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+};
+
+const getStatisticData = () => {
+  backendRailwayArriveGetTodayFlowRequest({})
+    .then((response: any) => {
+      state.formData.id = response.data.id;
     })
     .catch((error: any) => {
       console.log(error);
