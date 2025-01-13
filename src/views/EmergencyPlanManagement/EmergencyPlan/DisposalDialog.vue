@@ -5,16 +5,12 @@
     width="12rem"
     @cancel="handleClose"
   >
-    <template #title>
-      <span class="square"></span>
-      <span></span>
-      预案处置
-    </template>
+    <CommonTitle title="预案处置" />
     <a-form
       :model="state.formData"
       ref="formDataRef"
       autocomplete="off"
-      :rule="rules"
+      :rules="rules"
       :label-col="{ style: { width: '120px' } }"
     >
       <a-row>
@@ -42,9 +38,7 @@
                   ?.color,
               }"
             >
-              {{
-                global.$getColorInfoByValue(props.rowData.planLevel)?.label
-              }}
+              {{ global.$getColorInfoByValue(props.rowData.planLevel)?.label }}
             </span>
           </a-form-item>
         </a-col>
@@ -186,20 +180,29 @@ let state = reactive({
   disposalData: {} as any,
 });
 
-const colorList: any[] = [
-  {
-    label: "红色",
-    color: "red",
-  },
-  {
-    label: "黄色",
-    color: "yellow",
-  },
-  {
-    label: "绿色",
-    color: "green",
-  },
-];
+const rules: Record<string, Rule[]> = {
+  disposalTime: [
+    {
+      required: true,
+      message: "请输入响应时间",
+      trigger: "change",
+    },
+  ],
+  eventLocation: [
+    {
+      required: true,
+      message: "请选择处置步骤",
+      trigger: "change",
+    },
+  ],
+  stepContent: [
+    {
+      required: true,
+      message: "请选择处置内容",
+      trigger: "change",
+    },
+  ],
+};
 
 const eventList = computed(() => {
   return global.$store.state.app.currentEventTypeList.find(
@@ -215,37 +218,6 @@ const currentStepOrder = computed(() => {
     orderList = Array.from(new Set(orderList));
     result = Math.max(...orderList);
   }
-  return result;
-});
-
-const rules: ComputedRef<RuleObject[]> = computed(() => {
-  const validateNumber = (rule: any, value: any, callback: any) => {
-    if (isNaN(Number(value))) {
-      callback(new Error("请输入数字值"));
-    } else {
-      callback();
-    }
-  };
-  const result: any = {};
-  Object.keys(state.formData).forEach((item) => {
-    const dataModelInfo = props.dataModel.find(
-      (item2: any) => item2.name === item
-    ) as any;
-    if (!!dataModelInfo) {
-      result[item] = [];
-      if (dataModelInfo.required) {
-        result[item].push({
-          required: true,
-          message: "请输入" + dataModelInfo.label,
-          trigger: "change",
-        });
-        if (props.mode === "review") result[item] = false;
-      }
-      if (dataModelInfo.dataType === "number") {
-        result[item].push({ validator: validateNumber, trigger: "change" });
-      }
-    }
-  });
   return result;
 });
 
@@ -309,10 +281,17 @@ const handleClose = () => {
 
 const handleSubmit = () => {
   state.formData.id = undefined;
-  emit("onSubmit", {
-    ...state.formData,
-  });
-  handleClose();
+  formDataRef.value
+    .validate()
+    .then(() => {
+      emit("onSubmit", {
+        ...state.formData,
+      });
+      handleClose();
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
 };
 
 const handleChangeDisposalStep = (value: any) => {

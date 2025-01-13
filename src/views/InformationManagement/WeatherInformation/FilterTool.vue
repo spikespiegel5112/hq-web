@@ -4,7 +4,7 @@
       <a-row>
         <a-col :span="21">
           <a-row :gutter="20">
-            <a-col :span="8">
+            <a-col :span="9">
               <a-form-item name="dataTime" label="时间">
                 <el-date-picker
                   type="datetimerange"

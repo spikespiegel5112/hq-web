@@ -99,7 +99,7 @@
                 <div class="node">
                   <div class="time">
                     {{
-                      !!state.disposalList[index]
+                      !!state.disposalList[index].disposalTime
                         ? global
                             .$dayjs(state.disposalList[index]?.disposalTime)
                             .format("HH:mm")
