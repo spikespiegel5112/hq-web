@@ -9,14 +9,17 @@
         <OnlineCarHailingSouth
           v-if="state.activeKey === 0"
           :capPlace="item.value"
+          :statisticData="state.statisticData"
         />
         <OnlineCarHailingNorth
           v-if="state.activeKey === 1"
           :capPlace="item.value"
+          :statisticData="state.statisticData"
         />
         <OnlineCarHailingP9
           v-if="state.activeKey === 2"
           :capPlace="item.value"
+          :statisticData="state.statisticData"
         />
       </a-tab-pane>
     </a-tabs>
@@ -61,6 +64,7 @@ const componentMap = ref([
 const state = reactive({
   activeKey: 0,
   parkingLotData: [] as any[],
+  statisticData: {},
 });
 
 const handleChangeTab = (value: any) => {

@@ -12,7 +12,7 @@
             今日累计到达
           </div>
           <div class="content">
-            <span class="value">{{ props.statisticData.arriveNum }}</span>
+            <span class="value">{{ props.statisticData.inCount }}</span>
           </div>
         </div>
       </li>
@@ -27,7 +27,7 @@
             今日累计离开
           </div>
           <div class="content">
-            <span class="value">{{ props.statisticData.leaveNum }}</span>
+            <span class="value">{{ props.statisticData.outCount }}</span>
           </div>
         </div>
       </li>
@@ -119,7 +119,7 @@ onBeforeUnmount(() => {});
         .taxi {
           width: 0.7rem;
           height: 0.7rem;
-          background-image: url("@/assets/taxi_statistic/taxi_icon.png");
+          background-image: url("@/assets/taxi_statistic/online_car_hailing.png");
           background-size: contain;
           background-repeat: no-repeat;
           z-index: 1;

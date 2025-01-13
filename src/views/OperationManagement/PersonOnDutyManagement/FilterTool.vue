@@ -28,7 +28,8 @@
               <a-form-item name="password" label="值班时间">
                 <el-date-picker
                   type="datetimerange"
-                  placeholder="请选择"
+                  start-placeholder="开始时间"
+                  end-placeholder="结束时间"
                   v-model="state.dutyTime"
                 />
               </a-form-item>

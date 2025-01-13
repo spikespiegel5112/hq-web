@@ -1,5 +1,7 @@
 <template>
   <div class="common_table_wrapper">
+    <Statistic :statisticData="state.statisticData" />
+
     <FilterTool
       @onSearch="handleSearch"
       @onReset="handleReset"
@@ -23,6 +25,7 @@
       :processedTableData="state.processedTableData"
       :dataModel="pageModel"
       tabTable
+      statisticTable
       @onEdit="handleEdit"
     />
     <EditDialog
@@ -56,12 +59,15 @@ import {
 
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
+import Statistic from "./Statistic.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
+import { passengerFloweEHailingParkingGetStatisticsRequest } from "@/api/management";
+
 const props = defineProps({
-  capPlace: { type: String, required: true, default: "" },
+  capPlace: { type: Number, required: true, default: null },
 });
 
 const pageModel = ref([
@@ -122,6 +128,7 @@ const state = reactive({
   dialogVisible: false,
   dialogMode: null as string | null,
   currentRowData: {},
+  statisticData: {},
 });
 
 let queryFormData = reactive({} as any);
@@ -152,6 +159,18 @@ const getData = () => {
         };
       });
       pagination.total = response.total;
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+};
+
+const getStatisticData = () => {
+  passengerFloweEHailingParkingGetStatisticsRequest({
+    capPlace: props.capPlace,
+  })
+    .then((response: any) => {
+      state.statisticData = response.data;
     })
     .catch((error: any) => {
       console.log(error);
@@ -199,8 +218,10 @@ const handleChangePage = (pagingData: any) => {
 };
 
 const handleDelete = (id: number) => {};
+
 onMounted(async () => {
   getData();
+  getStatisticData();
 });
 
 onBeforeUnmount(() => {});

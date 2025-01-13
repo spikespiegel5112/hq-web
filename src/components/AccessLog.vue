@@ -112,12 +112,12 @@ const handleNavigate = (routeData: any) => {
 
 const handleClose = (routeData: any) => {
   let indexToDelete: number = 0;
-  state.accessLogList.forEach((item: any, index: number) => {
+  state.routeList.forEach((item: any, index: number) => {
     if (item.name === routeData.name) {
       indexToDelete = index;
+      item.isUsed = false;
     }
   });
-  state.accessLogList.splice(indexToDelete, 1);
 };
 
 const measurementWidth = async () => {

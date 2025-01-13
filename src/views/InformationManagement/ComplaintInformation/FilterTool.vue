@@ -37,7 +37,8 @@
               <a-form-item name="time" label="投诉时间">
                 <el-date-picker
                   type="datetimerange"
-                  placeholder="请选择"
+                  start-placeholder="开始时间"
+                  end-placeholder="结束时间"
                   v-model="state.dateRange"
                 />
               </a-form-item>

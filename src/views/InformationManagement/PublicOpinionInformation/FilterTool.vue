@@ -54,7 +54,8 @@
               <a-form-item name="publicSentimentTime" label="舆情发生时间">
                 <el-date-picker
                   type="datetimerange"
-                  placeholder="请选择"
+                  start-placeholder="开始时间"
+                  end-placeholder="结束时间"
                   v-model="state.publicSentimentTime"
                   @change="handleChangeTime1"
                 />

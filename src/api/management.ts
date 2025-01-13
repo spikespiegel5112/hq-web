@@ -1388,6 +1388,15 @@ export const passengerFloweEHailingParkingGetPageRequest = (params: any) => {
   });
 };
 
+// 客流数据管理-网约车-查询统计信息
+export const passengerFloweEHailingParkingGetStatisticsRequest = (params: any) => {
+  return service({
+    url: prefix + "/passengerFlow/eHailingParking/getStatistics",
+    method: "POST",
+    data: params,
+  });
+};
+
 // 系统管理-用户
 // Sys User Controller
 

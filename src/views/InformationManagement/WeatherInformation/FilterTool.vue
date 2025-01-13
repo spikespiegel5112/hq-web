@@ -8,7 +8,8 @@
               <a-form-item name="dataTime" label="时间">
                 <el-date-picker
                   type="datetimerange"
-                  placeholder="请选择"
+                  start-placeholder="开始时间"
+                  end-placeholder="结束时间"
                   v-model="state.dataTime"
                   @change="handleChangeTime1"
                 />
