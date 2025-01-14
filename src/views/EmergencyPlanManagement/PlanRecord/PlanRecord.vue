@@ -100,6 +100,7 @@ const pageModel = ref([
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
+    width: "1rem",
     colorConfig: {
       colorList: [
         { value: "绿色", color: "chartreuse" },
@@ -188,7 +189,7 @@ const getData = () => {
           ).label,
           planLevel: global
             .$getDictionary("planLevel")
-            .find((item2: any) => item2.value === item.planLevel).label,
+            .find((item2: any) => item2.value === item.planLevel)?.label,
         };
       });
     })

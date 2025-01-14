@@ -233,9 +233,6 @@ const getData = () => {
           planLevel: global
             .$getDictionary("planLevel")
             .find((item2: any) => item2.value === item.planLevel)?.label,
-          // planStatus: global
-          //   .$getDictionary("planStatus")
-          //   .find((item2: any) => item2.value === item.planStatus)?.label,
           planTime: global.$dayjs(item.planTime).format("YYYY-MM-DD"),
         };
       });
