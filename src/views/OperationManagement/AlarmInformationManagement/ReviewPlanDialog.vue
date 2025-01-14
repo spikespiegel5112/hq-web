@@ -107,13 +107,7 @@
                 </template>
                 <div class="node">
                   <div class="time">
-                    {{
-                      !!state.disposalList[index]
-                        ? global
-                            .$dayjs(state.disposalList[index]?.disposalTime)
-                            .format("HH:mm")
-                        : ""
-                    }}
+                    {{ getDispoaslTime(index) }}
                   </div>
                   <div class="content">
                     <div class="top">
@@ -216,12 +210,6 @@ const state = reactive({
   planInfo: [] as any[],
 });
 
-const dialogTitle: ComputedRef<string> = computed(() => {
-  return global.$store.state.dictionary.dialogMode.find(
-    (item: any) => item.value === props.mode
-  )?.title;
-});
-
 const currentStepOrder = computed(() => {
   let result = 0;
   if (!!state.disposalList) {
@@ -311,7 +299,24 @@ const handleClose = () => {
   emit("onClose");
 };
 
-const handleChangeTime1 = () => {};
+const getDispoaslTime = (index: number) => {
+  let result = "";
+  const disposalItem = getDispoaslItem(index);
+  if (disposalItem) {
+    const disposalTime = disposalItem.disposalTime;
+    if (!!disposalTime) {
+      result = global.$dayjs(disposalItem.disposalTime).format("HH:mm");
+    }
+  }
+  return result;
+};
+
+const getDispoaslItem = (index: number) => {
+  let result = state.disposalList.find(
+    (item: any) => item.stepOrder - 1 === index
+  );
+  return result;
+};
 
 const getCurrentStep = (currentPreplanData: any) => {
   const disposalList = state.disposalList;
