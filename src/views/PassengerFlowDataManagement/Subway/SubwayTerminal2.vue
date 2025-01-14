@@ -17,10 +17,10 @@
     <BaseTable
       :tableData="state.tableData"
       :dataModel="pageModel"
-      :pagination="pagination"
       :loading="global.$store.state.app.tableLoading"
       tabTable
-      statisticTable
+      statisticTable2
+      :pagination="pagination"
       @onEdit="handleEdit"
       @onReview="handleReview"
       @onChangePage="handleChangePage"
@@ -120,6 +120,7 @@ const getData = () => {
   passengerFlowMetroPassengerFlowGetPageRequest({
     ...queryFormData,
     ...pagination,
+    metroStationCode: props.capPlace.value,
   })
     .then((response: any) => {
       response = response.data;

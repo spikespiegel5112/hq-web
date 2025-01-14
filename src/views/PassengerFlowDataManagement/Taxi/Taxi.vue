@@ -6,13 +6,13 @@
         :key="item.value"
         :tab="item.label"
       >
-        <TaxiHighSpeedRailSouth
-          v-if="state.activeKey === 'TaxiHighSpeedRailSouth'"
+        <TaxiHighSpeedRailNorth
+          v-if="state.activeKey === 'TaxiHighSpeedRailNorth'"
           :parkCode="item.value"
           :statisticData="state.statisticData"
         />
-        <TaxiHighSpeedRailNorth
-          v-if="state.activeKey === 'TaxiHighSpeedRailNorth'"
+        <TaxiHighSpeedRailSouth
+          v-if="state.activeKey === 'TaxiHighSpeedRailSouth'"
           :parkCode="item.value"
           :statisticData="state.statisticData"
         />
@@ -50,12 +50,12 @@ const global = currentInstance.appContext.config.globalProperties;
 
 const componentMap = ref([
   {
-    code: "P-TPL-RailwayS",
-    componentName: "TaxiHighSpeedRailSouth",
-  },
-  {
     code: "P-TPL-RailwayN",
     componentName: "TaxiHighSpeedRailNorth",
+  },
+  {
+    code: "P-TPL-RailwayS",
+    componentName: "TaxiHighSpeedRailSouth",
   },
   {
     code: "P-TPL-UrbanRailway",
@@ -74,13 +74,19 @@ const getParkingLotData = () => {
 };
 
 const handleChangeTab = (value: any) => {
-  state.activeKey = componentMap.value.find(
+  const currentCompoennt: any = componentMap.value.find(
     (item: any) => item.code === value
-  )?.componentName;
+  );
+  state.activeKey = currentCompoennt?.componentName;
+  getStatisticData({
+    parkCode: currentCompoennt.code,
+  });
 };
 
-const getStatisticData = () => {
-  passengerFlowStorageGetStatisticsRequest({})
+const getStatisticData = (params: any) => {
+  passengerFlowStorageGetStatisticsRequest({
+    ...params,
+  })
     .then((response: any) => {
       state.statisticData = response.data;
     })
@@ -91,7 +97,7 @@ const getStatisticData = () => {
 
 onMounted(async () => {
   getParkingLotData();
-  getStatisticData();
+  handleChangeTab(componentMap.value[0].code);
 });
 
 onBeforeUnmount(() => {});

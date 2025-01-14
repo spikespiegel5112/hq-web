@@ -48,7 +48,6 @@ import {
 import {
   passengerFlowStorageExportRequest,
   passengerFlowStorageGetPageRequest,
-  passengerFlowStorageGetStatisticsRequest,
 } from "@/api/management";
 
 import FilterTool from "./FilterTool.vue";
@@ -146,14 +145,6 @@ const getData = () => {
     });
 };
 
-const getStatisticData = () => {
-  passengerFlowStorageGetStatisticsRequest()
-    .then((response: any) => {})
-    .catch((error: any) => {
-      console.log(error);
-    });
-};
-
 const handleEdit = (rowData: any) => {
   state.dialogVisible = true;
   state.dialogMode = "edit";
@@ -174,8 +165,6 @@ const handleClose = () => {
   state.dialogVisible = false;
 };
 
-const handleSubmit = () => {};
-
 const handleChangePage = (pagingData: any) => {
   pagination.page = pagingData.current;
   pagination.pageSize = pagingData.pageSize;
@@ -185,7 +174,6 @@ const handleChangePage = (pagingData: any) => {
 
 onMounted(async () => {
   getData();
-  getStatisticData();
 });
 
 onBeforeUnmount(() => {});

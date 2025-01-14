@@ -119,7 +119,6 @@ const handleChangeStatisticalDate = (date: any) => {
   state.formData.statisticalDateEnd = global
     .$dayjs(date[1])
     .format("YYYY-MM-DD HH:mm:ss");
-    debugger
 };
 
 onMounted(async () => {

@@ -25,6 +25,7 @@
       :dataModel="pageModel"
       tabTable
       statisticTable
+      :pagination="pagination"
       @onEdit="handleEdit"
       @onChangePage="handleChangePage"
     />
@@ -55,7 +56,6 @@ import {
 import {
   passengerFlowStorageExportRequest,
   passengerFlowStorageGetPageRequest,
-  passengerFlowStorageGetStatisticsRequest,
 } from "@/api/management";
 
 import FilterTool from "./FilterTool.vue";
@@ -137,8 +137,9 @@ const getData = () => {
     parkCode: props.parkCode,
   })
     .then((response: any) => {
-      state.tableData = response.data.list;
-      state.processedTableData = response.data.list.map((item: any) => {
+      response = response.data;
+      state.tableData = response.list;
+      state.processedTableData = response.list.map((item: any) => {
         return {
           ...item,
           parkCode: global
@@ -155,27 +156,9 @@ const getData = () => {
     });
 };
 
-const getStatisticData = () => {
-  passengerFlowStorageGetStatisticsRequest({
-    ...queryFormData,
-  })
-    .then((response: any) => {
-      state.statisticData = response.data;
-    })
-    .catch((error: any) => {
-      console.log(error);
-    });
-};
-
 const handleEdit = (rowData: any) => {
   state.dialogVisible = true;
   state.dialogMode = "edit";
-  state.currentRowData = rowData;
-};
-
-const handleReview = (rowData: any) => {
-  state.dialogVisible = true;
-  state.dialogMode = "review";
   state.currentRowData = rowData;
 };
 
@@ -193,8 +176,6 @@ const handleClose = () => {
   state.dialogVisible = false;
 };
 
-const handleSubmit = () => {};
-
 const handleChangePage = (pagingData: any) => {
   pagination.page = pagingData.current;
   pagination.pageSize = pagingData.pageSize;
@@ -204,7 +185,6 @@ const handleChangePage = (pagingData: any) => {
 
 onMounted(async () => {
   getData();
-  getStatisticData();
 });
 
 onBeforeUnmount(() => {});

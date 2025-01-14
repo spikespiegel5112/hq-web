@@ -77,11 +77,11 @@ onBeforeUnmount(() => {});
     display: flex;
     justify-content: space-around;
     align-items: center;
-    height: 3rem;
+    height: 2rem;
     li {
       display: flex;
       justify-content: center;
-      height: 2rem;
+      height: 1rem;
 
       .title {
         display: inline-flex;

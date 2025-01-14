@@ -18,7 +18,7 @@
       :tableData="state.tableData"
       :dataModel="pageModel"
       :pagination="pagination"
-      statisticTable
+      statisticTable2
       @onEdit="handleEdit"
       @onChangePage="handleChangePage"
     />
@@ -141,7 +141,9 @@ const getData = () => {
 };
 
 const getStatisticData = () => {
-  passengerFlowParkingPassengerFlowGetStatisticsRequest({})
+  passengerFlowParkingPassengerFlowGetStatisticsRequest({
+    // ...queryFormData,
+  })
     .then((response: any) => {
       state.statisticData = response.data;
     })
@@ -159,6 +161,7 @@ const handleEdit = (rowData: any) => {
 const handleSearch = (formData: object) => {
   queryFormData = formData;
   getData();
+  getStatisticData();
 };
 
 const handleReset = (formData: object) => {
@@ -179,9 +182,7 @@ const handleChangePage = (pagingData: any) => {
   getData();
 };
 
-onMounted(async () => {
-  getStatisticData();
-});
+onMounted(async () => {});
 
 onBeforeUnmount(() => {});
 </script>

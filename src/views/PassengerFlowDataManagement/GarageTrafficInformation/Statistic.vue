@@ -2,20 +2,20 @@
   <div class="statistic_wrapper">
     <ul>
       <li>
-        <div class="title">今日累计进站数</div>
+        <div class="title">今日累计进库数</div>
         <div class="content">
           <div>
-            <span class="value">{{ props.statisticData.inTotal }}</span>
-            <span class="unit">人次</span>
+            <span class="value">{{ props.statisticData.inCount }}</span>
+            <span class="unit">辆</span>
           </div>
         </div>
       </li>
       <li>
-        <div class="title">今日累计出站数</div>
+        <div class="title">今日累计出库数</div>
         <div class="content">
           <div>
-            <span class="value">{{ props.statisticData.outTotal }}</span>
-            <span class="unit">人次</span>
+            <span class="value">{{ props.statisticData.outCount }}</span>
+            <span class="unit">辆</span>
           </div>
         </div>
       </li>
@@ -77,11 +77,11 @@ onBeforeUnmount(() => {});
     display: flex;
     justify-content: space-around;
     align-items: center;
-    height: 3rem;
+    height: 2rem;
     li {
       display: flex;
       justify-content: center;
-      height: 2rem;
+      height: 1rem;
 
       .title {
         display: inline-flex;

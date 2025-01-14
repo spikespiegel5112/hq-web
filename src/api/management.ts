@@ -106,9 +106,7 @@ export const backendRailwayArriveGetRailwayArrivePagingRequest = (
 };
 
 // 区域小时客流-铁路到达-查询今日客流预测汇总信息
-export const backendRailwayArriveGetTodayFlowRequest = (
-  params: any
-) => {
+export const backendRailwayArriveGetTodayFlowRequest = (params: any) => {
   return service({
     url: prefix + "/backend/railwayArrive/getTodayFlow",
     method: "POST",
@@ -1400,7 +1398,9 @@ export const passengerFloweEHailingParkingGetPageRequest = (params: any) => {
 };
 
 // 客流数据管理-网约车-查询统计信息
-export const passengerFloweEHailingParkingGetStatisticsRequest = (params: any) => {
+export const passengerFloweEHailingParkingGetStatisticsRequest = (
+  params: any
+) => {
   return service({
     url: prefix + "/passengerFlow/eHailingParking/getStatistics",
     method: "POST",
