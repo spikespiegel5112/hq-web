@@ -75,9 +75,7 @@
           <div class="date"></div>
           <vue-scroll class="right">
             <a-timeline mode="left">
-              <a-timeline-item
-                v-for="(item, index) in state.disposalData.disposalList"
-              >
+              <a-timeline-item v-for="(item, index) in state.planInfo">
                 <template #dot>
                   <span>{{ index + 1 }}</span>
                 </template>
@@ -95,16 +93,19 @@
                       </span>
                     </div>
                     <div class="stepcontent">
-                      {{ item.stepContent }}
+                      {{ getDispoaslItem(index)?.stepContent }}
                     </div>
-                    <div
+                    <!-- <div
                       v-if="
-                        !!item.attachmentList && item.attachmentList.length > 0
+                        !!getDispoaslItem(index).attachmentList &&
+                        item.attachmentList.length > 0
                       "
                       class="attachment"
                     >
-                      <AttachmentReview :attachmentList="item.attachmentList" />
-                    </div>
+                      <AttachmentReview
+                        :attachmentList="getDispoaslItem(index)?.attachmentList"
+                      />
+                    </div> -->
                   </div>
                 </div>
               </a-timeline-item>
@@ -143,6 +144,7 @@ import {
   eventManageSuddenEventGetDisposalRequest,
   preplanPreplanGetStepPageRequest,
 } from "@/api/management";
+import { InvalidPDFException } from "pdfjs-dist";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -250,7 +252,7 @@ const getStepData = () => {
   });
 
   preplanPreplanGetStepPageRequest({
-    preplanType: global.$store.state.app.emergencyPlanType,
+    prId: planData.value,
     eventType: planData.label,
   })
     .then((response: any) => {
@@ -283,15 +285,21 @@ const getCurrentStep = (currentPreplanData: any) => {
 
 const getDispoaslTime = (index: number) => {
   let result = "";
-  state.disposalList[index];
-  if (state.disposalList[index]) {
-    const disposalTime = state.disposalList[index].disposalTime;
+  const disposalItem = getDispoaslItem(index);
+  if (disposalItem) {
+    const disposalTime = disposalItem.disposalTime;
     if (!!disposalTime) {
-      result = global
-        .$dayjs(state.disposalList[index].disposalTime)
-        .format("HH:mm");
+      result = global.$dayjs(disposalItem.disposalTime).format("HH:mm");
     }
   }
+  return result;
+};
+
+const getDispoaslItem = (index: number) => {
+  let result = state.disposalList.find(
+    (item: any) => item.stepOrder - 1 === index
+  );
+
   return result;
 };
 
