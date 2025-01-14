@@ -200,7 +200,7 @@ const getData = () => {
 
 const getStatisticData = () => {
   backendRailwayArriveGetTodayFlowRequest({
-    ...queryFormData,
+    // ...queryFormData,
   })
     .then((response: any) => {
       state.statisticData = response.data;

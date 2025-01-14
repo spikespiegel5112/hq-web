@@ -142,7 +142,14 @@ const getData = () => {
 
 const getStatisticData = () => {
   passengerFlowParkingPassengerFlowGetStatisticsRequest({
-    // ...queryFormData,
+    statisticalTimeBegin: global
+      .$dayjs()
+      .startOf("day")
+      .format("YYYY-MM-DD HH:mm:ss"),
+    statisticalTimeEnd: global
+      .$dayjs()
+      .endOf("day")
+      .format("YYYY-MM-DD HH:mm:ss"),
   })
     .then((response: any) => {
       state.statisticData = response.data;
