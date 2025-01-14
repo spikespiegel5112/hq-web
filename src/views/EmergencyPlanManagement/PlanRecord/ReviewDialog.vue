@@ -273,7 +273,7 @@ const getStepData = () => {
   });
 
   preplanPreplanGetStepPageRequest({
-    preplanType: global.$store.state.app.emergencyPlanType,
+    prId: planData.value,
     eventType: planData.label,
   })
     .then((response: any) => {
@@ -306,15 +306,20 @@ const getCurrentStep = (currentPreplanData: any) => {
 
 const getDispoaslTime = (index: number) => {
   let result = "";
-  state.disposalList[index];
-  if (state.disposalList[index]) {
-    const disposalTime = state.disposalList[index].disposalTime;
+  const disposalItem = getDispoaslItem(index);
+  if (disposalItem) {
+    const disposalTime = disposalItem.disposalTime;
     if (!!disposalTime) {
-      result = global
-        .$dayjs(state.disposalList[index].disposalTime)
-        .format("HH:mm");
+      result = global.$dayjs(disposalItem.disposalTime).format("HH:mm");
     }
   }
+  return result;
+};
+
+const getDispoaslItem = (index: number) => {
+  let result = state.disposalList.find(
+    (item: any) => item.stepOrder - 1 === index
+  );
   return result;
 };
 

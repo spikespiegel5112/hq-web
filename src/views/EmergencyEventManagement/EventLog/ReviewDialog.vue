@@ -299,7 +299,6 @@ const getDispoaslItem = (index: number) => {
   let result = state.disposalList.find(
     (item: any) => item.stepOrder - 1 === index
   );
-
   return result;
 };
 
