@@ -19,6 +19,7 @@
         上传
       </a-button>
       <template #itemRender="{ file, actions }">
+        {{ file }}
         <div class="filelist_wrapper">
           <div v-if="global.$checkFileType(file.name) === 'image'">
             <a-image width="1rem" height="1rem" :src="getImgUrl(file)" />
@@ -101,7 +102,7 @@ watch(
   () => props.attachmentList,
   (newValue: any, oldValue: any) => {
     state.fileList = [];
-
+    debugger;
     newValue.forEach((item: any, index: number) => {
       state.fileList.push({
         ...item,

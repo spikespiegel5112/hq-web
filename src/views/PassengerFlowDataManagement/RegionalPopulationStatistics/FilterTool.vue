@@ -81,7 +81,7 @@ const state = reactive({
     analyzeTimeBegin: null,
     analyzeTimeEnd: null,
   },
-  analyzeTime: null,
+  analyzeTime: [] as any[],
   cameraList: null,
 });
 
@@ -99,9 +99,12 @@ const handleSearch = () => {
 
 const handleReset = () => {
   formDataRef.value.resetFields();
-  state.analyzeTime = null;
-  state.formData.analyzeTimeBegin = null;
-  state.formData.analyzeTimeEnd = null;
+  const startOfDay = global.$dayjs().startOf("month");
+  const endOfDay = global.$dayjs();
+  state.formData.analyzeTimeBegin = startOfDay.format("YYYY-MM-DD HH:mm:ss");
+  state.formData.analyzeTimeEnd = endOfDay.format("YYYY-MM-DD HH:mm:ss");
+  state.analyzeTime = [startOfDay, endOfDay];
+
   emit("onReset", state.formData);
 };
 
@@ -126,6 +129,7 @@ const getCameraList = () => {
 
 onMounted(async () => {
   getCameraList();
+  handleReset();
   emit("update:modelValue", state.formData);
 });
 

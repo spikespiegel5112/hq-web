@@ -326,7 +326,7 @@ const _utils = {
     const colorList: any[] = [
       {
         label: "绿色",
-        color: "green",
+        color: "chartreuse",
         value: 0,
       },
       {

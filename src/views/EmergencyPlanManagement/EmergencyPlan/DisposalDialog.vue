@@ -225,6 +225,7 @@ watch(
       const formData = JSON.parse(JSON.stringify(props.rowData));
       state.formData = {
         ...formData,
+        emergencyPlanId: props.rowData.id,
         eventTime: global.$dayjs(formData.eventTime),
         attachmentList: [],
         stepContent: null,
@@ -273,7 +274,7 @@ const handleClose = () => {
 };
 
 const handleSubmit = () => {
-  state.formData.id = undefined;
+  // state.formData.id = undefined;
   formDataRef.value
     .validate()
     .then(() => {
@@ -299,8 +300,6 @@ const handleChangeDisposalStep = (value: any) => {
     stepOrderDesc: planInfo.stepOrderDesc,
   };
 };
-
-const handleChangeAttachment = () => {};
 
 onMounted(async () => {});
 

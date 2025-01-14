@@ -1,8 +1,7 @@
 <template>
   <a-modal v-model:open="state.visible" @cancel="handleClose" width="9rem">
     <template #title>
-           <CommonTitle :title="dialogTitle" />
-
+      <CommonTitle :title="dialogTitle" />
     </template>
     <a-row justify="center">
       <a-col :span="22">
@@ -114,7 +113,6 @@
       <a-row>
         <a-col :span="23">
           <a-form-item name="attachmentList" label="附件">
-            {{ state.formData.attachmentList }}
             <CommonUpload :attachmentList="state.formData.attachmentList" />
           </a-form-item>
         </a-col>
@@ -229,6 +227,10 @@ const state = reactive({
   tableData: [] as any[],
 });
 
+const pagination = reactive({
+  ...global.$store.state.app.defaultPagination,
+});
+
 const rules: ComputedRef<RuleObject[]> = computed(() => {
   const validateNumber = (rule: any, value: any, callback: any) => {
     if (isNaN(Number(value))) {
@@ -270,10 +272,6 @@ const columns = computed(() => {
         key: item.name,
       };
     });
-});
-
-const pagination = reactive({
-  ...global.$store.state.app.defaultPagination,
 });
 
 const dialogTitle: ComputedRef<string> = computed(() => {
@@ -334,8 +332,6 @@ const handleSubmit = () => {
       console.log(error);
     });
 };
-
-const handleChangeTime1 = () => {};
 
 onMounted(() => {});
 

@@ -159,8 +159,9 @@ const handleDistributeRole = () => {
     userId: props.rowData.id,
   })
     .then((response: any) => {
-      global.$message.success("操作成功");
       getAllRoleData();
+      global.$message.success("操作成功");
+      emit("onClose");
     })
     .catch((error: any) => {
       console.log(error);
