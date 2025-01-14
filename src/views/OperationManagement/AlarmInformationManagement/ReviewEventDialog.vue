@@ -90,8 +90,7 @@
           <vue-scroll class="right">
             <a-timeline mode="left">
               <a-timeline-item
-                v-for="(item, index) in state.disposalData
-                  ?.preplanResourceStepList"
+                v-for="(item, index) in state.planInfo"
               >
                 <template #dot>
                   <span>{{ index + 1 }}</span>
@@ -160,7 +159,6 @@ import {
 import {
   eventManageSuddenEventGetDisposalRequest,
   preplanPreplanGetStepPageRequest,
-  eventManageSuddenEventGetPageRequest,
   eventManageSuddenEventGetRecordPageRequest,
 } from "@/api/management";
 
@@ -241,7 +239,7 @@ const getData = async () => {
   global.$store.commit("app/updateTableLoading", true);
   state.formData.eventType = props.rowData.eventType;
   state.formData.seId = props.rowData.id;
-  eventManageSuddenEventGetPageRequest({
+  eventManageSuddenEventGetRecordPageRequest({
     id: props.rowData.eventAssociationId,
   })
     .then(async (response: any) => {
