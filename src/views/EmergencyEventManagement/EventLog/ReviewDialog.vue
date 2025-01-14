@@ -95,7 +95,7 @@
                       </span>
                     </div>
                     <div class="stepcontent">
-                      {{ state.disposalList.find((item:any)=>item.stepOrder===index+1)?.stepContent }}
+                      {{ item.stepContent }}
                     </div>
                     <div
                       v-if="
