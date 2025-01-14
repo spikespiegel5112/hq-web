@@ -86,7 +86,7 @@
             <a-timeline mode="left">
               <a-timeline-item
                 v-for="(item, index) in state.disposalData
-                  .preplanResourceStepList"
+                  ?.preplanResourceStepList"
               >
                 <template #dot>
                   <span>{{ index + 1 }}</span>
@@ -282,6 +282,7 @@ const getStepData = (preplanResourceId: number) => {
     const planData: any = eventList.value.find((item: any) => {
       return Number(item.value) === preplanResourceId;
     });
+    debugger
 
     preplanPreplanGetStepPageRequest({
       prId: preplanResourceId,

@@ -226,6 +226,7 @@ watch(
       const formData = JSON.parse(JSON.stringify(props.rowData));
       state.formData = {
         ...formData,
+        id: undefined,
         seId: props.rowData.id,
         eventTime: global.$dayjs(formData.eventTime),
         attachmentList: [],
