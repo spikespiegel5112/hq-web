@@ -19,7 +19,6 @@
         上传
       </a-button>
       <template #itemRender="{ file, actions }">
-        {{ file }}
         <div class="filelist_wrapper">
           <div v-if="global.$checkFileType(file.name) === 'image'">
             <a-image width="1rem" height="1rem" :src="getImgUrl(file)" />
@@ -70,7 +69,7 @@ const emit: any = defineEmits(["update:attachmentList"]);
 const props = defineProps({
   mode: { type: String, default: "edit", required: false },
   title: { type: String, default: null, required: false },
-  attachmentList: { type: Array, default: () => [] },
+  attachmentList: { type: [Array, String, null], default: [] },
   disabled: { type: Boolean, default: false },
 });
 
@@ -102,18 +101,19 @@ watch(
   () => props.attachmentList,
   (newValue: any, oldValue: any) => {
     state.fileList = [];
-    debugger;
-    newValue.forEach((item: any, index: number) => {
-      state.fileList.push({
-        ...item,
-        id: item.id,
-        uid: index,
-        name: item.attachmentName,
-        status: "done",
-        deleteAble: !checkUniView(item),
-        url: checkFileUrl(item),
+    if (!!newValue) {
+      newValue.forEach((item: any, index: number) => {
+        state.fileList.push({
+          ...item,
+          id: item.id,
+          uid: index,
+          name: item.attachmentName,
+          status: "done",
+          deleteAble: !checkUniView(item),
+          url: checkFileUrl(item),
+        });
       });
-    });
+    }
   },
   {
     deep: true,
@@ -155,21 +155,25 @@ const checkFileUrl = (item: any) => {
 };
 
 const checkUniViewImage = (item: any) => {
+  const fileData =
+    !!item.response && !!item.response.data ? item.response.data : item;
   let result: string;
   if (item.createBy === "uniview") {
-    result = item.attachmentPath;
+    result = fileData.attachmentPath;
   } else {
-    result = `${global.$getBaseUrl()}/attachment/download?id=${item.id}`;
+    result = `${global.$getBaseUrl()}/attachment/download?id=${fileData.id}`;
   }
+
   return result;
 };
 
 const handleChangeAttachment = (value: any) => {
   if (value.file.response) {
     const response: any = value.file.response;
+
     if (response.code === 0) {
-      if (!Array.isArray(_modelValue.value)) {
-        _modelValue.value = [];
+      if (!(_modelValue.value instanceof Array)) {
+        _modelValue.value = JSON.parse(JSON.stringify([]));
       }
       _modelValue.value.push(response.data);
       global.$message.success("上传成功");

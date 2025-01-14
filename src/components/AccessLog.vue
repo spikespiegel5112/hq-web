@@ -124,8 +124,6 @@ const measurementWidth = async () => {
   if (!state.autoCoordinate) {
     return;
   }
-  console.log(accesslogRef);
-  console.log(routeRef.value);
   await nextTick();
 
   const accesslogWraperWidth = accesslogRef.value.clientWidth;

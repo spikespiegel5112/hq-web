@@ -43,6 +43,7 @@
       :model="state.formData"
       ref="formDataRef"
       autocomplete="off"
+      :rules="rules"
       :label-col="{ style: { width: '80px' } }"
     >
       <a-row>
@@ -113,7 +114,10 @@
       <a-row>
         <a-col :span="23">
           <a-form-item name="attachmentList" label="附件">
-            <CommonUpload :attachmentList="state.formData.attachmentList" />
+            <CommonUpload
+              v-if="global.$checkEditable(props.mode)"
+              :attachmentList="state.formData.attachmentList"
+            />
           </a-form-item>
         </a-col>
       </a-row>
@@ -148,6 +152,7 @@ import {
   ref,
   nextTick,
 } from "vue";
+import type { Rule, RuleObject } from "ant-design-vue/es/form";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -191,15 +196,6 @@ const pageModel = ref([
     formVisible: true,
     exportVisible: true,
   },
-  // {
-  //   label: "预警内容",
-  //   name: "warningContent",
-  //   required: true,
-  //   tableVisible: true,
-  //   formVisible: true,
-  //   exportVisible: true,
-  //   width: "1rem",
-  // },
   {
     label: "时间",
     name: "dataTime",
@@ -227,39 +223,29 @@ const state = reactive({
   tableData: [] as any[],
 });
 
-const pagination = reactive({
-  ...global.$store.state.app.defaultPagination,
-});
-
 const rules: ComputedRef<RuleObject[]> = computed(() => {
-  const validateNumber = (rule: any, value: any, callback: any) => {
-    if (isNaN(Number(value))) {
-      callback(new Error("请输入数字值"));
-    } else {
-      callback();
-    }
+  return {
+    warningType: {
+      required: true,
+      message: "请输入",
+      trigger: "change",
+    },
+    warningLevel: {
+      required: true,
+      message: "请输入",
+      trigger: "change",
+    },
+    warningContent: {
+      required: true,
+      message: "请输入",
+      trigger: "change",
+    },
+    attachmentList: {
+      required: false,
+      message: "请上传",
+      trigger: "change",
+    },
   };
-  const result: any = {};
-  Object.keys(state.formData).forEach((item) => {
-    const dataModelInfo = props.dataModel.find(
-      (item2: any) => item2.name === item
-    ) as any;
-    if (!!dataModelInfo) {
-      result[item] = [];
-      if (dataModelInfo.required) {
-        result[item].push({
-          required: true,
-          message: "请输入" + dataModelInfo.label,
-          trigger: "change",
-        });
-        if (props.mode === "review") result[item] = false;
-      }
-      if (dataModelInfo.dataType === "number") {
-        result[item].push({ validator: validateNumber, trigger: "change" });
-      }
-    }
-  });
-  return result;
 });
 
 const columns = computed(() => {
@@ -306,9 +292,9 @@ watch(
 );
 
 const handleClose = () => {
-  emit("onClose");
   formDataRef.value.resetFields();
   state.formData.attachmentList = [];
+  emit("onClose");
 };
 
 const handleSubmit = () => {

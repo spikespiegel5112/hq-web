@@ -1,8 +1,7 @@
 <template>
   <a-modal v-model:open="state.visible" @cancel="handleClose" width="9rem">
     <template #title>
-           <CommonTitle :title="dialogTitle" />
-
+      <CommonTitle :title="dialogTitle" />
     </template>
     <a-row justify="center">
       <a-col :span="22">
@@ -140,6 +139,7 @@ import {
   ref,
   nextTick,
 } from "vue";
+import type { Rule, RuleObject } from "ant-design-vue/es/form";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
