@@ -413,24 +413,20 @@ const init = async () => {
     console.error("Login failed:", error);
   }
 
-  //获取相机资源数据
+  //获取相机资源数据1
   await getCameraData();
   // 默认循环视频数组
-  handleSelectChange(cameraList[0].label);
-  forCameraData();
-
+  state.selectedRegion = cameraList[0].label;
   //获取区域告警信息
   getAreaMapAlarmInfoFun();
 
   // // 监听 areaMapAlarmInfoData 的变化
-  // watch(
-  //   () => state.areaMapAlarmInfoData,
-  //   (newValue:any) => {
-  //     if (newValue && newValue.length > 0) {
-  //       console.log("111");
-  //     }
-  //   }
-  // );
+  watch(
+    () => state.selectedRegion,
+    (newValue: any) => {
+      handleSelectChange(newValue);
+    }
+  );
 };
 
 onMounted(async () => {
