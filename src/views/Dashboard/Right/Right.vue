@@ -10,11 +10,7 @@
                 :style="{
                   padding: '0 0.05rem',
                 }"
-                :type="
-                  state.cameraListChecked === item.label
-                    ? 'primary'
-                    : ''
-                "
+                :type="state.cameraListChecked === item.label ? 'primary' : ''"
                 @click="setActive('p9')"
               >
                 {{ item.label }}
@@ -205,7 +201,14 @@ watch(
 // 上墙功能
 const checkBtn = () => {
   console.log("点击了上墙");
-  videoUpperWallRequest({})
+  videoUpperWallRequest({
+    videoList: [
+      {
+        resCode: "string",
+        resName: "string",
+      },
+    ],
+  })
     .then((res: any) => {
       console.log("上墙res", res);
     })
