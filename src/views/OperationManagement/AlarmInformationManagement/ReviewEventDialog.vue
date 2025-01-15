@@ -109,6 +109,7 @@
                     <div class="stepcontent">
                       {{ state.disposalList.find((item:any)=>item.stepOrder===index+1)?.stepContent }}
                     </div>
+
                     <div
                       v-if="
                         checkAttachmentIndex(item, index) &&
@@ -238,8 +239,9 @@ const getData = async () => {
   global.$store.commit("app/updateTableLoading", true);
   state.formData.eventType = props.rowData.eventType;
   state.formData.seId = props.rowData.id;
+  console.log(props.rowData.eventAssociationId)
   eventManageSuddenEventGetRecordPageRequest({
-    id: props.rowData.eventAssociationId,
+    seId: props.rowData.eventAssociationId,
   })
     .then(async (response: any) => {
       response = response.data;
@@ -324,6 +326,7 @@ const checkAttachmentIndex: any = (item: any, index: number) => {
   let result = state.fileList.find(
     (item2: any) => item.stepOrder === item2.stepOrder
   );
+
   return result;
 };
 
@@ -337,8 +340,6 @@ const getCurrentStep = (currentPreplanData: any) => {
   });
   return _result || result;
 };
-
-const getPlanData = () => {};
 
 onMounted(() => {
   setTimeout(() => {
