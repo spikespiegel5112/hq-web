@@ -72,7 +72,20 @@
         </div>
       </div>
     </div>
-    <a-modal v-model:open="state.selectRegionVisible" :maskClosable="false">
+    <a-modal
+      v-model:open="state.selectRegionVisible"
+      :maskClosable="false"
+      :okButtonProps="{
+        style: {
+          display: 'none',
+        },
+      }"
+      :cancelButtonProps="{
+        style: {
+          display: 'none',
+        },
+      }"
+    >
       <a-form>
         <a-form-item label="区域">
           <a-select
