@@ -3,7 +3,7 @@
     <div class="header">
       <a-form>
         <a-row class="rowClass">
-          <a-col :span="14" style="margin-top: 0.04rem">
+          <a-col :span="12">
             <a-space>
               <a-button
                 v-for="item in cameraList.filter((item:any, index:number)=>index<2)"
@@ -36,31 +36,30 @@
               </a-button> -->
             </a-space>
           </a-col>
-          <a-col :span="10">
+          <a-col :span="12">
             <a-form-item label="区域">
-              <a-button
-                @click="
-                  () => {
-                    state.selectRegionVisible = true;
-                  }
-                "
+              <div
+                :style="{
+                  display: 'flex',
+                  alignItems:'center'
+                }"
               >
-                选择
-              </a-button>
-              <!-- <a-select
-                v-model:value="state.selectedRegion"
-                placeholder="请选择"
-                @change="handleSelectChange"
-                style="z-index: 1000"
-              >
-                <a-select-option
-                  v-for="item in cameraList"
-                  :key="item.label"
-                  :value="item.label"
+                <span
+                  :style="{
+                    flex: 1,
+                  }"
+                  >{{ state.selectedRegion }}</span
                 >
-                  {{ item.label }}
-                </a-select-option>
-              </a-select> -->
+                <a-button
+                  @click="
+                    () => {
+                      state.selectRegionVisible = true;
+                    }
+                  "
+                >
+                  选择
+                </a-button>
+              </div>
             </a-form-item>
           </a-col>
           <!-- 上墙 -->
@@ -397,6 +396,7 @@ const mouseEvent = (item: any, itemData: any) => {
         let videoData = JSON.parse(JSON.stringify(item.ResItemV1));
         if (itemData.isActive && videoElement) {
           videoElement.style.border = "2px solid #ff0000";
+          console.log(state.upperWallList);
           state.upperWallList.push({
             resCode: videoData.ResCode,
             resName: videoData.ResName,
@@ -483,6 +483,7 @@ const getCameraData = async () => {
 
 // 勾选数据
 const handleSelectChange = (value: any) => {
+  state.upperWallList = [];
   clearPanelWindow();
 
   const selectedCameraList = cameraList.find(
