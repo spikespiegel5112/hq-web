@@ -41,7 +41,7 @@
               <div
                 :style="{
                   display: 'flex',
-                  alignItems:'center'
+                  alignItems: 'center',
                 }"
               >
                 <span
