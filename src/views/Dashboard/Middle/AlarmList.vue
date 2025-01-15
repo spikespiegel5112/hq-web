@@ -58,6 +58,13 @@ const pageModel = ref([
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
+    colorConfig: {
+      colorList: [
+        { value: "绿色", color: "chartreuse" },
+        { value: "黄色", color: "yellow" },
+        { value: "红色", color: "red" },
+      ],
+    },
   },
   {
     label: "报警内容",

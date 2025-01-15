@@ -48,11 +48,12 @@ import {
   DataZoomComponent,
   DataZoomComponentOption,
 } from "echarts/components";
-import 'element-plus/theme-chalk/dark/css-vars.css'
-
+import "element-plus/theme-chalk/dark/css-vars.css";
 import { ElDatePicker } from "element-plus";
+import zhCn from "element-plus/es/locale/lang/zh-cn";
 
-app.component("ElDatePicker", ElDatePicker);
+app.use(ElDatePicker);
+app.config.globalProperties.$ELEMENT = { locale: zhCn };
 
 import { CustomChart } from "echarts/charts";
 

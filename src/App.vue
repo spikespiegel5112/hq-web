@@ -1,5 +1,10 @@
 <template>
   <router-view v-slot="{ Component }">
+    <ElConfigProvider>
+
+
+      
+    </ElConfigProvider>
     <a-config-provider
       :locale="locale"
       :theme="{
