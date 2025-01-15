@@ -24,14 +24,6 @@
       @onEdit="handleEdit"
       @onChangePage="handleChangePage"
     />
-    <EditDialog
-      :visible="state.dialogVisible"
-      :mode="state.dialogMode"
-      :dataModel="pageModel"
-      :rowData="state.currentRowData"
-      @onClose="handleClose"
-      @onSubmit="handleSubmit"
-    ></EditDialog>
   </div>
 </template>
 
@@ -165,12 +157,6 @@ const handleReset = (formData: object) => {
   queryFormData = formData;
   getData();
 };
-
-const handleClose = () => {
-  state.dialogVisible = false;
-};
-
-const handleSubmit = () => {};
 
 const handleChangePage = (pagingData: any) => {
   pagination.page = pagingData.current;
