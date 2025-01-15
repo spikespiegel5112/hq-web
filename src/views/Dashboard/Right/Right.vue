@@ -322,11 +322,6 @@ const handleSelectChange = (value: any) => {
     }
   );
   clearPanelWindow();
-  // state.cameraListTotal.forEach((item: any) => {
-  //   if (item.OrgName.includes(value)) {
-  //     cameraTemp.push(item);
-  //   }
-  // });
   state.cameraListChecked = selectedCameraData;
   // createPanelWindow();
   forCameraData();
@@ -420,8 +415,8 @@ const init = async () => {
 
   //获取相机资源数据
   await getCameraData();
-
   // 默认循环视频数组
+  handleSelectChange(cameraList[0].label);
   forCameraData();
 
   //获取区域告警信息
