@@ -3,22 +3,40 @@
     <div class="header">
       <a-form>
         <a-row class="rowClass">
-          <a-col :span="12" style="margin-top: 0.04rem">
-            <span
-              :class="{ active: state.isActive === 'p9' }"
-              @click="setActive('p9')"
-            >
-              P9停车场
-            </span>
-            <span
-              style="margin-left: 0.1rem"
-              :class="{ active: state.isActive === 'nanxu' }"
-              @click="setActive('nanxu')"
-            >
-              南蓄车场
-            </span>
+          <a-col :span="14" style="margin-top: 0.04rem">
+            <a-space>
+              <a-button
+                v-for="item in cameraList.filter((item:any, index:number)=>index<2)"
+                :style="{
+                  padding: '0 0.05rem',
+                }"
+                :type="state.cameraListChecked === 'p9' ? 'primary' : ''"
+                @click="setActive('p9')"
+              >
+                {{ item.label }}
+              </a-button>
+              {{ state.cameraListChecked }}
+              <!-- <a-button
+                :style="{
+                  padding: '0 0.05rem',
+                }"
+                :type="state.isActive === 'p9' ? 'primary' : ''"
+                @click="setActive('p9')"
+              >
+                P9停车场
+              </a-button>
+              <a-button
+                :style="{
+                  padding: '0 0.05rem',
+                }"
+                :type="state.isActive === 'nanxu' ? 'primary' : ''"
+                @click="setActive('nanxu')"
+              >
+                南蓄车场
+              </a-button> -->
+            </a-space>
           </a-col>
-          <a-col :span="12">
+          <a-col :span="10">
             <a-form-item label="区域">
               <a-button
                 @click="
@@ -74,7 +92,7 @@
     </div>
     <a-modal
       v-model:open="state.selectRegionVisible"
-      :maskClosable="false"
+      :maskClosable="true"
       :okButtonProps="{
         style: {
           display: 'none',
@@ -87,7 +105,7 @@
       }"
     >
       <a-row>
-        <a-col :span="22">
+        <a-col :span="23">
           <a-form>
             <a-form-item label="区域">
               <a-select
@@ -402,9 +420,6 @@ const alarmClick = (value: any) => {
       return item.OrgName == value.name;
     }
   );
-  // state.cameraListTotal.forEach(item => {
-
-  // });
 };
 
 // //获取区域告警信息
@@ -520,7 +535,6 @@ onBeforeUnmount(() => {});
 
 .active {
   background-color: #035bcd;
-  padding: 0.02rem;
   text-align: center;
   box-sizing: border-box;
   border-radius: 0.05rem;
