@@ -188,9 +188,12 @@ const loadScript = () => {
 
 const clearPanelWindow = () => {
   const videoContainer = document.querySelector("#videoDOMId");
-  if (videoContainer) {
-    videoContainer.innerHTML = null;
+  while (videoContainer?.firstChild) {
+    videoContainer.removeChild(videoContainer?.firstChild);
   }
+  // if (videoContainer) {
+  //   videoContainer.innerHTML = null;
+  // }
 };
 
 // 创建窗格
