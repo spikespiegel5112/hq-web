@@ -3,7 +3,7 @@
     <div
       :style="{
         margin: '0.3rem 0 0 0',
-        height: 'calc(100% - 0rem)',
+        height: 'calc(100% - 0.6rem)',
         position: 'relative',
       }"
     >
