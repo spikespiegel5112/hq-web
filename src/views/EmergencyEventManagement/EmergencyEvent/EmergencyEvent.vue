@@ -184,7 +184,7 @@ const pageModel = ref([
   {
     label: "附件",
     name: "attachment",
-    required: true,
+    required: false,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
