@@ -56,7 +56,7 @@
       </a-row>
       <a-row :gutter="20">
         <a-col :span="22">
-          <a-form-item name="value" label="字典项指">
+          <a-form-item name="value" label="字典项值">
             <a-input
               v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.value"

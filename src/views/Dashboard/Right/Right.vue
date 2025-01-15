@@ -21,14 +21,20 @@
           <a-col :span="12">
             <a-form-item label="区域">
               <a-select
-                v-model:value="selectedRegion"
+                v-model:value="state.selectedRegion"
                 placeholder="请选择"
                 @change="handleSelectChange"
                 style="z-index: 1000"
               >
-                <a-select-option value="全部">全部</a-select-option>
-                <!-- <a-select-option value="BM1">BM1</a-select-option>
-                <a-select-option value="BM2">BM2</a-select-option> -->
+                <a-select-option
+                  v-for="item in global.$getDictionary(
+                    'dashboardCameraAreaList'
+                  )"
+                  :key="item.value"
+                  :value="item.value"
+                >
+                  {{ item.label }}
+                </a-select-option>
               </a-select>
             </a-form-item>
           </a-col>
@@ -92,11 +98,12 @@ const checkFlag = ref(false);
 const AccessToken = ref();
 const cameraListTotal = ref();
 const cameraListChecked = ref();
-const selectedRegion = ref("全部");
 const isActive = ref("p9");
 const areaMapAlarmInfoData = ref([]);
 
-const state = reactive({});
+const state = reactive({
+  selectedRegion: null,
+});
 
 // 定义 winContent 响应式数据
 const winContent = ref("");
@@ -116,73 +123,6 @@ const alarmList = ref([
 ]);
 
 // ----------------------------------data------------
-onMounted(async () => {
-  try {
-    const res1 = await axios.post("http://10.141.10.10:8088/VIID/login/v2", {});
-    const postData = {
-      UserName: "loadmin",
-      AccessCode: res1.data.AccessCode,
-      LoginSignature: CryptoJS.MD5(
-        btoa("loadmin") +
-          res1.data.AccessCode +
-          CryptoJS.MD5("Hqhoc_20240919").toString()
-      ).toString(),
-    };
-
-    const res2 = await axios.post(
-      "http://10.141.10.10:8088/VIID/login/v2",
-      postData
-    );
-    AccessToken.value = res2.data.AccessToken;
-
-    res2.data.AccessToken
-      ? setInterval(async () => {
-          await axios.post(
-            "http://10.141.10.10:8088/VIID/hadesadapter/user/keepalive",
-            {},
-            {
-              headers: {
-                Authorization: `${res2.data.AccessToken}`,
-              },
-            }
-          );
-        }, 30000)
-      : null;
-
-    await loadScript();
-    const initData = {
-      ip: "10.141.10.10",
-      token: AccessToken.value,
-      title: document.title,
-      offset: [0, 0],
-    };
-
-    await init(initData);
-
-    setTimeout(() => {}, 1000);
-  } catch (error) {
-    console.error("Login failed:", error);
-  }
-
-  //获取相机资源数据
-  await getCameraData();
-
-  // 默认循环视频数组
-  forCameraData();
-
-  //获取区域告警信息
-  getAreaMapAlarmInfoFun();
-
-  // // 监听 areaMapAlarmInfoData 的变化
-  // watch(
-  //   () => areaMapAlarmInfoData.value,
-  //   (newValue:any) => {
-  //     if (newValue && newValue.length > 0) {
-  //       console.log("111");
-  //     }
-  //   }
-  // );
-});
 
 // 上墙功能
 const checkBtn = () => {
@@ -208,7 +148,7 @@ const checkBtn = () => {
 };
 
 // 初始化
-const init = async (initData: any) => {
+const initPlayer = async (initData: any) => {
   (window as any).imosPlayer
     .init(initData)
     .then(function (res: any) {
@@ -402,6 +342,78 @@ const getAreaMapAlarmInfoFun = () => {
       console.log(err);
     });
 };
+
+const init = async () => {
+  try {
+    const res1 = await axios.post("http://10.141.10.10:8088/VIID/login/v2", {});
+    const postData = {
+      UserName: "loadmin",
+      AccessCode: res1.data.AccessCode,
+      LoginSignature: CryptoJS.MD5(
+        btoa("loadmin") +
+          res1.data.AccessCode +
+          CryptoJS.MD5("Hqhoc_20240919").toString()
+      ).toString(),
+    };
+
+    const res2 = await axios.post(
+      "http://10.141.10.10:8088/VIID/login/v2",
+      postData
+    );
+    AccessToken.value = res2.data.AccessToken;
+
+    res2.data.AccessToken
+      ? setInterval(async () => {
+          await axios.post(
+            "http://10.141.10.10:8088/VIID/hadesadapter/user/keepalive",
+            {},
+            {
+              headers: {
+                Authorization: `${res2.data.AccessToken}`,
+              },
+            }
+          );
+        }, 30000)
+      : null;
+
+    await loadScript();
+    const initData = {
+      ip: "10.141.10.10",
+      token: AccessToken.value,
+      title: document.title,
+      offset: [0, 0],
+    };
+
+    await initPlayer(initData);
+
+    setTimeout(() => {}, 1000);
+  } catch (error) {
+    console.error("Login failed:", error);
+  }
+
+  //获取相机资源数据
+  await getCameraData();
+
+  // 默认循环视频数组
+  forCameraData();
+
+  //获取区域告警信息
+  getAreaMapAlarmInfoFun();
+
+  // // 监听 areaMapAlarmInfoData 的变化
+  // watch(
+  //   () => areaMapAlarmInfoData.value,
+  //   (newValue:any) => {
+  //     if (newValue && newValue.length > 0) {
+  //       console.log("111");
+  //     }
+  //   }
+  // );
+};
+
+onMounted(async () => {
+  init();
+});
 
 onBeforeUnmount(() => {});
 </script>
