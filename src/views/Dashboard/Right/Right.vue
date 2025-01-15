@@ -123,7 +123,15 @@ const state = reactive({
 const winContent = ref("");
 const defaultCameraList = ref("");
 
-// ----------------------------------data------------
+watch(
+  () => state.selectedRegion,
+  (newValue: any) => {
+    handleSelectChange(newValue);
+  },
+  {
+    deep: true,
+  }
+);
 
 // 上墙功能
 const checkBtn = () => {
@@ -236,7 +244,6 @@ const forCameraData = () => {
         ResCode: item.ResItemV1.ResCode,
         ResName: item.ResItemV1.ResName,
       };
-
       startLive(itemData);
     });
   });
@@ -321,6 +328,7 @@ const handleSelectChange = (value: any) => {
       );
     }
   );
+
   clearPanelWindow();
   state.cameraListChecked = selectedCameraData;
   // createPanelWindow();
@@ -417,16 +425,11 @@ const init = async () => {
   await getCameraData();
   // 默认循环视频数组
   state.selectedRegion = cameraList[0].label;
+
   //获取区域告警信息
   getAreaMapAlarmInfoFun();
 
   // // 监听 areaMapAlarmInfoData 的变化
-  watch(
-    () => state.selectedRegion,
-    (newValue: any) => {
-      handleSelectChange(newValue);
-    }
-  );
 };
 
 onMounted(async () => {
