@@ -178,6 +178,13 @@ const loadScript = () => {
   });
 };
 
+const clearPanelWindow = () => {
+  const videoContainer = document.querySelector("#videoDOMId");
+  if (videoContainer) {
+    videoContainer.innerHTML = null;
+  }
+};
+
 // 创建窗格
 const createPanelWindow = () => {
   return new Promise((resolve, reject) => {
@@ -314,14 +321,14 @@ const handleSelectChange = (value: any) => {
       );
     }
   );
-
+  clearPanelWindow();
   // state.cameraListTotal.forEach((item: any) => {
   //   if (item.OrgName.includes(value)) {
   //     cameraTemp.push(item);
   //   }
   // });
   state.cameraListChecked = selectedCameraData;
-  createPanelWindow();
+  // createPanelWindow();
   forCameraData();
 };
 
