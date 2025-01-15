@@ -29,7 +29,7 @@
                 <a-select-option
                   v-for="item in cameraList"
                   :key="item.label"
-                  :value="item.label"
+                  :value="item.OrgName"
                 >
                   {{ item.label }}
                 </a-select-option>
@@ -53,7 +53,7 @@
         <!-- 报警事件 -->
         <div
           class="location"
-          v-for="item in alarmList"
+          v-for="item in state.alarmList"
           :key="item.name"
           :style="{ left: item.left, top: item.top }"
           @click="alarmClick(item)"
@@ -89,6 +89,7 @@ import {
   videoUpperWall,
 } from "@/api/management";
 import CryptoJS from "crypto-js"; // 导入 crypto-js
+const _window: any = window;
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -96,33 +97,31 @@ const global = currentInstance.appContext.config.globalProperties;
 const formDataRef = ref();
 const checkFlag = ref(false);
 const AccessToken = ref();
-const cameraListTotal = ref();
 const isActive = ref("p9");
 const areaMapAlarmInfoData = ref([]);
 
 const state = reactive({
   selectedRegion: null,
   isActive: "p9",
-  cameraListChecked: [],
-  cameraListTotal: null,
+  cameraListChecked: [] as any[],
+  cameraListTotal: [] as any[],
+  areaMapAlarmInfoData: {},
+  alarmList: [
+    { name: "申虹国际大厦", top: "1.4rem", left: "1.4rem", isAlarm: false },
+    { name: "出租车市域铁", top: "1.4rem", left: "2rem", isAlarm: false },
+    { name: "蓄车场北", top: "0.8rem", left: "1.6rem", isAlarm: false },
+    { name: "蓄车场南", top: "2.5rem", left: "1.7rem", isAlarm: false },
+    { name: "P9P10停车库", top: "1.2rem", left: "0.9rem", isAlarm: false },
+    { name: "西交B区", top: "1.5rem", left: "1rem", isAlarm: false },
+    { name: "P9网约车1F", top: "1.2rem", left: "1.2rem", isAlarm: false },
+    { name: "P10网约车1F", top: "2.2rem", left: "1rem", isAlarm: false },
+    { name: "申贵路地下通道", top: "1.8rem", left: "1.25rem", isAlarm: false },
+  ],
 });
 
 // 定义 winContent 响应式数据
 const winContent = ref("");
 const defaultCameraList = ref("");
-
-// 声明 data 数组
-const alarmList = ref([
-  { name: "申虹国际大厦", top: "1.4rem", left: "1.4rem", isAlarm: false },
-  { name: "出租车市域铁", top: "1.4rem", left: "2rem", isAlarm: false },
-  { name: "蓄车场北", top: "0.8rem", left: "1.6rem", isAlarm: false },
-  { name: "蓄车场南", top: "2.5rem", left: "1.7rem", isAlarm: false },
-  { name: "P9P10停车库", top: "1.2rem", left: "0.9rem", isAlarm: false },
-  { name: "西交B区", top: "1.5rem", left: "1rem", isAlarm: false },
-  { name: "P9网约车1F", top: "1.2rem", left: "1.2rem", isAlarm: false },
-  { name: "P10网约车1F", top: "2.2rem", left: "1rem", isAlarm: false },
-  { name: "申贵路地下通道", top: "1.8rem", left: "1.25rem", isAlarm: false },
-]);
 
 // ----------------------------------data------------
 
@@ -151,7 +150,7 @@ const checkBtn = () => {
 
 // 初始化
 const initPlayer = async (initData: any) => {
-  (window as any).imosPlayer
+  _window.imosPlayer
     .init(initData)
     .then(function (res: any) {
       if (res.ErrCode === 0) {
@@ -182,7 +181,7 @@ const loadScript = () => {
 // 创建窗格
 const createPanelWindow = () => {
   return new Promise((resolve, reject) => {
-    let videoDom = (window as any).imosPlayer.createPanelWindow();
+    let videoDom = _window.imosPlayer.createPanelWindow();
     videoDom.style.width = "140px";
     videoDom.style.height = "150px";
     videoDom.style.marginTop = "0.08rem";
@@ -238,7 +237,7 @@ const forCameraData = () => {
 
 // 启动实况
 const startLive = (itemData: any) => {
-  (window as any).imosPlayer
+  _window.imosPlayer
     .playLive(itemData.id, {
       camera: itemData.ResCode,
       title: itemData.ResName,
@@ -305,13 +304,16 @@ const getCameraData = async () => {
 
 // 勾选数据
 const handleSelectChange = (value: any) => {
-  const cameraTemp: any = [];
-  state.cameraListTotal.forEach((item: any) => {
-    if (item.OrgName.includes(value)) {
-      cameraTemp.push(item);
-    }
-  });
+  const cameraTemp: any = state.cameraListTotal.filter(
+    (item: any) => item.OrgName === value
+  );
+  // state.cameraListTotal.forEach((item: any) => {
+  //   if (item.OrgName.includes(value)) {
+  //     cameraTemp.push(item);
+  //   }
+  // });
   state.cameraListChecked = cameraTemp;
+
   createPanelWindow();
   forCameraData();
 };
@@ -337,13 +339,15 @@ const alarmClick = (value: any) => {
 const getAreaMapAlarmInfoFun = () => {
   getAreaMapAlarmInfoData({})
     .then((res: any) => {
-      areaMapAlarmInfoData.value = res.data.areaToAlarmInfoMap;
-      if (areaMapAlarmInfoData.value) {
+      state.areaMapAlarmInfoData = res.data.areaToAlarmInfoMap;
+      if (state.areaMapAlarmInfoData) {
         console.log("有事故发生", res.data.areaToAlarmInfoMap);
-        for (const key in areaMapAlarmInfoData.value) {
-          alarmList.value.map((item: { name: string; isAlarm: boolean }) => {
-            return item.name === key ? (item.isAlarm = true) : null;
-          });
+        for (const key in state.areaMapAlarmInfoData) {
+          state.alarmList.forEach(
+            (item: { name: string; isAlarm: boolean }) => {
+              return item.name === key ? (item.isAlarm = true) : null;
+            }
+          );
         }
       }
     })
@@ -411,7 +415,7 @@ const init = async () => {
 
   // // 监听 areaMapAlarmInfoData 的变化
   // watch(
-  //   () => areaMapAlarmInfoData.value,
+  //   () => state.areaMapAlarmInfoData,
   //   (newValue:any) => {
   //     if (newValue && newValue.length > 0) {
   //       console.log("111");

@@ -16,7 +16,6 @@ import {
   ref,
   nextTick,
 } from "vue";
-import type { Rule } from "ant-design-vue/es/form";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;

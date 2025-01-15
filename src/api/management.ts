@@ -4,8 +4,6 @@ import { baseURL } from "@/utils/service";
 import { getCurrentInstance, ComponentInternalInstance } from "vue";
 // const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 // const global = currentInstance.appContext.config.globalProperties;
-import { utils } from "@/utils/utils";
-import { store } from "@/store";
 
 const prefix = "/manage";
 
