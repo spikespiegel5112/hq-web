@@ -1,7 +1,6 @@
 const result: any[] = [
   {
     label: "B区主干道",
-    OrgName: "B区",
     data: [
       {
         address: "10.141.15.96",

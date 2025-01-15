@@ -29,7 +29,7 @@
                 <a-select-option
                   v-for="item in cameraList"
                   :key="item.label"
-                  :value="item.OrgName"
+                  :value="item.label"
                 >
                   {{ item.label }}
                 </a-select-option>
@@ -304,16 +304,23 @@ const getCameraData = async () => {
 
 // 勾选数据
 const handleSelectChange = (value: any) => {
-  const cameraTemp: any = state.cameraListTotal.filter(
-    (item: any) => item.OrgName === value
+  const selectedCameraList = cameraList.find(
+    (item: any) => item.label === value
+  )?.data;
+  const selectedCameraData: any[] = state.cameraListTotal.filter(
+    (item: any) => {
+      return selectedCameraList.find(
+        (item2: any) => item.ResItemV1.ResCode === item2.id
+      );
+    }
   );
+
   // state.cameraListTotal.forEach((item: any) => {
   //   if (item.OrgName.includes(value)) {
   //     cameraTemp.push(item);
   //   }
   // });
-  state.cameraListChecked = cameraTemp;
-
+  state.cameraListChecked = selectedCameraData;
   createPanelWindow();
   forCameraData();
 };
