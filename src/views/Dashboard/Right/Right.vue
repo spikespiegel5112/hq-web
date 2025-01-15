@@ -4,21 +4,33 @@
       <a-form>
         <a-row class="rowClass">
           <a-col :span="12" style="margin-top: 0.04rem">
-            <span :class="{ active: state.isActive === 'p9' }" @click="setActive('p9')">
+            <span
+              :class="{ active: state.isActive === 'p9' }"
+              @click="setActive('p9')"
+            >
               P9停车场
             </span>
-            <span style="margin-left: 0.1rem" :class="{ active: state.isActive === 'nanxu' }"
-              @click="setActive('nanxu')">
+            <span
+              style="margin-left: 0.1rem"
+              :class="{ active: state.isActive === 'nanxu' }"
+              @click="setActive('nanxu')"
+            >
               南蓄车场
             </span>
           </a-col>
           <a-col :span="12">
             <a-form-item label="区域">
-              <a-select v-model:value="state.selectedRegion" placeholder="请选择" @change="handleSelectChange"
-                style="z-index: 1000">
-                <a-select-option v-for="item in global.$getDictionary(
-                  'dashboardCameraAreaList'
-                )" :key="item.value" :value="item.value">
+              <a-select
+                v-model:value="state.selectedRegion"
+                placeholder="请选择"
+                @change="handleSelectChange"
+                style="z-index: 1000"
+              >
+                <a-select-option
+                  v-for="item in cameraList"
+                  :key="item.label"
+                  :value="item.label"
+                >
                   {{ item.label }}
                 </a-select-option>
               </a-select>
@@ -36,12 +48,17 @@
 
     <div class="content">
       <div id="videoDOMId"></div>
-
       <div class="mapPic">
         <img src="@/assets/mapPic.png" />
         <!-- 报警事件 -->
-        <div class="location" v-for="item in alarmList" :key="item.name" :style="{ left: item.left, top: item.top }"
-          @click="alarmClick(item)" v-show="item.isAlarm">
+        <div
+          class="location"
+          v-for="item in alarmList"
+          :key="item.name"
+          :style="{ left: item.left, top: item.top }"
+          @click="alarmClick(item)"
+          v-show="item.isAlarm"
+        >
           <span class="bubble">{{ item.name }}</span>
         </div>
       </div>
@@ -63,6 +80,9 @@ import {
 } from "vue";
 
 import axios from "axios"; // 导入 axios
+
+import cameraList from "./camera.ts";
+
 import {
   screenBannerInfoRequest,
   getAreaMapAlarmInfoData,
@@ -82,9 +102,9 @@ const areaMapAlarmInfoData = ref([]);
 
 const state = reactive({
   selectedRegion: null,
-  isActive: 'p9',
+  isActive: "p9",
   cameraListChecked: [],
-  cameraListTotal: null
+  cameraListTotal: null,
 });
 
 // 定义 winContent 响应式数据
@@ -224,7 +244,7 @@ const startLive = (itemData: any) => {
       title: itemData.ResName,
       stream: 0,
     })
-    .then((res: any) => { });
+    .then((res: any) => {});
 };
 
 // 获取相机数据
@@ -258,22 +278,29 @@ const getCameraData = async () => {
   };
   let conditionEncodeStr1 = encodeURIComponent(JSON.stringify(data1.condition));
   let url = `${ipaddr}?org=${data1.org}&condition=${conditionEncodeStr1}`;
-  const res = await axios.get(url, {
-    headers: {
-      Authorization: AccessToken.value,
-    },
-  });
-  state.cameraListTotal = res.data.Result.InfoList;
-  console.log("相机总资源", state.cameraListTotal);
-  state.cameraListChecked = state.cameraListTotal.filter((item: any) => {
-    return item.OrgName.includes("B1");
-  });
+  const res = await axios
+    .get(url, {
+      headers: {
+        Authorization: AccessToken.value,
+      },
+    })
+    .then((res: any) => {
+      state.cameraListTotal = res.data.Result.InfoList;
+      console.log(state.cameraListTotal);
+      console.log("相机总资源", state.cameraListTotal);
+      state.cameraListChecked = state.cameraListTotal.filter((item: any) => {
+        return item.OrgName.includes("B1");
+      });
 
-  // 视频暂时只显示4个，视频会盖住其他dom元素 暂时没法解决
-  state.cameraListChecked.length >= 4
-    ? (state.cameraListChecked = state.cameraListChecked.slice(0, 4))
-    : null;
-  console.log("Checked111---", state.cameraListChecked);
+      // 视频暂时只显示4个，视频会盖住其他dom元素 暂时没法解决
+      state.cameraListChecked.length >= 4
+        ? (state.cameraListChecked = state.cameraListChecked.slice(0, 4))
+        : null;
+      console.log("Checked111---", state.cameraListChecked);
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
 };
 
 // 勾选数据
@@ -333,8 +360,8 @@ const init = async () => {
       AccessCode: res1.data.AccessCode,
       LoginSignature: CryptoJS.MD5(
         btoa("loadmin") +
-        res1.data.AccessCode +
-        CryptoJS.MD5("Hqhoc_20240919").toString()
+          res1.data.AccessCode +
+          CryptoJS.MD5("Hqhoc_20240919").toString()
       ).toString(),
     };
 
@@ -346,16 +373,16 @@ const init = async () => {
 
     res2.data.AccessToken
       ? setInterval(async () => {
-        await axios.post(
-          "http://10.141.10.10:8088/VIID/hadesadapter/user/keepalive",
-          {},
-          {
-            headers: {
-              Authorization: `${res2.data.AccessToken}`,
-            },
-          }
-        );
-      }, 30000)
+          await axios.post(
+            "http://10.141.10.10:8088/VIID/hadesadapter/user/keepalive",
+            {},
+            {
+              headers: {
+                Authorization: `${res2.data.AccessToken}`,
+              },
+            }
+          );
+        }, 30000)
       : null;
 
     await loadScript();
@@ -368,7 +395,7 @@ const init = async () => {
 
     await initPlayer(initData);
 
-    setTimeout(() => { }, 1000);
+    setTimeout(() => {}, 1000);
   } catch (error) {
     console.error("Login failed:", error);
   }
@@ -395,9 +422,11 @@ const init = async () => {
 
 onMounted(async () => {
   init();
+  console.log("cameraList");
+  console.log(cameraList);
 });
 
-onBeforeUnmount(() => { });
+onBeforeUnmount(() => {});
 </script>
 
 <style scoped lang="scss">
