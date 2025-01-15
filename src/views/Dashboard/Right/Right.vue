@@ -10,12 +10,16 @@
                 :style="{
                   padding: '0 0.05rem',
                 }"
-                :type="state.cameraListChecked === 'p9' ? 'primary' : ''"
+                :type="
+                  state.cameraListChecked === item.label
+                    ? 'primary'
+                    : ''
+                "
                 @click="setActive('p9')"
               >
                 {{ item.label }}
               </a-button>
-              {{ state.cameraListChecked }}
+              <!-- {{ state.cameraListChecked }} -->
               <!-- <a-button
                 :style="{
                   padding: '0 0.05rem',
