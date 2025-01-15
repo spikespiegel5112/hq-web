@@ -353,7 +353,7 @@ onBeforeUnmount(() => {});
           width: 100%;
           .time {
             display: inline-block;
-            margin: 0 05rem 0 0 0;
+            margin: 0.05rem 0 0 0;
             width: 1rem;
           }
           .content {
