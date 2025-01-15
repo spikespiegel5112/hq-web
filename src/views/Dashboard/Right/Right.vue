@@ -86,23 +86,27 @@
         },
       }"
     >
-      <a-form>
-        <a-form-item label="区域">
-          <a-select
-            v-model:value="state.selectedRegion"
-            placeholder="请选择"
-            style="z-index: 1000"
-          >
-            <a-select-option
-              v-for="item in cameraList"
-              :key="item.label"
-              :value="item.label"
-            >
-              {{ item.label }}
-            </a-select-option>
-          </a-select>
-        </a-form-item>
-      </a-form>
+      <a-row>
+        <a-col :span="22">
+          <a-form>
+            <a-form-item label="区域">
+              <a-select
+                v-model:value="state.selectedRegion"
+                placeholder="请选择"
+                style="z-index: 1000"
+              >
+                <a-select-option
+                  v-for="item in cameraList"
+                  :key="item.label"
+                  :value="item.label"
+                >
+                  {{ item.label }}
+                </a-select-option>
+              </a-select>
+            </a-form-item>
+          </a-form>
+        </a-col>
+      </a-row>
     </a-modal>
   </div>
 </template>
@@ -127,7 +131,7 @@ import cameraList from "./camera.ts";
 import {
   screenBannerInfoRequest,
   getAreaMapAlarmInfoData,
-  videoUpperWall,
+  videoUpperWallRequest,
 } from "@/api/management";
 import CryptoJS from "crypto-js"; // 导入 crypto-js
 const _window: any = window;
@@ -179,7 +183,7 @@ watch(
 // 上墙功能
 const checkBtn = () => {
   console.log("点击了上墙");
-  videoUpperWall({})
+  videoUpperWallRequest({})
     .then((res: any) => {
       console.log("上墙res", res);
     })

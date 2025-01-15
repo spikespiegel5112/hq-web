@@ -8,7 +8,7 @@ import { getCurrentInstance, ComponentInternalInstance } from "vue";
 const prefix = "/manage";
 
 // 视频上墙
-export const videoUpperWall = (params: any) => {
+export const videoUpperWallRequest = (params: any) => {
   return service({
     url: prefix + "/backend/indexPage/videoUpperWall",
     method: "POST",
