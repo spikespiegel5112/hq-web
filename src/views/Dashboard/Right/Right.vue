@@ -20,7 +20,16 @@
           </a-col>
           <a-col :span="12">
             <a-form-item label="区域">
-              <a-select
+              <a-button
+                @click="
+                  () => {
+                    state.selectRegionVisible = true;
+                  }
+                "
+              >
+                选择
+              </a-button>
+              <!-- <a-select
                 v-model:value="state.selectedRegion"
                 placeholder="请选择"
                 @change="handleSelectChange"
@@ -33,7 +42,7 @@
                 >
                   {{ item.label }}
                 </a-select-option>
-              </a-select>
+              </a-select> -->
             </a-form-item>
           </a-col>
           <!-- 上墙 -->
@@ -63,6 +72,30 @@
         </div>
       </div>
     </div>
+    <a-modal
+      :visible="state.selectRegionVisible"
+      top="3rem"
+      @ok="handleSelectChange"
+    >
+      <a-form>
+        <a-form-item label="区域">
+          <a-select
+            v-model:value="state.selectedRegion"
+            placeholder="请选择"
+            @change="handleSelectChange"
+            style="z-index: 1000"
+          >
+            <a-select-option
+              v-for="item in cameraList"
+              :key="item.label"
+              :value="item.label"
+            >
+              {{ item.label }}
+            </a-select-option>
+          </a-select>
+        </a-form-item>
+      </a-form>
+    </a-modal>
   </div>
 </template>
 
@@ -101,6 +134,7 @@ const isActive = ref("p9");
 const areaMapAlarmInfoData = ref([]);
 
 const state = reactive({
+  selectRegionVisible: false,
   selectedRegion: null,
   isActive: "p9",
   cameraListChecked: [] as any[],
@@ -341,6 +375,7 @@ const handleSelectChange = (value: any) => {
 
   state.cameraListChecked = selectedCameraData;
   forCameraData();
+  state.selectRegionVisible = false;
 };
 
 // 设置激活的 span
