@@ -182,7 +182,6 @@ const state = reactive({
     { name: "P10网约车1F", top: "2.2rem", left: "1rem", isAlarm: false },
     { name: "申贵路地下通道", top: "1.8rem", left: "1.25rem", isAlarm: false },
   ],
-  upperWallList: [] as any,
 });
 
 // 定义 winContent 响应式数据
@@ -198,75 +197,17 @@ watch(
     deep: true,
   }
 );
-// 声明 data 数组
-const alarmList = ref([
-  { name: "申虹国际大厦", top: "1.85rem", left: "2.95rem", isAlarm: false },
-  { name: "出租车市域铁", top: "1.85rem", left: "3.82rem", isAlarm: false },
-  { name: "蓄车场北", top: "0.8rem", left: "1.6rem", isAlarm: false },
-  { name: "蓄车场南", top: "2.5rem", left: "1.7rem", isAlarm: false },
-  { name: "P9P10停车库", top: "1.2rem", left: "0.9rem", isAlarm: false },
-  { name: "西交B区", top: "1.5rem", left: "1rem", isAlarm: false },
-  { name: "P9网约车1F", top: "1.2rem", left: "1.2rem", isAlarm: false },
-  { name: "P10网约车1F", top: "2.2rem", left: "1rem", isAlarm: false },
-  { name: "申贵路地下通道", top: "1.8rem", left: "1.25rem", isAlarm: false },
-]);
-
-// ----------------------------------data------------
-onMounted(async () => {
-  try {
-    const res1 = await axios.post("http://10.141.10.10:8088/VIID/login/v2", {});
-    const postData = {
-      UserName: "loadmin",
-      AccessCode: res1.data.AccessCode,
-      LoginSignature: CryptoJS.MD5(
-        btoa("loadmin") +
-          res1.data.AccessCode +
-          CryptoJS.MD5("Hqhoc_20240919").toString()
-      ).toString(),
-    };
-
-    const res2 = await axios.post(
-      "http://10.141.10.10:8088/VIID/login/v2",
-      postData
-    );
-    AccessToken.value = res2.data.AccessToken;
-
-    res2.data.AccessToken
-      ? setInterval(async () => {
-          await axios.post(
-            "http://10.141.10.10:8088/VIID/hadesadapter/user/keepalive",
-            {},
-            {
-              headers: {
-                Authorization: `${res2.data.AccessToken}`,
-              },
-            }
-          );
-        }, 30000)
-      : null;
-
-    await loadScript();
-    const initData = {
-      ip: "10.141.10.10",
-      token: AccessToken.value,
-      title: document.title,
-      offset: [0, 0],
-    };
-
-    await init(initData);
-
-    setTimeout(() => {}, 1000);
-  } catch (error) {
-    console.error("Login failed:", error);
-  }
-});
 
 // 上墙功能
 const checkBtn = () => {
   console.log("点击了上墙");
-
   videoUpperWallRequest({
-    videoList: state.upperWallList,
+    videoList: [
+      {
+        resCode: "string",
+        resName: "string",
+      },
+    ],
   })
     .then((res: any) => {
       console.log("上墙res", res);
@@ -329,10 +270,12 @@ const clearPanelWindow = () => {
 // 创建窗格
 const createPanelWindow = () => {
   return new Promise((resolve, reject) => {
-    let videoDom = (window as any).imosPlayer.createPanelWindow();
-    videoDom.style.width = "160px";
-    videoDom.style.height = "110px";
-    videoDom.style.marginTop = "0.2rem";
+    let videoDom = _window.imosPlayer.createPanelWindow();
+    // videoDom.id = "aaa" + index;
+    console.log(videoDom.id);
+    videoDom.style.width = "140px";
+    videoDom.style.height = "150px";
+    videoDom.style.marginTop = "0.08rem";
     videoDom.style.overflow = "hidden"; // 确保子元素内部也隐藏溢出部分
 
     // 创建勾选框
@@ -378,39 +321,10 @@ const forCameraData = () => {
         id: videoDomId,
         ResCode: item.ResItemV1.ResCode,
         ResName: item.ResItemV1.ResName,
-        isActive: false,
       };
       state.currentVideoIdList.push(videoDomId);
       startLive(itemData);
-      mouseEvent(item, itemData);
     });
-  });
-};
-
-// 启用鼠标回调
-const mouseEvent = (item: any, itemData: any) => {
-  (window as any).imosPlayer.setFloatEventCallback(itemData.id, {
-    callback: (event: any) => {
-      if (event.Event === 2) {
-        itemData.isActive = !itemData.isActive;
-        let videoElement = document.getElementById(itemData.id);
-        let videoData = JSON.parse(JSON.stringify(item.ResItemV1));
-        if (itemData.isActive && videoElement) {
-          videoElement.style.border = "2px solid #ff0000";
-          state.upperWallList.push({
-            resCode: videoData.ResCode,
-            resName: videoData.ResName,
-          });
-        } else if (!itemData.isActive && videoElement) {
-          videoElement.style.border = "none";
-          state.upperWallList = state.upperWallList.filter(
-            (deleteItem) => deleteItem.resCode !== videoData.ResCode
-          );
-        }
-        console.log("123", state.upperWallList);
-      }
-      return false;
-    },
   });
 };
 
@@ -653,8 +567,8 @@ onBeforeUnmount(() => {});
   margin-top: 0.5rem;
 
   img {
-    width: 4.67rem;
-    height: 4.11rem;
+    width: 100%;
+    height: 100%;
   }
 }
 
