@@ -120,14 +120,16 @@
                     </div>
                     <div
                       v-if="
-                        !!state.fileList[index] &&
-                        !!state.fileList[index].attachmentList &&
-                        state.fileList[index].attachmentList.length > 0
+                        checkAttachmentIndex(item, index) &&
+                        checkAttachmentIndex(item, index).attachmentList
+                          .length > 0
                       "
                       class="attachment"
                     >
                       <AttachmentReview
-                        :attachmentList="state.fileList[index].attachmentList"
+                        :attachmentList="
+                          checkAttachmentIndex(item, index).attachmentList
+                        "
                       />
                     </div>
                   </div>
@@ -291,17 +293,11 @@ const handleClose = () => {
   emit("onClose");
 };
 
-const handleChangeTime1 = () => {};
-
-const getCurrentStep = (currentPreplanData: any) => {
-  const disposalList = state.disposalList;
-  let result = {
-    attachmentList: [],
-  };
-  let _result = disposalList.find((item: any) => {
-    return currentPreplanData.stepOrder === item.stepOrder;
-  });
-  return _result || result;
+const getDispoaslItem = (index: number) => {
+  let result = state.disposalList.find(
+    (item: any) => item.stepOrder - 1 === index
+  );
+  return result;
 };
 
 const getDispoaslTime = (index: number) => {
@@ -316,11 +312,22 @@ const getDispoaslTime = (index: number) => {
   return result;
 };
 
-const getDispoaslItem = (index: number) => {
-  let result = state.disposalList.find(
-    (item: any) => item.stepOrder - 1 === index
+const checkAttachmentIndex: any = (item: any, index: number) => {
+  let result = state.fileList.find(
+    (item2: any) => item.stepOrder === item2.stepOrder
   );
   return result;
+};
+
+const getCurrentStep = (currentPreplanData: any) => {
+  const disposalList = state.disposalList;
+  let result = {
+    attachmentList: [],
+  };
+  let _result = disposalList.find((item: any) => {
+    return currentPreplanData.stepOrder === item.stepOrder;
+  });
+  return _result || result;
 };
 
 onMounted(() => {
@@ -340,7 +347,7 @@ onBeforeUnmount(() => {});
     width: 100%;
     .left {
       display: inline-block;
-      width: 7rem;
+      width: 100%;
     }
     .right {
       display: inline-block;

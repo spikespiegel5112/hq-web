@@ -1,8 +1,7 @@
 <template>
   <a-modal v-model:open="state.visible" @cancel="handleClose" width="16rem">
     <template #title>
-           <CommonTitle :title="dialogTitle" />
-
+      <CommonTitle :title="dialogTitle" />
     </template>
     <div class="maincontent">
       <a-row :gutter="30">
@@ -99,13 +98,7 @@
                 </template>
                 <div class="node">
                   <div class="time">
-                    {{
-                      !!state.disposalList[index]
-                        ? global
-                            .$dayjs(state.disposalList[index]?.disposalTime)
-                            .format("HH:mm")
-                        : ""
-                    }}
+                    {{ getDispoaslTime(index) }}
                   </div>
                   <div class="content">
                     <div class="top">
@@ -121,14 +114,15 @@
                     </div>
                     <div
                       v-if="
-                        !!state.fileList[index] &&
-                        !!state.fileList[index].attachmentList &&
-                        state.fileList[index].attachmentList.length > 0
+                        checkAttachmentIndex(item, index) &&
+                        checkAttachmentIndex(item, index).attachmentList.length > 0
                       "
                       class="attachment"
                     >
                       <AttachmentReview
-                        :attachmentList="state.fileList[index].attachmentList"
+                        :attachmentList="
+                          checkAttachmentIndex(item, index).attachmentList
+                        "
                       />
                     </div>
                   </div>
@@ -291,7 +285,32 @@ const handleClose = () => {
   emit("onClose");
 };
 
-const handleChangeTime1 = () => {};
+const getDispoaslItem = (index: number) => {
+  let result = state.disposalList.find(
+    (item: any) => item.stepOrder - 1 === index
+  );
+  return result;
+};
+
+const getDispoaslTime = (index: number) => {
+  let result = "";
+  const disposalItem = getDispoaslItem(index);
+  if (disposalItem) {
+    const disposalTime = disposalItem.disposalTime;
+    if (!!disposalTime) {
+      result = global.$dayjs(disposalItem.disposalTime).format("HH:mm");
+    }
+  }
+  return result;
+};
+
+const checkAttachmentIndex: any = (item: any, index: number) => {
+  
+  let result = state.fileList.find(
+    (item2: any) => item.stepOrder === item2.stepOrder
+  );
+  return result;
+};
 
 const getCurrentStep = (currentPreplanData: any) => {
   const disposalList = state.disposalList;
@@ -321,7 +340,7 @@ onBeforeUnmount(() => {});
     width: 100%;
     .left {
       display: inline-block;
-      width: 7rem;
+      width: 100%;
     }
     .right {
       display: inline-block;

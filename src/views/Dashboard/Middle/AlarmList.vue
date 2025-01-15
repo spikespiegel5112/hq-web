@@ -116,10 +116,36 @@ watch(
 
 const getData = () => {
   global.$store.commit("app/updateTableLoading", true);
+  const timeTypeDictionary = [
+    {
+      value: 1,
+      code: "day",
+    },
+    {
+      value: 2,
+      code: "week",
+    },
+    {
+      value: 3,
+      code: "month",
+    },
+  ];
   backendIndexPageGetAlarmInfoDataRequest({
     alarmLevel: null,
-    alarmTimeEnd: null,
-    alarmTimeStart: null,
+    alarmTimeStart: global
+      .$dayjs()
+      .startOf(
+        timeTypeDictionary.find((item: any) => item.value === props.timeType)
+          ?.code
+      )
+      .format("YYYY-MM-DD HH:mm:ss"),
+    alarmTimeEnd: global
+      .$dayjs()
+      .endOf(
+        timeTypeDictionary.find((item: any) => item.value === props.timeType)
+          ?.code
+      )
+      .format("YYYY-MM-DD HH:mm:ss"),
     dateType: null,
     preplanResourceId: null,
     ...pagination,

@@ -89,9 +89,7 @@
           <div class="date"></div>
           <vue-scroll class="right">
             <a-timeline mode="left">
-              <a-timeline-item
-                v-for="(item, index) in state.planInfo"
-              >
+              <a-timeline-item v-for="(item, index) in state.planInfo">
                 <template #dot>
                   <span>{{ index + 1 }}</span>
                 </template>
@@ -113,14 +111,16 @@
                     </div>
                     <div
                       v-if="
-                        !!state.fileList[index] &&
-                        !!state.fileList[index].attachmentList &&
-                        state.fileList[index].attachmentList.length > 0
+                        checkAttachmentIndex(item, index) &&
+                        checkAttachmentIndex(item, index).attachmentList
+                          .length > 0
                       "
                       class="attachment"
                     >
                       <AttachmentReview
-                        :attachmentList="state.fileList[index].attachmentList"
+                        :attachmentList="
+                          checkAttachmentIndex(item, index).attachmentList
+                        "
                       />
                     </div>
                   </div>
@@ -229,7 +229,6 @@ watch(
     state.visible = newValue;
     if (!!newValue) {
       await nextTick();
-
       getData();
     }
   }
@@ -321,6 +320,13 @@ const getDispoaslItem = (index: number) => {
   return result;
 };
 
+const checkAttachmentIndex: any = (item: any, index: number) => {
+  let result = state.fileList.find(
+    (item2: any) => item.stepOrder === item2.stepOrder
+  );
+  return result;
+};
+
 const getCurrentStep = (currentPreplanData: any) => {
   const disposalList = state.disposalList;
   let result = {
@@ -351,7 +357,7 @@ onBeforeUnmount(() => {});
     width: 100%;
     .left {
       display: inline-block;
-      width: 7rem;
+      width: 100%;
     }
     .right {
       display: inline-block;
