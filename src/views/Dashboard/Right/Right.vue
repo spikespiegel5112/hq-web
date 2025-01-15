@@ -106,6 +106,7 @@ const state = reactive({
   cameraListChecked: [] as any[],
   cameraListTotal: [] as any[],
   areaMapAlarmInfoData: {},
+  currentVideoIdList: [] as any[],
   alarmList: [
     { name: "申虹国际大厦", top: "1.4rem", left: "1.4rem", isAlarm: false },
     { name: "出租车市域铁", top: "1.4rem", left: "2rem", isAlarm: false },
@@ -187,19 +188,20 @@ const loadScript = () => {
 };
 
 const clearPanelWindow = () => {
-  const videoContainer = document.querySelector("#videoDOMId");
-  while (videoContainer?.firstChild) {
-    videoContainer.removeChild(videoContainer?.firstChild);
-  }
-  // if (videoContainer) {
-  //   videoContainer.innerHTML = null;
-  // }
+  state.currentVideoIdList.forEach((item: string) => {
+    const aaa = document.getElementById(item);
+    console.log(aaa);
+    aaa?.remove();
+  });
+  state.currentVideoIdList = [];
 };
 
 // 创建窗格
 const createPanelWindow = () => {
   return new Promise((resolve, reject) => {
     let videoDom = _window.imosPlayer.createPanelWindow();
+    // videoDom.id = "aaa" + index;
+    console.log(videoDom.id);
     videoDom.style.width = "140px";
     videoDom.style.height = "150px";
     videoDom.style.marginTop = "0.08rem";
@@ -240,13 +242,16 @@ const handleCheckboxChange = (event: Event) => {
 };
 
 const forCameraData = () => {
-  state.cameraListChecked.forEach((item: any) => {
+  console.log(state.cameraListChecked);
+
+  state.cameraListChecked.forEach((item: any, index: number) => {
     createPanelWindow().then((videoDomId: any) => {
       let itemData = {
         id: videoDomId,
         ResCode: item.ResItemV1.ResCode,
         ResName: item.ResItemV1.ResName,
       };
+      state.currentVideoIdList.push(videoDomId);
       startLive(itemData);
     });
   });
@@ -321,6 +326,8 @@ const getCameraData = async () => {
 
 // 勾选数据
 const handleSelectChange = (value: any) => {
+  clearPanelWindow();
+
   const selectedCameraList = cameraList.find(
     (item: any) => item.label === value
   )?.data;
@@ -332,9 +339,7 @@ const handleSelectChange = (value: any) => {
     }
   );
 
-  clearPanelWindow();
   state.cameraListChecked = selectedCameraData;
-  // createPanelWindow();
   forCameraData();
 };
 
