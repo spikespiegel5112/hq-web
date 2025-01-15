@@ -4,35 +4,21 @@
       <a-form>
         <a-row class="rowClass">
           <a-col :span="12" style="margin-top: 0.04rem">
-            <span
-              :class="{ active: isActive === 'p9' }"
-              @click="setActive('p9')"
-            >
+            <span :class="{ active: state.isActive === 'p9' }" @click="setActive('p9')">
               P9停车场
             </span>
-            <span
-              style="margin-left: 0.1rem"
-              :class="{ active: isActive === 'nanxu' }"
-              @click="setActive('nanxu')"
-            >
+            <span style="margin-left: 0.1rem" :class="{ active: state.isActive === 'nanxu' }"
+              @click="setActive('nanxu')">
               南蓄车场
             </span>
           </a-col>
           <a-col :span="12">
             <a-form-item label="区域">
-              <a-select
-                v-model:value="state.selectedRegion"
-                placeholder="请选择"
-                @change="handleSelectChange"
-                style="z-index: 1000"
-              >
-                <a-select-option
-                  v-for="item in global.$getDictionary(
-                    'dashboardCameraAreaList'
-                  )"
-                  :key="item.value"
-                  :value="item.value"
-                >
+              <a-select v-model:value="state.selectedRegion" placeholder="请选择" @change="handleSelectChange"
+                style="z-index: 1000">
+                <a-select-option v-for="item in global.$getDictionary(
+                  'dashboardCameraAreaList'
+                )" :key="item.value" :value="item.value">
                   {{ item.label }}
                 </a-select-option>
               </a-select>
@@ -40,9 +26,9 @@
           </a-col>
           <!-- 上墙 -->
           <a-col :span="12">
-            <a-button type="primary" class="checkBtn" @click="checkBtn"
-              >上墙</a-button
-            >
+            <a-button type="primary" class="checkBtn" @click="checkBtn">
+              上墙
+            </a-button>
           </a-col>
         </a-row>
       </a-form>
@@ -54,14 +40,8 @@
       <div class="mapPic">
         <img src="@/assets/mapPic.png" />
         <!-- 报警事件 -->
-        <div
-          class="location"
-          v-for="item in alarmList"
-          :key="item.name"
-          :style="{ left: item.left, top: item.top }"
-          @click="alarmClick(item)"
-          v-show="item.isAlarm"
-        >
+        <div class="location" v-for="item in alarmList" :key="item.name" :style="{ left: item.left, top: item.top }"
+          @click="alarmClick(item)" v-show="item.isAlarm">
           <span class="bubble">{{ item.name }}</span>
         </div>
       </div>
@@ -97,12 +77,14 @@ const formDataRef = ref();
 const checkFlag = ref(false);
 const AccessToken = ref();
 const cameraListTotal = ref();
-const cameraListChecked = ref();
 const isActive = ref("p9");
 const areaMapAlarmInfoData = ref([]);
 
 const state = reactive({
   selectedRegion: null,
+  isActive: 'p9',
+  cameraListChecked: [],
+  cameraListTotal: null
 });
 
 // 定义 winContent 响应式数据
@@ -221,7 +203,7 @@ const handleCheckboxChange = (event: Event) => {
 };
 
 const forCameraData = () => {
-  cameraListChecked.value.forEach((item: any) => {
+  state.cameraListChecked.forEach((item: any) => {
     createPanelWindow().then((videoDomId: any) => {
       let itemData = {
         id: videoDomId,
@@ -242,7 +224,7 @@ const startLive = (itemData: any) => {
       title: itemData.ResName,
       stream: 0,
     })
-    .then((res: any) => {});
+    .then((res: any) => { });
 };
 
 // 获取相机数据
@@ -281,45 +263,45 @@ const getCameraData = async () => {
       Authorization: AccessToken.value,
     },
   });
-  cameraListTotal.value = res.data.Result.InfoList;
-  console.log("相机总资源", cameraListTotal.value);
-  cameraListChecked.value = cameraListTotal.value.filter((item: any) => {
+  state.cameraListTotal = res.data.Result.InfoList;
+  console.log("相机总资源", state.cameraListTotal);
+  state.cameraListChecked = state.cameraListTotal.filter((item: any) => {
     return item.OrgName.includes("B1");
   });
 
   // 视频暂时只显示4个，视频会盖住其他dom元素 暂时没法解决
-  cameraListChecked.value.length >= 4
-    ? (cameraListChecked.value = cameraListChecked.value.slice(0, 4))
+  state.cameraListChecked.length >= 4
+    ? (state.cameraListChecked = state.cameraListChecked.slice(0, 4))
     : null;
-  console.log("Checked111---", cameraListChecked.value);
+  console.log("Checked111---", state.cameraListChecked);
 };
 
 // 勾选数据
 const handleSelectChange = (value: any) => {
   const cameraTemp: any = [];
-  cameraListTotal.value.forEach((item: any) => {
+  state.cameraListTotal.forEach((item: any) => {
     if (item.OrgName.includes(value)) {
       cameraTemp.push(item);
     }
   });
-  cameraListChecked.value = cameraTemp;
+  state.cameraListChecked = cameraTemp;
   createPanelWindow();
   forCameraData();
 };
 
 // 设置激活的 span
 const setActive = (value: string) => {
-  isActive.value = value;
+  state.isActive = value;
 };
 
 // 警报弹窗点击事件-符合类型的视频将显示在页面
 const alarmClick = (value: any) => {
-  cameraListChecked.value = cameraListTotal.value.map(
+  state.cameraListChecked = state.cameraListTotal.map(
     (item: { OrgName: any }) => {
       return item.OrgName == value.name;
     }
   );
-  // cameraListTotal.value.forEach(item => {
+  // state.cameraListTotal.forEach(item => {
 
   // });
 };
@@ -351,8 +333,8 @@ const init = async () => {
       AccessCode: res1.data.AccessCode,
       LoginSignature: CryptoJS.MD5(
         btoa("loadmin") +
-          res1.data.AccessCode +
-          CryptoJS.MD5("Hqhoc_20240919").toString()
+        res1.data.AccessCode +
+        CryptoJS.MD5("Hqhoc_20240919").toString()
       ).toString(),
     };
 
@@ -364,16 +346,16 @@ const init = async () => {
 
     res2.data.AccessToken
       ? setInterval(async () => {
-          await axios.post(
-            "http://10.141.10.10:8088/VIID/hadesadapter/user/keepalive",
-            {},
-            {
-              headers: {
-                Authorization: `${res2.data.AccessToken}`,
-              },
-            }
-          );
-        }, 30000)
+        await axios.post(
+          "http://10.141.10.10:8088/VIID/hadesadapter/user/keepalive",
+          {},
+          {
+            headers: {
+              Authorization: `${res2.data.AccessToken}`,
+            },
+          }
+        );
+      }, 30000)
       : null;
 
     await loadScript();
@@ -386,7 +368,7 @@ const init = async () => {
 
     await initPlayer(initData);
 
-    setTimeout(() => {}, 1000);
+    setTimeout(() => { }, 1000);
   } catch (error) {
     console.error("Login failed:", error);
   }
@@ -415,7 +397,7 @@ onMounted(async () => {
   init();
 });
 
-onBeforeUnmount(() => {});
+onBeforeUnmount(() => { });
 </script>
 
 <style scoped lang="scss">
@@ -424,6 +406,7 @@ onBeforeUnmount(() => {});
   flex-direction: column;
   height: calc(100vh - 1.75rem);
   position: relative;
+
   .content {
     height: calc(100vh - 3.4rem);
     text-align: center;
@@ -452,22 +435,26 @@ onBeforeUnmount(() => {});
   flex-wrap: wrap;
   // height: 5rem; /* 使用百分比高度 */
   justify-content: space-between;
-  align-items: flex-start; /* 确保子元素从顶部开始排列 */
+  align-items: flex-start;
+  /* 确保子元素从顶部开始排列 */
   // overflow: hidden !important; /* 使用 !important 强制生效 */
   // overflow-y: scroll!important;
   box-sizing: border-box;
   overflow: hidden;
 }
+
 .mapPic {
   position: relative;
   // width: 2rem;
   // height: 2rem;
   margin-top: 0.5rem;
+
   img {
     width: 100%;
     height: 100%;
   }
 }
+
 .location {
   width: 0.3rem;
   height: 0.3rem;
@@ -479,23 +466,28 @@ onBeforeUnmount(() => {});
   animation: breathe 1.6s infinite ease-in-out;
   cursor: pointer;
 }
+
 @keyframes breathe {
   0% {
     transform: scale(0.3);
     opacity: 1;
   }
+
   50% {
     transform: scale(0.5);
     opacity: 0.8;
   }
+
   100% {
     transform: scale(0.3);
     opacity: 1;
   }
 }
+
 .bubble {
   position: absolute;
-  bottom: 100%; /* 确保气泡显示在 .location 的上方 */
+  bottom: 100%;
+  /* 确保气泡显示在 .location 的上方 */
   left: 50%;
   transform: translateX(-50%);
   background-color: #f68b00;
@@ -505,11 +497,14 @@ onBeforeUnmount(() => {});
   font-size: 0.5rem;
   white-space: nowrap;
   z-index: 10;
-  margin-bottom: 0.4rem; /* 添加一些间距，确保气泡和 .location 之间有空隙 */
+  margin-bottom: 0.4rem;
+
+  /* 添加一些间距，确保气泡和 .location 之间有空隙 */
   &::after {
     content: "";
     position: absolute;
-    top: 100%; /* 确保三角形显示在气泡的底部 */
+    top: 100%;
+    /* 确保三角形显示在气泡的底部 */
     left: 50%;
     transform: translateX(-50%);
     border-width: 0.2rem;
@@ -517,6 +512,7 @@ onBeforeUnmount(() => {});
     border-color: #f68b00 transparent transparent transparent;
   }
 }
+
 .checkBtn {
   margin: -1rem 0 0.1rem 0;
 }

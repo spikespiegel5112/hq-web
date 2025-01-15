@@ -1,10 +1,6 @@
 <template>
   <div class="mapconfigration">
-    <iframe
-      class="content"
-      src="http://10.141.10.13/#/?shareLogin&GNKh3QOOIeEbZ0goH7xWu1D67svaWIorQYwwk4JuYztmRG+8m7sEEyMsJA4bFzkExcYMlFSFsrcuMNZKkzQfR7o3aEAyeht9lt4yi7b08iE=&title=${document.title}&offset=[1000, 200]*offset"
-      frameborder="0"
-    ></iframe>
+    <iframe class="content" :src="iframeUrl" frameborder="0"></iframe>
   </div>
 </template>
 
@@ -30,35 +26,16 @@ const state = reactive({
   formData: {},
 });
 
-const rules: Record<string, Rule[]> = {
-  username: [
-    {
-      required: true,
-      message: "请输入用户名",
-      trigger: "change",
-    },
-  ],
-  password: [
-    {
-      required: true,
-      message: "请输入密码",
-      trigger: "change",
-    },
-  ],
-  seconds: [
-    {
-      required: true,
-      message: "请输入验证码",
-      trigger: "change",
-    },
-  ],
-};
+const iframeUrl = computed(() => {
+  return `http://10.141.10.13/#/?shareLogin&GNKh3QOOIeEbZ0goH7xWu1D67svaWIorQYwwk4JuYztmRG+8m7sEEyMsJA4bFzkExcYMlFSFsrcuMNZKkzQfR7o3aEAyeht9lt4yi7b08iE=&title=${document.title}&offset=[100,100]`;
+});
 
 const getData = () => {
   global.$store.commit("app/updateTableLoading", true);
 };
 
 const handleSubmit = () => {};
+
 onMounted(async () => {
   getData();
 });
@@ -71,6 +48,7 @@ onBeforeUnmount(() => {});
   margin: 0.1rem;
   padding: 0.3rem;
   background-color: #010f27;
+
   .content {
     display: flex;
     flex-direction: column;
