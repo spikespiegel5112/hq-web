@@ -2,7 +2,7 @@
   <div class="mapconfigration">
     <iframe
       class="content"
-      src="http://10.141.10.13/#/?shareLogin&GNKh3QOOIeEbZ0goH7xWu1D67svaWIorQYwwk4JuYztmRG+8m7sEEyMsJA4bFzkExcYMlFSFsrcuMNZKkzQfR7o3aEAyeht9lt4yi7b08iE="
+      src="http://10.141.10.13/#/?shareLogin&GNKh3QOOIeEbZ0goH7xWu1D67svaWIorQYwwk4JuYztmRG+8m7sEEyMsJA4bFzkExcYMlFSFsrcuMNZKkzQfR7o3aEAyeht9lt4yi7b08iE=&title=${document.title}&offset=[1000, 200]*offset"
       frameborder="0"
     ></iframe>
   </div>
