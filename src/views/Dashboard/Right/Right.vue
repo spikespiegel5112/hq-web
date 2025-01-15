@@ -72,17 +72,12 @@
         </div>
       </div>
     </div>
-    <a-modal
-      :visible="state.selectRegionVisible"
-      top="3rem"
-      @ok="handleSelectChange"
-    >
+    <a-modal v-model:open="state.selectRegionVisible" :maskClosable="false">
       <a-form>
         <a-form-item label="区域">
           <a-select
             v-model:value="state.selectedRegion"
             placeholder="请选择"
-            @change="handleSelectChange"
             style="z-index: 1000"
           >
             <a-select-option
