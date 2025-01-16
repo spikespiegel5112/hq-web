@@ -5,7 +5,7 @@
       v-model:file-list="state.fileList"
       name="file"
       :list-type="listType"
-      action="/api/manage/attachment/upload"
+      :action="`${global.$getBaseUrl()}/attachment/upload`"
       :headers="{}"
       :disabled="props.disabled"
       :showUploadList="{

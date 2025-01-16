@@ -15,6 +15,7 @@ declare module 'vue' {
     CommonTitle: typeof import('./src/components/CommonTitle.vue')['default']
     CommonUpload: typeof import('./src/components/CommonUpload.vue')['default']
     DigitFlipper: typeof import('./src/components/DigitFlipper.vue')['default']
+    ElDatePicker: typeof import('element-plus/es')['ElDatePicker']
     ExportButton: typeof import('./src/components/ExportButton.vue')['default']
     Header: typeof import('./src/components/Header.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']

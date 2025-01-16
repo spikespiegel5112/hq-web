@@ -128,10 +128,7 @@ const getImgUrl = (item: any) => {
 
 const checkUniViewImage = (item: any) => {
   let result: string;
-  const baseUrl =
-    global.$store.state.app.envMode.MODE === "test"
-      ? "http://localhost:9009/manage"
-      : "";
+
   if (item.createBy === "uniview") {
     result = item.attachmentPath;
   } else {
