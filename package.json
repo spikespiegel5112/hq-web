@@ -10,7 +10,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
-    "dev:test": "vite --mode test",
+    "dev:test": "vite --mode test --host 0.0.0.0",
     "build": "vite build",
     "build:test": "vite build --mode test",
     "preview": "vite preview"
