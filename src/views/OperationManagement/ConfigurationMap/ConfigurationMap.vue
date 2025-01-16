@@ -26,7 +26,7 @@ const state = reactive({
 });
 
 const iframeUrl = computed(() => {
-  return `http://10.141.10.13/#/?shareLogin&GNKh3QOOIeEbZ0goH7xWu1D67svaWIorQYwwk4JuYztmRG+8m7sEEyMsJA4bFzkExcYMlFSFsrcuMNZKkzQfR7o3aEAyeht9lt4yi7b08iE=&title=${document.title}&offset=[100,100]`;
+  return `http://10.141.10.13/#/?shareLogin&GNKh3QOOIeEbZ0goH7xWu1D67svaWIorQYwwk4JuYztmRG+8m7sEEyMsJA4bFzkExcYMlFSFsrcuMNZKkzQfR7o3aEAyeht9lt4yi7b08iE=&title=${document.title}&offset=[235,155]`;
 });
 
 const getData = () => {
