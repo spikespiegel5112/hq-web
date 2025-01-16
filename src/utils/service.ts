@@ -4,7 +4,7 @@ const env = import.meta.env;
 console.log("service+++++", env);
 
 const _baseURL: string =
-  env.VITE_USER_NODE_ENV === "production" ? env.VITE_BASE_URL : "/api";
+  env.VITE_USER_NODE_ENV === "test" ? env.VITE_BASE_URL : "/api";
 
 console.log(_baseURL);
 
