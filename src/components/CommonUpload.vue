@@ -37,6 +37,23 @@
               <DeleteOutlined />
             </a-button>
           </div>
+          <div v-else-if="global.$checkFileType(file.name) === 'pdf'">
+            <FilePdfOutlined />
+            <a-button class="deletebutton" type="link" @click="actions.remove">
+              <DeleteOutlined />
+            </a-button>
+          </div>
+          <div v-else-if="global.$checkFileType(file.name) === 'video'">
+            <VideoCameraOutlined />
+            <a-button
+              v-if="!checkUniView(file)"
+              class="deletebutton"
+              type="link"
+              @click="actions.remove"
+            >
+              <DeleteOutlined />
+            </a-button>
+          </div>
         </div>
       </template>
     </a-upload>
@@ -60,6 +77,8 @@ import {
   UploadOutlined,
   DeleteOutlined,
   FileOutlined,
+  VideoCameraOutlined,
+  FilePdfOutlined,
 } from "@ant-design/icons-vue";
 
 import { attachmentDeleteRequest } from "@/api/management";
@@ -191,7 +210,7 @@ const handleDeleteAttachment = (value: any) => {
   let sliceIndex: number = 0;
 
   props.attachmentList.forEach((item: any, index: number) => {
-    if (item.attachmentPath === value.url) {
+    if (item.attachmentPath === value.attachmentPath) {
       sliceIndex = index;
     }
   });
@@ -268,7 +287,9 @@ onMounted(() => {
           position: relative;
           align-items: center;
           justify-content: center;
-          .anticon-file {
+          .anticon-file,
+          .anticon-video-camera,
+          .anticon-file-pdf {
             font-size: 0.5rem;
           }
           .deletebutton {

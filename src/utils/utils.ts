@@ -295,9 +295,24 @@ const _utils = {
   },
 
   $checkFileType: (fileName: any) => {
+    const getFileExtension = (filename: string) => {
+      if (typeof filename !== "string") {
+        throw new Error("参数必须是字符串");
+      }
+
+      // 获取最后一个点后的内容作为后缀名
+      const extension: any = filename.split(".").pop();
+
+      // 如果文件名中没有点，或者点在开头，则返回空字符串
+      if (extension === filename || filename.startsWith(".")) {
+        return "";
+      }
+
+      return extension.toLowerCase(); // 返回小写后缀
+    };
     let result = "";
     const attachmentName = fileName;
-    const fileSufix = attachmentName.split(".")[1];
+    const fileSufix = getFileExtension(attachmentName);
 
     const imageType = ["png", "jpg", "jpeg", "gif", "bmp"];
     const videoType = ["mp4", "avi", "mov", "wmv", "flv", "rmvb", "3gp"];
@@ -311,6 +326,7 @@ const _utils = {
       "pptx",
       "txt",
     ];
+    const pdfType = ["pdf"];
     if (imageType.includes(fileSufix)) {
       result = "image";
     }
@@ -319,6 +335,9 @@ const _utils = {
     }
     if (fileType.includes(fileSufix)) {
       result = "file";
+    }
+    if (pdfType.includes(fileSufix)) {
+      result = "pdf";
     }
     return result;
   },
