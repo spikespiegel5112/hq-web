@@ -49,7 +49,6 @@
                   v-model="state.planTime"
                   @change="handleChangePlanTime"
                 />
-            
               </a-form-item>
             </a-col>
           </a-row>
@@ -114,14 +113,6 @@ const eventList = computed(() => {
   });
   return result;
 });
-
-watch(
-  () => state.formData,
-  (newValue: any, oldValue: any) => {
-    emit("update:modelValue", newValue);
-  },
-  { deep: true }
-);
 
 watch(
   () => state.formData,

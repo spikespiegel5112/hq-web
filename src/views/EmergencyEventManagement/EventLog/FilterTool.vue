@@ -113,14 +113,6 @@ watch(
   { deep: true }
 );
 
-watch(
-  () => state.formData,
-  (newValue: any, oldValue: any) => {
-    emit("update:modelValue", newValue);
-  },
-  { deep: true }
-);
-
 const handleSearch = () => {
   emit("onSearch", state.formData);
 };
