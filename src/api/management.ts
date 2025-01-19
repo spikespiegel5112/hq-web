@@ -32,7 +32,6 @@ export const backendIndexPageSuddenEventRequest = (params: any) => {
     data: params,
   });
 };
-
 // 附件
 // 下载
 export const attachmentDownloadRequest = (params: any) => {

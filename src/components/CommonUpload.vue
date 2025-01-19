@@ -21,7 +21,12 @@
       <template #itemRender="{ file, actions }">
         <div class="filelist_wrapper">
           <div v-if="global.$checkFileType(file.name) === 'image'">
-            <a-image width="1rem" height="1rem" :src="getImgUrl(file)" />
+            <!-- <a-image width="1rem" height="1rem" :src="getImgUrl(file)" /> -->
+            <a-image
+              width="1rem"
+              height="1rem"
+              :src="`${global.$getBaseUrl()}/attachment/download?id=${file.id}`"
+            />
             <a-button
               v-if="!checkUniView(file)"
               class="deletebutton"
@@ -119,18 +124,19 @@ const listType = computed(() => {
 watch(
   () => props.attachmentList,
   (newValue: any, oldValue: any) => {
-    state.fileList = [];
     if (!!newValue) {
-      newValue.forEach((item: any, index: number) => {
-        state.fileList.push({
-          ...item,
-          id: item.id,
-          uid: index,
-          name: item.attachmentName,
-          status: "done",
-          deleteAble: !checkUniView(item),
-          url: checkFileUrl(item),
-        });
+      _modelValue.value.forEach((item: any, index: number) => {
+        if (!state.fileList.find((item2: any) => item2.id === item.id)) {
+          // state.fileList.push({
+          //   ...item,
+          //   id: item.id,
+          //   uid: index,
+          //   name: item.attachmentName,
+          //   status: "done",
+          //   deleteAble: !checkUniView(item),
+          //   url: checkFileUrl(item),
+          // });
+        }
       });
     }
   },
@@ -147,6 +153,8 @@ const getImgUrl = (item: any) => {
   if (item.directLocation) {
     return item.attachmentName;
   } else {
+    return `${global.$getBaseUrl()}/attachment/download?id=${item.id}`;
+    debugger;
     return checkUniViewImage(item);
   }
 };
@@ -194,7 +202,9 @@ const handleChangeAttachment = (value: any) => {
       if (!(_modelValue.value instanceof Array)) {
         _modelValue.value = JSON.parse(JSON.stringify([]));
       }
-      _modelValue.value.push(response.data);
+      const fileIndex =
+        state.fileList.length > 0 ? state.fileList.length - 1 : 0;
+      state.fileList[fileIndex].id = response.data.id;
       global.$message.success("上传成功");
     } else {
       global.$message.error("上传失败");
@@ -231,16 +241,22 @@ const initFileList = () => {
   state.fileList = [];
   _modelValue.value.forEach((item: any, index: number) => {
     state.fileList.push({
+      ...item,
+      id: item.id,
       uid: index,
       name: item.attachmentName,
       status: "done",
-      url: item.attachmentPath,
+      deleteAble: !checkUniView(item),
+      url: checkFileUrl(item),
     });
   });
 };
 
-onMounted(() => {
-  initFileList();
+onMounted(async () => {
+  await nextTick();
+  setTimeout(() => {
+    initFileList();
+  }, 500);
 });
 </script>
 
