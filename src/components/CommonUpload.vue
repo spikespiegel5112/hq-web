@@ -209,17 +209,17 @@ const handleDeleteAttachment = (value: any) => {
   }
   let sliceIndex: number = 0;
 
-  props.attachmentList.forEach((item: any, index: number) => {
+  _modelValue.value.forEach((item: any, index: number) => {
     if (item.attachmentPath === value.attachmentPath) {
       sliceIndex = index;
     }
   });
 
-  props.attachmentList.splice(sliceIndex, 1);
   attachmentDeleteRequest({
     id: value.id,
   })
     .then((res: any) => {
+      _modelValue.value.splice(sliceIndex, 1);
       global.$message.success("删除成功");
     })
     .catch((err: any) => {
@@ -229,7 +229,7 @@ const handleDeleteAttachment = (value: any) => {
 
 const initFileList = () => {
   state.fileList = [];
-  props.attachmentList.forEach((item: any, index: number) => {
+  _modelValue.value.forEach((item: any, index: number) => {
     state.fileList.push({
       uid: index,
       name: item.attachmentName,
