@@ -242,8 +242,8 @@ onBeforeUnmount(() => {});
         align-items: center;
         > div {
           display: inline-block;
-          width: calc(100% - 1.5rem);
-          height: auto;
+          // width: calc(100% - 1.5rem);
+          // height: auto;
         }
         img {
           max-width: 100%;

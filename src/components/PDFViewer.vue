@@ -1,7 +1,11 @@
 <template>
-  <!-- http://10.141.18.11:9000/images/outinfo/WBXX-20240923001.pdf -->
-
-  <div class="common_pdfviewer_wrapper"></div>
+  <div class="common_pdfviewer_wrapper">
+    <div class="main"></div>
+    <div class="navigator">
+      <a-button @click="handlePrevPage">上一页</a-button>
+      <a-button @click="handleNextPage">下一页</a-button>
+    </div>
+  </div>
 </template>
 
 <script lang="tsx" setup>
@@ -14,7 +18,6 @@ import {
   getCurrentInstance,
   ComponentInternalInstance,
   ref,
-  defineEmits,
   nextTick,
 } from "vue";
 import * as pdfWorker from "pdfjs-dist/build/pdf.worker.mjs?url";
@@ -44,47 +47,81 @@ const emit = defineEmits<{
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
+let pdfDocument;
+let ctx;
+let canvasElement;
+
+const state = reactive({
+  currentPage: 1,
+  totalPages: 0,
+});
+
 const getPDF = async () => {
   // Loading a document.
-  const loadingTask = pdfjsLib.getDocument(props.filePath);
-  loadingTask.promise
-    .then((pdfDocument: any) => {
-      pdfDocument.getPage(1).then((pdfPage: any) => {
-        initPDF(pdfPage);
-      });
-    })
-    .catch((error: any) => {
-      console.log(error);
-      global.$message.error("该文件不存在");
-      emit("onError", false);
+  let loadingTask = pdfjsLib
+    .getDocument(props.filePath)
+    .promise.then((doc: any) => {
+      pdfDocument = doc;
+      state.totalPages = doc.numPages; // 获取总页数
+      initPDF();
+      renderPage(state.currentPage); // 渲染第一页
     });
 };
 
-const initPDF = (pdfPage: any) => {
+const initPDF = () => {
   // Display page on the existing canvas with 100% scale.
-  const viewport = pdfPage.getViewport({ scale: 1.0 });
-  const canvasElement = document.createElement("canvas");
-  const pdfViewerElement = document.getElementsByClassName(
-    "common_pdfviewer_wrapper"
+  canvasElement = document.createElement("canvas");
+  // const canvasElement = document.querySelector('#pdfcanvas');
+
+  const pdfViewerElement = document.querySelector(
+    ".common_pdfviewer_wrapper .main"
   );
 
+  canvasElement.style.objectFit = "contain";
+  canvasElement.style.maxWidth = "100%";
+  canvasElement.style.maxHeight = "100%";
+  ctx = canvasElement.getContext("2d");
+  pdfViewerElement.appendChild(canvasElement);
+};
+
+const setPDFSize = (pdfPage: any) => {
+  // Display page on the existing canvas with 100% scale.
+  const viewport = pdfPage.getViewport({ scale: 1.0 });
   canvasElement.width = viewport.width;
   canvasElement.height = viewport.height;
-  const ctx = canvasElement.getContext("2d");
+};
 
-  pdfViewerElement[0].appendChild(canvasElement);
-  const renderTask = pdfPage.render({
-    canvasContext: ctx,
-    viewport,
+const renderPage = (pageNumber: number) => {
+  pdfDocument.getPage(pageNumber).then((pdfPage: any) => {
+    setPDFSize(pdfPage);
+    const viewport = pdfPage.getViewport({ scale: 1.5 }); // 缩放比例
+    canvasElement.width = viewport.width;
+    canvasElement.height = viewport.height;
+    pdfPage
+      .render({
+        canvasContext: ctx,
+        viewport: viewport,
+      })
+      .promise.then((doc: any) => {
+        // pageInfo.textContent = `第 ${currentPage} 页 / 共 ${totalPages} 页`;
+      });
   });
-  renderTask.promise.then(() => {}).catch((error: any) => {});
+};
+
+const handlePrevPage = () => {
+  state.currentPage = state.currentPage === 0 ? 0 : state.currentPage - 1;
+  renderPage(state.currentPage);
+};
+
+const handleNextPage = () => {
+  state.currentPage =
+    state.currentPage < state.totalPages
+      ? state.currentPage + 1
+      : state.totalPages;
+  renderPage(state.currentPage);
 };
 
 onMounted(async () => {
-  console.log(props.filePath);
-  console.log("=====pdfWorkerUrl=====");
-  console.log(pdfWorkerUrl);
-  console.log(pdfWorkerUrl2);
   getPDF();
 });
 
@@ -103,12 +140,29 @@ watch(
 .common_pdfviewer_wrapper {
   display: block;
   // width: 100%;
+  height: 100%;
   min-height: 5rem;
   position: relative;
   text-align: center;
   transition: all 0.3s;
-  canvas {
+  .main {
+    display: flex;
     width: 100%;
+    height: calc(100% - 1rem);
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    canvas {
+      object-fit: contain;
+      max-width: 100%; /* 宽度不能超过父级 */
+      max-height: 100%; /* 高度不能超过父级 */
+    }
+  }
+  .navigator {
+    padding: 0.3rem 0 0 0;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
   }
 }
 </style>

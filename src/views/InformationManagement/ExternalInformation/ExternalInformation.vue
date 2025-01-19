@@ -112,6 +112,7 @@ const pageModel = ref([
   {
     label: "内容",
     name: "externalContent",
+    rows: 2,
     required: true,
     tableVisible: true,
     formVisible: true,
