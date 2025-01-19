@@ -21,12 +21,7 @@
       <template #itemRender="{ file, actions }">
         <div class="filelist_wrapper">
           <div v-if="global.$checkFileType(file.name) === 'image'">
-            <!-- <a-image width="1rem" height="1rem" :src="getImgUrl(file)" /> -->
-            <a-image
-              width="1rem"
-              height="1rem"
-              :src="`${global.$getBaseUrl()}/attachment/download?id=${file.id}`"
-            />
+            <a-image width="1rem" height="1rem" :src="getImgUrl(file)" />
             <a-button
               v-if="!checkUniView(file)"
               class="deletebutton"
@@ -102,6 +97,7 @@ const global = currentInstance.appContext.config.globalProperties;
 
 const state = reactive({
   fileList: [] as any[],
+  initFlag: true,
 });
 
 const _modelValue = computed({
@@ -123,23 +119,7 @@ const listType = computed(() => {
 
 watch(
   () => props.attachmentList,
-  (newValue: any, oldValue: any) => {
-    if (!!newValue) {
-      _modelValue.value.forEach((item: any, index: number) => {
-        if (!state.fileList.find((item2: any) => item2.id === item.id)) {
-          // state.fileList.push({
-          //   ...item,
-          //   id: item.id,
-          //   uid: index,
-          //   name: item.attachmentName,
-          //   status: "done",
-          //   deleteAble: !checkUniView(item),
-          //   url: checkFileUrl(item),
-          // });
-        }
-      });
-    }
-  },
+  (newValue: any, oldValue: any) => {},
   {
     deep: true,
   }
@@ -153,8 +133,6 @@ const getImgUrl = (item: any) => {
   if (item.directLocation) {
     return item.attachmentName;
   } else {
-    return `${global.$getBaseUrl()}/attachment/download?id=${item.id}`;
-    debugger;
     return checkUniViewImage(item);
   }
 };
@@ -204,7 +182,21 @@ const handleChangeAttachment = (value: any) => {
       }
       const fileIndex =
         state.fileList.length > 0 ? state.fileList.length - 1 : 0;
-      state.fileList[fileIndex].id = response.data.id;
+      state.fileList[fileIndex] = {
+        ...state.fileList[fileIndex],
+        ...response.data,
+      };
+      const aaa = {
+        ...state.fileList[fileIndex],
+        id: state.fileList[fileIndex].id,
+        uid: fileIndex,
+        name: state.fileList[fileIndex].attachmentName,
+        status: "done",
+        deleteAble: !checkUniView(state.fileList[fileIndex]),
+        url: checkFileUrl(state.fileList[fileIndex]),
+      };
+
+      _modelValue.value.push(aaa);
       global.$message.success("上传成功");
     } else {
       global.$message.error("上传失败");
@@ -250,6 +242,7 @@ const initFileList = () => {
       url: checkFileUrl(item),
     });
   });
+  state.initFlag = false;
 };
 
 onMounted(async () => {
@@ -285,7 +278,7 @@ onMounted(async () => {
     margin: 0.15rem 0 0 0;
     .ant-upload-list-item-container {
       display: inline-block;
-      margin: 0 0.2rem 0 0;
+      margin: 0 0.1rem 0 0;
       height: auto !important;
       border: 1px solid #00266f;
       border-radius: 0.1rem;
