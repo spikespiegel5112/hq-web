@@ -10,6 +10,7 @@
       <!-- Additional required wrapper -->
       <div class="swiper-wrapper">
         <!-- Slides -->
+
         <div
           v-for="item in props.attachmentList"
           class="swiper-slide"
@@ -48,7 +49,7 @@
       <div class="swiper-scrollbar"></div>
     </div>
     <template #footer>
-      <a-row>
+      <a-row class="footer">
         <a-col :span="24">
           <a-button key="back" @click="handleClose">关闭</a-button>
         </a-col>
@@ -97,6 +98,8 @@ const state = reactive({
   attachmentList: [] as any[],
 });
 
+let swiperInstance: any;
+
 watch(
   () => props.visible,
   async (newValue: any) => {
@@ -106,10 +109,12 @@ watch(
 
 watch(
   () => props.attachmentList,
-  (newValue: any, oldValue: any) => {
-    if (props.fileType === "image") {
-      initSwiper();
+  async (newValue: any, oldValue: any) => {
+    if (!!swiperInstance) {
+      swiperInstance.destroy();
     }
+    await nextTick();
+    initSwiper();
   }
 );
 
@@ -144,7 +149,7 @@ const handleClose = () => {
 
 const initSwiper = async () => {
   await nextTick();
-  const swiper = new Swiper(".swiper", {
+  swiperInstance = new Swiper(".swiper", {
     // Optional parameters
     loop: true,
     // If we need pagination
@@ -171,13 +176,13 @@ onBeforeUnmount(() => {});
 </script>
 
 <style scoped lang="scss">
-.common_accesslog_wrapper {
+.common_attachmentpreview_wrapper {
   display: flex;
   margin: 0.15rem 0 0 0;
-  padding: 0 0.2rem;
   width: 100%;
   height: 0.5rem;
   align-items: center;
+
   .ant-space {
     width: 100%;
     overflow-x: auto;
@@ -229,7 +234,14 @@ onBeforeUnmount(() => {});
       }
     }
   }
+  .footer {
+    // width: calc(100% - 0.5rem);
+    box-sizing: border-box;
+    justify-content: end;
+    bottom: 0.2rem;
+  }
 }
+
 .swiper {
   width: 100%;
   height: 600px;
