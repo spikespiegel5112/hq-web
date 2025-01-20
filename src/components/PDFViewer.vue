@@ -43,13 +43,12 @@ const props = defineProps({
 const emit = defineEmits<{
   (e: "onError", visible: boolean): void;
 }>();
-
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
-let pdfDocument;
-let ctx;
-let canvasElement;
+let pdfDocument: any;
+let ctx: any;
+let canvasElement: any;
 
 const state = reactive({
   currentPage: 1,
@@ -73,7 +72,7 @@ const initPDF = () => {
   canvasElement = document.createElement("canvas");
   // const canvasElement = document.querySelector('#pdfcanvas');
 
-  const pdfViewerElement = document.querySelector(
+  const pdfViewerElement: any = document.querySelector(
     ".common_pdfviewer_wrapper .main"
   );
 
