@@ -1,5 +1,5 @@
 <template>
-  <a-modal v-model:open="state.visible" @cancel="handleClose" width="12rem">
+  <a-modal v-model:open="state.visible" @cancel="handleClose" width="15rem">
     <template #title>
       <CommonTitle :title="dialogTitle" />
     </template>

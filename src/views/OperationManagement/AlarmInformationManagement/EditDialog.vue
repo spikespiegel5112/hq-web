@@ -84,7 +84,7 @@
             <el-date-picker
               v-if="global.$checkEditable(props.mode)"
               type="datetimerange"
-                  placeholder="请选择"
+              placeholder="请选择"
               v-model="state.dutyTime"
               @change="handleChangeDutyTime"
             />
