@@ -1,6 +1,10 @@
 <template>
   <div class="common_table_wrapper">
-    <FilterTool       @onSearch="handleSearch"       @onReset="handleReset"       v-model="queryFormData"     ></FilterTool>
+    <FilterTool
+      @onSearch="handleSearch"
+      @onReset="handleReset"
+      v-model="queryFormData"
+    ></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
         <a-button class="import">导入</a-button>
@@ -168,14 +172,18 @@ const getData = () => {
       response = response.data;
       state.tableData = response.list;
       pagination.total = response.total;
+
       state.processedTableData = response.list.map((item: any) => {
+        const preplanResourceId = !!item.preplanResourceId
+          ? eventAllList.value.find(
+              (item2: any) => item2.value === item.preplanResourceId.toString()
+            )?.label
+          : "";
         return {
           ...item,
           dutyStartTime: global.$dayjs(item.dutyStartTime).format("YYYY-MM-DD"),
           dutyEndTime: global.$dayjs(item.dutyEndTime).format("YYYY-MM-DD"),
-          preplanResourceId: eventAllList.value.find(
-            (item2: any) => item2.value === item.preplanResourceId.toString()
-          )?.label,
+          preplanResourceId: preplanResourceId,
           alarmTime: global.$dayjs(item.alarmTime).format("YYYY-MM-DD"),
           alarmLevel: global
             .$getDictionary("alarmLevel")
