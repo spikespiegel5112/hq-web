@@ -362,6 +362,23 @@ const _utils = {
     const color = colorList.find((item: any) => item.value === colorValue);
     return color;
   },
+  $generateUUID() {
+    // 创建一个数组来保存UUID的各个部分
+    let uuid = [] as any[],
+      i;
+    // RFC4122 version 4 UUID
+    for (i = 0; i < 32; i++) {
+      // 随机生成一个16位的数，并将其转为16进制字符串
+      uuid[i] = ((Math.random() * 16) | 0).toString(16);
+    }
+    // 设置UUID的版本号为4（即4位的随机数为4）
+    uuid[6] = (uuid[6] & 0x0f) | 0x40;
+    // 设置UUID的变体为DCE1.1（即2位的高4位为8）
+    uuid[8] = (uuid[8] & 0x3f) | 0x80;
+
+    // 将数组转换为UUID格式的字符串，并用"-"分隔各部分
+    return uuid.join("");
+  },
 } as any;
 
 const result = {
@@ -386,6 +403,7 @@ const result = {
     app.config.globalProperties["$checkFileType"] = _utils["$checkFileType"];
     app.config.globalProperties["$getColorInfoByValue"] =
       _utils["$getColorInfoByValue"];
+    app.config.globalProperties["$generateUUID"] = _utils["$generateUUID"];
   },
 } as any;
 

@@ -245,7 +245,9 @@ onBeforeUnmount(() => {});
 .swiper {
   width: 100%;
   height: 600px;
+  text-align: center;
   .swiper-wrapper {
+    position: relative;
     .swiper-slide {
       .content {
         display: flex;
@@ -253,7 +255,7 @@ onBeforeUnmount(() => {});
         justify-content: center;
         align-items: center;
         > div {
-          display: inline-block;
+          // display: inline-block;
           // width: calc(100% - 1.5rem);
           // height: auto;
         }

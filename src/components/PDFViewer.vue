@@ -1,5 +1,5 @@
 <template>
-  <div class="common_pdfviewer_wrapper">
+  <div class="common_pdfviewer_wrapper" :id="state.pdfId">
     <div class="main"></div>
     <div class="navigator">
       <a-button @click="handlePrevPage">上一页</a-button>
@@ -53,6 +53,7 @@ let canvasElement: any;
 const state = reactive({
   currentPage: 1,
   totalPages: 0,
+  pdfId: "",
 });
 
 const getPDF = async () => {
@@ -67,14 +68,13 @@ const getPDF = async () => {
     });
 };
 
-const initPDF = () => {
+const initPDF = async () => {
+  state.pdfId = "pdf" + global.$generateUUID();
+  await nextTick();
   // Display page on the existing canvas with 100% scale.
   canvasElement = document.createElement("canvas");
   // const canvasElement = document.querySelector('#pdfcanvas');
-
-  const pdfViewerElement: any = document.querySelector(
-    ".common_pdfviewer_wrapper .main"
-  );
+  const pdfViewerElement: any = document.querySelector(`#${state.pdfId} .main`);
 
   canvasElement.style.objectFit = "contain";
   canvasElement.style.maxWidth = "100%";
@@ -121,6 +121,7 @@ const handleNextPage = () => {
 };
 
 onMounted(async () => {
+  state.pdfId = global.$generateUUID();
   getPDF();
 });
 
