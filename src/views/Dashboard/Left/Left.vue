@@ -66,6 +66,7 @@ onBeforeUnmount(() => {});
     width: 100%;
     height: 55%;
     min-height: 42%;
+    position: relative;
   }
   .bottom {
     position: relative;

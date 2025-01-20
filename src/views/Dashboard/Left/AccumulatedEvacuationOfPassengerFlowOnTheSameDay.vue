@@ -159,13 +159,13 @@ onMounted(() => {
 <style scoped lang="scss">
 .accumulatedevacuationofpassengerflowonthesameday {
   width: 100%;
-  height: calc(100% - 1.5rem);
-  min-height: 1rem;
+  height: calc(100% - 3.1rem);
+  // min-height: 1rem;
   max-height: 3rem;
   position: relative;
   > div {
     width: 100%;
-    height: calc(100% - 1.2rem);
+    height: calc(100% - 0.3rem);
   }
 }
 </style>
