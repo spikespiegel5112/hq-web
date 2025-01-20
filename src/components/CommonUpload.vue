@@ -119,7 +119,16 @@ const listType = computed(() => {
 
 watch(
   () => props.attachmentList,
-  (newValue: any, oldValue: any) => {},
+  (newValue: any, oldValue: any) => {
+    if (newValue instanceof Array && oldValue instanceof Array) {
+      if (oldValue.length > 0 && newValue.length === 0) {
+        state.fileList = [];
+        state.initFlag = true;
+      } else if (newValue.length > 0 && !!state.initFlag) {
+        initFileList();
+      }
+    }
+  },
   {
     deep: true,
   }
@@ -248,7 +257,7 @@ const initFileList = () => {
 onMounted(async () => {
   await nextTick();
   setTimeout(() => {
-    initFileList();
+    // initFileList();
   }, 500);
 });
 </script>

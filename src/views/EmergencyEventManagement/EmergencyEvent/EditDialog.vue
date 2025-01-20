@@ -276,8 +276,8 @@ watch(
 
 const handleClose = () => {
   formDataRef.value.resetFields();
-  emit("onClose");
   state.formData.attachmentList = [];
+  emit("onClose");
 };
 
 const handleSubmit = () => {
