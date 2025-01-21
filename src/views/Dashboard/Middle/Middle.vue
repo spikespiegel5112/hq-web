@@ -137,8 +137,7 @@ onBeforeUnmount(() => {});
 
   .choosedate {
     position: absolute;
-    top: 0.1rem 0 0 0;
-    right: 0;
+    right: 0.25rem;
     z-index: 1;
     ul {
       li {

@@ -14,7 +14,12 @@
             <a class="title" href="javascript:;" @click="handleChooseTag(item)">
               {{ item.title }}
             </a>
-            <a class="close" href="javascript:;" @click="handleClose(item)">
+            <a
+              v-if="item.name !== 'Dashboard'"
+              class="close"
+              href="javascript:;"
+              @click="handleClose(item)"
+            >
               <div class="idle">
                 <CloseOutlined />
               </div>
@@ -75,12 +80,20 @@ const initRouteList = () => {
         isUsed: false,
         active: false,
       });
+
       if (item.children instanceof Array && item.children.length > 0) {
         looper(item.children);
       }
     });
   };
   looper(routeDictionary.find((item: any) => item.name === "layout").children);
+  // 强制显示首页
+  result.forEach((item: any) => {
+    if (item.name === "Dashboard") {
+      item.active = true;
+      item.isUsed = true;
+    }
+  });
   result = result.filter((item: any) => {
     return !item.children;
   });

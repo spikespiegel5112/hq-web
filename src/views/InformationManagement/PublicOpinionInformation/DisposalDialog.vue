@@ -19,13 +19,14 @@
       <a-row>
         <a-col :span="22">
           <a-form-item name="publicSentimentType" label="舆情类型">
-            {{ global.$getDictionary("public_sentiment_info_public_sentiment_type").find((item:any)=>item.value===props.rowData.publicSentimentType)?.label }}
+            {{ global.$getDictionary("public_sentiment_info_public_sentiment_type").find((item:any)=>item.value===props.rowData.publicSentimentType)?global.$getDictionary("public_sentiment_info_public_sentiment_type").find((item:any)=>item.value===props.rowData.publicSentimentType).label:props.rowData.publicSentimentType
+            }}
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="publicSentimentContent" label="舆情来源">
+          <a-form-item name="publicSentimentContent" label="舆情内容">
             {{ props.rowData.publicSentimentContent }}
           </a-form-item>
         </a-col>
