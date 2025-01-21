@@ -76,16 +76,19 @@
       <div id="videoDOMId"></div>
       <div class="mapPic">
         <img src="@/assets/mapPic.png" />
-        <!-- 报警事件 -->
-        <div
-          class="location"
-          v-for="item in state.alarmList"
-          :key="item.name"
-          :style="{ left: item.left, top: item.top }"
-          @click="alarmClick(item)"
-          v-show="item.isAlarm"
-        >
-          <span class="bubble">{{ item.name }}</span>
+        <div class="alert">
+          <div class="content">
+            <div
+              class="location"
+              v-for="item in state.alarmList"
+              :key="item.name"
+              :style="{ left: item.left, top: item.top }"
+              @click="alarmClick(item)"
+              v-show="item.isAlarm"
+            >
+              <span class="bubble">{{ item.name }}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -329,7 +332,7 @@ const clearPanelWindow = () => {
 const createPanelWindow = () => {
   return new Promise((resolve, reject) => {
     let videoDom = (window as any).imosPlayer.createPanelWindow();
-    videoDom.style.width = "160px";
+    videoDom.style.width = "150px";
     videoDom.style.height = "110px";
     videoDom.style.marginTop = "0.2rem";
     videoDom.style.overflow = "hidden"; // 确保子元素内部也隐藏溢出部分
@@ -612,7 +615,9 @@ onBeforeUnmount(() => {});
   height: calc(100vh - 1.75rem);
   position: relative;
 
-  .content {
+  > .content {
+    display: flex;
+    flex-direction: column;
     height: calc(100vh - 3.4rem);
     text-align: center;
     position: relative;
@@ -648,14 +653,38 @@ onBeforeUnmount(() => {});
 }
 
 .mapPic {
+  display: flex;
   position: relative;
-  // width: 2rem;
-  // height: 2rem;
-  margin-top: 0.5rem;
-
+  width: 100%;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
   img {
+    max-width: 12rem;
+    min-width: 4rem;
+    width: 100%;
     width: 4.67rem;
-    height: 4.11rem;
+  }
+  .alert {
+    display: flex;
+
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    .content {
+      width: 4.67rem;
+      height: 4.11rem;
+      position: relative;
+
+      img {
+        width: 4.67rem;
+        height: 4.11rem;
+      }
+    }
   }
 }
 
