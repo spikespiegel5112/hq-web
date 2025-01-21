@@ -663,7 +663,7 @@ onBeforeUnmount(() => {});
     max-width: 12rem;
     min-width: 4rem;
     width: 100%;
-    width: 4.67rem;
+    width: 4rem;
   }
   .alert {
     display: flex;
@@ -676,10 +676,9 @@ onBeforeUnmount(() => {});
     top: 0;
     left: 0;
     .content {
-      width: 4.67rem;
-      height: 4.11rem;
+      width: 3.8rem;
+      height: 3.3rem;
       position: relative;
-
       img {
         width: 4.67rem;
         height: 4.11rem;
