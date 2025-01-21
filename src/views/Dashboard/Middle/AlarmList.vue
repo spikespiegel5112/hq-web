@@ -17,6 +17,18 @@
         @onReview="handleReview"
       />
     </div>
+    <ReviewEventDialog
+      :visible="state.dialogReviewEventVisible"
+      :rowData="state.currentRowData"
+      :mode="state.dialogMode"
+      @onClose="handleClose"
+    />
+    <ReviewPlanDialog
+      :visible="state.dialogReviewPlanVisible"
+      :rowData="state.currentRowData"
+      :mode="state.dialogMode"
+      @onClose="handleClose"
+    />
   </Block>
 </template>
 
@@ -34,6 +46,9 @@ import {
 } from "vue";
 
 import { backendIndexPageGetAlarmInfoDataRequest } from "@/api/management";
+
+import ReviewEventDialog from "./ReviewEventDialog.vue";
+import ReviewPlanDialog from "./ReviewPlanDialog.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -105,13 +120,52 @@ const state = reactive({
   processedTableData: [] as any[],
   dataModel: [] as any[],
   timeType: 1,
+  dialogReviewEventVisible: false,
+  dialogReviewPlanVisible: false,
+  currentRowData: {},
+  dialogMode: "",
 });
 
 const pagination = reactive({
   ...global.$store.state.app.defaultPagination,
 });
 
-const handleReview = (item: any) => {};
+const eventAllList = computed(() => {
+  return [
+    ...global.$store.state.app.currentEventTypeList[0].data,
+    ...global.$store.state.app.currentEventTypeList[1].data,
+  ];
+});
+
+const handleReview = (rowData: any) => {
+  const emergencyPlanList = global.$store.state.app.currentEventTypeList.find(
+    (item: any) => item.type === global.$store.state.app.emergencyPlanType
+  ).data;
+  const emergencyEventList = global.$store.state.app.currentEventTypeList.find(
+    (item: any) => item.type === global.$store.state.app.emergencyEventType
+  ).data;
+  if (
+    emergencyPlanList.some(
+      (item: any) => Number(item.value) === rowData.preplanResourceId
+    )
+  ) {
+    state.dialogReviewPlanVisible = true;
+  }
+  if (
+    emergencyEventList.some(
+      (item: any) => Number(item.value) === rowData.preplanResourceId
+    )
+  ) {
+    state.dialogReviewEventVisible = true;
+  }
+  state.currentRowData = rowData;
+};
+
+const handleClose = () => {
+  state.dialogReviewPlanVisible = false;
+  state.dialogReviewEventVisible = false;
+  global.$store.commit("app/updateTableLoading", false);
+};
 
 watch(
   () => props.timeType,

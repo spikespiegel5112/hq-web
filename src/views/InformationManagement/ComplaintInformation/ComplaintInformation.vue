@@ -182,7 +182,7 @@ const getData = () => {
             .$getDictionary("disposalStatus")
             .find((item2: any) => item2.value === item.handlingStatus)?.label,
           complaintType: global
-            .$getDictionary("complaintType")
+            .$getDictionary("public_sentiment_info_public_sentiment_type")
             .find((item2: any) => item2.value === item.complaintType)?.label,
           complaintSensitive: global
             .$getDictionary("sensitivity")

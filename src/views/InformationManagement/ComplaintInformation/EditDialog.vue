@@ -39,15 +39,16 @@
               placeholder="请选择"
             >
               <a-select-option
-                v-for="item in global.$getDictionary('complaintType')"
+                v-for="item in global.$getDictionary(
+                  'public_sentiment_info_public_sentiment_type'
+                )"
                 :value="item.value"
               >
                 {{ item.label }}
               </a-select-option>
             </a-select>
             <template v-if="props.mode === 'review'">
-              {{ state.formData.complaintType }}
-              {{ global.$getDictionary('complaintType' ).find((item:any)=>item.value==state.formData.complaintType)?.label }}
+              {{ global.$getDictionary('public_sentiment_info_public_sentiment_type' ).find((item:any)=>item.value==state.formData.complaintType)?.label }}
             </template>
           </a-form-item>
         </a-col>

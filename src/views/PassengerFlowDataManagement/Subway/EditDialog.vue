@@ -21,7 +21,7 @@
             <a-date-picker
               v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.statisticalDate"
-              placeholder="情选择"
+              placeholder="请选择"
               format="YYYY-MM-DD"
               valueFormat="YYYY-MM-DD"
             />

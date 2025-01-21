@@ -1,8 +1,7 @@
 <template>
   <a-modal v-model:open="state.visible" @cancel="handleClose" width="9rem">
     <template #title>
-           <CommonTitle :title="dialogTitle" />
-
+      <CommonTitle :title="dialogTitle" />
     </template>
     <a-form
       :model="state.formData"
@@ -20,7 +19,7 @@
       <a-row>
         <a-col :span="22">
           <a-form-item name="complaintType" label="投诉类型">
-            {{ global.$getDictionary("complaintType").find((item:any)=>item.value===props.rowData.complaintType)?.label }}
+            {{ global.$getDictionary("public_sentiment_info_public_sentiment_type").find((item:any)=>item.value===props.rowData.complaintType)?.label }}
           </a-form-item>
         </a-col>
       </a-row>

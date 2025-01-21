@@ -8,7 +8,7 @@
               <a-form-item name="externalSource" label="外部信息来源">
                 <a-select
                   v-model:value="state.formData.externalSource"
-                  placeholder="情选择"
+                  placeholder="请选择"
                 >
                   <a-select-option
                     v-for="item in global.$getDictionary(
@@ -25,7 +25,7 @@
               <a-form-item name="externalType" label="信息类型">
                 <a-select
                   v-model:value="state.formData.externalType"
-                  placeholder="情选择"
+                  placeholder="请选择"
                   allow-clear
                 >
                   <a-select-option

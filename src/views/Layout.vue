@@ -57,13 +57,6 @@ const init = () => {
   const lineScaleEl: HTMLElement = document.getElementById("line-scale");
   lineScaleEl.style.display = "none";
   global.$getAllDictionary();
-
-  // global.$getAllDictionary("externalDataSources");
-  // global.$getAllDictionary("disposalStatus");
-  // global.$getAllDictionary("alarmType");
-  // global.$getAllDictionary("informationType");
-  // global.$getAllDictionary("complaintType");
-  // global.$getAllDictionary("complaintSensitive");
 };
 
 const getEventTypeList = () => {

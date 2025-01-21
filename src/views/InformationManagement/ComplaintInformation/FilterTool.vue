@@ -23,7 +23,7 @@
                 >
                   <a-select-option
                     v-for="item in global.$store.state.dictionary[
-                      'complaintType'
+                      'public_sentiment_info_public_sentiment_type'
                     ]"
                     :value="item.value"
                   >
