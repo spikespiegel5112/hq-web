@@ -230,25 +230,21 @@ watch(
       await nextTick();
       if (["edit", "review", "disposal"].some((item) => item === props.mode)) {
         let rowData = JSON.parse(JSON.stringify(props.rowData));
-        rowData = {
-          ...rowData,
-        };
+
         state.dutyTime = [
           global.$dayjs(rowData.dutyStartTime, "YYYY-MM-DD HH:mm:ss"),
           global.$dayjs(rowData.dutyEndTime, "YYYY-MM-DD HH:mm:ss"),
         ];
-        state.formData.dutyStartTime = global.$dayjs(
+        rowData.dutyStartTime = global.$dayjs(
           rowData.dutyStartTime,
           "YYYY-MM-DD HH:mm:ss"
         );
-        state.formData.dutyEndTime = global.$dayjs(
+        rowData.dutyEndTime = global.$dayjs(
           rowData.dutyEndTime,
           "YYYY-MM-DD HH:mm:ss"
         );
         Object.keys(state.formData).forEach((item: string) => {
-          state.formData[item] = global.$isNotEmpty(rowData[item])
-            ? rowData[item]
-            : undefined;
+          state.formData[item] = rowData[item];
         });
       }
     }

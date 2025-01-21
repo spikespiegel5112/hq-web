@@ -1,8 +1,7 @@
 <template>
   <a-modal v-model:open="state.visible" @cancel="handleClose" width="9rem">
     <template #title>
-           <CommonTitle :title="dialogTitle" />
-
+      <CommonTitle :title="dialogTitle" />
     </template>
     <a-form
       :model="state.formData"
@@ -232,7 +231,9 @@ watch(
             ? global.$dayjs(rowData.publicSentimentTime, "YYYY-MM-DD HH:mm:ss")
             : null,
         };
-        state.formData = rowData;
+        Object.keys(state.formData).forEach((item: string) => {
+          state.formData[item] = rowData[item];
+        });
       }
     }
   }

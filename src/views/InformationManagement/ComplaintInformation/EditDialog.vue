@@ -39,16 +39,14 @@
               placeholder="请选择"
             >
               <a-select-option
-                v-for="item in global.$getDictionary(
-                  'public_sentiment_info_public_sentiment_type'
-                )"
+                v-for="item in global.$getDictionary('complaintType')"
                 :value="item.value"
               >
                 {{ item.label }}
               </a-select-option>
             </a-select>
             <template v-if="props.mode === 'review'">
-              {{ global.$getDictionary('public_sentiment_info_public_sentiment_type' ).find((item:any)=>item.value==state.formData.complaintType)?.label }}
+              {{ global.$getDictionary('complaintType' ).find((item:any)=>item.value==state.formData.complaintType)?.label }}
             </template>
           </a-form-item>
         </a-col>
@@ -210,12 +208,10 @@ watch(
             "YYYY-MM-DD HH:mm:ss"
           ),
         };
-        Object.keys(state.formData).forEach((item: string) => {
-          state.formData[item] = global.$isNotEmpty(rowData[item])
-            ? rowData[item]
-            : undefined;
-        });
         console.log(state.formData);
+        Object.keys(state.formData).forEach((item: string) => {
+          state.formData[item] = rowData[item];
+        });
       }
     }
   }

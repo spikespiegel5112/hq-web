@@ -286,9 +286,7 @@ watch(
           dataTime: global.$dayjs(rowData.dataTime).format("YYYY/MM/DD"),
         };
         Object.keys(state.formData).forEach((item: string) => {
-          state.formData[item] = global.$isNotEmpty(rowData[item])
-            ? rowData[item]
-            : undefined;
+          state.formData[item] = rowData[item];
         });
         console.log(rowData);
         state.tableData = rowData.warningList;
