@@ -114,10 +114,7 @@
       <a-row>
         <a-col :span="23">
           <a-form-item name="attachmentList" label="附件">
-            <CommonUpload
-              v-if="global.$checkEditable(props.mode)"
-              :attachmentList="state.formData.attachmentList"
-            />
+            <CommonUpload :attachmentList="state.formData.attachmentList" />
           </a-form-item>
         </a-col>
       </a-row>
@@ -279,11 +276,6 @@ watch(
           ...rowData,
           dataTime: global.$dayjs(rowData.dataTime, "YYYY-MM-DD HH:mm:ss"),
         };
-        Object.keys(state.formData).forEach((item: string) => {
-          state.formData[item] = global.$isNotEmpty(rowData[item])
-            ? rowData[item]
-            : undefined;
-        });
         console.log(rowData);
         state.tableData = rowData.warningList;
       }

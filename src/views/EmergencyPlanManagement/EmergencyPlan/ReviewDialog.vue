@@ -130,7 +130,8 @@
                     <div
                       v-if="
                         checkAttachmentIndex(item, index) &&
-                        checkAttachmentIndex(item, index).attachmentList.length > 0
+                        checkAttachmentIndex(item, index).attachmentList
+                          .length > 0
                       "
                       class="attachment"
                     >
