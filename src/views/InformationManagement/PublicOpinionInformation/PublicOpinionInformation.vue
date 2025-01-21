@@ -196,11 +196,11 @@ const getData = () => {
           ...item,
           handlingStatus: global
             .$getDictionary("disposalStatus")
-            .find((item2: any) => item2.value === item.handlingStatus).label,
+            .find((item2: any) => item2.value === item.handlingStatus)?.label,
           publicSentimentSensitive: global
             .$getDictionary("sensitivity")
             .find((item2: any) => item2.value === item.publicSentimentSensitive)
-            .label,
+            ?.label,
         };
       });
     })
