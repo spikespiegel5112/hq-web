@@ -116,6 +116,7 @@ const pageModel = ref([
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
+    rows: 2,
   },
   {
     label: "舆情发生时间",
@@ -124,6 +125,7 @@ const pageModel = ref([
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
+    width: "2.3rem",
   },
   {
     label: "关键词",
@@ -132,6 +134,7 @@ const pageModel = ref([
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
+    rows: 2,
   },
   {
     label: "处置状态",

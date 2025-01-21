@@ -120,6 +120,7 @@ const pageModel = ref([
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
+    rows: 2,
   },
   {
     label: "预案等级",
@@ -225,8 +226,9 @@ const getData = () => {
       pagination.total = response.total;
       state.processedTableData = response.list.map((item: any) => {
         const preplanResourceId = eventList.value.find(
-          (item2: any) => item2.value === item.preplanResourceId.toString()
+          (item2: any) => item2.value === item.preplanResourceId?.toString()
         )?.label;
+        console.log(item.planLevel);
         return {
           ...item,
           preplanResourceId,

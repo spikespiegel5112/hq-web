@@ -167,6 +167,7 @@
                     '-webkit-line-clamp': item.rows,
                     overflow: 'hidden',
                     'text-overflow': 'ellipsis',
+                    'white-space': 'normal',
                   }"
                 >
                   {{ scope.record[item.name] }}
@@ -277,7 +278,7 @@ const state = reactive({
 const tableHeight = computed(() => {
   const offsetTabTable = 0.6;
   const offsetStatisticTable = 3;
-  const offsetStatisticTable2 =2;
+  const offsetStatisticTable2 = 2;
   let offset = 3.8;
   if (props.tabTable) {
     offset += offsetTabTable;

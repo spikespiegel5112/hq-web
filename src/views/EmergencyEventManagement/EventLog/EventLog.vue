@@ -100,6 +100,7 @@ const pageModel = ref([
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
+    rows: 2,
   },
   {
     label: "发生时间",
