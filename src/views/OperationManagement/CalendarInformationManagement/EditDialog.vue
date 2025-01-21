@@ -1,8 +1,7 @@
 <template>
   <a-modal v-model:open="state.visible" @cancel="handleClose" width="8rem">
     <template #title>
-           <CommonTitle :title="dialogTitle" />
-
+      <CommonTitle :title="dialogTitle" />
     </template>
     <a-form
       :model="state.formData"
@@ -26,7 +25,9 @@
               allow-clear
             />
             <template v-if="props.mode === 'review'">
-              {{ state.formData.staffName }}
+              {{
+                global.$dayjs(state.formData.calendarDate).format("YYYY-MM-DD")
+              }}
             </template>
           </a-form-item>
         </a-col>
@@ -51,7 +52,7 @@
               </a-select-option>
             </a-select>
             <template v-if="props.mode === 'review'">
-              {{ state.formData.dateType }}
+              {{ global.$getDictionary('dateType').find((item:any)=>item.value===state.formData.dateType)?.label }}
             </template>
           </a-form-item>
         </a-col>
@@ -76,9 +77,7 @@
               </a-select-option>
             </a-select>
             <template v-if="props.mode === 'review'">
-              {{
-                global.$dayjs(state.formData.dutyStartTime).format("YYYY-MM-DD")
-              }}
+              {{ global.$getDictionary('exhibitionType').find((item:any)=>item.value===state.formData.exhibitionType)?.label }}
             </template>
           </a-form-item>
         </a-col>

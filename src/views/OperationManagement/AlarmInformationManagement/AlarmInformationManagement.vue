@@ -12,7 +12,6 @@
           :action="operationManagementAlarmInfoExportExcelRequest"
           :queryFormData="queryFormData"
         />
-        <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
     <BaseTable
