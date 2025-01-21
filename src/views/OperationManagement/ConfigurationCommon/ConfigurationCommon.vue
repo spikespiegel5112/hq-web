@@ -124,13 +124,13 @@ const state = reactive({
     //   configValue: null,
     //   id: null,
     // },
-    {
-      label: "单拌线进出人数统计订阅",
-      configCode:
-        "subscribe_single_mixing_line_in_and_out_person_count_statistics_subscribe",
-      configValue: null,
-      id: null,
-    },
+    // {
+    //   label: "单拌线进出人数统计订阅",
+    //   configCode:
+    //     "subscribe_single_mixing_line_in_and_out_person_count_statistics_subscribe",
+    //   configValue: null,
+    //   id: null,
+    // },
     {
       label: "行为告警数据订阅",
       configCode: "subscribe_behavior_alarm_data_subscribe",
