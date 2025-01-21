@@ -66,6 +66,11 @@ onBeforeUnmount(() => {});
 <style scoped lang="scss">
 .configurationcommon {
   margin: 0.1rem;
+  height: calc(100vh - 2rem);
   background-color: #010f27;
+  .operationmanagementconfigration {
+    height: calc(100vh - 2.5rem);
+    overflow: auto;
+  }
 }
 </style>

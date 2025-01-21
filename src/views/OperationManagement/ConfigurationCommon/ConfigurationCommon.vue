@@ -215,6 +215,7 @@ onBeforeUnmount(() => {});
 <style scoped lang="scss">
 .configurationcommon {
   padding: 0.3rem;
+  height: calc(100vh - 2rem);
   .cancelsubscribe {
     background-color: orange;
   }

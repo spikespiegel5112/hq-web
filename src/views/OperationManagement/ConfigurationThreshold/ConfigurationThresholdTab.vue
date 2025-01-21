@@ -655,7 +655,7 @@ onBeforeUnmount(() => {});
 }
 .operationmanagementconfigration {
   margin: 0.1rem 0;
-  padding: 0.3rem 0;
+  padding: 0.3rem;
   background-color: #010f27;
   .ant-input {
     &.green {
