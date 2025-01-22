@@ -1,12 +1,17 @@
 <template>
-  <a-modal v-model:open="state.visible" @cancel="handleClose" width="16rem">
+  <a-modal
+    v-model:open="state.visible"
+    @cancel="handleClose"
+    width="13rem"
+    wrapClassName="common_disposal_wrapper disposaldashboard "
+  >
     <template #title>
       <div class="common_dislogtitle_item">
         <span class="sequre"></span>
         <span class="text"> 查看应急预案</span>
       </div>
     </template>
-    <div class="maincontent">
+    <div class="common_disposal_wrapper">
       <a-row :gutter="30">
         <a-col :span="10">
           <div class="left">

@@ -72,7 +72,7 @@
       width: 1rem;
     }
     .content {
-      display: inline-block;
+      display: block;
       padding: 0.1rem 0.2rem;
       flex: 1;
       background-color: #0a1f44;
@@ -92,7 +92,7 @@
       }
       .stepcontent {
         margin: 0.1rem 0;
-        width: 5.5rem;
+        flex: 1;
         color: #d6eaff;
       }
       .attachment {
@@ -539,5 +539,32 @@ input:focus {
   .text {
     display: inline-block;
     font-size: 0.25rem;
+  }
+}
+
+.common_disposal_wrapper {
+  display: flex;
+  align-items: start;
+  .ant-row {
+    width: 100%;
+    .left {
+      display: inline-block;
+      width: 100%;
+    }
+    .right {
+      display: inline-block;
+      flex: 1;
+      max-height: 9rem !important;
+      overflow-y: auto;
+    }
+  }
+  .left {
+    padding: 0.5rem 0 0 0;
+  }
+  &.disposaldashboard {
+    .ant-modal {
+      margin: 0;
+      left: 4rem;
+    }
   }
 }

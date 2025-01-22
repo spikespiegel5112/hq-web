@@ -1,12 +1,17 @@
 <template>
-  <a-modal v-model:open="state.visible" @cancel="handleClose" width="16rem">
+  <a-modal
+    v-model:open="state.visible"
+    @cancel="handleClose"
+    width="13rem"
+    wrapClassName="common_disposal_wrapper disposaldashboard "
+  >
     <template #title>
       <div class="common_dislogtitle_item">
         <span class="sequre"></span>
-        <span class="text"> 查看突发事件</span>
+        <span class="text">查看突发事件</span>
       </div>
     </template>
-    <div class="maincontent">
+    <div>
       <a-row :gutter="30">
         <a-col :span="10">
           <div class="left">
@@ -228,7 +233,7 @@ watch(
   () => props.visible,
   async (newValue: any) => {
     state.visible = newValue;
-    
+
     if (!!newValue) {
       await nextTick();
       getData();
@@ -240,8 +245,8 @@ const getData = async () => {
   global.$store.commit("app/updateTableLoading", true);
   state.formData.eventType = props.rowData.eventType;
   state.formData.seId = props.rowData.id;
-  
-  console.log(props.rowData.eventAssociationId)
+
+  console.log(props.rowData.eventAssociationId);
   eventManageSuddenEventGetRecordPageRequest({
     seId: props.rowData.eventAssociationId,
   })
@@ -353,22 +358,9 @@ onBeforeUnmount(() => {});
 </script>
 
 <style scoped lang="scss">
-.maincontent {
-  display: flex;
-  align-items: start;
-  .ant-row {
-    width: 100%;
-    .left {
-      display: inline-block;
-      width: 100%;
-    }
-    .right {
-      display: inline-block;
-      flex: 1;
-      max-height: 9rem !important;
-      overflow-y: auto;
-      
-    }
+.common_disposal_wrapper {
+  .left {
+    padding: 0.5rem 0 0 0;
   }
 }
 </style>
