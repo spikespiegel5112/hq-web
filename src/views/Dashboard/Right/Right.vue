@@ -1,75 +1,25 @@
 <template>
   <div class="dashboardright common_block_wrapper">
     <div class="header">
-      <a-form>
-        <a-row class="rowClass">
-          <a-col :span="12">
-            <a-space>
-              <a-button
-                v-for="item in cameraList.filter((item:any, index:number)=>index<2)"
-                :style="{
-                  padding: '0 0.05rem',
-                }"
-                :type="state.cameraListChecked === item.label ? 'primary' : ''"
-                @click="setActive('p9')"
-              >
-                {{ item.label }}
-              </a-button>
-              <!-- {{ state.cameraListChecked }} -->
-              <!-- <a-button
-                :style="{
-                  padding: '0 0.05rem',
-                }"
-                :type="state.isActive === 'p9' ? 'primary' : ''"
-                @click="setActive('p9')"
-              >
-                P9停车场
-              </a-button>
-              <a-button
-                :style="{
-                  padding: '0 0.05rem',
-                }"
-                :type="state.isActive === 'nanxu' ? 'primary' : ''"
-                @click="setActive('nanxu')"
-              >
-                南蓄车场
-              </a-button> -->
-            </a-space>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="区域">
-              <div
-                :style="{
-                  display: 'flex',
-                  alignItems: 'center',
-                }"
-              >
-                <span
-                  :style="{
-                    flex: 1,
-                  }"
-                  >{{ state.selectedRegion }}</span
-                >
-                <a-button
-                  @click="
-                    () => {
-                      state.selectRegionVisible = true;
-                    }
-                  "
-                >
-                  选择
-                </a-button>
-              </div>
-            </a-form-item>
-          </a-col>
-          <!-- 上墙 -->
-          <a-col :span="12">
-            <a-button type="primary" class="checkBtn" @click="checkBtn">
-              上墙
+      <a-row>
+        <a-col :span="12" class="selectedregion">
+          {{ state.selectedRegion }}
+        </a-col>
+        <a-col :span="12">
+          <a-space>
+            <a-button
+              @click="
+                () => {
+                  state.selectRegionVisible = true;
+                }
+              "
+            >
+              选择区域
             </a-button>
-          </a-col>
-        </a-row>
-      </a-form>
+            <a-button class="checkBtn" @click="checkBtn"> 上墙 </a-button>
+          </a-space>
+        </a-col>
+      </a-row>
     </div>
 
     <div class="content">
@@ -628,8 +578,9 @@ onBeforeUnmount(() => {});
   }
 }
 
-.rowClass {
+.selectedregion {
   display: flex;
+  align-items: center;
 }
 
 .active {
@@ -743,9 +694,5 @@ onBeforeUnmount(() => {});
     border-style: solid;
     border-color: #f68b00 transparent transparent transparent;
   }
-}
-
-.checkBtn {
-  margin: -1rem 0 0.1rem 0;
 }
 </style>
