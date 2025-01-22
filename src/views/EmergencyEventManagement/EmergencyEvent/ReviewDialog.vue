@@ -118,7 +118,8 @@
                     <div
                       v-if="
                         checkAttachmentIndex(item, index) &&
-                        checkAttachmentIndex(item, index).attachmentList.length > 0
+                        checkAttachmentIndex(item, index).attachmentList
+                          .length > 0
                       "
                       class="attachment"
                     >
@@ -353,47 +354,47 @@ onBeforeUnmount(() => {});
       flex: 1;
       max-height: 9rem !important;
       overflow-y: auto;
-      .ant-timeline {
-        .node {
-          display: flex;
-          width: 100%;
-          .time {
-            display: inline-block;
-            margin: 0.05rem 0 0 0;
-            width: 1rem;
-          }
-          .content {
-            display: inline-block;
-            padding: 0.1rem 0.2rem;
-            flex: 1;
-            background-color: #0a1f44;
-            .top {
-              display: flex;
-              .stepname {
-                flex: 1;
-                font-size: 0.23rem;
-                color: #fff;
-              }
-              .status {
-                display: inline-block;
-                width: 1rem;
-                text-align: right;
-                color: #00ffa8;
-              }
-            }
-            .stepcontent {
-              margin: 0.1rem 0;
-              width: 5.5rem;
-              color: #d6eaff;
-            }
-            .attachment {
-              margin: 0.1rem 0 0 0;
-              padding: 0.1rem 0 0 0;
-              border-top: 1px solid #01447c;
-            }
-          }
-        }
-      }
+      // .ant-timeline {
+      //   .node {
+      //     display: flex;
+      //     width: 100%;
+      //     .time {
+      //       display: inline-block;
+      //       margin: 0.05rem 0 0 0;
+      //       width: 1rem;
+      //     }
+      //     .content {
+      //       display: inline-block;
+      //       padding: 0.1rem 0.2rem;
+      //       flex: 1;
+      //       background-color: #0a1f44;
+      //       .top {
+      //         display: flex;
+      //         .stepname {
+      //           flex: 1;
+      //           font-size: 0.23rem;
+      //           color: #fff;
+      //         }
+      //         .status {
+      //           display: inline-block;
+      //           width: 1rem;
+      //           text-align: right;
+      //           color: #00ffa8;
+      //         }
+      //       }
+      //       .stepcontent {
+      //         margin: 0.1rem 0;
+      //         width: 5.5rem;
+      //         color: #d6eaff;
+      //       }
+      //       .attachment {
+      //         margin: 0.1rem 0 0 0;
+      //         padding: 0.1rem 0 0 0;
+      //         border-top: 1px solid #01447c;
+      //       }
+      //     }
+      //   }
+      // }
     }
   }
 }
