@@ -295,7 +295,7 @@ const _utils = {
   },
   $getFileBaseUrl: (mode: string) => {
     const env = import.meta.env;
-    return env.VITE_BASE_URL + "/manage";
+    return env.VITE_FILE_BASE_URL + "/manage";
   },
 
   $checkFileType: (fileName: any) => {
@@ -404,6 +404,7 @@ const result = {
       _utils["$getAllDictionary"];
     app.config.globalProperties["$checkEditable"] = _utils["$checkEditable"];
     app.config.globalProperties["$getBaseUrl"] = _utils["$getBaseUrl"];
+    app.config.globalProperties["$getFileBaseUrl"] = _utils["$getFileBaseUrl"];
     app.config.globalProperties["$checkFileType"] = _utils["$checkFileType"];
     app.config.globalProperties["$getColorInfoByValue"] =
       _utils["$getColorInfoByValue"];
