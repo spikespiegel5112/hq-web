@@ -293,7 +293,9 @@
                         "
                         :class="key"
                         placeholder="请输入"
-                      />
+                      >
+                        <template #suffix>%</template>
+                      </a-input>
                     </a-form-item-rest>
                   </a-col>
                 </a-row>

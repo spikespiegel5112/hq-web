@@ -37,6 +37,7 @@
                 <a-select
                   v-model:value="state.formData.dateType"
                   placeholder="请选择"
+                  allow-clear
                 >
                   <a-select-option
                     v-for="item in global.$getDictionary('dateType')"
@@ -53,6 +54,7 @@
                 <a-select
                   v-model:value="state.formData.alarmLevel"
                   placeholder="请选择"
+                  allow-clear
                 >
                   <a-select-option
                     v-for="item in global.$getDictionary('alarmLevel')"
@@ -140,8 +142,12 @@ const handleReset = () => {
 };
 
 const handleChangeTime1 = (value: any) => {
-  const alarmTimeStart = global.$dayjs(value[0]).format("YYYY-MM-DD HH:mm:ss");
-  const alarmTimeEnd = global.$dayjs(value[1]).format("YYYY-MM-DD HH:mm:ss");
+  const alarmTimeStart = !value
+    ? ""
+    : global.$dayjs(value[0]).format("YYYY-MM-DD HH:mm:ss");
+  const alarmTimeEnd = !value
+    ? ""
+    : global.$dayjs(value[1]).format("YYYY-MM-DD HH:mm:ss");
   state.formData.alarmTimeStart = alarmTimeStart;
   state.formData.alarmTimeEnd = alarmTimeEnd;
 };

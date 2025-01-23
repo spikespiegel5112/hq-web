@@ -11,7 +11,7 @@
                   start-placeholder="开始时间"
                   end-placeholder="结束时间"
                   v-model="state.dataTime"
-                  @change="handleChangeTime1"
+                  @change="handleChangeTimeRange1"
                 />
               </a-form-item>
             </a-col>
@@ -83,14 +83,15 @@ const state = reactive({
   dataTime: [] as any[],
 });
 
-const handleChangeTime1 = (value: any) => {
-  state.formData.dataTimeBegin = global
-    .$dayjs(value[0])
+const handleChangeTimeRange1 = (value: any) => {
+  if (!value) return;
+  state.formData.dataTimeBegin  = !value
+    ? ""
+    : global.$dayjs(value[0])
     .format("YYYY-MM-DD HH:mm:ss");
-
-  state.formData.dataTimeEnd = global
-    .$dayjs(value[1])
-    .format("YYYY-MM-DD HH:mm:ss");
+  state.formData.dataTimeEnd =!value
+    ? ""
+    : global.$dayjs(value[1]).format("YYYY-MM-DD HH:mm:ss");
 };
 
 watch(

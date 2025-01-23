@@ -10,7 +10,9 @@
         </a-layout-sider>
         <a-layout-content>
           <AccessLog />
-          <router-view v-if="dictionaryReady"></router-view>
+          <router-view
+            v-if="dictionaryReady && eventTypeListReady"
+          ></router-view>
           <div v-else class="loading">
             <LoadingOutlined />
           </div>
@@ -47,10 +49,16 @@ const layoutRef = ref(HTMLDivElement);
 
 const state = reactive({
   bannerInfo: {},
+  emergencyPlanTypeReady: false,
+  emergencyEventTypeReady: false,
 });
 
 const dictionaryReady = computed(() => {
   return global.$store.state.dictionary.dictionaryReady;
+});
+
+const eventTypeListReady = computed(() => {
+  return state.emergencyPlanTypeReady && state.emergencyEventTypeReady;
 });
 
 const init = () => {
@@ -68,6 +76,7 @@ const getEventTypeList = () => {
         type: global.$store.state.app.emergencyPlanType,
         data: response.data.list,
       });
+      state.emergencyPlanTypeReady = true;
     })
     .catch((error: any) => {
       console.log(error);
@@ -81,6 +90,7 @@ const getEventTypeList = () => {
         type: global.$store.state.app.emergencyEventType,
         data: response.data.list,
       });
+      state.emergencyEventTypeReady = true;
     })
     .catch((error: any) => {
       console.log(error);

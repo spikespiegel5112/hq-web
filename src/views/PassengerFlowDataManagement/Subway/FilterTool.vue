@@ -85,13 +85,15 @@ const handleReset = () => {
 };
 
 const handleChangeTime1 = (value: any) => {
-  state.formData.statisticalTimeBegin = global
-    .$dayjs(value[0])
+  if (!value) return;
+  state.formData.statisticalTimeBegin  = !value
+    ? ""
+    : global.$dayjs(value[0])
     .format("YYYY-MM-DD HH:mm:ss");
 
-  state.formData.statisticalTimeEnd = global
-    .$dayjs(value[1])
-    .format("YYYY-MM-DD HH:mm:ss");
+  state.formData.statisticalTimeEnd =!value
+    ? ""
+    : global.$dayjs(value[1]).format("YYYY-MM-DD HH:mm:ss");
 };
 
 onMounted(async () => {

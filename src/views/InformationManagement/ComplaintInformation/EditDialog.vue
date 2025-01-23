@@ -243,7 +243,8 @@ const handleSubmit = () => {
     });
 };
 
-const handleChangeTime1 = (value: any) => {};
+const handleChangeTime1 = (value: any) => {
+  if (!value) return;};
 
 onBeforeUnmount(() => {});
 </script>

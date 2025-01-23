@@ -56,7 +56,7 @@
                   start-placeholder="开始时间"
                   end-placeholder="结束时间"
                   v-model="state.eventTime"
-                  @change="handleChangeEventTime"
+                  @change="handleChangeTimeRange1"
                 />
               </a-form-item>
             </a-col>
@@ -141,13 +141,13 @@ const handleReset = () => {
   emit("onReset", formData);
 };
 
-const handleChangeEventTime = (value: any) => {
-  state.formData.eventTimeBegin = global
-    .$dayjs(value[0])
-    .format("YYYY-MM-DD HH:mm:ss");
-  state.formData.eventTimeEnd = global
-    .$dayjs(value[1])
-    .format("YYYY-MM-DD HH:mm:ss");
+const handleChangeTimeRange1 = (value: any) => {
+  state.formData.eventTimeBegin = !value
+    ? ""
+    : global.$dayjs(value[0]).format("YYYY-MM-DD HH:mm:ss");
+  state.formData.eventTimeEnd = !value
+    ? ""
+    : global.$dayjs(value[1]).format("YYYY-MM-DD HH:mm:ss");
 };
 
 onMounted(async () => {

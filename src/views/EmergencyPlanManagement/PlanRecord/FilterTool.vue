@@ -29,7 +29,7 @@
                   start-placeholder="开始时间"
                   end-placeholder="结束时间"
                   v-model="state.planTime"
-                  @change="handleChangePlanTime"
+                  @change="handleChangeTimeRange1"
                 />
               </a-form-item>
             </a-col>
@@ -116,13 +116,14 @@ const handleReset = () => {
   emit("onReset", state.formData);
 };
 
-const handleChangePlanTime = (value: any) => {
-  state.formData.planTimeStart = global
-    .$dayjs(value[0])
+const handleChangeTimeRange1 = (value: any) => {
+  state.formData.planTimeStart  = !value
+    ? ""
+    : global.$dayjs(value[0])
     .format("YYYY-MM-DD HH:mm:ss");
-  state.formData.planTimeEnd = global
-    .$dayjs(value[1])
-    .format("YYYY-MM-DD HH:mm:ss");
+  state.formData.planTimeEnd =!value
+    ? ""
+    : global.$dayjs(value[1]).format("YYYY-MM-DD HH:mm:ss");
 };
 
 onMounted(async () => {

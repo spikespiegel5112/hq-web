@@ -38,7 +38,7 @@
       @expandedRowsChange="handleExpandedRowsChange"
       @change="handleChangePage"
     >
-      <template v-slot:expandIcon="props">
+      <template v-slot:expandIcon="props" #expandColumnTitle>
         <a-button type="link">
           <CaretRightOutlined
             :style="
@@ -93,9 +93,9 @@
           @onEdit="handleEditPlan($event, record)"
         />
       </template>
-      <template #expandColumnTitle>
+      <!-- <template #expandColumnTitle>
         <span></span>
-      </template>
+      </template> -->
     </a-table>
     <EditDialog
       :visible="state.dialogVisible"
@@ -129,7 +129,6 @@ import {
   preplanPreplanGetPageRequest,
   preplanPreplanDeleteRequest,
   preplanPreplanSaveRequest,
-  preplanPreplanGetStepPageRequest,
   preplanPreplanImportStepRequest,
   preplanPreplanExportStepRequest,
 } from "@/api/management";

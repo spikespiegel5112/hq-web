@@ -30,7 +30,7 @@
                   start-placeholder="开始时间"
                   end-placeholder="结束时间"
                   v-model="state.statisticalDate"
-                  @change="handleChangeStatisticalDate"
+                  @change="handleChangeTimeRange1"
                 />
               </a-form-item>
             </a-col>
@@ -112,21 +112,21 @@ const handleReset = () => {
   emit("onReset", state.formData);
 };
 
-const handleChangeStatisticalDate = (date: any) => {
-  state.formData.statisticalDateBegin = global
-    .$dayjs(date[0])
-    .format("YYYY-MM-DD HH:mm:ss");
-  state.formData.statisticalDateEnd = global
-    .$dayjs(date[1])
-    .format("YYYY-MM-DD HH:mm:ss");
+const handleChangeTimeRange1 = (value: any) => {
+  state.formData.statisticalDateBegin = !value
+    ? ""
+    : global.$dayjs(value[0]).format("YYYY-MM-DD HH:mm:ss");
+  state.formData.statisticalDateEnd = !value
+    ? ""
+    : global.$dayjs(value[1]).format("YYYY-MM-DD HH:mm:ss");
 };
 
 onMounted(async () => {
   state.statisticalDate = [
-    global.$dayjs().startOf('day'),
+    global.$dayjs().startOf("day"),
     global.$dayjs().endOf("day"),
   ] as any[];
-  handleChangeStatisticalDate(state.statisticalDate)
+  handleChangeTimeRange1(state.statisticalDate);
   emit("update:modelValue", state.formData);
 });
 
