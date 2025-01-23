@@ -114,7 +114,7 @@
         </a-col>
       </a-row>
 
-      <a-row>
+      <!-- <a-row>
         <a-col :span="22">
           <a-form-item name="planStatus" label="状态">
             <a-select
@@ -136,7 +136,7 @@
             </template>
           </a-form-item>
         </a-col>
-      </a-row>
+      </a-row> -->
       <a-row>
         <a-col :span="22">
           <a-form-item name="attachment" label="附件">
