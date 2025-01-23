@@ -908,7 +908,7 @@ export const preplanPreplanSaveRequest = (params: any) => {
 // 预案库管理-预案库管理-步骤和预案一起保存
 export const preplanPreplanSaveWithPreplanStepRequest = (params: any) => {
   return service({
-    url: prefix + "//preplan/preplan/saveWithPreplanStep",
+    url: prefix + "/preplan/preplan/saveWithPreplanStep",
     method: "POST",
     data: params,
   });
