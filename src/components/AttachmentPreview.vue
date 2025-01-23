@@ -137,7 +137,7 @@ const checkUniViewImage = (item: any) => {
   if (item.createBy === "uniview") {
     result = item.attachmentPath;
   } else {
-    result = `${global.$getBaseUrl()}/attachment/download?id=${item.id}`;
+    result = `${global.$getFileBaseUrl()}/attachment/download?id=${item.id}`;
   }
   return result;
 };

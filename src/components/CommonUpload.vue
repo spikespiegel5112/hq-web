@@ -5,7 +5,7 @@
       v-model:file-list="state.fileList"
       name="file"
       :list-type="listType"
-      :action="`${global.$getBaseUrl()}/attachment/upload`"
+      :action="`${global.$getFileBaseUrl()}/attachment/upload`"
       :headers="{}"
       :disabled="props.disabled"
       :showUploadList="{
@@ -161,7 +161,7 @@ const checkFileUrl = (item: any) => {
         result = global.$getImageUrl("/src/assets/file_icon.png");
         break;
       default:
-        result = `${global.$getBaseUrl()}/attachment/download?id=${item.id}`;
+        result = `${global.$getFileBaseUrl()}/attachment/download?id=${item.id}`;
         break;
     }
   }
@@ -175,7 +175,7 @@ const checkUniViewImage = (item: any) => {
   if (item.createBy === "uniview") {
     result = fileData.attachmentPath;
   } else {
-    result = `${global.$getBaseUrl()}/attachment/download?id=${fileData.id}`;
+    result = `${global.$getFileBaseUrl()}/attachment/download?id=${fileData.id}`;
   }
 
   return result;

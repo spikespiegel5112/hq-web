@@ -112,7 +112,8 @@
                     <div
                       v-if="
                         checkAttachmentIndex(item, index) &&
-                        checkAttachmentIndex(item, index).attachmentList.length > 0
+                        checkAttachmentIndex(item, index).attachmentList
+                          .length > 0
                       "
                       class="attachment"
                     >
@@ -306,7 +307,6 @@ const getDispoaslTime = (index: number) => {
 };
 
 const checkAttachmentIndex: any = (item: any, index: number) => {
-  
   let result = state.fileList.find(
     (item2: any) => item.stepOrder === item2.stepOrder
   );

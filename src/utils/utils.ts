@@ -293,6 +293,10 @@ const _utils = {
     const env = import.meta.env;
     return env.VITE_BASE_URL + "/manage";
   },
+  $getFileBaseUrl: (mode: string) => {
+    const env = import.meta.env;
+    return env.VITE_BASE_URL + "/manage";
+  },
 
   $checkFileType: (fileName: any) => {
     const getFileExtension = (filename: string) => {

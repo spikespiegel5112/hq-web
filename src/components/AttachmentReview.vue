@@ -18,7 +18,7 @@
       style="display: none"
       :width="100"
       :height="100"
-      :src="`${global.$getBaseUrl()}/attachment/download?id=${state.currentAttachmentData.id}`"
+      :src="`${global.$getFileBaseUrl()}/attachment/download?id=${state.currentAttachmentData.id}`"
       :preview="{
         visible: state.previewVisible,
         onVisibleChange: () => (state.previewVisible = false),
@@ -115,7 +115,7 @@ const checkUniViewImage = (item: any) => {
   if (item.createBy === "uniview") {
     result = item.attachmentPath;
   } else {
-    result = `${global.$getBaseUrl()}/attachment/download?id=${item.id}`;
+    result = `${global.$getFileBaseUrl()}/attachment/download?id=${item.id}`;
   }
   return result;
 };
