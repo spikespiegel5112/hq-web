@@ -39,10 +39,6 @@ const state = reactive({
 
 let queryFormData = reactive({} as any);
 
-const pagination = reactive({
-  ...global.$store.state.app.defaultPagination,
-});
-
 onMounted(async () => {});
 
 onBeforeUnmount(() => {});

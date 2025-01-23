@@ -18,6 +18,7 @@
                 <a-select
                   v-model:value="state.formData.dateType"
                   placeholder="请选择"
+                  allow-clear
                 >
                   <a-select-option
                     v-for="item in global.$getDictionary('dateType')"
@@ -34,6 +35,7 @@
                 <a-select
                   v-model:value="state.formData.exhibitionType"
                   placeholder="请选择"
+                  allow-clear
                 >
                   <a-select-option
                     v-for="item in global.$getDictionary('exhibitionType')"

@@ -101,7 +101,7 @@
       :visible="state.dialogVisible"
       :mode="state.dialogMode"
       :dataModel="pageModel"
-      :preplanType="queryFormData.preplanType"
+      :preplanType="global.$store.state.app.emergencyEventType"
       :rowData="state.currentEventTypeData"
       :tableData="state.planTableData"
       @onClose="handleClose"
