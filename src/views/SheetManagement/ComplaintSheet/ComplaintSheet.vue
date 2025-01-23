@@ -1,13 +1,13 @@
 <template>
   <div class="common_table_wrapper">
-    <FilterTool       @onSearch="handleSearch"       @onReset="handleReset"       v-model="queryFormData"     ></FilterTool>
+    <FilterTool
+      @onSearch="handleSearch"
+      @onReset="handleReset"
+      v-model="queryFormData"
+    ></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
         <a-button class="import">导入</a-button>
-                 <!-- <ExportButton
-          :action="eventManageSuddenEventExportRequest"
-          :queryFormData="queryFormData"
-        /> -->
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
@@ -44,7 +44,6 @@ import {
   ref,
   nextTick,
 } from "vue";
-
 
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
@@ -94,7 +93,11 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "操作",     name: "operationColumn",     tableVisible: true,     exportVisible: false,     fixed: "right",
+    label: "操作",
+    name: "operationColumn",
+    tableVisible: true,
+    exportVisible: false,
+    fixed: "right",
     actions: ["edit", "review", "delete"],
   },
 ]);

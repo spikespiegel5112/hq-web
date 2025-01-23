@@ -2,7 +2,7 @@
   <a-modal
     class="common_dailog_wrapper"
     v-model:open="state.visible"
-    width="14rem"
+    :width="props.mode === 'editPlanName' ? '7rem' : '14rem'"
     @cancel="handleClose"
   >
     <template #title>
@@ -107,7 +107,6 @@ import { PlusCircleOutlined, MinusCircleOutlined } from "@ant-design/icons-vue";
 
 import {
   preplanPreplanSaveWithPreplanStepRequest,
-  eventManageSuddenEventExportRequest,
   preplanPreplanDeleteRequest,
   preplanPreplanDeleteStepRequest,
 } from "@/api/management";
@@ -136,7 +135,7 @@ const columns = [
     width: "40%",
     formType: "textarea",
   },
-] as any[]
+] as any[];
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;

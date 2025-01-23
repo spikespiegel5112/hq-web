@@ -7,7 +7,10 @@
     ></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
-        <a-button class="import">导入</a-button>
+        <ImportButton
+          :action="preplanPreplanImportStepRequest"
+          @success="() => getData()"
+        />
         <ExportButton
           :action="preplanPreplanExportStepRequest"
           :queryFormData="{
@@ -127,6 +130,7 @@ import {
   preplanPreplanDeleteRequest,
   preplanPreplanSaveRequest,
   preplanPreplanGetStepPageRequest,
+  preplanPreplanImportStepRequest,
   preplanPreplanExportStepRequest,
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";

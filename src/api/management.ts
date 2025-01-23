@@ -887,6 +887,15 @@ export const preplanPreplanGetStepPageRequest = (params: any) => {
   });
 };
 
+// 预案库管理-预案库管理-预案库步骤报表导入
+export const preplanPreplanImportStepRequest = (params: any) => {
+  return service({
+    url: prefix + "/preplan/preplan/importStep",
+    method: "POST",
+    data: params,
+  });
+};
+
 // 预案库管理-预案库管理-保存
 export const preplanPreplanSaveRequest = (params: any) => {
   return service({

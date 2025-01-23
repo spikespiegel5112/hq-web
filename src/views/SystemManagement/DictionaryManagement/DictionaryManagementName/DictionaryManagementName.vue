@@ -50,7 +50,6 @@ import {
   dictionaryManageGetDictPagingRequest,
   dictionaryManageDelDictRequest,
   dictionaryManageSaveDictRequest,
-  eventManageSuddenEventExportRequest,
 } from "@/api/management";
 import FilterTool from "../FilterTool.vue";
 import EditDialog from "./EditDialog.vue";

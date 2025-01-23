@@ -9,7 +9,7 @@
       <a-space size="middle" wrap>
         <a-button class="import">导入</a-button>
         <ExportButton
-          :action="eventManageSuddenEventExportRequest"
+          :action="preplanPreplanExportStepRequest"
           :queryFormData="{
             ...queryFormData,
             preplanType: global.$store.state.app.emergencyPlanType,
@@ -127,6 +127,7 @@ import {
   preplanPreplanDeleteRequest,
   preplanPreplanSaveRequest,
   preplanPreplanGetStepPageRequest,
+  preplanPreplanExportStepRequest,
   eventManageSuddenEventExportRequest,
 } from "@/api/management";
 
