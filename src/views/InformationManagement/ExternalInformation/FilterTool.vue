@@ -12,7 +12,8 @@
                 >
                   <a-select-option
                     v-for="item in global.$getDictionary(
-                      'external_info_external_source'
+                      'external_info_external_source',
+                      'string'
                     )"
                     :value="item.value"
                   >
@@ -104,12 +105,11 @@ const state = reactive({
 
 const handleChangeTimeRange1 = (value: any) => {
   if (!value) return;
-  state.formData.externalTimeStart  = !value
+  state.formData.externalTimeStart = !value
     ? ""
-    : global.$dayjs(value[0])
-    .format("YYYY-MM-DD HH:mm:ss");
+    : global.$dayjs(value[0]).format("YYYY-MM-DD HH:mm:ss");
 
-  state.formData.externalTimeEnd =!value
+  state.formData.externalTimeEnd = !value
     ? ""
     : global.$dayjs(value[1]).format("YYYY-MM-DD HH:mm:ss");
 };

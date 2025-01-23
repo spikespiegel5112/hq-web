@@ -12,7 +12,7 @@
       <a-row>
         <a-col :span="22">
           <a-form-item name="externalSource" label="来源">
-            {{ global.$getDictionary("external_info_external_source").find((item:any)=>item.value===props.rowData.externalSource)?.label }}
+            {{ global.$getDictionary("external_info_external_source",'string').find((item:any)=>item.value===props.rowData.externalSource)?.label }}
           </a-form-item>
         </a-col>
       </a-row>

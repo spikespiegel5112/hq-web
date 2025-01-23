@@ -20,7 +20,8 @@
             >
               <a-select-option
                 v-for="item in global.$getDictionary(
-                  'external_info_external_source'
+                  'external_info_external_source',
+                  'string'
                 )"
                 :value="item.value"
               >
@@ -28,7 +29,7 @@
               </a-select-option>
             </a-select>
             <template v-if="props.mode === 'review'">
-              {{ global.$getDictionary('external_info_external_source').find((item:any)=>item.value===state.formData.externalSource)?.label }}
+              {{ global.$getDictionary('external_info_external_source', 'string').find((item:any)=>item.value===state.formData.externalSource)?.label }}
             </template>
           </a-form-item>
         </a-col>
