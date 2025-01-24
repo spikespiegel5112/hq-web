@@ -45,6 +45,7 @@
         <a-row v-if="['editPlan', 'add'].includes(props.mode)" justify="center">
           <a-col :span="22">
             <a-table
+              class="plantable"
               :columns="columns"
               :data-source="state.formData.stepList"
               bordered
@@ -333,4 +334,19 @@ onMounted(async () => {});
 onBeforeUnmount(() => {});
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.plantable {
+  &.ant-table-wrapper {
+    :deep(.ant-table) {
+      background: transparent;
+      .ant-table-container {
+        .ant-table-content {
+          .ant-table-thead {
+            background: transparent;
+          }
+        }
+      }
+    }
+  }
+}
+</style>
