@@ -6,12 +6,19 @@
           <a-row :gutter="20">
             <a-col :span="6">
               <a-form-item name="complaintRegion" label="投诉区域">
-                <a-input
+                <a-select
                   v-model:value="state.formData.complaintRegion"
                   placeholder="请输入"
-                  allow-clear
                 >
-                </a-input>
+                  <a-select-option
+                    v-for="item in global.$store.state.dictionary[
+                      'manageRegion'
+                    ]"
+                    :value="item.value"
+                  >
+                    {{ item.label }}
+                  </a-select-option>
+                </a-select>
               </a-form-item>
             </a-col>
 

@@ -23,21 +23,21 @@
           </a-form-item>
         </a-col>
       </a-row>
-      <a-row>
+      <!-- <a-row>
         <a-col :span="22">
           <a-form-item name="complaintSensitive" label="敏感程度">
             {{ global.$getDictionary("sensitivity").find((item:any)=>item.value===props.rowData.complaintSensitive)?.label }}
           </a-form-item>
         </a-col>
-      </a-row>
+      </a-row> -->
       <a-row>
         <a-col :span="22">
           <a-form-item name="handlingTime" label="处置时间">
             <a-date-picker
               v-model:value="state.formData.handlingTime"
-              show-time
               format="YYYY-MM-DD HH:mm:ss"
               @change="handleChangeTime1"
+              show-time
             ></a-date-picker>
           </a-form-item>
         </a-col>

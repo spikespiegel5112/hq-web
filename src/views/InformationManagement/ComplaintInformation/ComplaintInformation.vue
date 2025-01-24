@@ -101,14 +101,14 @@ const pageModel = ref([
     formVisible: true,
     exportVisible: true,
   },
-  {
-    label: "敏感程度",
-    name: "complaintSensitive",
-    required: true,
-    tableVisible: true,
-    formVisible: true,
-    exportVisible: true,
-  },
+  // {
+  //   label: "敏感程度",
+  //   name: "complaintSensitive",
+  //   required: true,
+  //   tableVisible: true,
+  //   formVisible: true,
+  //   exportVisible: true,
+  // },
   {
     label: "投诉时间",
     name: "complaintTime",

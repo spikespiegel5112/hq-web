@@ -78,6 +78,7 @@
               v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.eventTime"
               format="YYYY-MM-DD HH:mm:ss"
+              show-time
             ></a-date-picker>
             <template v-if="props.mode === 'review'">
               {{
@@ -96,6 +97,7 @@
               v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.disposalCompletionTime"
               format="YYYY-MM-DD HH:mm:ss"
+              show-time
             ></a-date-picker>
             <template v-if="props.mode === 'review'">
               {{

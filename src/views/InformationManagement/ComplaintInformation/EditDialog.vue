@@ -52,7 +52,7 @@
           </a-form-item>
         </a-col>
       </a-row>
-      <a-row>
+      <!-- <a-row>
         <a-col :span="22">
           <a-form-item name="complaintSensitive" label="敏感程度">
             <a-select
@@ -72,7 +72,7 @@
             </template>
           </a-form-item>
         </a-col>
-      </a-row>
+      </a-row> -->
       <a-row>
         <a-col :span="22">
           <a-form-item name="complaintTime" label="投诉时间">
@@ -81,10 +81,13 @@
               v-model:value="state.formData.complaintTime"
               format="YYYY-MM-DD HH:mm:ss"
               @change="handleChangeTime1"
+              show-time
             ></a-date-picker>
             <template v-if="props.mode === 'review'">
               {{
-                global.$dayjs(state.formData.complaintTime).format("YYYY-MM-DD")
+                global
+                  .$dayjs(state.formData.complaintTime)
+                  .format("YYYY-MM-DD HH:mm:ss")
               }}
             </template>
           </a-form-item>

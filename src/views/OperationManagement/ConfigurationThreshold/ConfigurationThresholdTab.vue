@@ -318,7 +318,9 @@
                         "
                         :class="key"
                         placeholder="请输入"
-                      />
+                      >
+                        <template #suffix>%</template>
+                      </a-input>
                     </a-form-item-rest>
                   </a-col>
                 </a-row>
@@ -339,7 +341,9 @@
                         "
                         :class="key"
                         placeholder="请输入"
-                      />
+                      >
+                        <template #suffix>%</template>
+                      </a-input>
                     </a-form-item-rest>
                   </a-col>
                 </a-row>
@@ -362,7 +366,9 @@
                         "
                         :class="key"
                         placeholder="请输入"
-                      />
+                      >
+                        <template #suffix>%</template>
+                      </a-input>
                     </a-form-item-rest>
                   </a-col>
                 </a-row>
@@ -383,7 +389,9 @@
                         "
                         :class="key"
                         placeholder="请输入"
-                      />
+                      >
+                        <template #suffix>%</template>
+                      </a-input>
                     </a-form-item-rest>
                   </a-col>
                 </a-row>
@@ -674,10 +682,15 @@ onBeforeUnmount(() => {});
   .ant-form {
     padding: 0.3rem;
   }
-  .ant-input {
+  .ant-input,
+  .ant-input-affix-wrapper {
     &.green {
       background-color: rgba(114, 241, 1, 0.2);
       border-color: rgba(114, 241, 1, 0.8);
+      .ant-input {
+        background-color: rgba(114, 241, 1, 0.2);
+        border-color: rgba(114, 241, 1, 0.8);
+      }
     }
     &.yellow {
       background-color: rgba(255, 234, 0, 0.2);

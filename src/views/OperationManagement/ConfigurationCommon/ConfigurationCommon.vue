@@ -117,6 +117,12 @@ const state = reactive({
       configValue: null,
       id: null,
     },
+    {
+      label: "火灾告警订阅",
+      configCode: "subscribe_fire_alarm_subscribe",
+      configValue: null,
+      id: null,
+    },
     // {
     //   label: "多拌线进出人数统计订阅",
     //   configCode:
