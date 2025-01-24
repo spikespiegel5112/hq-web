@@ -80,22 +80,19 @@ const handleSearch = () => {
 
 const handleReset = () => {
   formDataRef.value.resetFields();
-  const formData: any = Object.keys(state.formData).forEach((item: any) => {
-    state.formData[item] = global.$isEmpty(state.formData[item])
-      ? null
-      : state.formData[item];
-  });
-  emit("onReset", formData);
+  state.statisticalTime = [];
+  state.formData.statisticalTimeBegin = null;
+  state.formData.statisticalTimeEnd = null;
+  emit("onReset", state.formData);
 };
 
 const handleChangeTime1 = (value: any) => {
   if (!value) return;
-  state.formData.statisticalTimeBegin  = !value
+  state.formData.statisticalTimeBegin = !value
     ? ""
-    : global.$dayjs(value[0])
-    .format("YYYY-MM-DD HH:mm:ss");
+    : global.$dayjs(value[0]).format("YYYY-MM-DD HH:mm:ss");
 
-  state.formData.statisticalTimeEnd =!value
+  state.formData.statisticalTimeEnd = !value
     ? ""
     : global.$dayjs(value[1]).format("YYYY-MM-DD HH:mm:ss");
 };

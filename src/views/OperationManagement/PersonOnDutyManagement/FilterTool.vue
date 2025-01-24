@@ -31,6 +31,7 @@
                   start-placeholder="开始时间"
                   end-placeholder="结束时间"
                   v-model="state.dutyTime"
+                  @change="handleChangeTimeRange1"
                 />
               </a-form-item>
             </a-col>
@@ -86,26 +87,27 @@ const state = reactive({
 });
 
 const handleSearch = () => {
-  const dutyStartTime = !!state.dutyTime[0]
-    ? global.$dayjs(state.dutyTime[0]).format("YYYY-MM-DD HH:mm:ss")
-    : null;
-  const dutyEndTime = !!state.dutyTime[1]
-    ? global.$dayjs(state.dutyTime[1]).format("YYYY-MM-DD HH:mm:ss")
-    : null;
-
-  const formData: any = JSON.parse(JSON.stringify(state.formData));
-  formData.dutyTime = undefined;
-  emit("onSearch", {
-    ...formData,
-    dutyStartTime,
-    dutyEndTime,
-  });
+  emit("onSearch", state.formData);
 };
 
 const handleReset = () => {
   formDataRef.value.resetFields();
-  emit("onReset", state.formData);
+  state.formData = {
+    ...state.formData,
+    dutyStartTime: null,
+    dutyEndTime: null,
+  };
   state.dutyTime = [];
+  emit("onReset", state.formData);
+};
+
+const handleChangeTimeRange1 = (value: any) => {
+  state.formData.dutyStartTime = !value
+    ? ""
+    : global.$dayjs(value[0]).format("YYYY-MM-DD HH:mm:ss");
+  state.formData.dutyEndTime = !value
+    ? ""
+    : global.$dayjs(value[1]).format("YYYY-MM-DD HH:mm:ss");
 };
 
 onMounted(async () => {

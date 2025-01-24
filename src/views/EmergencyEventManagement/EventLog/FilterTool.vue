@@ -129,12 +129,11 @@ const handleReset = () => {
 };
 
 const handleChangeTimeRange1 = (value: any[]) => {
-  state.formData.eventTimeBegin  = !value
+  state.formData.eventTimeBegin = !value
     ? ""
-    : global.$dayjs(value[0])
-    .format("YYYY-MM-DD HH:mm:ss");
+    : global.$dayjs(value[0]).format("YYYY-MM-DD HH:mm:ss");
 
-  state.formData.eventTimeEnd =!value
+  state.formData.eventTimeEnd = !value
     ? ""
     : global.$dayjs(value[1]).format("YYYY-MM-DD HH:mm:ss");
 };
