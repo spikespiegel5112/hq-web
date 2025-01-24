@@ -7,7 +7,6 @@
     ></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
-        <a-button class="import">导入</a-button>
         <ExportButton
           :action="operationManagementAlarmInfoExportExcelRequest"
           :queryFormData="queryFormData"
