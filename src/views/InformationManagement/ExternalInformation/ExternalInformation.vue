@@ -191,6 +191,9 @@ const getData = () => {
           handlingStatus: global
             .$getDictionary("disposalStatus")
             .find((item2: any) => item2.value === item.handlingStatus).label,
+          externalSource: global
+            .$getDictionary("external_info_external_source", "string")
+            .find((item2: any) => item2.value === item.externalSource)?.label,
         };
       });
     })
