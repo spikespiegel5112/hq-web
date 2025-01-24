@@ -23,7 +23,7 @@
                 >
                   <a-select-option
                     v-for="item in global.$store.state.dictionary[
-                      'public_sentiment_info_public_sentiment_type'
+                      'complaintType'
                     ]"
                     :value="item.value"
                   >
@@ -114,11 +114,10 @@ const handleReset = () => {
 
 const handleChangeTimeRange1 = (value: any) => {
   if (!value) return;
-  state.formData.complaintTimeStart  = !value
+  state.formData.complaintTimeStart = !value
     ? ""
-    : global.$dayjs(value[0])
-    .format("YYYY-MM-DD HH:mm:ss");
-  state.formData.complaintTimeEnd =!value
+    : global.$dayjs(value[0]).format("YYYY-MM-DD HH:mm:ss");
+  state.formData.complaintTimeEnd = !value
     ? ""
     : global.$dayjs(value[1]).format("YYYY-MM-DD HH:mm:ss");
 };

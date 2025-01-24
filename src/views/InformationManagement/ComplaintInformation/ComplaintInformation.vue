@@ -176,16 +176,17 @@ const getData = () => {
       state.tableData = response.list;
       pagination.total = response.total;
       state.processedTableData = response.list.map((item: any) => {
+        // complaintType
         return {
           ...item,
           handlingStatus: global
             .$getDictionary("disposalStatus")
             .find((item2: any) => item2.value === item.handlingStatus)?.label,
           complaintType: global
-            .$getDictionary("public_sentiment_info_public_sentiment_type")
+            .$getDictionary("complaintType")
             .find((item2: any) => item2.value === item.complaintType)?.label,
           complaintSensitive: global
-            .$getDictionary("sensitivity", "string")
+            .$getDictionary("sensitivity")
             .find((item2: any) => item2.value === item.complaintSensitive)
             ?.label,
         };
