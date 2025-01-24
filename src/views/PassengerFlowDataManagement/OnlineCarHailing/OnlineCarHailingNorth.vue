@@ -9,7 +9,7 @@
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
         <ExportButton
-          :action="passengerFlowStorageExportRequest"
+          :action="passengerFloweEHailingParkingExportRequest"
           :queryFormData="queryFormData"
           :pagination="{
             ...pagination,
@@ -53,7 +53,7 @@ import {
 } from "vue";
 
 import {
-  passengerFlowStorageExportRequest,
+  passengerFloweEHailingParkingExportRequest,
   passengerFloweEHailingParkingGetPageRequest,
 } from "@/api/management";
 

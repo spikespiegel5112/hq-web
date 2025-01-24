@@ -1378,8 +1378,9 @@ export const passengerFlowStorageGetStatisticsRequest = (params: any) => {
 export const passengerFloweEHailingParkingExportRequest = (params: any) => {
   return service({
     url: prefix + "/passengerFlow/eHailingParking/export",
-    method: "POST",
-    data: params,
+    method: "GET",
+    params,
+    responseType: "blob",
   });
 };
 
