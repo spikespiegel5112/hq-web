@@ -68,7 +68,6 @@ import {
   operationManagementOperationConfigConfigRequest,
   operationManagementOperationConfigSubscribeConfigRequest,
   operationManagementOperationConfigGetCommonListRequest,
-  operationManagementOperationConfigGetListRequest,
 } from "@/api/management.ts";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
