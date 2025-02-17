@@ -108,7 +108,9 @@ watch(
 
 const getData = () => {
   global.$store.commit("app/updateTableLoading", true);
-  backendIndexPageTaxiVehicleMonitorNewRequest({})
+  backendIndexPageTaxiVehicleMonitorNewRequest({
+    queryTime: global.$dayjs().format("YYYY-MM-DD HH:mm:ss"),
+  })
     .then((response: any) => {
       response = response.data;
       Object.keys(state).forEach((item: any) => {
