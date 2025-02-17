@@ -11,7 +11,7 @@
         y: tableBodyHeight,
       }"
       :style="{
-        height: tableBodyHeight,
+        height: tableBodyHeight2,
       }"
     >
       <a-table-column
@@ -275,7 +275,7 @@ const state = reactive({
   currentPreviewFileType: "",
 });
 
-const tableHeight = computed(() => {
+const tableOffset = computed(() => {
   const offsetTabTable = 0.6;
   const offsetStatisticTable = 3;
   const offsetStatisticTable2 = 2;
@@ -290,12 +290,20 @@ const tableHeight = computed(() => {
     offset += offsetStatisticTable2;
   }
 
-  let result = `calc(100vh - ${offset}rem)`;
+  let result = offset;
   return result;
 });
 
 const tableBodyHeight = computed(() => {
-  let result = tableHeight.value;
+  let result = `calc(100vh - ${tableOffset.value + 0.4}rem)`;
+  if (props.tableBodyHeight) {
+    result = props.tableBodyHeight;
+  }
+  return result;
+}) as any;
+
+const tableBodyHeight2 = computed(() => {
+  let result = `calc(100vh - ${tableOffset.value}rem)`;
   if (props.tableBodyHeight) {
     result = props.tableBodyHeight;
   }
