@@ -24,7 +24,7 @@ import {
   nextTick,
 } from "vue";
 
-import { backendIndexPageTodayFlowAcceleratedRequest } from "@/api/management.ts";
+import { backendIndexPageTodayFlowAcceleratedNewRequest } from "@/api/management.ts";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -50,7 +50,7 @@ watch(
 
 const getData = () => {
   global.$store.commit("app/updateTableLoading", true);
-  backendIndexPageTodayFlowAcceleratedRequest({
+  backendIndexPageTodayFlowAcceleratedNewRequest({
     ...global.$store.state.app.currentQueryDateParams,
     timeType: 1,
   })

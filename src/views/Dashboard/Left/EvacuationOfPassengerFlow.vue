@@ -44,6 +44,11 @@ let dataDictionary = [
     value: null,
   },
   {
+    title: "高铁",
+    name: "highSpeedRailwayPassengerCount",
+    value: null,
+  },
+  {
     title: "公交",
     name: "dispersedParkingPassengerCount",
     value: null,
@@ -144,7 +149,7 @@ const setOption: EChartsOption = () => {
 
 const getData = () => {
   global.$store.commit("app/updateTableLoading", true);
-  setOption();
+  // setOption();
   backendIndexPageFlowHourlyNewRequest({
     // ...global.$store.state.app.currentQueryDateParams,
     // ...global.$store.state.app.currentQueryHourParams,

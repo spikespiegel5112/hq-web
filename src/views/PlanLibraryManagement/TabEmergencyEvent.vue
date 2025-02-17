@@ -39,7 +39,7 @@
       @change="handleChangePage"
     >
       <template v-slot:expandIcon="props" #expandColumnTitle>
-        <a-button type="link">
+        <a-button type="link" @click="handleClickExpandCorner(props.record)">
           <CaretRightOutlined
             :style="
               props.record.expand
@@ -277,6 +277,10 @@ const transformPageModel: any = () => {
 
 const handleExpand = (expand: boolean, row: any) => {
   row.expand = expand;
+};
+
+const handleClickExpandCorner = (row: any) => {
+  row.expand = !row.expand;
 };
 
 const handleExpandedRowsChange = (expandedRows: any) => {};

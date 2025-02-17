@@ -270,10 +270,28 @@ export const backendIndexPageTaxiVehicleMonitorRequest = (params: any) => {
   });
 };
 
+// 后台管理-首页-出租车车辆监测数据
+export const backendIndexPageTaxiVehicleMonitorNewRequest = (params: any) => {
+  return service({
+    url: prefix + "/backend/indexPage/taxi/vehicle/monitorNew",
+    method: "POST",
+    data: params,
+  });
+};
+
 // 后台管理-当日累计疏散客流
 export const backendIndexPageTodayFlowAcceleratedRequest = (params: any) => {
   return service({
     url: prefix + "/backend/indexPage/today/flow/accelerated",
+    method: "POST",
+    data: params,
+  });
+};
+
+// 后台管理-当日累计疏散客流
+export const backendIndexPageTodayFlowAcceleratedNewRequest = (params: any) => {
+  return service({
+    url: prefix + "/backend/indexPage/today/flow/acceleratedNew",
     method: "POST",
     data: params,
   });

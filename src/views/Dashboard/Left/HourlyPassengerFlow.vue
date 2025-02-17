@@ -19,7 +19,7 @@ import {
   nextTick,
 } from "vue";
 
-import { backendIndexPageFlowHourlyRequest } from "@/api/management.ts";
+import { backendIndexPageFlowHourlyNewRequest } from "@/api/management.ts";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -122,7 +122,7 @@ const setOption: EChartsOption = () => {
 const getData = () => {
   global.$store.commit("app/updateTableLoading", true);
   setOption();
-  backendIndexPageFlowHourlyRequest({
+  backendIndexPageFlowHourlyNewRequest({
     ...global.$store.state.app.currentQueryDateParams,
     hour: 1,
     timeType: 1,

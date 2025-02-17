@@ -17,23 +17,13 @@
             <li>
               <span class="label">入库速度：</span>
               <span class="value">
-                {{
-                  !!state.southSecondTaxiBoardingPointWaitingTime
-                    ? state.southTaxiParkingLotArrivalSituation /
-                      state.southSecondTaxiBoardingPointWaitingTime
-                    : ""
-                }}
+                {{ state.northTaxiParkingLotParkingIn }}
               </span>
             </li>
             <li>
               <span class="label">出库速度：</span>
               <span class="value">
-                {{
-                  !!state.southSecondTaxiBoardingPointWaitingTime
-                    ? state.southTaxiParkingLotArrivalSituation /
-                      state.southSecondTaxiBoardingPointWaitingTime
-                    : ""
-                }}
+                {{ state.northTaxiParkingLotParkingOut }}
               </span>
             </li>
           </ul>
@@ -43,29 +33,19 @@
             <li>
               <span class="label">蓄车场数：</span>
               <span class="value">
-                {{ state.southTaxiParkingLotArrivalSituation }}
+                {{ state.northTaxiParkingLotParkingCount }}
               </span>
             </li>
             <li>
               <span class="label">入库速度：</span>
               <span class="value">
-                {{
-                  !!state.northFirstTaxiBoardingPointWaitingTime
-                    ? state.northFirstTaxiBoardingPointWaitingCount /
-                      state.northFirstTaxiBoardingPointWaitingTime
-                    : ""
-                }}
+                {{ state.southTaxiParkingLotParkingIn }}
               </span>
             </li>
             <li>
               <span class="label">出库速度：</span>
               <span class="value">
-                {{
-                  !!state.northFirstTaxiBoardingPointWaitingTime
-                    ? state.northFirstTaxiBoardingPointWaitingCount /
-                      state.northFirstTaxiBoardingPointWaitingTime
-                    : ""
-                }}
+                {{ state.southTaxiParkingLotParkingOut }}
               </span>
             </li>
           </ul>
@@ -90,7 +70,7 @@ import {
 } from "vue";
 import QueueTime from "./QueueTime.vue";
 
-import { backendIndexPageTaxiVehicleMonitorRequest } from "@/api/management.ts";
+import { backendIndexPageTaxiVehicleMonitorNewRequest } from "@/api/management.ts";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -105,18 +85,20 @@ const props = defineProps({
 });
 
 const state = reactive({
-  northFirstTaxiBoardingPointWaitingCount: null,
-  northFirstTaxiBoardingPointWaitingTime: null,
-  northSecondTaxiBoardingPointWaitingCount: null,
-  northSecondTaxiBoardingPointWaitingTime: null,
-  northTaxiParkingLotArrivalSituation: null,
   northTaxiParkingLotParkingCount: null,
-  southFirstTaxiBoardingPointWaitingCount: null,
-  southFirstTaxiBoardingPointWaitingTime: null,
-  southSecondTaxiBoardingPointWaitingCount: null,
-  southSecondTaxiBoardingPointWaitingTime: null,
-  southTaxiParkingLotArrivalSituation: null,
   southTaxiParkingLotParkingCount: null,
+  northTaxiParkingLotParkingIn: null,
+  northTaxiParkingLotParkingOut: null,
+  southTaxiParkingLotParkingIn: null,
+  southTaxiParkingLotParkingOut: null,
+  northOneTaxiParkingLotParkingQueueCount: null,
+  northTwoTaxiParkingLotParkingQueueCount: null,
+  southOneTaxiParkingLotParkingQueueCount: null,
+  southTwoTaxiParkingLotParkingQueueCount: null,
+  northOneTaxiParkingLotParkingQueueTime: null,
+  northTwoTaxiParkingLotParkingQueueTime: null,
+  southOneTaxiParkingLotParkingQueueTime: null,
+  southTwoTaxiParkingLotParkingQueueTime: null,
 }) as any;
 
 watch(
@@ -126,17 +108,10 @@ watch(
 
 const getData = () => {
   global.$store.commit("app/updateTableLoading", true);
-  backendIndexPageTaxiVehicleMonitorRequest({})
+  backendIndexPageTaxiVehicleMonitorNewRequest({})
     .then((response: any) => {
       response = response.data;
-
       Object.keys(state).forEach((item: any) => {
-        if (item === "northFirstTaxiBoardingPointWaitingTime") {
-          // const aaa = response.northFirstTaxiBoardingPointWaitingTime;
-          // const bbb = response.northFirstTaxiBoardingPointWaitingCount;
-          // const ccc = response.northFirstTaxiBoardingPointWaitingCount;
-          // const ddd = response.northFirstTaxiBoardingPointWaitingTime;
-        }
         state[item] = response[item];
       });
     })

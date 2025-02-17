@@ -17,22 +17,34 @@ import {
   ref,
   nextTick,
 } from "vue";
-
-import { screenTimeDistFlowRequest } from "@/api/screen.ts";
-import { color } from "echarts";
+import { backendIndexPageTaxiVehicleMonitorNewRequest } from "@/api/management.ts";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 type EChartsOption = global.$echarts.EChartsOption;
 
-let xAxis = [] as string[];
-const dataDictionary: any[] = [];
-for (let index = 0; index < 4; index++) {
-  dataDictionary.push({
-    title: index,
-    value: Math.floor(Math.random() * 3000),
-  });
-}
+const dataDictionary: any[] = [
+  {
+    name: "南1",
+    key: "southOneTaxiParkingLotParkingQueueTime",
+    value: null,
+  },
+  {
+    name: "南2",
+    key: "southTwoTaxiParkingLotParkingQueueTime",
+    value: null,
+  },
+  {
+    name: "北1",
+    key: "northOneTaxiParkingLotParkingQueueTime",
+    value: null,
+  },
+  {
+    name: "北2",
+    key: "northTwoTaxiParkingLotParkingQueueTime",
+    value: null,
+  },
+];
 
 const props = defineProps({
   text: {
@@ -42,7 +54,24 @@ const props = defineProps({
   },
 });
 
-const state = reactive({});
+const state = reactive({
+  chartData: {
+    northTaxiParkingLotParkingCount: null,
+    southTaxiParkingLotParkingCount: null,
+    northTaxiParkingLotParkingIn: null,
+    northTaxiParkingLotParkingOut: null,
+    southTaxiParkingLotParkingIn: null,
+    southTaxiParkingLotParkingOut: null,
+    northOneTaxiParkingLotParkingQueueCount: null,
+    northTwoTaxiParkingLotParkingQueueCount: null,
+    southOneTaxiParkingLotParkingQueueCount: null,
+    southTwoTaxiParkingLotParkingQueueCount: null,
+    northOneTaxiParkingLotParkingQueueTime: null,
+    northTwoTaxiParkingLotParkingQueueTime: null,
+    southOneTaxiParkingLotParkingQueueTime: null,
+    southTwoTaxiParkingLotParkingQueueTime: null,
+  } as any,
+});
 
 watch(
   () => global.$store.state.app.currentQueryDateParams,
@@ -56,6 +85,7 @@ const initChart = () => {
 };
 
 const setOption: EChartsOption = () => {
+  // console.log(dataDictionary)
   const option = {
     title: {
       text: null,
@@ -93,15 +123,14 @@ const setOption: EChartsOption = () => {
         color: "#fff",
         fontSize: "0.15rem",
       },
-      data: dataDictionary.map((item: any) => item.title),
+      data: dataDictionary.map((item: any) => item.name),
     },
     series: [
       {
-        name: "Direct",
         type: "bar",
-        data: [10, 52, 200, 334, 390, 330, 220],
         color: "#FCB501",
         barWidth: "10",
+        data: dataDictionary.map((item: any) => item.value),
       },
     ],
   };
@@ -111,7 +140,23 @@ const setOption: EChartsOption = () => {
 
 const getData = () => {
   global.$store.commit("app/updateTableLoading", true);
-  setOption();
+  backendIndexPageTaxiVehicleMonitorNewRequest({})
+    .then((response: any) => {
+      response = response.data;
+      Object.keys(response).forEach((item: any) => {
+        dataDictionary.forEach((item2: any) => {
+          if (item === item2.key) {
+            item2.value = response[item];
+          }
+        });
+      });
+      console.log(dataDictionary);
+
+      setOption();
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
 };
 
 onMounted(() => {

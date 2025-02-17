@@ -38,8 +38,6 @@ import HourlyPassengerFlow from "./HourlyPassengerFlow.vue";
 import AccumulatedEvacuationOfPassengerFlowOnTheSameDay from "./AccumulatedEvacuationOfPassengerFlowOnTheSameDay.vue";
 import Taxi from "./Taxi.vue";
 
-import dayjs from "dayjs";
-
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
