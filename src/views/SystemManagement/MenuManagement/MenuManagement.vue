@@ -46,6 +46,7 @@
       :mode="state.dialogMode"
       :rowData="state.currentRowData"
       :title="state.currentDialogTitle"
+      :parentId="state.currentParentId"
       @onClose="handleClose"
       @onSubmit="handleSubmit"
     ></EditDialog>
@@ -151,6 +152,7 @@ const state = reactive({
   dialogMode: null as string | null,
   currentRowData: {},
   currentDialogTitle: "",
+  currentParentId: null,
 });
 
 let queryFormData = reactive({} as any);
@@ -213,6 +215,7 @@ const handleEditNode = (
   state.dialogMode = type;
   state.currentDialogTitle = title;
   state.currentRowData = record;
+  state.currentParentId = parentId;
 };
 
 const handleDeleteNode = (record: any) => {
@@ -220,14 +223,17 @@ const handleDeleteNode = (record: any) => {
     title: "提示",
     content: "确认删除？",
     onOk: () => {
+      const loadingInstance: any = global.$message.loading("处理中...", 0);
       sysSysMenuDeleteRequest({
         id: record.id,
       })
         .then((response: any) => {
+          loadingInstance();
           global.$message.success("删除成功");
           getData();
         })
         .catch((error: any) => {
+          loadingInstance();
           global.$message.error("删除失败");
           console.log(error);
         });
@@ -236,8 +242,10 @@ const handleDeleteNode = (record: any) => {
 };
 
 const handleSubmit = (formData: any) => {
+  const loadingInstance: any = global.$message.loading("处理中...", 0);
   sysSysMenuSaveRequest(formData)
     .then((response: any) => {
+      loadingInstance();
       global.$message.success("提交成功");
       getData();
       handleClose();
@@ -245,27 +253,6 @@ const handleSubmit = (formData: any) => {
     .catch((error: any) => {
       console.log(error);
       global.$message.error(error.message);
-    });
-};
-
-const handleChangePage = (pagingData: any) => {
-  pagination.page = pagingData.current;
-  pagination.pageSize = pagingData.pageSize;
-  pagination.total = pagingData.total;
-  getData();
-};
-
-const handleDelete = (id: number) => {
-  sysSysMenuDeleteRequest({
-    id,
-  })
-    .then((response: any) => {
-      global.$message.success("删除成功");
-      getData();
-    })
-    .catch((error: any) => {
-      global.$message.error("删除失败");
-      console.log(error);
     });
 };
 
@@ -284,6 +271,7 @@ onBeforeUnmount(() => {});
     .ant-tree-list-holder {
       height: 100%;
       max-height: 100% !important;
+      overflow: auto;
       .ant-tree-treenode {
         width: 100%;
         .ant-tree-node-content-wrapper {

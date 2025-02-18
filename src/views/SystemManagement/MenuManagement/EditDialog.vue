@@ -8,7 +8,7 @@
       ref="formDataRef"
       autocomplete="off"
       :rules
-      :label-col="{ style: { width: '80px' } }"
+      :label-col="{ style: { width: '100px' } }"
     >
       <a-row>
         <a-col :span="22">
@@ -34,7 +34,7 @@
       </a-row>
       <a-row :gutter="50">
         <a-col :span="11">
-          <a-form-item name="menuType" label="节点状类型">
+          <a-form-item name="menuType" label="节点类型">
             <a-select
               v-model:value="state.formData.menuType"
               placeholder="请选择"
@@ -51,8 +51,8 @@
               v-model:checked="state.formData.menuStatus"
               :checkedValue="1"
               :unCheckedValue="0"
-              checkedChildren="停用"
-              unCheckedChildren="正常"
+              checkedChildren="正常"
+              unCheckedChildren="停用"
             />
           </a-form-item>
         </a-col>
@@ -112,6 +112,7 @@ const props = defineProps({
   mode: { type: [String, null], required: true, default: null },
   rowData: { type: Object, required: true, default: () => {} },
   title: { type: String, required: true, default: "" },
+  parentId: { type: Number || null, required: true, default: null },
 });
 
 const state = reactive({
@@ -125,7 +126,7 @@ const state = reactive({
     menuType: null,
     parentId: null,
     permissionCode: null,
-  },
+  } as any,
 });
 
 const rules: Record<string, Rule[]> = {
@@ -209,6 +210,7 @@ const handleSubmit = () => {
   if (props.mode === "add") {
     state.formData.id = undefined;
   }
+  state.formData.parentId = props.parentId;
   formDataRef.value
     .validate()
     .then(() => {
