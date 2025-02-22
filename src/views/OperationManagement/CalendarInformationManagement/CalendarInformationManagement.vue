@@ -100,7 +100,7 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
-    label: "运行动态",
+    label: "日历动态",
     name: "calendarDynamic",
     required: true,
     tableVisible: true,
