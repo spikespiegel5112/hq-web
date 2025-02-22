@@ -100,6 +100,14 @@ const pageModel = ref([
     exportVisible: true,
   },
   {
+    label: "运行动态",
+    name: "calendarDynamic",
+    required: true,
+    tableVisible: true,
+    formVisible: true,
+    exportVisible: true,
+  },
+  {
     label: "操作",
     name: "operationColumn",
     tableVisible: true,

@@ -24,6 +24,7 @@ const app = {
     emergencyPlanType: 0,
     emergencyEventType: 1,
     tableLoading: true,
+
   }),
   mutations: {
     updateBannerInfo: (state: any, payload: any) => {

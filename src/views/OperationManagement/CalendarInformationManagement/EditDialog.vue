@@ -82,6 +82,26 @@
           </a-form-item>
         </a-col>
       </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item
+            name="calendarDynamic"
+            label="日历动态"
+            :label-col="{ style: { width: '100px' } }"
+          >
+            <a-textarea
+              v-model:value="state.formData.calendarDynamic"
+              placeholder="请输入"
+              :rows="3"
+              allow-clear
+            >
+            </a-textarea>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.calendarDynamic }}
+            </template>
+          </a-form-item>
+        </a-col>
+      </a-row>
     </a-form>
     <template #footer>
       <a-row>
@@ -145,6 +165,7 @@ const state = reactive({
     calendarDate: null,
     dateType: null,
     exhibitionType: null,
+    calendarDynamic: null,
   },
   dutyTime: [],
 }) as any;

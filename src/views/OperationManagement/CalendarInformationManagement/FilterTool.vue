@@ -13,7 +13,7 @@
                 />
               </a-form-item>
             </a-col>
-            <a-col :span="6">
+            <a-col :span="5">
               <a-form-item name="dateType" label="日期类型">
                 <a-select
                   v-model:value="state.formData.dateType"
@@ -30,7 +30,7 @@
                 </a-select>
               </a-form-item>
             </a-col>
-            <a-col :span="6">
+            <a-col :span="5">
               <a-form-item name="exhibitionType" label="展会类型">
                 <a-select
                   v-model:value="state.formData.exhibitionType"
@@ -45,6 +45,15 @@
                     {{ item.label }}
                   </a-select-option>
                 </a-select>
+              </a-form-item>
+            </a-col>
+            <a-col :span="7">
+              <a-form-item name="calendarDynamic" label="日历动态">
+                <a-input
+                  v-model:value="state.formData.calendarDynamic"
+                  placeholder="请输入"
+                >
+                </a-input>
               </a-form-item>
             </a-col>
           </a-row>
@@ -93,6 +102,7 @@ const state = reactive({
     calendarDate: null,
     dateType: null,
     exhibitionType: null,
+    calendarDynamic: null,
   },
 });
 
