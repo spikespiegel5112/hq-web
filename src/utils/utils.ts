@@ -301,7 +301,6 @@ const _utils = {
   $checkFileType: (fileName: string) => {
     const getFileExtension = (filename: string) => {
       if (typeof filename !== "string") {
-        debugger
         throw new Error("参数必须是字符串");
       }
 
