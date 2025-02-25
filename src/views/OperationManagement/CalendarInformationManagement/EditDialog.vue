@@ -90,6 +90,7 @@
             :label-col="{ style: { width: '100px' } }"
           >
             <a-textarea
+              v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.calendarDynamic"
               placeholder="请输入"
               :rows="3"
