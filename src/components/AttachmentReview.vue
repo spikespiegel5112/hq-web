@@ -24,7 +24,9 @@
               <DeleteOutlined />
             </a-button>
           </div>
-          <div v-else-if="global.$checkFileType(file.attachmentName) === 'file'">
+          <div
+            v-else-if="global.$checkFileType(file.attachmentName) === 'file'"
+          >
             <FileOutlined />
             <a-button class="deletebutton" type="link" @click="actions.remove">
               <DeleteOutlined />
@@ -36,7 +38,9 @@
               <DeleteOutlined />
             </a-button>
           </div>
-          <div v-else-if="global.$checkFileType(file.attachmentName) === 'video'">
+          <div
+            v-else-if="global.$checkFileType(file.attachmentName) === 'video'"
+          >
             <VideoCameraOutlined />
             <a-button
               v-if="!checkUniView(file)"
@@ -139,7 +143,7 @@ const parseAttachmentList = () => {
           break;
       }
 
-      console.log(previewImagePath)
+      console.log(previewImagePath);
 
       return {
         ...item,
@@ -203,12 +207,7 @@ onMounted(() => {
       display: inline-block;
       margin: 0 0.1rem 0 0;
       height: auto !important;
-      border: 1px solid #00266f;
-      border-radius: 0.1rem;
-      &:hover {
-        border: 1px solid #0059ff;
-        transition: 0.3s all;
-      }
+
       .filelist_wrapper {
         width: 1rem;
         height: 1rem;
@@ -219,6 +218,13 @@ onMounted(() => {
           position: relative;
           align-items: center;
           justify-content: center;
+          border: 1px solid #00266f;
+          border-radius: 0.1rem;
+          overflow: hidden;
+          &:hover {
+            border: 1px solid #0059ff;
+            transition: 0.3s all;
+          }
           .anticon-file,
           .anticon-video-camera,
           .anticon-file-pdf {
