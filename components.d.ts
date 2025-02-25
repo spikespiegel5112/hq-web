@@ -10,7 +10,6 @@ declare module 'vue' {
     AccessLog: typeof import('./src/components/AccessLog.vue')['default']
     AttachmentPreview: typeof import('./src/components/AttachmentPreview.vue')['default']
     AttachmentReview: typeof import('./src/components/AttachmentReview.vue')['default']
-    'AttachmentReview copy': typeof import('./src/components/AttachmentReview copy.vue')['default']
     BaseTable: typeof import('./src/components/BaseTable.vue')['default']
     Block: typeof import('./src/components/Block.vue')['default']
     CommonTitle: typeof import('./src/components/CommonTitle.vue')['default']
