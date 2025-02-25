@@ -241,7 +241,7 @@ const getData = async () => {
   state.formData.seId = props.rowData.id;
   console.log(props.rowData.eventAssociationId)
   eventManageSuddenEventGetRecordPageRequest({
-    seId: props.rowData.eventAssociationId,
+    id: props.rowData.eventAssociationId,
   })
     .then(async (response: any) => {
       response = response.data;
