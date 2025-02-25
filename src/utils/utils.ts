@@ -298,9 +298,10 @@ const _utils = {
     return env.VITE_FILE_BASE_URL + "/manage";
   },
 
-  $checkFileType: (fileName: any) => {
+  $checkFileType: (fileName: string) => {
     const getFileExtension = (filename: string) => {
       if (typeof filename !== "string") {
+        debugger
         throw new Error("参数必须是字符串");
       }
 

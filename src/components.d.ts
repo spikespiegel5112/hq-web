@@ -50,6 +50,7 @@ declare module 'vue' {
     ATimeRangePicker: typeof import('ant-design-vue/es')['TimeRangePicker']
     AttachmentPreview: typeof import('./components/AttachmentPreview.vue')['default']
     AttachmentReview: typeof import('./components/AttachmentReview.vue')['default']
+    'AttachmentReview copy': typeof import('./components/AttachmentReview copy.vue')['default']
     AUpload: typeof import('ant-design-vue/es')['Upload']
     BaseTable: typeof import('./components/BaseTable.vue')['default']
     Block: typeof import('./components/Block.vue')['default']

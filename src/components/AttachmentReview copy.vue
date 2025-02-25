@@ -11,44 +11,7 @@
       @preview="handlePreview"
       @download="handleDownload"
     >
-      <template #itemRender="{ file, actions }">
-        <div class="filelist_wrapper">
-          <div v-if="global.$checkFileType(file.attachmentName) === 'image'">
-            <a-image width="1rem" height="1rem" :src="getImgUrl(file)" />
-            <a-button
-              v-if="!checkUniView(file)"
-              class="deletebutton"
-              type="link"
-              @click="actions.remove"
-            >
-              <DeleteOutlined />
-            </a-button>
-          </div>
-          <div v-else-if="global.$checkFileType(file.attachmentName) === 'file'">
-            <FileOutlined />
-            <a-button class="deletebutton" type="link" @click="actions.remove">
-              <DeleteOutlined />
-            </a-button>
-          </div>
-          <div v-else-if="global.$checkFileType(file.attachmentName) === 'pdf'">
-            <FilePdfOutlined />
-            <a-button class="deletebutton" type="link" @click="actions.remove">
-              <DeleteOutlined />
-            </a-button>
-          </div>
-          <div v-else-if="global.$checkFileType(file.attachmentName) === 'video'">
-            <VideoCameraOutlined />
-            <a-button
-              v-if="!checkUniView(file)"
-              class="deletebutton"
-              type="link"
-              @click="actions.remove"
-            >
-              <DeleteOutlined />
-            </a-button>
-          </div>
-        </div>
-      </template>
+      <template #slot:itemRender> </template>
       <!-- http://localhost:9009/manage/attachment/download?id=191 -->
     </a-upload>
     <a-image
@@ -76,13 +39,6 @@ import {
   ref,
   nextTick,
 } from "vue";
-import {
-  UploadOutlined,
-  DeleteOutlined,
-  FileOutlined,
-  VideoCameraOutlined,
-  FilePdfOutlined,
-} from "@ant-design/icons-vue";
 
 const props = defineProps({
   title: {
@@ -139,8 +95,6 @@ const parseAttachmentList = () => {
           break;
       }
 
-      console.log(previewImagePath)
-
       return {
         ...item,
         uid: index,
@@ -166,18 +120,6 @@ const checkUniViewImage = (item: any) => {
   return result;
 };
 
-const getImgUrl = (item: any) => {
-  if (item.directLocation) {
-    return item.attachmentName;
-  } else {
-    return checkUniViewImage(item);
-  }
-};
-
-const checkUniView = (item: any) => {
-  return item.createBy === "uniview";
-};
-
 onMounted(() => {
   parseAttachmentList();
 });
@@ -196,47 +138,6 @@ onMounted(() => {
     font-size: 0.25rem;
     color: #fff;
     line-height: 0.5rem;
-  }
-  :deep(.ant-upload-list) {
-    margin: 0.15rem 0 0 0;
-    .ant-upload-list-item-container {
-      display: inline-block;
-      margin: 0 0.1rem 0 0;
-      height: auto !important;
-      border: 1px solid #00266f;
-      border-radius: 0.1rem;
-      &:hover {
-        border: 1px solid #0059ff;
-        transition: 0.3s all;
-      }
-      .filelist_wrapper {
-        width: 1rem;
-        height: 1rem;
-        > div {
-          display: inline-flex;
-          width: 100%;
-          height: 100%;
-          position: relative;
-          align-items: center;
-          justify-content: center;
-          .anticon-file,
-          .anticon-video-camera,
-          .anticon-file-pdf {
-            font-size: 0.5rem;
-          }
-          .deletebutton {
-            height: 20px;
-            padding: 0;
-            position: absolute;
-            right: 0;
-            top: 0;
-            .anticon {
-              font-size: 0.2rem;
-            }
-          }
-        }
-      }
-    }
   }
 }
 </style>
