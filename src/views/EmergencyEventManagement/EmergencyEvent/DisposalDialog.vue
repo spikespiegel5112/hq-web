@@ -65,7 +65,11 @@
                     {{ item.stepName }}
                   </span>
                   <span class="stepcontent">
-                    {{ item.stepContent }}
+                    {{
+                      !!getDisposalData(item)
+                        ? getDisposalData(item)?.stepContent
+                        : item.stepContent
+                    }}
                   </span>
                 </div>
               </a-radio>
@@ -300,6 +304,17 @@ const handleChangeDisposalStep = (value: any) => {
     stepOrder: planInfo.stepOrder,
     stepOrderDesc: planInfo.stepOrderDesc,
   };
+};
+
+const getDisposalData: any = (item: any) => {
+  let result = "";
+  if (!!state.disposalData.disposalList) {
+    result = state.disposalData.disposalList.find((item2: any) => {
+      return item2.stepOrder === item.stepOrder;
+    });
+  }
+  console.log(result);
+  return result;
 };
 
 onMounted(async () => {});
