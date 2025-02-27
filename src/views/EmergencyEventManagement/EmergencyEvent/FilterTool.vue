@@ -22,7 +22,7 @@
               </a-form-item>
             </a-col>
 
-            <a-col :span="4">
+            <a-col :span="5">
               <a-form-item name="eventType" label="事件类型">
                 <a-select
                   v-model:value="state.formData.eventType"
@@ -38,7 +38,7 @@
                 </a-select>
               </a-form-item>
             </a-col>
-            <a-col :span="5">
+            <a-col :span="4">
               <a-form-item name="eventLocation" label="地点">
                 <a-input
                   v-model:value="state.formData.eventLocation"
