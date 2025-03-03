@@ -105,7 +105,7 @@
             <a-date-picker
               v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.planTime"
-              format="YYYY-MM-DD"
+              format="YYYY-MM-DD HH:mm:ss"
               show-time
             ></a-date-picker>
             <template v-if="props.mode === 'review'">
