@@ -56,6 +56,9 @@
         },
       }"
     >
+      <template #title>
+        <CommonTitle title="选择区域" />
+      </template>
       <a-row>
         <a-col :span="23">
           <a-form>
@@ -64,6 +67,10 @@
                 v-model:value="state.selectedRegion"
                 placeholder="请选择"
                 style="z-index: 1000"
+                :filter-option="filterOption"
+                show-search
+                @focus="handleFocus"
+                @blur="handleBlur"
               >
                 <a-select-option
                   v-for="item in cameraList"
@@ -77,6 +84,19 @@
           </a-form>
         </a-col>
       </a-row>
+      <template #footer>
+        <a-row>
+          <a-col :span="23">
+            <a-button
+              key="submit"
+              type="primary"
+              @click="handleConfirmSelectRegion"
+            >
+              确定
+            </a-button>
+          </a-col>
+        </a-row>
+      </template>
     </a-modal>
   </div>
 </template>
@@ -99,7 +119,6 @@ import axios from "axios"; // 导入 axios
 import cameraList from "./camera.ts";
 
 import {
-  screenBannerInfoRequest,
   getAreaMapAlarmInfoData,
   videoUpperWallRequest,
 } from "@/api/management";
@@ -109,11 +128,12 @@ const _window: any = window;
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
-const formDataRef = ref();
 const checkFlag = ref(false);
 const AccessToken = ref();
-const isActive = ref("p9");
-const areaMapAlarmInfoData = ref([]);
+
+const options = [...Array(25)].map((_, i) => ({
+  value: (i + 10).toString(36) + (i + 1),
+}));
 
 const state = reactive({
   selectRegionVisible: false,
@@ -137,33 +157,6 @@ const state = reactive({
   upperWallList: [] as any,
 });
 
-// 定义 winContent 响应式数据
-const winContent = ref("");
-const defaultCameraList = ref("");
-
-watch(
-  () => state.selectedRegion,
-  (newValue: any) => {
-    handleSelectChange(newValue);
-  },
-  {
-    deep: true,
-  }
-);
-// 声明 data 数组
-const alarmList = ref([
-  { name: "申虹国际大厦", top: "1.85rem", left: "2.95rem", isAlarm: false },
-  { name: "出租车市域铁", top: "1.85rem", left: "3.82rem", isAlarm: false },
-  { name: "蓄车场北", top: "0.8rem", left: "1.6rem", isAlarm: false },
-  { name: "蓄车场南", top: "2.5rem", left: "1.7rem", isAlarm: false },
-  { name: "P9P10停车库", top: "1.2rem", left: "0.9rem", isAlarm: false },
-  { name: "西交B区", top: "1.5rem", left: "1rem", isAlarm: false },
-  { name: "P9网约车1F", top: "1.2rem", left: "1.2rem", isAlarm: false },
-  { name: "P10网约车1F", top: "2.2rem", left: "1rem", isAlarm: false },
-  { name: "申贵路地下通道", top: "1.8rem", left: "1.25rem", isAlarm: false },
-]);
-
-// ----------------------------------data------------
 onMounted(async () => {
   try {
     const res1 = await axios.post("http://10.141.10.10:8088/VIID/login/v2", {});
@@ -198,14 +191,14 @@ onMounted(async () => {
       : null;
 
     await loadScript();
-    const initData = {
+    const initData: any = {
       ip: "10.141.10.10",
       token: AccessToken.value,
       title: document.title,
       offset: [0, 0],
     };
 
-    await init(initData);
+    await init();
 
     setTimeout(() => {}, 1000);
   } catch (error) {
@@ -434,32 +427,6 @@ const getCameraData = async () => {
     });
 };
 
-// 勾选数据
-const handleSelectChange = (value: any) => {
-  state.upperWallList = [];
-  clearPanelWindow();
-
-  const selectedCameraList = cameraList.find(
-    (item: any) => item.label === value
-  )?.data;
-  const selectedCameraData: any[] = state.cameraListTotal.filter(
-    (item: any) => {
-      return selectedCameraList.find(
-        (item2: any) => item.ResItemV1.ResCode === item2.id
-      );
-    }
-  );
-
-  state.cameraListChecked = selectedCameraData;
-  forCameraData();
-  state.selectRegionVisible = false;
-};
-
-// 设置激活的 span
-const setActive = (value: string) => {
-  state.isActive = value;
-};
-
 // 警报弹窗点击事件-符合类型的视频将显示在页面
 const alarmClick = (value: any) => {
   state.cameraListChecked = state.cameraListTotal.map(
@@ -542,11 +509,42 @@ const init = async () => {
   await getCameraData();
   // 默认循环视频数组
   state.selectedRegion = cameraList[0].label;
-
+  handleConfirmSelectRegion();
   //获取区域告警信息
   getAreaMapAlarmInfoFun();
 
   // // 监听 areaMapAlarmInfoData 的变化
+};
+
+const handleConfirmSelectRegion = () => {
+  state.upperWallList = [];
+  clearPanelWindow();
+
+  const selectedCameraList = cameraList.find(
+    (item: any) => item.label === state.selectedRegion
+  )?.data;
+  const selectedCameraData: any[] = state.cameraListTotal.filter(
+    (item: any) => {
+      return selectedCameraList.find(
+        (item2: any) => item.ResItemV1.ResCode === item2.id
+      );
+    }
+  );
+
+  state.cameraListChecked = selectedCameraData;
+  forCameraData();
+  state.selectRegionVisible = false;
+};
+
+const handleBlur = () => {
+  console.log("blur");
+};
+const handleFocus = () => {
+  console.log("focus");
+};
+
+const filterOption = (input: string, option: any) => {
+  return option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0;
 };
 
 onMounted(async () => {

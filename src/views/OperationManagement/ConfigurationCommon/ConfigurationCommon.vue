@@ -86,8 +86,6 @@ const props = defineProps({
   },
 });
 
-const dataIndex = [] as any[];
-
 const alarmList = ref([
   {
     label: "绿灯",
