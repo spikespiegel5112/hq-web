@@ -116,7 +116,7 @@
             >
               {{
                 !!item.colorConfig.val
-                  ? item.colorConfig.dictionary.find((item2) => {
+                  ? item.colorConfig.dictionary.find((item2:any) => {
                       const result =
                         item2.value === scope.record[item.tagConfig.val];
                       return result;

@@ -12,50 +12,7 @@
     >
       <a-row>
         <a-col :span="22">
-          <a-form-item name="publicSentimentSource" label="来源">
-            <a-select
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.publicSentimentSource"
-              placeholder="请选择"
-            >
-              <a-select-option
-                v-for="item in global.$getDictionary(
-                  'public_sentiment_info_public_sentiment_source'
-                )"
-                :value="item.value"
-              >
-                {{ item.label }}
-              </a-select-option>
-            </a-select>
-            <template v-if="props.mode === 'review'">
-              {{ global.$getDictionary('public_sentiment_info_public_sentiment_source').find((item:any)=>item.value===state.formData.publicSentimentSource)?.label }}
-            </template>
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="22">
-          <a-form-item name="publicSentimentTime" label="上报时间">
-            <a-date-picker
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.publicSentimentTime"
-              show-time
-              format="YYYY-MM-DD HH:mm:ss"
-              @change="handleChangeTime1"
-            ></a-date-picker>
-            <template v-if="props.mode === 'review'">
-              {{
-                global
-                  .$dayjs(state.formData.publicSentimentTime)
-                  .format("YYYY-MM-DD")
-              }}
-            </template>
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="22">
-          <a-form-item name="publicSentimentType" label="类型">
+          <a-form-item name="publicSentimentType" label="舆情类型">
             <a-select
               v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.publicSentimentType"
@@ -78,22 +35,32 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="keyword" label="关键词">
-            <a-input
+          <a-form-item name="publicSentimentSource" label="舆情来源">
+            <a-select
               v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.keyword"
-              placeholder="请输入"
+              v-model:value="state.formData.publicSentimentSource"
+              placeholder="请选择"
             >
-            </a-input>
+              <a-select-option
+                v-for="item in global.$getDictionary(
+                  'public_sentiment_info_public_sentiment_source'
+                )"
+                :value="item.value"
+              >
+                {{ item.label }}
+              </a-select-option>
+            </a-select>
             <template v-if="props.mode === 'review'">
-              {{ state.formData.keyword }}
+              {{
+                parsePublicSentimentSource(state.formData.publicSentimentSource)
+              }}
             </template>
           </a-form-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="publicSentimentSensitive" label="敏感度">
+          <a-form-item name="publicSentimentSensitive" label="敏感程度">
             <a-select
               v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.publicSentimentSensitive"
@@ -114,7 +81,7 @@
       </a-row>
       <a-row>
         <a-col :span="22">
-          <a-form-item name="publicSentimentContent" label="内容">
+          <a-form-item name="publicSentimentContent" label="舆情内容">
             <a-textarea
               v-if="global.$checkEditable(props.mode)"
               v-model:value="state.formData.publicSentimentContent"
@@ -131,6 +98,70 @@
       </a-row>
       <a-row>
         <a-col :span="22">
+          <a-form-item name="publicSentimentTime" label="舆情发生时间">
+            <a-date-picker
+              v-if="global.$checkEditable(props.mode)"
+              v-model:value="state.formData.publicSentimentTime"
+              show-time
+              format="YYYY-MM-DD HH:mm:ss"
+            ></a-date-picker>
+            <template v-if="props.mode === 'review'">
+              {{
+                global
+                  .$dayjs(state.formData.publicSentimentTime)
+                  .format("YYYY-MM-DD HH:mm:ss")
+              }}
+            </template>
+          </a-form-item>
+        </a-col>
+      </a-row>
+
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="keyword" label="关键词">
+            <a-input
+              v-if="global.$checkEditable(props.mode)"
+              v-model:value="state.formData.keyword"
+              placeholder="请输入"
+            >
+            </a-input>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.keyword }}
+            </template>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row v-if="props.mode === 'review'">
+        <a-col :span="22">
+          <a-form-item
+            name="handlingStatus"
+            label="状态"
+            :style="{
+              color: getDisposalStatusColor(state.formData.handlingStatus),
+            }"
+          >
+            {{ global
+            .$getDictionary("disposalStatus")
+            .find((item2: any) => item2.value === state.formData.handlingStatus)?.label }}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="handlingTime" label="处置时间">
+            {{ state.formData.handlingTime }}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="handlingContent" label="处置情况">
+            {{ state.formData.handlingContent }}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="22">
           <a-form-item name="attachmentList" label="附件">
             <CommonUpload
               v-if="global.$checkEditable(props.mode)"
@@ -141,6 +172,15 @@
                 :attachmentList="state.formData.attachmentList"
               />
             </template>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row v-if="props.mode === 'review'">
+        <a-col :span="22">
+          <a-form-item name="handlingAttachmentList" label="处置附件">
+            <AttachmentReview
+              :attachmentList="state.formData.handlingAttachmentList"
+            />
           </a-form-item>
         </a-col>
       </a-row>
@@ -205,12 +245,16 @@ const state = reactive({
   formData: {
     id: null as number | null | undefined,
     attachmentList: [] as any[],
+    handlingAttachmentList: [] as any[],
     keyword: null,
     publicSentimentContent: null,
     publicSentimentSensitive: null,
     publicSentimentSource: null,
     publicSentimentTime: null,
     publicSentimentType: null,
+    handlingStatus: null,
+    handlingTime: null,
+    handlingContent: null,
   },
 });
 
@@ -265,6 +309,7 @@ watch(
             ? global.$dayjs(rowData.publicSentimentTime, "YYYY-MM-DD HH:mm:ss")
             : null,
         };
+        debugger;
         Object.keys(state.formData).forEach((item: string) => {
           state.formData[item] = rowData[item];
         });
@@ -299,7 +344,34 @@ const handleSubmit = () => {
     });
 };
 
-const handleChangeTime1 = () => {};
+const getDisposalStatusColor = (value: any) => {
+  const colorList = [
+    {
+      label: "绿色",
+      color: "chartreuse",
+      value: 2,
+    },
+    {
+      label: "黄色",
+      color: "yellow",
+      value: 1,
+    },
+    {
+      label: "红色",
+      color: "red",
+      value: 0,
+    },
+  ];
+
+  return global.$getColorInfoByValue(value, colorList)?.color;
+};
+
+const parsePublicSentimentSource = (value: any) => {
+  let result = global
+    .$getDictionary("public_sentiment_info_public_sentiment_source")
+    .find((item: any) => value === state.formData.publicSentimentSource);
+  return !!result ? result.label : result.value;
+};
 
 onBeforeUnmount(() => {});
 </script>

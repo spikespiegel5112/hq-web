@@ -410,8 +410,8 @@ const getCameraData = async () => {
     })
     .then((res: any) => {
       state.cameraListTotal = res.data.Result.InfoList;
-      console.log(state.cameraListTotal);
-      console.log("相机总资源", state.cameraListTotal);
+      // console.log(state.cameraListTotal);
+      // console.log("相机总资源", state.cameraListTotal);
       state.cameraListChecked = state.cameraListTotal.filter((item: any) => {
         return item.OrgName.includes("B1");
       });
@@ -522,15 +522,15 @@ const handleConfirmSelectRegion = () => {
 
   const selectedCameraList = cameraList.find(
     (item: any) => item.label === state.selectedRegion
-  )?.data;
+  )?.info;
+
   const selectedCameraData: any[] = state.cameraListTotal.filter(
     (item: any) => {
       return selectedCameraList.find(
-        (item2: any) => item.ResItemV1.ResCode === item2.id
+        (item2: any) => item.ResItemV1.ResCode === item2.seriesNumber
       );
     }
   );
-
   state.cameraListChecked = selectedCameraData;
   forCameraData();
   state.selectRegionVisible = false;

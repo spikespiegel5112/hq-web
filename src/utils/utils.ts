@@ -345,24 +345,27 @@ const _utils = {
     }
     return result;
   },
-  $getColorInfoByValue(colorValue: string) {
-    const colorList: any[] = [
-      {
-        label: "绿色",
-        color: "chartreuse",
-        value: 0,
-      },
-      {
-        label: "黄色",
-        color: "yellow",
-        value: 1,
-      },
-      {
-        label: "红色",
-        color: "red",
-        value: 2,
-      },
-    ];
+  $getColorInfoByValue(colorValue: string, colorList: any[]) {
+    if (!colorList) {
+      colorList = [
+        {
+          label: "绿色",
+          color: "chartreuse",
+          value: 0,
+        },
+        {
+          label: "黄色",
+          color: "yellow",
+          value: 1,
+        },
+        {
+          label: "红色",
+          color: "red",
+          value: 2,
+        },
+      ];
+    }
+
     const color = colorList.find((item: any) => item.value === colorValue);
     return color;
   },

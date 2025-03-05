@@ -31,6 +31,7 @@
           </a-form-item>
         </a-col>
       </a-row>
+
       <a-row>
         <a-col :span="22">
           <a-form-item name="complaintType" label="投诉类型">
@@ -52,7 +53,7 @@
           </a-form-item>
         </a-col>
       </a-row>
-      <!-- <a-row>
+      <a-row>
         <a-col :span="22">
           <a-form-item name="complaintSensitive" label="敏感程度">
             <a-select
@@ -72,7 +73,24 @@
             </template>
           </a-form-item>
         </a-col>
-      </a-row> -->
+      </a-row>
+
+      <a-row>
+        <a-col :span="22">
+          <a-form-item name="complaintContent" label="投诉内容">
+            <a-textarea
+              v-if="global.$checkEditable(props.mode)"
+              v-model:value="state.formData.complaintContent"
+              placeholder="请输入"
+              :rows="4"
+            >
+            </a-textarea>
+            <template v-if="props.mode === 'review'">
+              {{ state.formData.complaintContent }}
+            </template>
+          </a-form-item>
+        </a-col>
+      </a-row>
       <a-row>
         <a-col :span="22">
           <a-form-item name="complaintTime" label="投诉时间">
@@ -93,22 +111,22 @@
           </a-form-item>
         </a-col>
       </a-row>
-      <a-row>
+      <a-row v-if="props.mode === 'review'">
         <a-col :span="22">
-          <a-form-item name="complaintContent" label="投诉内容">
-            <a-textarea
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.complaintContent"
-              placeholder="请输入"
-              :rows="4"
-            >
-            </a-textarea>
-            <template v-if="props.mode === 'review'">
-              {{ state.formData.complaintContent }}
-            </template>
+          <a-form-item
+            name="handlingStatus"
+            label="状态"
+            :style="{
+              color: getDisposalStatusColor(state.formData.handlingStatus),
+            }"
+          >
+            {{ global
+            .$getDictionary("disposalStatus")
+            .find((item2: any) => item2.value === state.formData.handlingStatus)?.label }}
           </a-form-item>
         </a-col>
       </a-row>
+
       <a-row>
         <a-col :span="22">
           <a-form-item name="attachmentList" label="附件">
@@ -121,6 +139,15 @@
                 :attachmentList="state.formData.attachmentList"
               />
             </template>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row v-if="props.mode === 'review'">
+        <a-col :span="22">
+          <a-form-item name="handlingAttachmentList" label="处置附件">
+            <AttachmentReview
+              :attachmentList="state.formData.handlingAttachmentList"
+            />
           </a-form-item>
         </a-col>
       </a-row>
@@ -190,6 +217,8 @@ const state = reactive({
     complaintSensitive: null,
     complaintTime: null,
     complaintContent: null,
+    handlingAttachmentList: [] as any[],
+    handlingStatus: null,
   } as any,
 });
 
@@ -230,14 +259,38 @@ const rules: ComputedRef<RuleObject[]> = computed(() => {
   return result;
 });
 
+const getDisposalStatusColor = (value: any) => {
+  const colorList = [
+    {
+      label: "绿色",
+      color: "chartreuse",
+      value: 2,
+    },
+    {
+      label: "黄色",
+      color: "yellow",
+      value: 1,
+    },
+    {
+      label: "红色",
+      color: "red",
+      value: 0,
+    },
+  ];
+
+  return global.$getColorInfoByValue(value, colorList)?.color;
+};
+
 watch(
   () => props.visible,
   async (newValue: any) => {
     state.visible = newValue;
+
     if (!!newValue) {
       await nextTick();
       if (["edit", "review", "disposal"].some((item) => item === props.mode)) {
         let rowData = JSON.parse(JSON.stringify(props.rowData));
+
         rowData = {
           ...rowData,
           complaintTime: global.$dayjs(
