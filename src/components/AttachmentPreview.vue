@@ -21,7 +21,7 @@
           <div class="content">
             <img v-if="props.fileType === 'image'" :src="getImgUrl(item)" />
             <PDFViewer
-              v-if="props.fileType === 'file' && props.visible"
+              v-if="props.fileType === 'pdf' && props.visible"
               :filePath="getImgUrl(item)"
             />
             <VideoPlayer
@@ -35,7 +35,6 @@
       <div class="swiper-pagination"></div>
 
       <!-- If we need navigation buttons -->
-      {{ props.attachmentList }}
       <div
         v-if="props.attachmentList.length > 0"
         class="swiper-button-prev"

@@ -33,7 +33,7 @@
             </a-button>
           </div>
           <div v-else-if="global.$checkFileType(file.attachmentName) === 'pdf'">
-            <FilePdfOutlined />
+            <FilePdfOutlined @click="handlePreviewPdf(file)" />
             <a-button class="deletebutton" type="link" @click="actions.remove">
               <DeleteOutlined />
             </a-button>
@@ -41,7 +41,7 @@
           <div
             v-else-if="global.$checkFileType(file.attachmentName) === 'video'"
           >
-            <VideoCameraOutlined />
+            <VideoCameraOutlined @click="handlePreviewVideo(file)" />
             <a-button
               v-if="!checkUniView(file)"
               class="deletebutton"
@@ -64,6 +64,12 @@
         visible: state.previewVisible,
         onVisibleChange: () => (state.previewVisible = false),
       }"
+    />
+    <AttachmentPreview
+      :visible="state.attachmentVisible"
+      :fileType="state.attachmentType"
+      :attachmentList="[state.currentAttachmentData]"
+      @onClose="state.attachmentVisible = false"
     />
   </div>
 </template>
@@ -103,8 +109,10 @@ const global = currentInstance.appContext.config.globalProperties;
 const state = reactive({
   attachmentList: [] as any[],
   previewVisible: false,
-  attachmentType: null,
+  attachmentType: "",
+  attachmentVisible: false,
   currentAttachmentData: {},
+  pdfViewerVisible: false,
 });
 
 watch(
@@ -158,10 +166,6 @@ const parseAttachmentList = () => {
 
 const checkUniViewImage = (item: any) => {
   let result: string;
-  const baseUrl =
-    global.$store.state.app.envMode.MODE === "test"
-      ? "http://localhost:9009/manage"
-      : "";
   if (item.createBy === "uniview") {
     result = item.attachmentPath;
   } else {
@@ -180,6 +184,18 @@ const getImgUrl = (item: any) => {
 
 const checkUniView = (item: any) => {
   return item.createBy === "uniview";
+};
+
+const handlePreviewPdf = (file: any) => {
+  state.currentAttachmentData = file;
+  state.attachmentVisible = true;
+  state.attachmentType = "pdf";
+};
+
+const handlePreviewVideo = (file: any) => {
+  state.currentAttachmentData = file;
+  state.attachmentVisible = true;
+  state.attachmentType = "video";
 };
 
 onMounted(() => {
