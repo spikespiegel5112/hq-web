@@ -97,7 +97,7 @@
             >
               {{
                 !!item.tagConfig.val
-                  ? item.tagConfig.dictionary.find((item2) => {
+                  ? item.tagConfig.dictionary.find((item2:any) => {
                       const result =
                         item2.value === scope.record[item.tagConfig.val];
                       return result;
