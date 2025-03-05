@@ -34,25 +34,6 @@
           </a-form-item>
         </a-col>
       </a-row>
-
-      <a-row>
-        <a-col :span="22">
-          <a-form-item name="externalTime" label="上报时间">
-            <a-date-picker
-              v-if="global.$checkEditable(props.mode)"
-              v-model:value="state.formData.externalTime"
-              show-time
-              format="YYYY-MM-DD HH:mm:ss"
-              @change="handleChangeTime1"
-            ></a-date-picker>
-            <template v-if="props.mode === 'review'">
-              {{
-                global.$dayjs(state.formData.externalTime).format("YYYY-MM-DD")
-              }}
-            </template>
-          </a-form-item>
-        </a-col>
-      </a-row>
       <a-row>
         <a-col :span="22">
           <a-form-item name="externalType" label="类型">
@@ -78,6 +59,26 @@
       </a-row>
       <a-row>
         <a-col :span="22">
+          <a-form-item name="externalTime" label="上报时间">
+            <a-date-picker
+              v-if="global.$checkEditable(props.mode)"
+              v-model:value="state.formData.externalTime"
+              show-time
+              format="YYYY-MM-DD HH:mm:ss"
+            ></a-date-picker>
+            <template v-if="props.mode === 'review'">
+              {{
+                global
+                  .$dayjs(state.formData.externalTime)
+                  .format("YYYY-MM-DD HH:mm:ss")
+              }}
+            </template>
+          </a-form-item>
+        </a-col>
+      </a-row>
+
+      <a-row>
+        <a-col :span="22">
           <a-form-item name="externalContent" label="内容">
             <a-textarea
               v-if="global.$checkEditable(props.mode)"
@@ -93,6 +94,33 @@
           </a-form-item>
         </a-col>
       </a-row>
+      <a-row v-if="props.mode === 'review'">
+        <a-col :span="22">
+          <a-form-item name="handlingTime" label="处置时间">
+            {{ state.formData.handlingTime }}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row v-if="props.mode === 'review'">
+        <a-col :span="22">
+          <a-form-item name="handlingContent" label="处置情况">
+            {{ state.formData.handlingContent }}
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row v-if="props.mode === 'review'">
+        <a-col :span="22">
+          <a-form-item
+            name="handlingStatus"
+            label="状态"
+            :style="{
+              color: getDisposalStatusColor(state.formData.handlingStatus),
+            }"
+          >
+            {{ global.$getDictionary("disposalStatus").find((item2: any) => item2.value === state.formData.handlingStatus)?.label }}
+          </a-form-item>
+        </a-col>
+      </a-row>
       <a-row>
         <a-col :span="22">
           <a-form-item name="attachmentList" label="附件">
@@ -105,6 +133,15 @@
                 :attachmentList="state.formData.attachmentList"
               />
             </template>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row v-if="props.mode === 'review'">
+        <a-col :span="22">
+          <a-form-item name="handlingAttachmentList" label="处置附件">
+            <AttachmentReview
+              :attachmentList="state.formData.handlingAttachmentList"
+            />
           </a-form-item>
         </a-col>
       </a-row>
@@ -177,6 +214,7 @@ const state = reactive({
     handlingContent: null,
     handlingStatus: null,
     handlingTime: null,
+    handlingAttachmentList: [] as any[],
   },
 }) as any;
 
@@ -266,7 +304,27 @@ const handleSubmit = () => {
     });
 };
 
-const handleChangeTime1 = () => {};
+const getDisposalStatusColor = (value: any) => {
+  const colorList = [
+    {
+      label: "绿色",
+      color: "chartreuse",
+      value: 2,
+    },
+    {
+      label: "黄色",
+      color: "yellow",
+      value: 1,
+    },
+    {
+      label: "红色",
+      color: "red",
+      value: 0,
+    },
+  ];
+
+  return global.$getColorInfoByValue(value, colorList)?.color;
+};
 
 onBeforeUnmount(() => {});
 </script>
