@@ -245,7 +245,6 @@ const state = reactive({
   formData: {
     id: null as number | null | undefined,
     attachmentList: [] as any[],
-    handlingAttachmentList: [] as any[],
     keyword: null,
     publicSentimentContent: null,
     publicSentimentSensitive: null,
@@ -255,6 +254,7 @@ const state = reactive({
     handlingStatus: null,
     handlingTime: null,
     handlingContent: null,
+    handlingAttachmentList: [] as any[],
   },
 });
 
@@ -309,7 +309,6 @@ watch(
             ? global.$dayjs(rowData.publicSentimentTime, "YYYY-MM-DD HH:mm:ss")
             : null,
         };
-        debugger;
         Object.keys(state.formData).forEach((item: string) => {
           state.formData[item] = rowData[item];
         });
