@@ -349,13 +349,13 @@ const _utils = {
     if (!colorList) {
       colorList = [
         {
-          label: "绿色",
-          color: "chartreuse",
+          label: "黄色",
+          color: "yellow",
           value: 0,
         },
         {
-          label: "黄色",
-          color: "yellow",
+          label: "橙色",
+          color: "orange",
           value: 1,
         },
         {
@@ -364,6 +364,23 @@ const _utils = {
           value: 2,
         },
       ];
+      // colorList = [
+      //   {
+      //     label: "绿色",
+      //     color: "chartreuse",
+      //     value: 0,
+      //   },
+      //   {
+      //     label: "黄色",
+      //     color: "yellow",
+      //     value: 1,
+      //   },
+      //   {
+      //     label: "红色",
+      //     color: "red",
+      //     value: 2,
+      //   },
+      // ];
     }
 
     const color = colorList.find((item: any) => item.value === colorValue);

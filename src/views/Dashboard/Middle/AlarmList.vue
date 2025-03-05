@@ -75,8 +75,8 @@ const pageModel = ref([
     exportVisible: true,
     colorConfig: {
       colorList: [
-        { value: "绿色", color: "chartreuse" },
         { value: "黄色", color: "yellow" },
+        { value: "橙色", color: "orange" },
         { value: "红色", color: "red" },
       ],
     },
@@ -307,5 +307,4 @@ onBeforeUnmount(() => {});
     }
   }
 }
-
 </style>
