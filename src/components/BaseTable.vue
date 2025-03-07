@@ -65,6 +65,20 @@
                     />
                   </a-button>
                 </template>
+                <template v-else-if="item2 === 'pdf'">
+                  <a-button
+                    :key="item2"
+                    type="link"
+                    @click.stop="handlePreview(scope, 'pdf')"
+                  >
+                    <PaperClipOutlined
+                      :style="{
+                        color: '#8EE1F9',
+                        fontSize: '0.3rem',
+                      }"
+                    />
+                  </a-button>
+                </template>
                 <template v-else-if="item2 === 'video'">
                   <a-button
                     :key="item2"
@@ -418,12 +432,16 @@ const checkFileType = (file: any) => {
 
   const imageType = ["png", "jpg", "jpeg", "gif", "bmp"];
   const videoType = ["mp4", "avi", "mov", "wmv", "flv", "rmvb", "3gp"];
-  const fileType = ["xls", "xlsx", "pdf"];
+  const fileType = ["xls", "xlsx"];
+  const pdfType = ["pdf"];
   if (imageType.includes(fileSufix)) {
     result = "image";
   }
   if (videoType.includes(fileSufix)) {
     result = "video";
+  }
+  if (pdfType.includes(fileSufix)) {
+    result = "pdf";
   }
   if (fileType.includes(fileSufix)) {
     result = "file";
@@ -497,6 +515,9 @@ const getAttachmentTypeList = (attachmentList: any) => {
     }
     if (checkFileType(item) === "file" && !typeList.includes("file")) {
       typeList.push("file");
+    }
+    if (checkFileType(item) === "pdf" && !typeList.includes("file")) {
+      typeList.push("pdf");
     }
     if (checkFileType(item) === "video" && !typeList.includes("video")) {
       typeList.push("video");

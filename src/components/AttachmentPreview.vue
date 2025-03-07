@@ -11,37 +11,33 @@
       <!-- Additional required wrapper -->
       <div class="swiper-wrapper">
         <!-- Slides -->
-
         <div
-          v-for="item in props.attachmentList"
+          v-for="item in state.filePathList"
           class="swiper-slide"
           :style="{
             textAlign: 'center',
           }"
         >
           <div class="content">
-            <img v-if="props.fileType === 'image'" :src="getImgUrl(item)" />
-            <PDFViewer
-              v-if="props.fileType === 'pdf' && props.visible"
-              :filePath="getImgUrl(item)"
-            />
+            <img v-if="props.fileType === 'image'" :src="item" />
+            <PDFViewer v-if="props.fileType === 'pdf'" :filePath="item" />
             <VideoPlayer
-              v-if="props.fileType === 'video' && props.visible"
-              :filePath="getImgUrl(item)"
+              v-if="props.fileType === 'video'"
+              :filePath="item"
+              :play="props.visible"
             />
           </div>
         </div>
       </div>
       <!-- If we need pagination -->
       <div class="swiper-pagination"></div>
-
       <!-- If we need navigation buttons -->
       <div
-        v-if="props.attachmentList.length > 0"
+        v-if="props.attachmentList.length > 1"
         class="swiper-button-prev"
       ></div>
       <div
-        v-if="props.attachmentList.length > 0"
+        v-if="props.attachmentList.length > 1"
         class="swiper-button-next"
       ></div>
 
@@ -78,8 +74,6 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-import { CloseOutlined, CloseCircleFilled } from "@ant-design/icons-vue";
-
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
@@ -88,14 +82,33 @@ const emit = defineEmits<{
 }>();
 
 const props = defineProps({
-  attachmentList: { type: Array, required: true, default: () => [] },
-  visible: { type: Boolean, required: true, default: false },
-  fileType: { type: String, default: "", required: true },
+  linkKey: {
+    type: String,
+    required: false,
+    default: "",
+  },
+  attachmentList: {
+    type: Array,
+    required: true,
+    default: () => [],
+  },
+  visible: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
+  fileType: {
+    type: String,
+    default: "",
+    required: true,
+  },
 });
 
 const state = reactive({
   visible: false,
+  attachmentVisible: false,
   attachmentList: [] as any[],
+  filePathList: [],
 });
 
 let swiperInstance: any;
@@ -112,15 +125,12 @@ watch(
   async (newValue: any, oldValue: any) => {
     if (!!swiperInstance) {
       swiperInstance.destroy();
+      swiperInstance = undefined;
     }
     await nextTick();
+    state.filePathList = newValue.map((item: any) => getImgUrl(item));
     initSwiper();
   }
-);
-
-watch(
-  () => global.$route,
-  (newValue: any, oldValue: any) => {}
 );
 
 const getImgUrl = (item: any) => {
@@ -145,6 +155,7 @@ const checkUniViewImage = (item: any) => {
 const handleClose = () => {
   global.$store.commit("app/updateTableLoading", false);
   emit("onClose", false);
+  state.filePathList = [];
 };
 
 const initSwiper = async () => {
@@ -179,10 +190,10 @@ onBeforeUnmount(() => {});
 .common_attachmentpreview_wrapper {
   display: flex;
   margin: 0.15rem 0 0 0;
+  padding: 0 0.2rem;
   width: 100%;
   height: 0.5rem;
   align-items: center;
-
   .ant-space {
     width: 100%;
     overflow-x: auto;
