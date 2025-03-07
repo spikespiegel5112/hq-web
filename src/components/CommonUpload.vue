@@ -19,7 +19,10 @@
         上传
       </a-button>
       <template #itemRender="{ file, actions }">
-        <div class="filelist_wrapper">
+        <div v-if="file.status === 'uploading'" class="loading">
+          <LoadingOutlined />
+        </div>
+        <div v-else class="filelist_wrapper">
           <div v-if="global.$checkFileType(file.name) === 'image'">
             <a-image width="1rem" height="1rem" :src="getImgUrl(file)" />
             <a-button
@@ -81,6 +84,7 @@ import {
   FilePdfOutlined,
 } from "@ant-design/icons-vue";
 
+import { LoadingOutlined } from "@ant-design/icons-vue";
 import { attachmentDeleteRequest } from "@/api/management";
 
 const emit: any = defineEmits(["update:attachmentList"]);
@@ -98,6 +102,7 @@ const global = currentInstance.appContext.config.globalProperties;
 const state = reactive({
   fileList: [] as any[],
   initFlag: true,
+  uploadingFlag: false,
 });
 
 const _modelValue = computed({
@@ -195,7 +200,7 @@ const handleChangeAttachment = (value: any) => {
         ...state.fileList[fileIndex],
         ...response.data,
       };
-      const aaa = {
+      const fileInfo = {
         ...state.fileList[fileIndex],
         id: state.fileList[fileIndex].id,
         uid: fileIndex,
@@ -204,8 +209,8 @@ const handleChangeAttachment = (value: any) => {
         deleteAble: !checkUniView(state.fileList[fileIndex]),
         url: checkFileUrl(state.fileList[fileIndex]),
       };
-
-      _modelValue.value.push(aaa);
+      console.log(fileInfo);
+      _modelValue.value.push(fileInfo);
       global.$message.success("上传成功");
     } else {
       global.$message.error("上传失败");
@@ -214,7 +219,7 @@ const handleChangeAttachment = (value: any) => {
 };
 
 const handleDeleteAttachment = (value: any) => {
-  if (!value.deleteAble) {
+  if (!value.deleteAble && value.deleteAble !== undefined) {
     global.$message.error("系统文件，无法删除");
     return;
   }
@@ -295,6 +300,14 @@ onMounted(async () => {
         border: 1px solid #0059ff;
         transition: 0.3s all;
       }
+      .loading {
+        display: flex;
+        width: 1rem;
+        height: 1rem;
+        line-height: 1rem;
+        justify-content: center;
+        font-size: 0.5rem;
+      }
       .filelist_wrapper {
         width: 1rem;
         height: 1rem;
@@ -305,6 +318,7 @@ onMounted(async () => {
           position: relative;
           align-items: center;
           justify-content: center;
+
           .anticon-file,
           .anticon-video-camera,
           .anticon-file-pdf {
