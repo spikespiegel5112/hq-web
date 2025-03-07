@@ -48,6 +48,7 @@ declare module 'vue' {
     ATimelineItem: typeof import('ant-design-vue/es')['TimelineItem']
     ATimePicker: typeof import('ant-design-vue/es')['TimePicker']
     ATimeRangePicker: typeof import('ant-design-vue/es')['TimeRangePicker']
+    AttachmentListPreview: typeof import('./components/attachment/AttachmentListPreview.vue')['default']
     AttachmentPreview: typeof import('./components/AttachmentPreview.vue')['default']
     AttachmentReview: typeof import('./components/AttachmentReview.vue')['default']
     AUpload: typeof import('ant-design-vue/es')['Upload']

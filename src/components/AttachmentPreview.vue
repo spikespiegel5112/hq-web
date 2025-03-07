@@ -4,6 +4,7 @@
     v-model:open="state.visible"
     @cancel="handleClose"
     width="12rem"
+    centered
   >
     <!-- Slider main container -->
     <div class="swiper">

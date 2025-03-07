@@ -53,18 +53,7 @@
           </div>
         </div>
       </template>
-      <!-- http://localhost:9009/manage/attachment/download?id=191 -->
     </a-upload>
-    <a-image
-      style="display: none"
-      :width="100"
-      :height="100"
-      :src="`${global.$getFileBaseUrl()}/attachment/download?id=${state.currentAttachmentData.id}`"
-      :preview="{
-        visible: state.previewVisible,
-        onVisibleChange: () => (state.previewVisible = false),
-      }"
-    />
     <AttachmentPreview
       :visible="state.attachmentVisible"
       :fileType="state.attachmentType"
@@ -126,7 +115,7 @@ watch(
 );
 
 const handlePreview = (value: any) => {
-  state.previewVisible = true;
+  state.attachmentVisible = true;
   state.currentAttachmentData = value;
 };
 
@@ -222,6 +211,7 @@ onMounted(() => {
     .ant-upload-list-item-container {
       display: inline-block;
       margin: 0 0.1rem 0 0;
+      width: auto !important;
       height: auto !important;
 
       .filelist_wrapper {

@@ -687,10 +687,6 @@ onBeforeUnmount(() => {});
     &.yellow {
       background-color: rgba(255, 234, 0, 0.2);
       border-color: rgba(255, 234, 0, 0.8);
-      .ant-input {
-        background-color: rgba(255, 234, 0, 0.2);
-        border-color: rgba(255, 234, 0, 0.8);
-      }
     }
     &.orange {
       background-color: rgba(255, 165, 0, 0.2);
@@ -699,6 +695,11 @@ onBeforeUnmount(() => {});
     &.red {
       background-color: rgba(255, 36, 0, 0.2);
       border-color: rgba(255, 36, 0, 0.8);
+    }
+  }
+  .ant-input-affix-wrapper {
+    :deep(.ant-input) {
+      background-color: transparent !important;
     }
   }
 }

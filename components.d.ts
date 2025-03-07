@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AccessLog: typeof import('./src/components/AccessLog.vue')['default']
+    AttachmentListPreview: typeof import('./src/components/attachment/AttachmentListPreview.vue')['default']
     AttachmentPreview: typeof import('./src/components/AttachmentPreview.vue')['default']
     AttachmentReview: typeof import('./src/components/AttachmentReview.vue')['default']
     BaseTable: typeof import('./src/components/BaseTable.vue')['default']
