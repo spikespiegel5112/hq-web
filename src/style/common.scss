@@ -44,7 +44,7 @@
       line-height: 0.2rem;
     }
   }
-  .ant-modal-close{
+  .ant-modal-close {
     color: #fff;
   }
 }
@@ -296,10 +296,10 @@ input:focus {
       }
     }
   }
-  ::v-deep.ant-table {
-    ::v-deep.ant-table-wrapper {
-      ::v-deep.ant-table-tbody {
-        ::v-deep > tr {
+  :deep(.ant-table) {
+    :deep(.ant-table-wrapper) {
+      :deep(.ant-table-tbody) {
+        :deep(> tr) {
           background-color: linear-gradient(
             to right,
             red 0%,
@@ -316,7 +316,7 @@ input:focus {
             );
           }
 
-          ::v-deep.ant-table-cell {
+          :deep(.ant-table-cell) {
             background-color: transparent;
           }
         }
