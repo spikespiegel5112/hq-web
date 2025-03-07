@@ -20,7 +20,7 @@
                 <a-row>
                   <a-col
                     :span="8"
-                    v-for="(key, index) in ['green', 'yellow', 'red']"
+                    v-for="(key, index) in ['yellow', 'orange', 'red']"
                     :key="index"
                   >
                     <a-form-item-rest>
@@ -43,7 +43,7 @@
                 <a-row>
                   <a-col
                     :span="8"
-                    v-for="(key, index) in ['green', 'yellow', 'red']"
+                    v-for="(key, index) in ['yellow', 'orange', 'red']"
                     :key="index"
                   >
                     <a-form-item-rest>
@@ -66,7 +66,7 @@
                 <a-row>
                   <a-col
                     :span="8"
-                    v-for="(key, index) in ['green', 'yellow', 'red']"
+                    v-for="(key, index) in ['yellow', 'orange', 'red']"
                     :key="index"
                   >
                     <a-form-item-rest>
@@ -91,7 +91,7 @@
                 <a-row>
                   <a-col
                     :span="8"
-                    v-for="(key, index) in ['green', 'yellow', 'red']"
+                    v-for="(key, index) in ['yellow', 'orange', 'red']"
                     :key="index"
                   >
                     <a-form-item-rest>
@@ -114,7 +114,7 @@
                 <a-row>
                   <a-col
                     :span="8"
-                    v-for="(key, index) in ['green', 'yellow', 'red']"
+                    v-for="(key, index) in ['yellow', 'orange', 'red']"
                     :key="index"
                   >
                     <a-form-item-rest>
@@ -137,7 +137,7 @@
                 <a-row>
                   <a-col
                     :span="8"
-                    v-for="(key, index) in ['green', 'yellow', 'red']"
+                    v-for="(key, index) in ['yellow', 'orange', 'red']"
                     :key="index"
                   >
                     <a-form-item-rest>
@@ -162,7 +162,7 @@
                 <a-row>
                   <a-col
                     :span="8"
-                    v-for="(key, index) in ['green', 'yellow', 'red']"
+                    v-for="(key, index) in ['yellow', 'orange', 'red']"
                     :key="index"
                   >
                     <a-form-item-rest>
@@ -185,7 +185,7 @@
                 <a-row>
                   <a-col
                     :span="8"
-                    v-for="(key, index) in ['green', 'yellow', 'red']"
+                    v-for="(key, index) in ['yellow', 'orange', 'red']"
                     :key="index"
                   >
                     <a-form-item-rest>
@@ -208,7 +208,7 @@
                 <a-row>
                   <a-col
                     :span="8"
-                    v-for="(key, index) in ['green', 'yellow', 'red']"
+                    v-for="(key, index) in ['yellow', 'orange', 'red']"
                     :key="index"
                   >
                     <a-form-item-rest>
@@ -233,7 +233,7 @@
                 <a-row>
                   <a-col
                     :span="8"
-                    v-for="(key, index) in ['green', 'yellow', 'red']"
+                    v-for="(key, index) in ['yellow', 'orange', 'red']"
                     :key="index"
                   >
                     <a-form-item-rest>
@@ -256,7 +256,7 @@
                 <a-row>
                   <a-col
                     :span="8"
-                    v-for="(key, index) in ['green', 'yellow', 'red']"
+                    v-for="(key, index) in ['yellow', 'orange', 'red']"
                     :key="index"
                   >
                     <a-form-item-rest>
@@ -283,7 +283,7 @@
                 <a-row>
                   <a-col
                     :span="8"
-                    v-for="(key, index) in ['green', 'yellow', 'red']"
+                    v-for="(key, index) in ['yellow', 'orange', 'red']"
                     :key="index"
                   >
                     <a-form-item-rest>
@@ -306,7 +306,7 @@
                 <a-row>
                   <a-col
                     :span="8"
-                    v-for="(key, index) in ['green', 'yellow', 'red']"
+                    v-for="(key, index) in ['yellow', 'orange', 'red']"
                     :key="index"
                   >
                     <a-form-item-rest>
@@ -331,7 +331,7 @@
                 <a-row>
                   <a-col
                     :span="8"
-                    v-for="(key, index) in ['green', 'yellow', 'red']"
+                    v-for="(key, index) in ['yellow', 'orange', 'red']"
                     :key="index"
                   >
                     <a-form-item-rest>
@@ -356,7 +356,7 @@
                 <a-row>
                   <a-col
                     :span="8"
-                    v-for="(key, index) in ['green', 'yellow', 'red']"
+                    v-for="(key, index) in ['yellow', 'orange', 'red']"
                     :key="index"
                   >
                     <a-form-item-rest>
@@ -379,7 +379,7 @@
                 <a-row>
                   <a-col
                     :span="8"
-                    v-for="(key, index) in ['green', 'yellow', 'red']"
+                    v-for="(key, index) in ['yellow', 'orange', 'red']"
                     :key="index"
                   >
                     <a-form-item-rest>
@@ -406,7 +406,7 @@
                 <a-row>
                   <a-col
                     :span="8"
-                    v-for="(key, index) in ['green', 'yellow', 'red']"
+                    v-for="(key, index) in ['yellow', 'orange', 'red']"
                     :key="index"
                   >
                     <a-form-item-rest>
@@ -429,7 +429,7 @@
                 <a-row>
                   <a-col
                     :span="8"
-                    v-for="(key, index) in ['green', 'yellow', 'red']"
+                    v-for="(key, index) in ['yellow', 'orange', 'red']"
                     :key="index"
                   >
                     <a-form-item-rest>
@@ -452,7 +452,7 @@
                 <a-row>
                   <a-col
                     :span="8"
-                    v-for="(key, index) in ['green', 'yellow', 'red']"
+                    v-for="(key, index) in ['yellow', 'orange', 'red']"
                     :key="index"
                   >
                     <a-form-item-rest>
@@ -477,7 +477,7 @@
                 <a-row>
                   <a-col
                     :span="8"
-                    v-for="(key, index) in ['green', 'yellow', 'red']"
+                    v-for="(key, index) in ['yellow', 'orange', 'red']"
                     :key="index"
                   >
                     <a-form-item-rest>
@@ -500,7 +500,7 @@
                 <a-row>
                   <a-col
                     :span="8"
-                    v-for="(key, index) in ['green', 'yellow', 'red']"
+                    v-for="(key, index) in ['yellow', 'orange', 'red']"
                     :key="index"
                   >
                     <a-form-item-rest>
@@ -684,17 +684,17 @@ onBeforeUnmount(() => {});
   }
   .ant-input,
   .ant-input-affix-wrapper {
-    &.green {
-      background-color: rgba(114, 241, 1, 0.2);
-      border-color: rgba(114, 241, 1, 0.8);
-      .ant-input {
-        background-color: rgba(114, 241, 1, 0.2);
-        border-color: rgba(114, 241, 1, 0.8);
-      }
-    }
     &.yellow {
       background-color: rgba(255, 234, 0, 0.2);
       border-color: rgba(255, 234, 0, 0.8);
+      .ant-input {
+        background-color: rgba(255, 234, 0, 0.2);
+        border-color: rgba(255, 234, 0, 0.8);
+      }
+    }
+    &.orange {
+      background-color: rgba(255, 165, 0, 0.2);
+      border-color: rgba(255, 165, 0, 0.8);
     }
     &.red {
       background-color: rgba(255, 36, 0, 0.2);

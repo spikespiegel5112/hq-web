@@ -348,9 +348,9 @@ const mouseEvent = (item: any, itemData: any) => {
             resName: videoData.ResName,
           });
         } else if (!itemData.isActive && videoElement) {
-          videoElement.style.border = "none";
+          videoElement.style.border = "2px solid #ccc";
           state.upperWallList = state.upperWallList.filter(
-            (deleteItem) => deleteItem.resCode !== videoData.ResCode
+            (deleteItem: any) => deleteItem.resCode !== videoData.ResCode
           );
         }
         console.log("123", state.upperWallList);
