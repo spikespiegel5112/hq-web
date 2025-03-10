@@ -42,7 +42,7 @@ import {
   ComponentInternalInstance,
   ref,
   nextTick,
-  defineEmits,
+  
 } from "vue";
 import type { DefaultOptionType } from "ant-design-vue/es/select";
 

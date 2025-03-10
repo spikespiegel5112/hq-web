@@ -59,14 +59,15 @@ export default defineConfig({
     },
   },
   css: {
-    // preprocessorOptions: {
-    //   scss: {
-    //     sassOptions: {
-    //       // 消除启动时对过时sass API使用的报警
-    //       silenceDeprecations: ["legacy-js-api"],
-    //     },
-    //   },
-    // },
+    preprocessorOptions: {
+      scss: {
+        api: "modern", // or "modern"
+        // sassOptions: {
+        //   // 消除启动时对过时sass API使用的报警
+        //   silenceDeprecations: ["legacy-js-api"],
+        // },
+      },
+    },
   },
   define: {
     "process.env": {},

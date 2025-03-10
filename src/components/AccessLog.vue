@@ -144,7 +144,6 @@ const measurementWidth = async () => {
 
   if (!!routeRef.value) {
     const activeLog = routeRef.value.find((item: any) => {
-      console.log(JSON.stringify(item.classList));
       return Object.values(item.classList).some(
         (item2: string) => item2 === "active"
       );
