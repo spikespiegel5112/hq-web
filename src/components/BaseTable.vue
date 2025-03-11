@@ -431,7 +431,7 @@ const checkFileType = (file: any) => {
   const fileSufix = attachmentName.split(".").pop().toLowerCase();
 
   const imageType = ["png", "jpg", "jpeg", "gif", "bmp"];
-  const videoType = ["mp4", "avi", "mov", "wmv", "flv", "rmvb", "3gp"];
+  const videoType = ['mp4', 'avi', 'mov', 'wmv', 'flv', 'rmvb', '3gp', 'webm'];
   const fileType = ["xls", "xlsx"];
   const pdfType = ["pdf"];
   if (imageType.includes(fileSufix)) {
