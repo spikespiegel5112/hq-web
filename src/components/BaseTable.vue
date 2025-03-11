@@ -516,13 +516,14 @@ const getAttachmentTypeList = (attachmentList: any) => {
     if (checkFileType(item) === "file" && !typeList.includes("file")) {
       typeList.push("file");
     }
-    if (checkFileType(item) === "pdf" && !typeList.includes("file")) {
+    if (checkFileType(item) === "pdf" && !typeList.includes("pdf")) {
       typeList.push("pdf");
     }
     if (checkFileType(item) === "video" && !typeList.includes("video")) {
       typeList.push("video");
     }
   });
+
   return typeList;
 };
 

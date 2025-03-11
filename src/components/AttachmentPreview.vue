@@ -257,6 +257,9 @@ onBeforeUnmount(() => {});
   width: 100%;
   height: 600px;
   text-align: center;
+  .swiper-pagination{
+    bottom: 1rem;
+  }
   .swiper-wrapper {
     position: relative;
     .swiper-slide {
