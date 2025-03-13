@@ -1,14 +1,7 @@
-// import { getCurrentInstance, ComponentInternalInstance } from "vue";
 import router from "@/router";
 import routeDictionary from "@/router/routeDictionary.ts";
 import { store } from "@/store";
 import { message } from "ant-design-vue";
-
-// import { mapGetters, useStore } from "vuex";
-
-// const currentInstance = getCurrentInstance() as ComponentInternalInstance;
-// const global = currentInstance.appContext.config.globalProperties;
-
 import { getUserInfoRequest } from "@/api/auth";
 
 const flatTree = (tree: any[]) => {
@@ -22,43 +15,37 @@ const flatTree = (tree: any[]) => {
     });
   };
   looper(tree);
-  result = result.map((item: any) => {
-    return {
-      ...item,
-    };
-  });
   return result;
 };
 
 const parseRouteDictionary = (flattenedPermissionTree: any[]) => {
+  // 永久显示的路由
+  const permanentRouteName: any[] = ["Dashboard"];
   const _routeDictionary: any[] = JSON.parse(
     JSON.stringify(routeDictionary[1].children)
   );
 
-  let _result = [] as any[];
+  let result = [] as any[];
   const looper = (children: any[]) => {
-    let result = [] as any[];
+    let _result = [] as any[];
     children.forEach((item: any) => {
       if (
         flattenedPermissionTree.some(
           (item2: any) => item2.permissionCode === item.name
-        )
+        ) ||
+        permanentRouteName.some((item2: any) => item2 === item.name)
       ) {
-        const aaa: any = JSON.parse(JSON.stringify(item));
+        const _item: any = JSON.parse(JSON.stringify(item));
         if (!!item.children && item.children.length > 0) {
-          aaa.children = looper(item.children);
+          _item.children = looper(item.children);
         }
-        console.log(children);
-
-        result.push(aaa);
+        _result.push(_item);
       }
     });
-    return result;
+    return _result;
   };
-  _result = looper(_routeDictionary);
-  console.log("=====permission=====");
-  console.log(_result);
-  return _result;
+  result = looper(_routeDictionary);
+  return result;
 };
 
 router.beforeEach((to: any, from: any, next: any) => {
@@ -83,8 +70,13 @@ router.beforeEach((to: any, from: any, next: any) => {
           const flattenedPermissionTree: any[] = flatTree(
             response.permMenuList
           );
-          parseRouteDictionary(flattenedPermissionTree);
-
+          const parsedRouteDictionary = parseRouteDictionary(
+            flattenedPermissionTree
+          );
+          store.commit(
+            "app/updateParsedRouteDictionary",
+            parsedRouteDictionary
+          );
           const sysUser = response.sysUser;
           if (sysUser.userStatus === 1) {
             message.warning("用户已冻结，无法登录");

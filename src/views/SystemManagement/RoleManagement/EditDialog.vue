@@ -3,7 +3,7 @@
     v-model:open="state.visible"
     @cancel="handleClose"
     @ok="handleSubmit"
-    width="12rem"
+    width="9rem"
   >
     <template #title>
       <CommonTitle :title="dialogTitle" />

@@ -7,7 +7,7 @@
     @afterOpenChange="handleOpen"
   >
     <template #title>
-      <CommonTitle title="分配权限" />
+      <CommonTitle :title="`分配权限（${rowData.roleName}）`" />
     </template>
     <template #extra>
       <a-button style="margin-right: 8px" @click="handleClose">取消</a-button>
@@ -76,15 +76,6 @@ const props = defineProps({
   visible: { type: Boolean, required: true, default: false },
   rowData: { type: Object, required: true, default: {} },
 });
-
-const disabled = ref<boolean>(false);
-
-interface MockData {
-  key: string;
-  title: string;
-  description: string;
-  disabled: boolean;
-}
 
 const state: UnwrapRef<any> = reactive({
   visible: false,

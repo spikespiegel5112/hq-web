@@ -5,7 +5,6 @@
       v-model:selectedKeys="state.selectedKeys"
       v-model:checkedKeys="state.checkedKeys"
       default-expand-all
-      checkable
       :tree-data="state.treeData"
     >
       <template #title="record" #default="scope">
@@ -21,7 +20,9 @@
           </a-button>
           <a-button
             type="link"
-            @click="handleEditNode(record, record.parentId, '添加子节点', 'add')"
+            @click="
+              handleEditNode(record, record.parentId, '添加子节点', 'add')
+            "
           >
             添加子节点
           </a-button>
@@ -234,7 +235,7 @@ const handleDeleteNode = (record: any) => {
         })
         .catch((error: any) => {
           loadingInstance();
-          global.$message.error("删除失败");
+          global.$message.error(error.message);
           console.log(error);
         });
     },

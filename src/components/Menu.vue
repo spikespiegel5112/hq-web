@@ -75,10 +75,18 @@ const currentOpenKeys = ref<string[]>(["sub1"]);
 const currentRoute = computed(() => {
   return global.$route;
 });
+
+const parsedRouteDictionary = computed(() => {
+  const result = global.$store.state.app.parsedRouteDictionary;
+  return result;
+}) as any;
+
 const menuList = computed(() => {
-  const _routeDictionary = routeDictionary.find(
-    (item: any) => item.name === "layout"
-  ).children;
+  // const _routeDictionary = routeDictionary.find(
+  //   (item: any) => item.name === "layout"
+  // ).children;
+
+  const _routeDictionary = parsedRouteDictionary.value;
   let result = [] as any[];
   const looper = (chidren: any[], parentKey: number | string | null) => {
     const _result = [] as any[];
@@ -165,9 +173,9 @@ onMounted(() => {
     overflow: auto;
   }
   :deep(
-      .ant-menu-root .ant-menu-item > .ant-menu-title-content,
-      .ant-menu-root .ant-menu-submenu-title > .ant-menu-title-content
-    ) {
+    .ant-menu-root .ant-menu-item > .ant-menu-title-content,
+    .ant-menu-root .ant-menu-submenu-title > .ant-menu-title-content
+  ) {
     text-align: left;
     color: #fff;
   }

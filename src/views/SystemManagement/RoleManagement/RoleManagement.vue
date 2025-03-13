@@ -73,16 +73,16 @@ const pageModel = ref([
     exportVisible: false,
   },
   {
-    label: "角色描述",
-    name: "roleDesc",
+    label: "角色名称",
+    name: "roleName",
     required: true,
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
   },
   {
-    label: "角色名称",
-    name: "roleName",
+    label: "角色描述",
+    name: "roleDesc",
     required: true,
     tableVisible: true,
     formVisible: true,
@@ -120,7 +120,7 @@ const pageModel = ref([
     tableVisible: true,
     exportVisible: false,
     fixed: "right",
-    actions: ["edit", "delete", "distributeAuthority"],
+    actions: ["edit", "distributeAuthority", "delete"],
   },
 ]);
 

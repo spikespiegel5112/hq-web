@@ -19,6 +19,7 @@ const app = {
     emergencyPlanType: 0,
     emergencyEventType: 1,
     tableLoading: true,
+    parsedRouteDictionary: [] as any[],
   }),
   mutations: {
     updateBannerInfo: (state: any, payload: any) => {
@@ -61,6 +62,10 @@ const app = {
     updateUserInfo: (state: any, payload: any) => {
       state.userInfo = payload;
     },
+    updateParsedRouteDictionary: (state: any, payload: any) => {
+      state.parsedRouteDictionary = payload;
+    },
+    
   },
   actions: {
     refreshCurrentQueryDate: (context: any) => {
