@@ -20,7 +20,7 @@
         </div>
         <div class="user">
           <span class="avatar"> </span>
-          <span class="name">Admin</span>
+          <span class="name">{{ userInfo.nickName }}</span>
           <span class="logout">
             <PoweroffOutlined @click="hadleLogout" />
           </span>
@@ -77,8 +77,8 @@ const state = reactive({
   bannerInfo: {} as any,
 });
 
-const blockSize = computed(() => {
-  return props.width + "-" + props.height;
+const userInfo = computed(() => {
+  return global.$store.state.app.userInfo;
 }) as any;
 
 watch(

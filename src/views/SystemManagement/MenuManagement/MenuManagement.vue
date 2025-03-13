@@ -15,13 +15,13 @@
           </span>
           <a-button
             type="link"
-            @click="handleEditNode(record, record.id, '编辑', 'edit')"
+            @click="handleEditNode(record, record.parentId, '编辑', 'edit')"
           >
             编辑
           </a-button>
           <a-button
             type="link"
-            @click="handleEditNode(record, record.id, '添加子节点', 'add')"
+            @click="handleEditNode(record, record.parentId, '添加子节点', 'add')"
           >
             添加子节点
           </a-button>

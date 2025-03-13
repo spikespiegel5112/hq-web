@@ -18,6 +18,7 @@
       @onReview="handleReview"
       @onChangePage="handleChangePage"
       @onDelete="handleDelete"
+      @onDistributeAuthority="handleDistributeRole"
     />
     <EditDialog
       :visible="state.dialogVisible"
@@ -27,6 +28,12 @@
       @onClose="handleClose"
       @onSubmit="handleSubmit"
     ></EditDialog>
+    <DistributeAuthorityDialog
+      :visible="state.dialogDistributeAuthorityVisible"
+      :rowData="state.currentRowData"
+      @onClose="handleClose"
+      @onSubmit="handleSubmitDistributeAuthority"
+    ></DistributeAuthorityDialog>
   </div>
 </template>
 
@@ -51,6 +58,7 @@ import {
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
+import DistributeAuthorityDialog from "./DistributeAuthorityDialog.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -84,6 +92,7 @@ const pageModel = ref([
     label: "角色顺序",
     name: "roleSort",
     required: true,
+    dataType: "number",
     tableVisible: true,
     formVisible: true,
     exportVisible: true,
@@ -97,10 +106,10 @@ const pageModel = ref([
     exportVisible: true,
     tagConfig: {
       val: "roleStatus",
-      dictionary: global.$store.state.dictionary.userStatus,
+      dictionary: global.$store.state.dictionary.roleStatus,
       colorList: [
-        { value: 1, color: "success" },
-        { value: 0, color: "warning" },
+        { value: 0, color: "success" },
+        { value: 1, color: "warning" },
       ],
     },
   },
@@ -111,13 +120,14 @@ const pageModel = ref([
     tableVisible: true,
     exportVisible: false,
     fixed: "right",
-    actions: ["edit", "delete"],
+    actions: ["edit", "delete", "distributeAuthority"],
   },
 ]);
 
 const state = reactive({
   tableData: [] as any[],
   dialogVisible: false,
+  dialogDistributeAuthorityVisible: false,
   dialogMode: null as string | null,
   currentRowData: {},
 });
@@ -129,7 +139,7 @@ const pagination = reactive({
 });
 
 const getData = () => {
-  global.$store.commit("app/updateTableLoading", true);
+  // global.$store.commit("app/updateTableLoading", true);
   pagination.total = undefined;
   sysSysRoleGetPage({
     ...queryFormData,
@@ -139,6 +149,7 @@ const getData = () => {
       response = response.data;
       state.tableData = response.list;
       pagination.total = response.total;
+      // global.$store.commit("app/updateTableLoading", false);
     })
     .catch((error: any) => {
       console.log(error);
@@ -172,8 +183,12 @@ const handleReset = (formData: object) => {
   getData();
 };
 
-const handleClose = () => {
+const handleClose = async () => {
   state.dialogVisible = false;
+  state.dialogDistributeAuthorityVisible = false;
+  await nextTick();
+  // global.$store.commit("app/updateTableLoading", false);
+  // global.$store.commit("app/updateTableLoading", false);
 };
 
 const handleSubmit = (formData: any) => {
@@ -188,6 +203,8 @@ const handleSubmit = (formData: any) => {
       global.$message.error(error.message);
     });
 };
+
+const handleSubmitDistributeAuthority = (rowData: any) => {};
 
 const handleChangePage = (pagingData: any) => {
   pagination.page = pagingData.current;
@@ -208,6 +225,11 @@ const handleDelete = (id: number) => {
       global.$message.error("删除失败");
       console.log(error);
     });
+};
+
+const handleDistributeRole = (rowData: any) => {
+  state.dialogDistributeAuthorityVisible = true;
+  state.currentRowData = rowData;
 };
 
 onMounted(async () => {

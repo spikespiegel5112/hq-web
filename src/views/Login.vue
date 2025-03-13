@@ -30,16 +30,6 @@
               </template>
             </a-input>
           </a-form-item>
-          <a-form-item name="verifycode" label="">
-            <a-input
-              v-model:value="state.formData.seconds"
-              placeholder="请输入验证码"
-            >
-              <template #suffix>
-                <span class="verifycode"></span>
-              </template>
-            </a-input>
-          </a-form-item>
           <a-button
             class="submitbutton"
             type="primary"
@@ -49,10 +39,10 @@
             登录
           </a-button>
         </a-form>
-        <div class="forgetpassword">
+        <!-- <div class="forgetpassword">
           <span>忘记密码？</span>
           <a-button type="link">立即找回</a-button>
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="footer">上海虹桥HOC地产集团</div>
@@ -73,7 +63,8 @@ import {
 } from "vue";
 import type { Rule } from "ant-design-vue/es/form";
 
-import { authLoginRequest } from "@/api/management";
+import { authLoginRequest, sysSysUserResetPasswordRequest } from "@/api/auth";
+import { setImmediate } from "timers/promises";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -82,14 +73,15 @@ const formDataRef = ref();
 
 const state = reactive({
   visible: false,
+  loading: false,
   formData: {
     deviceId: "dev_znjt_001",
     loginType: 2,
-    password: "shzj002",
+    password: "admin",
     seconds: 30,
     simId: "simznjtpos",
     userId: "shzj002",
-    username: "shzj002",
+    username: "admin",
   },
 });
 
@@ -117,29 +109,54 @@ const rules: Record<string, Rule[]> = {
   ],
 };
 
+const handleCancelResetPassword = () => {};
+
 const handleLogin = () => {
-  global.$router.push({
-    name: "Dashboard",
-  });
   formDataRef.value
     .validate()
-    .then((valid: boolean) => {
+    .then((response: any) => {
       submitLogin();
     })
-    .catch((error) => {});
+    .catch((error: any) => {
+      console.log(error);
+      state.loading = false;
+    });
 };
 
-const submitLogin = () => {
-  authLoginRequest(toRaw(state.formData))
-    .then((response: any) => {})
+const handleResetPassword = () => {
+  formDataRef.value
+    .validate()
+    .then((response: any) => {
+      submitLogin();
+    })
     .catch((error: any) => {
       console.log(error);
     });
 };
 
-const init = () => {
-  const lineScaleEl: HTMLElement = document.getElementById("line-scale");
-  lineScaleEl.style.display = "none";
+const submitLogin = () => {
+  state.loading = true;
+  authLoginRequest(state.formData)
+    .then((response: any) => {
+      state.loading = false;
+      localStorage.setItem("token", response.data);
+      global.$message.success("登录成功");
+      global.$router.push({
+        name: "Dashboard",
+      });
+    })
+    .catch((error: any) => {
+      global.$message.error(error.message);
+      console.log(error);
+    });
+};
+
+const init = async () => {
+  setTimeout(() => {
+    // 火狐需要等待一会儿才能获取dom
+    const lineScaleEl: HTMLElement = document.getElementById("line-scale");
+    lineScaleEl.style.display = "none";
+  }, 100);
 };
 
 onMounted(async () => {

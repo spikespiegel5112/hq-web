@@ -1463,6 +1463,15 @@ export const sysSysUserDeletesRequest = (params: any) => {
   });
 };
 
+// 重置密码
+export const sysSysUserResetPasswordRequest = (params: any) => {
+  return service({
+    url: prefix + "/sys/sysUser/resetPassword",
+    method: "POST",
+    data: params,
+  });
+};
+
 // 根据Id查询
 export const sysSysUserGetOneByIdRequest = (params: any) => {
   return service({
@@ -1546,3 +1555,14 @@ export const sysSysRoleGetAllRequest = (params: any) => {
     data: params,
   });
 };
+
+// 分配菜单
+export const sysSysRoleAllocateMenuRequest = (params: any) => {
+  return service({
+    url: prefix + "/sys/sysRole/allocateMenu",
+    method: "POST",
+    data: params,
+  });
+};
+
+

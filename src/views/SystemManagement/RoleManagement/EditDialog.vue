@@ -42,8 +42,8 @@
           <a-form-item name="roleStatus" label="角色状态">
             <a-switch
               v-model:checked="state.formData.roleStatus"
-              :checkedValue="1"
-              :unCheckedValue="0"
+              :checkedValue="0"
+              :unCheckedValue="1"
               checkedChildren="启用"
               unCheckedChildren="停用"
             />

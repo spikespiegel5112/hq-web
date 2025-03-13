@@ -3,18 +3,13 @@ import dayjs from "dayjs";
 const app = {
   namespaced: true,
   state: () => ({
-    refreshInterval: 20000,
+    userInfo: {},
     currentQueryDateParams: {
       queryDate: "2024-09-11 09:00:00",
     },
     currentDate: null,
-    currentQueryHourParams: {
-      hour: 0,
-    },
     envMode: import.meta.env,
-    lastOneHourDate: null,
     bannerInfo: {},
-    currentPeriod: null,
     defaultPagination: {
       page: 1,
       pageSize: 10,
@@ -24,7 +19,6 @@ const app = {
     emergencyPlanType: 0,
     emergencyEventType: 1,
     tableLoading: true,
-
   }),
   mutations: {
     updateBannerInfo: (state: any, payload: any) => {
@@ -32,15 +26,6 @@ const app = {
     },
     updateCurrentQueryDate: (state: any, payload: any) => {
       state.currentQueryDateParams = payload;
-    },
-    updateLastOneHourDate: (state: any, payload: any) => {
-      state.lastOneHourDate = payload;
-    },
-    updateCurrentQueryHourParams: (state: any, payload: any) => {
-      state.currentQueryHourParams.hour = payload;
-    },
-    updateCurrentPeriod: (state: any, payload: any) => {
-      state.currentPeriod = payload;
     },
     updatePdfViewerVisible: (state: any, payload: any) => {
       state.pdfViewerVisible = payload;
@@ -73,6 +58,9 @@ const app = {
     updateTableLoading: (state: any, payload: any) => {
       state.tableLoading = payload;
     },
+    updateUserInfo: (state: any, payload: any) => {
+      state.userInfo = payload;
+    },
   },
   actions: {
     refreshCurrentQueryDate: (context: any) => {
@@ -86,19 +74,6 @@ const app = {
         queryDate: "2024-09-11 14:00:00",
         // queryDate: payload.queryDate,
       });
-      context.commit("updateCurrentQueryHourParams", 5);
-      // context.commit('updateCurrentQueryHourParams', Number(dayjs().format('HH')));
-    },
-    refreshLastOneHourDate: (context: any) => {
-      const formatString = "YYYY-MM-DD HH:mm:ss";
-      const date = dayjs().subtract(1, "hour").format(formatString);
-      context.commit("updateLastOneHourDate", date);
-      return date;
-    },
-    refreshCurrentPeriod: (context: any) => {
-      const lastHour = dayjs().subtract(1, "hour").format("HH") + ":00";
-      const currentHour = dayjs().format("HH") + ":00";
-      context.commit("updateCurrentPeriod", lastHour + "-" + currentHour);
     },
   },
   getters: {},

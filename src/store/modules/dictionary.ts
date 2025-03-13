@@ -60,7 +60,11 @@ const dictionary = {
         name: "distributeRole",
         color: null,
       },
-
+      {
+        label: "分配权限",
+        name: "distributeAuthority",
+        color: null,
+      },
       {
         label: "下载",
         name: "download",
@@ -91,7 +95,6 @@ const dictionary = {
         name: "edit",
         color: null,
       },
-
       {
         label: "事件处置",
         name: "eventDisposal",
@@ -222,7 +225,6 @@ const dictionary = {
         fileName: "大雪@1x.png",
         value: 1,
       },
-
       {
         fileName: "大雾@1x.png",
         value: 1,
@@ -296,7 +298,6 @@ const dictionary = {
         value: 1,
       },
     ],
-
     disposalStatus2: [
       {
         title: "未处置",
@@ -308,7 +309,6 @@ const dictionary = {
         value: 1,
         lightColor: "orange",
       },
-
       {
         title: "已处置",
         value: 2,

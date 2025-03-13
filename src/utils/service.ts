@@ -21,6 +21,8 @@ const service: any = axios.create({
 
 service.interceptors.request.use(
   (config: any) => {
+    const token = localStorage.getItem("token");
+    config.headers.token = token;
     return config;
   },
   (error: any) => {

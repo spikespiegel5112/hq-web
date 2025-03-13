@@ -34,7 +34,7 @@
         <a-col :span="11">
           <a-form-item name="password" label="密码">
             <template v-if="props.mode === 'edit'">
-              {{ state.formData.username }}
+              {{ state.formData.password }}
             </template>
             <a-input
               v-else
@@ -70,8 +70,8 @@
           <a-form-item name="userStatus" label="用户状态">
             <a-switch
               v-model:checked="state.formData.userStatus"
-              :checkedValue="1"
-              :unCheckedValue="0"
+              :checkedValue="0"
+              :unCheckedValue="1"
               checkedChildren="启用"
               unCheckedChildren="停用"
             />

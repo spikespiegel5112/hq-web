@@ -62,8 +62,11 @@ const eventTypeListReady = computed(() => {
 });
 
 const init = () => {
-  const lineScaleEl: HTMLElement = document.getElementById("line-scale");
-  lineScaleEl.style.display = "none";
+  setTimeout(() => {
+    // 火狐需要等待一会儿才能获取dom
+    const lineScaleEl: HTMLElement = document.getElementById("line-scale");
+    lineScaleEl.style.display = "none";
+  }, 100);
   global.$getAllDictionary();
 };
 

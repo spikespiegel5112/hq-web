@@ -154,6 +154,7 @@ const getDistributedRolesDataByUserId = () => {
 };
 
 const handleDistributeRole = () => {
+  
   sysSysUserAllocateRoleRequest({
     roleIdList: state.targetKeys,
     userId: props.rowData.id,

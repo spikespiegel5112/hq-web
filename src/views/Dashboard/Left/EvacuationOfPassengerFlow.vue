@@ -151,8 +151,6 @@ const getData = () => {
   global.$store.commit("app/updateTableLoading", true);
   // setOption();
   backendIndexPageFlowHourlyNewRequest({
-    // ...global.$store.state.app.currentQueryDateParams,
-    // ...global.$store.state.app.currentQueryHourParams,
     hour: 1,
     queryDate: global.$dayjs().format("YYYY-MM-DD HH:mm:ss"),
     timeType: 1,

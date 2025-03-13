@@ -4,7 +4,7 @@
       :dataSource="actualTableData"
       :loading="global.$store.state.app.tableLoading"
       :rowClassName="
-        (_record, index) => (index % 2 === 1 ? 'table-striped' : undefined)
+        (_record:any, index:number) => (index % 2 === 1 ? 'table-striped' : undefined)
       "
       :pagination="false"
       :scroll="{
@@ -244,6 +244,7 @@ const emit = defineEmits<{
   (e: "onDisposal", row: object): void;
   (e: "onIssueWarning", row: object): void;
   (e: "onDistributeRole", row: object): void;
+  (e: "onDistributeAuthority", row: object): void;
 }>();
 
 const props = defineProps({
@@ -431,7 +432,7 @@ const checkFileType = (file: any) => {
   const fileSufix = attachmentName.split(".").pop().toLowerCase();
 
   const imageType = ["png", "jpg", "jpeg", "gif", "bmp"];
-  const videoType = ['mp4', 'avi', 'mov', 'wmv', 'flv', 'rmvb', '3gp', 'webm'];
+  const videoType = ["mp4", "avi", "mov", "wmv", "flv", "rmvb", "3gp", "webm"];
   const fileType = ["xls", "xlsx"];
   const pdfType = ["pdf"];
   if (imageType.includes(fileSufix)) {
@@ -482,6 +483,8 @@ const handleAction = (action: any, scope: any) => {
     emit("onIssueWarning", state.originalTableData[scope.index]);
   } else if (action === "distributeRole") {
     emit("onDistributeRole", state.originalTableData[scope.index]);
+  } else if (action === "distributeAuthority") {
+    emit("onDistributeAuthority", state.originalTableData[scope.index]);
   }
 };
 

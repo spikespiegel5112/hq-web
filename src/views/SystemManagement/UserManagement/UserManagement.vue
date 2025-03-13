@@ -28,11 +28,11 @@
       @onClose="handleClose"
       @onSubmit="handleSubmit"
     ></EditDialog>
-    <DistributeDialog
+    <DistributeRoleDialog
       :visible="state.dialogDistributeVisible"
       :rowData="state.currentRowData"
-      @onClose="handleCloseDistributeDialog"
-    ></DistributeDialog>
+      @onClose="handleCloseDistributeRoleDialog"
+    ></DistributeRoleDialog>
   </div>
 </template>
 
@@ -57,7 +57,7 @@ import {
 } from "@/api/management";
 import FilterTool from "./FilterTool.vue";
 import EditDialog from "./EditDialog.vue";
-import DistributeDialog from "./DistributeDialog.vue";
+import DistributeRoleDialog from "./DistributeRoleDialog.vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -123,8 +123,8 @@ const pageModel = ref([
       val: "userStatus",
       dictionary: global.$store.state.dictionary.userStatus,
       colorList: [
-        { value: 1, color: "success" },
-        { value: 0, color: "warning" },
+        { value: 0, color: "success" },
+        { value: 1, color: "warning" },
       ],
     },
   },
@@ -206,7 +206,7 @@ const handleClose = () => {
   state.dialogVisible = false;
 };
 
-const handleCloseDistributeDialog = () => {
+const handleCloseDistributeRoleDialog = () => {
   state.dialogDistributeVisible = false;
 };
 
