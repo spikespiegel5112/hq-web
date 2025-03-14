@@ -115,7 +115,8 @@
                     <div
                       v-if="
                         checkAttachmentIndex(item, index) &&
-                        checkAttachmentIndex(item, index).attachmentList.length > 0
+                        checkAttachmentIndex(item, index).attachmentList
+                          .length > 0
                       "
                       class="attachment"
                     >
@@ -236,7 +237,7 @@ watch(
       };
       state.formData = rowData;
       getData();
-      getStepData();
+      // getStepData();
     }
   }
 );
@@ -255,6 +256,7 @@ const getData = () => {
       response.preplanResourceStepList.forEach((item: any, index: number) => {
         state.fileList.push(getCurrentStep(item));
       });
+      state.planInfo = response.preplanResourceStepList;
     })
     .catch((error: any) => {
       console.log(error);
@@ -305,7 +307,6 @@ const getDispoaslTime = (index: number) => {
 };
 
 const checkAttachmentIndex: any = (item: any, index: number) => {
-  
   let result = state.fileList.find(
     (item2: any) => item.stepOrder === item2.stepOrder
   );

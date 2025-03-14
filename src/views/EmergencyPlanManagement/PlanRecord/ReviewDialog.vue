@@ -244,7 +244,7 @@ watch(
       };
       state.formData = rowData;
       getData();
-      getStepData();
+      // getStepData();
     }
   }
 );
@@ -263,6 +263,7 @@ const getData = () => {
       response.preplanResourceStepList.forEach((item: any, index: number) => {
         state.fileList.push(getCurrentStep(item));
       });
+      state.planInfo = response.preplanResourceStepList;
     })
     .catch((error: any) => {
       console.log(error);

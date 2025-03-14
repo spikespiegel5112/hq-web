@@ -95,13 +95,14 @@
                 </template>
                 <div class="node">
                   <div class="time">
-                    {{
+                    <!-- {{
                       !!state.disposalList[index]
                         ? global
                             .$dayjs(state.disposalList[index]?.disposalTime)
                             .format("HH:mm")
                         : ""
-                    }}
+                    }} -->
+                    {{ getDispoaslTime(index) }}
                   </div>
                   <div class="content">
                     <div class="top">
@@ -244,7 +245,7 @@ watch(
       };
       state.formData = rowData;
       getData();
-      getStepData();
+      // getStepData();
     }
   }
 );
@@ -263,6 +264,7 @@ const getData = () => {
       response.preplanResourceStepList.forEach((item: any, index: number) => {
         state.fileList.push(getCurrentStep(item));
       });
+      state.planInfo = response.preplanResourceStepList;
     })
     .catch((error: any) => {
       console.log(error);
