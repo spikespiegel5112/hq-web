@@ -1,10 +1,11 @@
 <template>
   <div class="common_table_wrapper">
     <a-tree
+      v-if="state.treeData.length > 0"
       class="tree"
       v-model:selectedKeys="state.selectedKeys"
       v-model:checkedKeys="state.checkedKeys"
-      default-expand-all
+      defaultExpandAll
       :tree-data="state.treeData"
     >
       <template #title="record" #default="scope">
@@ -274,7 +275,8 @@ onBeforeUnmount(() => {});
       max-height: 100% !important;
       overflow: auto;
       .ant-tree-treenode {
-        width: 100%;
+        margin: auto;
+        width: 10rem;
         .ant-tree-node-content-wrapper {
           width: 100%;
           .ant-tree-title {

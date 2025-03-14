@@ -1,5 +1,5 @@
 <template>
-  <div class="login_container" ref="layoutRef">
+  <div class="login_container" ref="layoutRef" @keyup.enter="handleLogin">
     <div class="title">虹桥枢纽运行管理一体化平台</div>
     <div class="main">
       <div class="content">
@@ -34,15 +34,12 @@
             class="submitbutton"
             type="primary"
             size="large"
+            :loading="state.loading"
             @click="handleLogin"
           >
             登录
           </a-button>
         </a-form>
-        <!-- <div class="forgetpassword">
-          <span>忘记密码？</span>
-          <a-button type="link">立即找回</a-button>
-        </div> -->
       </div>
     </div>
     <div class="footer">上海虹桥HOC地产集团</div>
@@ -111,19 +108,8 @@ const rules: Record<string, Rule[]> = {
 
 const handleCancelResetPassword = () => {};
 
-const handleLogin = () => {
-  formDataRef.value
-    .validate()
-    .then((response: any) => {
-      submitLogin();
-    })
-    .catch((error: any) => {
-      console.log(error);
-      state.loading = false;
-    });
-};
-
-const handleResetPassword = () => {
+const handleLogin = (event: any) => {
+  event.preventDefault();
   formDataRef.value
     .validate()
     .then((response: any) => {
@@ -138,16 +124,22 @@ const submitLogin = () => {
   state.loading = true;
   authLoginRequest(state.formData)
     .then((response: any) => {
-      state.loading = false;
       localStorage.setItem("token", response.data);
+      global.$store.commit("app/clearUserInfo");
       global.$message.success("登录成功");
-      global.$router.push({
-        name: "Dashboard",
-      });
+      setTimeout(() => {
+        global.$router.push({
+          name: "Dashboard",
+        });
+      }, 500);
+      setTimeout(() => {
+        state.loading = false;
+      }, 2000);
     })
     .catch((error: any) => {
       global.$message.error(error.message);
       console.log(error);
+      state.loading = false;
     });
 };
 

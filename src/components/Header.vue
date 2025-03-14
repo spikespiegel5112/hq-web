@@ -94,8 +94,14 @@ const initClock = () => {
 };
 
 const hadleLogout = () => {
-  global.$router.push({
-    name: "Login",
+  global.$confirm({
+    title: "提示",
+    content: "确认登出？",
+    onOk: () => {
+      global.$router.push({
+        name: "Login",
+      });
+    },
   });
 };
 

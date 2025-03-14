@@ -62,10 +62,12 @@ const app = {
     updateUserInfo: (state: any, payload: any) => {
       state.userInfo = payload;
     },
+    clearUserInfo: (state: any, payload: any) => {
+      state.userInfo = {};
+    },
     updateParsedRouteDictionary: (state: any, payload: any) => {
       state.parsedRouteDictionary = payload;
     },
-    
   },
   actions: {
     refreshCurrentQueryDate: (context: any) => {
