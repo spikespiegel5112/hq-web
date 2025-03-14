@@ -4,6 +4,8 @@ import { store } from "@/store";
 import { message } from "ant-design-vue";
 import { getUserInfoRequest } from "@/api/auth";
 
+let permMenuList: any[] = [];
+
 const flatTree = (tree: any[]) => {
   let result = [] as any[];
   const looper = (children: any[]) => {
@@ -18,6 +20,22 @@ const flatTree = (tree: any[]) => {
   return result;
 };
 
+const findNodeChildrenPermissionCodeByName = (name: string) => {
+  let result: any;
+  const looper = (children: any[]) => {
+    children.forEach((item: any) => {
+      if (item.permissionCode === name) {
+        result = item.children.map((item2: any) => item2.permissionCode);
+      } else {
+        looper(item.children);
+      }
+    });
+  };
+  looper(permMenuList);
+
+  return result;
+};
+
 const parseRouteDictionary = (flattenedPermissionTree: any[]) => {
   // 永久显示的路由
   const permanentRouteName: any[] = ["Dashboard"];
@@ -29,22 +47,32 @@ const parseRouteDictionary = (flattenedPermissionTree: any[]) => {
   const looper = (children: any[]) => {
     let _result = [] as any[];
     children.forEach((item: any) => {
+      const currentPermissionInfo = flattenedPermissionTree.find(
+        (item2: any) => item2.permissionCode === item.name
+      );
       if (
-        flattenedPermissionTree.some(
-          (item2: any) => item2.permissionCode === item.name
-        ) ||
+        !!currentPermissionInfo ||
         permanentRouteName.some((item2: any) => item2 === item.name)
       ) {
         const _item: any = JSON.parse(JSON.stringify(item));
         if (!!item.children && item.children.length > 0) {
           _item.children = looper(item.children);
         }
-        _result.push(_item);
+
+        if (!!currentPermissionInfo) {
+        }
+
+        _result.push({
+          ..._item,
+          permissionCodeList: findNodeChildrenPermissionCodeByName(_item.name),
+        });
       }
     });
     return _result;
   };
   result = looper(_routeDictionary);
+
+  console.log(result);
   return result;
 };
 
@@ -67,9 +95,8 @@ router.beforeEach((to: any, from: any, next: any) => {
       getUserInfoRequest()
         .then((response: any) => {
           response = response.data;
-          const flattenedPermissionTree: any[] = flatTree(
-            response.permMenuList
-          );
+          permMenuList = response.permMenuList;
+          const flattenedPermissionTree: any[] = flatTree(permMenuList);
           const parsedRouteDictionary = parseRouteDictionary(
             flattenedPermissionTree
           );
@@ -84,7 +111,7 @@ router.beforeEach((to: any, from: any, next: any) => {
               name: "Login",
             });
           } else {
-            store.commit("app/updateUserInfo", response.sysUser);
+            store.commit("user/updateUserInfo", response.sysUser);
             next();
           }
         })

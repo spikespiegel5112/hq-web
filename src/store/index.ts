@@ -11,7 +11,6 @@ export interface State {
     currentChatList: any;
   };
   user: {
-    baiduAPIAccessInfo: any;
     userIdInfo: any;
   };
 }

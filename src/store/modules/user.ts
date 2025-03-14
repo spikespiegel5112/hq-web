@@ -1,19 +1,13 @@
 const user = {
   namespaced: true,
   state: {
-    baiduAPIAccessInfo: {},
+    userInfo: {},
     userIdInfo: {},
     userDetailInfo: {},
   },
   mutations: {
-    updateBaiduAPIAccessInfo: (state: any, payload: object) => {
-      state.baiduAPIAccessInfo = payload;
-    },
-    updateUserIdInfo: (state: any, payload: object) => {
-      state.userIdInfo = payload;
-    },
-    updateUserDetailInfo: (state: any, payload: object) => {
-      state.userDetailInfo = payload;
+    updateUserInfo: (state: any, payload: any) => {
+      state.userInfo = payload;
     },
   },
   actions: {},

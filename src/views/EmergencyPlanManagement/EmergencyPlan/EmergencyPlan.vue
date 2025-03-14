@@ -228,7 +228,6 @@ const getData = () => {
         const preplanResourceId = eventList.value.find(
           (item2: any) => item2.value === item.preplanResourceId?.toString()
         )?.label;
-        console.log(item.planLevel);
         return {
           ...item,
           preplanResourceId,

@@ -12,6 +12,8 @@
         <div class="node">
           <span class="title">
             {{ record.title }}
+             - 
+            {{ record.permissionCode }}
           </span>
           <a-button
             type="link"
@@ -276,7 +278,7 @@ onBeforeUnmount(() => {});
       overflow: auto;
       .ant-tree-treenode {
         margin: auto;
-        width: 10rem;
+        width: 15rem;
         .ant-tree-node-content-wrapper {
           width: 100%;
           .ant-tree-title {
