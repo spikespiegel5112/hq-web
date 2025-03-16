@@ -47,7 +47,7 @@ import {
 } from "vue";
 import { CloseOutlined, CloseCircleFilled } from "@ant-design/icons-vue";
 
-import routeDictionary from "@/router/routeDictionary";
+import systemRouteDictionary from "@/router/systemRouteDictionary";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -86,7 +86,7 @@ const initRouteList = () => {
       }
     });
   };
-  looper(routeDictionary.find((item: any) => item.name === "layout").children);
+  looper(systemRouteDictionary);
   // 强制显示首页
   result.forEach((item: any) => {
     if (item.name === "Dashboard") {

@@ -31,15 +31,7 @@
 </template>
 
 <script lang="tsx" setup>
-import {
-  MenuFoldOutlined,
-  PoweroffOutlined,
-  PieChartOutlined,
-  MailOutlined,
-  DesktopOutlined,
-  InboxOutlined,
-  AppstoreOutlined,
-} from "@ant-design/icons-vue";
+import { PoweroffOutlined } from "@ant-design/icons-vue";
 
 import {
   reactive,
@@ -52,6 +44,7 @@ import {
   ref,
   nextTick,
 } from "vue";
+import { authLogoutRequest } from "@/api/auth";
 
 const props = defineProps({
   bannerInfo: {
@@ -78,7 +71,7 @@ const state = reactive({
 });
 
 const userInfo = computed(() => {
-  return global.$store.state.app.userInfo;
+  return global.$store.state.user.userInfo.sysUser;
 }) as any;
 
 watch(
@@ -98,9 +91,21 @@ const hadleLogout = () => {
     title: "提示",
     content: "确认登出？",
     onOk: () => {
-      global.$router.push({
-        name: "Login",
-      });
+      authLogoutRequest()
+        .then(async (response: any) => {
+          global.$message.success("登出成功");
+          localStorage.removeItem("token");
+          global.$router.push({
+            name: "Login",
+          });
+          await nextTick();
+          setTimeout(() => {
+            global.$store.commit("user/clearUserInfo");
+          }, 1000);
+        })
+        .catch((error: any) => {
+          console.log(error);
+        });
     },
   });
 };

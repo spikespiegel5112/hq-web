@@ -166,6 +166,10 @@ const pagination = reactive({
   ...global.$store.state.app.defaultPagination,
 });
 
+const currentRoute = computed(() => {
+  return global.$route;
+});
+
 watch(
   () => queryFormData,
   (newValue: any, oldValue: any) => {}
@@ -291,7 +295,7 @@ const handleSubmitSummarizeData = (formData: any) => {
     .then((response: any) => {
       global.$message.success("提交成功");
       getData();
-      getStatisticData()
+      getStatisticData();
     })
     .catch((error: any) => {
       console.log(error);
@@ -321,6 +325,7 @@ const handleDelete = (id: number) => {
 onMounted(async () => {
   getData();
   getStatisticData();
+  console.log(currentRoute.value);
 });
 
 onBeforeUnmount(() => {});

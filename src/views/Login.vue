@@ -61,7 +61,7 @@ import {
 import type { Rule } from "ant-design-vue/es/form";
 
 import { authLoginRequest, sysSysUserResetPasswordRequest } from "@/api/auth";
-import { setImmediate } from "timers/promises";
+import getUserInfoPromise from "@/utils/permission";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
@@ -123,13 +123,14 @@ const handleLogin = (event: any) => {
 const submitLogin = () => {
   state.loading = true;
   authLoginRequest(state.formData)
-    .then((response: any) => {
+    .then(async (response: any) => {
       localStorage.setItem("token", response.data);
       global.$store.commit("app/clearUserInfo");
+      await getUserInfoPromise();
       global.$message.success("登录成功");
       setTimeout(() => {
         global.$router.push({
-          name: "Dashboard",
+          path: "/Dashboard",
         });
       }, 500);
       setTimeout(() => {

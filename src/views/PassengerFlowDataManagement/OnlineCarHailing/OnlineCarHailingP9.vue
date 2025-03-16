@@ -25,7 +25,7 @@
       :processedTableData="state.processedTableData"
       :dataModel="pageModel"
       tabTable
-      statisticTable
+      statisticTable3
       :pagination="pagination"
       @onEdit="handleEdit"
       @onChangePage="handleChangePage"

@@ -1,8 +1,6 @@
 <template>
   <router-view v-slot="{ Component }">
-    <ElConfigProvider>
-      
-    </ElConfigProvider>
+    <ElConfigProvider> </ElConfigProvider>
     <a-config-provider
       :locale="locale"
       :theme="{
@@ -47,9 +45,27 @@ import { ElConfigProvider } from "element-plus";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
-const state = reactive({});
 
 const locale = ref(zhCN);
+const state = reactive({});
+
+const AllRouters = computed(() => {
+  return global.$router.getRoutes();
+});
+
+watch(
+  () => AllRouters.value,
+  (newValue: any) => {}
+);
+
+watch(
+  () => global.$store.state.user.userInfoFinally,
+  (newValue: any) => {
+    if (!!newValue) {
+      const aaa = global.$router.currentRoute.value;
+    }
+  }
+);
 
 const initRemResizing = () => {
   let fontSize = 40;
@@ -74,7 +90,6 @@ const studioDarkAlgorithm: MappingAlgorithm = (
   return {
     ...baseToken,
     fontSize: 16,
-
     // colorBgLayout: "#20252b", // Layout 背景色
     // colorBgContainer: "#282c34", // 组件容器背景色
     // colorBgElevated: "#32363e", // 悬浮容器背景色

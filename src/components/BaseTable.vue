@@ -259,6 +259,7 @@ const props = defineProps({
   tabTable: { type: Boolean, default: false },
   statisticTable: { type: Boolean, default: false },
   statisticTable2: { type: Boolean, default: false },
+  statisticTable3: { type: Boolean, default: false },
   tableBodyHeight: { type: String || null, default: null },
   pagination: {
     type: [Object, Boolean],
@@ -292,8 +293,9 @@ const state = reactive({
 
 const tableOffset = computed(() => {
   const offsetTabTable = 0.6;
-  const offsetStatisticTable = 3;
-  const offsetStatisticTable2 = 2;
+  const offsetStatisticTable = 4;
+  const offsetStatisticTable2 = 2.2;
+  const offsetStatisticTable3 = 3.2;
   let offset = 3.8;
   if (props.tabTable) {
     offset += offsetTabTable;
@@ -304,7 +306,9 @@ const tableOffset = computed(() => {
   if (props.statisticTable2) {
     offset += offsetStatisticTable2;
   }
-
+  if (props.statisticTable3) {
+    offset += offsetStatisticTable3;
+  }
   let result = offset;
   return result;
 });

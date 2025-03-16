@@ -60,21 +60,15 @@ import {
 } from "vue";
 
 import type { MenuTheme } from "ant-design-vue";
-import routeDictionary from "@/router/routeDictionary";
+import systemRouteDictionary from "@/router/systemRouteDictionary";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
-const props = defineProps({});
 const theme = ref<MenuTheme>("dark");
-const selectedKeys = ref(["1"]);
 
 const currentSelectKeys = ref<string[]>(["1"]);
 const currentOpenKeys = ref<string[]>(["sub1"]);
-
-const currentRoute = computed(() => {
-  return global.$route;
-});
 
 const parsedRouteDictionary = computed(() => {
   const result = global.$store.state.app.parsedRouteDictionary;

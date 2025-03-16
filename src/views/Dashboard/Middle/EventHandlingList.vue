@@ -106,7 +106,6 @@ watch(
 
 const getData = () => {
   global.$store.commit("app/updateTableLoading", true);
-  console.log(state.timeType);
   const timeTypeList = ["day", "week", "month"];
   backendIndexPageSuddenEventRequest({
     queryDate: global.$dayjs().format("YYYY-MM-DD"),

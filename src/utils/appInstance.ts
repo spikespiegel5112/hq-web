@@ -9,6 +9,8 @@ import vuescroll from "vuescroll";
 
 const app = createApp(App);
 
+
+
 import { store, key } from "@/store";
 
 import dayjs from "dayjs";
@@ -98,7 +100,8 @@ app.config.globalProperties.$dayjs = dayjs;
 app.config.globalProperties.$router = router;
 app.config.globalProperties.$http = service;
 
-app.use(Antd).use(router).use(store, key).use(utils);
+app.use(Antd).use(store, key).use(utils);
+
 app.use(vuescroll, {
   ops: {
     bar: {

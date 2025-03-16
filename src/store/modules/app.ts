@@ -59,9 +59,6 @@ const app = {
     updateTableLoading: (state: any, payload: any) => {
       state.tableLoading = payload;
     },
-    updateUserInfo: (state: any, payload: any) => {
-      state.userInfo = payload;
-    },
     clearUserInfo: (state: any, payload: any) => {
       state.userInfo = {};
     },

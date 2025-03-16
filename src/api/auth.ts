@@ -24,3 +24,12 @@ export const authLoginRequest = (params: any) => {
     data: params,
   });
 };
+
+// 登出
+export const authLogoutRequest = (params: any) => {
+  return service({
+    url: prefix + "/logout",
+    method: "POST",
+    data: params,
+  });
+};

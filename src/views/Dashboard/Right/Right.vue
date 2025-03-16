@@ -264,9 +264,8 @@ const loadScript = () => {
 
 const clearPanelWindow = () => {
   state.currentVideoIdList.forEach((item: string) => {
-    const aaa = document.getElementById(item);
-    console.log(aaa);
-    aaa?.remove();
+    const videoEl = document.getElementById(item);
+    videoEl?.remove();
   });
   state.currentVideoIdList = [];
 };
@@ -549,8 +548,6 @@ const filterOption = (input: string, option: any) => {
 
 onMounted(async () => {
   init();
-  console.log("cameraList");
-  console.log(cameraList);
 });
 
 onBeforeUnmount(() => {});

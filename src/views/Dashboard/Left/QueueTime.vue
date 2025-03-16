@@ -152,7 +152,6 @@ const getData = () => {
           }
         });
       });
-      console.log(dataDictionary);
 
       setOption();
     })

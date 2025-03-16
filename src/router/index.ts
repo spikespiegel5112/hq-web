@@ -5,8 +5,9 @@ import {
   RouteRecordRaw,
 } from "vue-router";
 
-import routeDictionary from "@/router/routeDictionary";
-const routes: Array<RouteRecordRaw> = routeDictionary;
+import baseRouteDictionary from "@/router/baseRouteDictionary";
+
+const routes: Array<RouteRecordRaw> = baseRouteDictionary;
 
 const router = createRouter({
   history: createWebHashHistory(),
