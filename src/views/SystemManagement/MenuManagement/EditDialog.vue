@@ -112,7 +112,7 @@ const props = defineProps({
   mode: { type: [String, null], required: true, default: null },
   rowData: { type: Object, required: true, default: () => {} },
   title: { type: String, required: true, default: "" },
-  parentId: { type: Number || null, required: true, default: null },
+  parentId: { type: [Number, null], required: true, default: null },
 });
 
 const state = reactive({

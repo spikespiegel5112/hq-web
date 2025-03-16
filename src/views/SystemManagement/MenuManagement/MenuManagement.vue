@@ -12,7 +12,7 @@
         <div class="node">
           <span class="title">
             {{ record.title }}
-             - 
+            -
             {{ record.permissionCode }}
           </span>
           <a-button
@@ -42,8 +42,6 @@
           </a-button>
         </div>
       </template>
-
-      <template #slot:custom="{ title, key, aaa, bbb, ccc }"> dsadas </template>
     </a-tree>
     <EditDialog
       :visible="state.dialogVisible"
@@ -90,63 +88,6 @@ import EditDialog from "./EditDialog.vue";
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 
-const columns = [
-  {
-    title: "菜单名称",
-    dataIndex: "menuName",
-    key: "menuName",
-  },
-  {
-    title: "菜单描述",
-    dataIndex: "menuDesc",
-    key: "menuDesc",
-  },
-  {
-    title: "菜单排序",
-    dataIndex: "menuSort",
-    key: "menuSort",
-  },
-  {
-    title: "菜单图标",
-    dataIndex: "menuIcon",
-    key: "menuIcon",
-  },
-  {
-    title: "权限编码",
-    dataIndex: "permissionCode",
-    key: "permissionCode",
-  },
-  {
-    title: "操作",
-    dataIndex: "operation",
-    key: "operation",
-  },
-];
-
-const rowSelection = ref({
-  checkStrictly: false,
-  onChange: (
-    selectedRowKeys: (string | number)[],
-    selectedRows: DataItem[]
-  ) => {
-    console.log(
-      `selectedRowKeys: ${selectedRowKeys}`,
-      "selectedRows: ",
-      selectedRows
-    );
-  },
-  onSelect: (record: DataItem, selected: boolean, selectedRows: DataItem[]) => {
-    console.log(record, selected, selectedRows);
-  },
-  onSelectAll: (
-    selected: boolean,
-    selectedRows: DataItem[],
-    changeRows: DataItem[]
-  ) => {
-    console.log(selected, selectedRows, changeRows);
-  },
-});
-
 const state = reactive({
   treeData: [] as any[],
   expandedKeys: null,
@@ -156,7 +97,7 @@ const state = reactive({
   dialogMode: null as string | null,
   currentRowData: {},
   currentDialogTitle: "",
-  currentParentId: null,
+  currentParentId: null as any,
 });
 
 let queryFormData = reactive({} as any);
