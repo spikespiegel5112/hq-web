@@ -11,6 +11,7 @@
         :tableData="state.tableData"
         :processedTableData="state.processedTableData"
         :dataModel="pageModel"
+        :permissionCodeListWithAction="permissionCodeListWithAction"
         :pagination="null"
         height="100%"
         tableBodyHeight="100%"
@@ -55,6 +56,39 @@ const global = currentInstance.appContext.config.globalProperties;
 
 const props = defineProps({
   timeType: { type: Number, default: 1, required: true },
+});
+
+const permissionCodeListWithAction = computed(() => {
+  return [
+    {
+      code: "planManagement:emergencyPlan:save",
+      action: "edit",
+    },
+    {
+      code: "planManagement:emergencyPlan:delete",
+      action: "delete",
+    },
+    {
+      code: "planManagement:emergencyPlan:getOneById",
+      action: "review",
+    },
+    {
+      code: "planManagement:emergencyPlan:importExcel",
+      action: "importExcel",
+    },
+    {
+      code: "planManagement:emergencyPlan:exportExcel",
+      action: "exportExcel",
+    },
+    {
+      code: "planManagement:emergencyPlan:getDisposal",
+      action: "eventDisposal",
+    },
+    {
+      code: "planManagement:emergencyPlan:saveDisposal",
+      action: "saveDisposal",
+    },
+  ];
 });
 
 const pageModel = ref([

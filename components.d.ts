@@ -8,27 +8,20 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AccessLog: typeof import('./src/components/AccessLog.vue')['default']
-    AttachmentListPreview: typeof import('./src/components/attachment/AttachmentListPreview.vue')['default']
     AttachmentPreview: typeof import('./src/components/AttachmentPreview.vue')['default']
     AttachmentReview: typeof import('./src/components/AttachmentReview.vue')['default']
     BaseTable: typeof import('./src/components/BaseTable.vue')['default']
     Block: typeof import('./src/components/Block.vue')['default']
     CommonTitle: typeof import('./src/components/CommonTitle.vue')['default']
     CommonUpload: typeof import('./src/components/CommonUpload.vue')['default']
-    copy: typeof import('./src/components/AttachmentReview copy.vue')['default']
-    DigitFlipper: typeof import('./src/components/DigitFlipper.vue')['default']
     ElDatePicker: typeof import('element-plus/es')['ElDatePicker']
     ExportButton: typeof import('./src/components/ExportButton.vue')['default']
     Header: typeof import('./src/components/Header.vue')['default']
-    HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     ImportButton: typeof import('./src/components/ImportButton.vue')['default']
     Menu: typeof import('./src/components/Menu.vue')['default']
     PDFViewer: typeof import('./src/components/PDFViewer.vue')['default']
-    RightEvent: typeof import('./src/components/RightEvent.vue')['default']
-    RightLight: typeof import('./src/components/RightLight.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    StatusWithColor: typeof import('./src/components/StatusWithColor.vue')['default']
     VideoPlayer: typeof import('./src/components/VideoPlayer.vue')['default']
   }
 }

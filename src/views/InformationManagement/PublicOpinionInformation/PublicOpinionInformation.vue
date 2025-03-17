@@ -21,6 +21,7 @@
     <BaseTable
       :tableData="state.tableData"
       :processedTableData="state.processedTableData"
+      :permissionCodeListWithAction="permissionCodeListWithAction"
       :dataModel="pageModel"
       :pagination="pagination"
       @onEdit="handleEdit"
@@ -183,7 +184,38 @@ let queryFormData = reactive({} as any);
 const pagination = reactive({
   ...global.$store.state.app.defaultPagination,
 });
-
+const permissionCodeListWithAction = computed(() => {
+  return [
+    {
+      code: "planManagement:emergencyPlan:save",
+      action: "edit",
+    },
+    {
+      code: "planManagement:emergencyPlan:delete",
+      action: "delete",
+    },
+    {
+      code: "planManagement:emergencyPlan:getOneById",
+      action: "review",
+    },
+    {
+      code: "planManagement:emergencyPlan:importExcel",
+      action: "importExcel",
+    },
+    {
+      code: "planManagement:emergencyPlan:exportExcel",
+      action: "exportExcel",
+    },
+    {
+      code: "planManagement:emergencyPlan:getDisposal",
+      action: "eventDisposal",
+    },
+    {
+      code: "planManagement:emergencyPlan:saveDisposal",
+      action: "saveDisposal",
+    },
+  ];
+});
 const getData = () => {
   global.$store.commit("app/updateTableLoading", true);
   infoManagementPublicSentimentInfoGetPageRequest({

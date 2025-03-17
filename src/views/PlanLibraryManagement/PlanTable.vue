@@ -8,6 +8,7 @@
     tableBodyHeight="calc(100% - 0.4rem)"
     @onEdit="handleEdit"
     @onDelete="handleDelete"
+    :permissionCodeListWithAction="permissionCodeListWithAction"
   />
 </template>
 
@@ -117,7 +118,38 @@ const getDataPromise = () => {
       });
   });
 };
-
+const permissionCodeListWithAction = computed(() => {
+  return [
+    {
+      code: "planManagement:emergencyPlan:save",
+      action: "edit",
+    },
+    {
+      code: "planManagement:emergencyPlan:delete",
+      action: "delete",
+    },
+    {
+      code: "planManagement:emergencyPlan:getOneById",
+      action: "review",
+    },
+    {
+      code: "planManagement:emergencyPlan:importExcel",
+      action: "importExcel",
+    },
+    {
+      code: "planManagement:emergencyPlan:exportExcel",
+      action: "exportExcel",
+    },
+    {
+      code: "planManagement:emergencyPlan:getDisposal",
+      action: "eventDisposal",
+    },
+    {
+      code: "planManagement:emergencyPlan:saveDisposal",
+      action: "saveDisposal",
+    },
+  ];
+});
 const getData = () => {
   global.$store.commit("app/updateTableLoading", true);
   pagination.total = undefined;

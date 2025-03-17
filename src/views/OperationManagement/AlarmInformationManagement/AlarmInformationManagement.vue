@@ -16,6 +16,7 @@
     <BaseTable
       :tableData="state.tableData"
       :processedTableData="state.processedTableData"
+      :permissionCodeListWithAction="permissionCodeListWithAction"
       :dataModel="pageModel"
       :pagination="pagination"
       @onEdit="handleEdit"
@@ -156,6 +157,39 @@ const eventAllList = computed(() => {
   return [
     ...global.$store.state.app.currentEventTypeList[0].data,
     ...global.$store.state.app.currentEventTypeList[1].data,
+  ];
+});
+
+const permissionCodeListWithAction = computed(() => {
+  return [
+    {
+      code: "planManagement:emergencyPlan:save",
+      action: "edit",
+    },
+    {
+      code: "planManagement:emergencyPlan:delete",
+      action: "delete",
+    },
+    {
+      code: "planManagement:emergencyPlan:getOneById",
+      action: "review",
+    },
+    {
+      code: "planManagement:emergencyPlan:importExcel",
+      action: "importExcel",
+    },
+    {
+      code: "planManagement:emergencyPlan:exportExcel",
+      action: "exportExcel",
+    },
+    {
+      code: "planManagement:emergencyPlan:getDisposal",
+      action: "eventDisposal",
+    },
+    {
+      code: "planManagement:emergencyPlan:saveDisposal",
+      action: "saveDisposal",
+    },
   ];
 });
 
