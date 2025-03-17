@@ -16,7 +16,7 @@
     <BaseTable
       :tableData="state.tableData"
       :processedTableData="state.processedTableData"
-      :permissionCodeListWithAction="permissionCodeListWithAction"
+      :tablePermissionCodeListWithAction="tablePermissionCodeListWithAction"
       :dataModel="pageModel"
       :pagination="pagination"
       @onEdit="handleEdit"
@@ -160,7 +160,7 @@ const eventAllList = computed(() => {
   ];
 });
 
-const permissionCodeListWithAction = computed(() => {
+const tablePermissionCodeListWithAction = computed(() => {
   return [
     {
       code: "planManagement:emergencyPlan:save",

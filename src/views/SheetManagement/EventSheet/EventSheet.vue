@@ -24,7 +24,7 @@
       @onReview="handleReview"
       @onChangePage="handleChangePage"
       @onDelete="handleDelete"
-      :permissionCodeListWithAction="permissionCodeListWithAction"
+      :tablePermissionCodeListWithAction="tablePermissionCodeListWithAction"
     />
     <EditDialog
       :visible="state.dialogVisible"
@@ -127,7 +127,7 @@ let queryFormData = reactive({} as any);
 const pagination = reactive({
   ...global.$store.state.app.defaultPagination,
 });
-const permissionCodeListWithAction = computed(() => {
+const tablePermissionCodeListWithAction = computed(() => {
   return [
     {
       code: "planManagement:emergencyPlan:save",

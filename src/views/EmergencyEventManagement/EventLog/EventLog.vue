@@ -15,7 +15,7 @@
     </div>
     <BaseTable
       :tableData="state.tableData"
-      :permissionCodeListWithAction="permissionCodeListWithAction"
+      :tablePermissionCodeListWithAction="tablePermissionCodeListWithAction"
       :dataModel="pageModel"
       :pagination="pagination"
       @onEdit="handleEdit"
@@ -136,35 +136,19 @@ const pageModel = ref([
     actions: ["review"],
   },
 ]);
-const permissionCodeListWithAction = computed(() => {
+const tablePermissionCodeListWithAction = computed(() => {
   return [
     {
-      code: "planManagement:emergencyPlan:save",
-      action: "edit",
+      code: "eventManage:suddenEvent:getRecordPage",
+      action: "getData",
     },
     {
-      code: "planManagement:emergencyPlan:delete",
-      action: "delete",
-    },
-    {
-      code: "planManagement:emergencyPlan:getOneById",
+      code: "eventManage:suddenEvent:review",
       action: "review",
     },
     {
-      code: "planManagement:emergencyPlan:importExcel",
-      action: "importExcel",
-    },
-    {
-      code: "planManagement:emergencyPlan:exportExcel",
+      code: "eventManage:suddenEvent:exportExcel",
       action: "exportExcel",
-    },
-    {
-      code: "planManagement:emergencyPlan:getDisposal",
-      action: "eventDisposal",
-    },
-    {
-      code: "planManagement:emergencyPlan:saveDisposal",
-      action: "saveDisposal",
     },
   ];
 });

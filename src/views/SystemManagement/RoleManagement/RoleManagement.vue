@@ -14,7 +14,7 @@
       :tableData="state.tableData"
       :dataModel="pageModel"
       :pagination="pagination"
-      :permissionCodeListWithAction="permissionCodeListWithAction"
+      :tablePermissionCodeListWithAction="tablePermissionCodeListWithAction"
       @onEdit="handleEdit"
       @onReview="handleReview"
       @onChangePage="handleChangePage"
@@ -139,7 +139,7 @@ const pagination = reactive({
   ...global.$store.state.app.defaultPagination,
 });
 
-const permissionCodeListWithAction = computed(() => {
+const tablePermissionCodeListWithAction = computed(() => {
   return [
     {
       code: "system:sysRole:save",

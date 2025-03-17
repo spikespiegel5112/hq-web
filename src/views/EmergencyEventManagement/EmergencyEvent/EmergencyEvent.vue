@@ -21,7 +21,7 @@
     <BaseTable
       :tableData="state.tableData"
       :processedTableData="state.processedTableData"
-      :permissionCodeListWithAction="permissionCodeListWithAction"
+      :tablePermissionCodeListWithAction="tablePermissionCodeListWithAction"
       :dataModel="pageModel"
       :pagination="pagination"
       @onEdit="handleEdit"
@@ -217,35 +217,34 @@ const pagination = reactive({
   ...global.$store.state.app.defaultPagination,
 });
 
-
-const permissionCodeListWithAction = computed(() => {
+const tablePermissionCodeListWithAction = computed(() => {
   return [
     {
-      code: "planManagement:emergencyPlan:save",
+      code: "eventManage:suddenEvent:save",
       action: "edit",
     },
     {
-      code: "planManagement:emergencyPlan:delete",
+      code: "eventManage:suddenEvent:delete",
       action: "delete",
     },
     {
-      code: "planManagement:emergencyPlan:getOneById",
+      code: "eventManage:suddenEvent:getDisposal",
       action: "review",
     },
     {
-      code: "planManagement:emergencyPlan:importExcel",
+      code: "eventManage:suddenEvent:importExcel",
       action: "importExcel",
     },
     {
-      code: "planManagement:emergencyPlan:exportExcel",
+      code: "eventManage:suddenEvent:exportExcel",
       action: "exportExcel",
     },
     {
-      code: "planManagement:emergencyPlan:getDisposal",
+      code: "eventManage:suddenEvent:getDisposal",
       action: "eventDisposal",
     },
     {
-      code: "planManagement:emergencyPlan:saveDisposal",
+      code: "eventManage:suddenEvent:saveDisposal",
       action: "saveDisposal",
     },
   ];

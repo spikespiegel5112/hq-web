@@ -272,7 +272,7 @@ const props = defineProps({
   },
 
   dialogVisible: false,
-  permissionCodeListWithAction: { type: Array, default: [] },
+  tablePermissionCodeListWithAction: { type: Array, default: [] },
 });
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
@@ -534,7 +534,7 @@ const getAttachmentTypeList = (attachmentList: any) => {
 
 const checkOperationAuth = (action: string) => {
   let result = false;
-  props.permissionCodeListWithAction.forEach((item: any) => {
+  props.tablePermissionCodeListWithAction.forEach((item: any) => {
     if (item.action === action) {
       result = global.$route.meta.permissionCodeList.some(
         (item2: string) => item2 === item.code
@@ -542,7 +542,9 @@ const checkOperationAuth = (action: string) => {
     }
   });
 
-  result = global.$route.name === "Dashboard";
+  if (global.$route.name === "Dashboard") {
+    result = true;
+  }
 
   return result;
 };

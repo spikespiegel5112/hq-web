@@ -8,7 +8,7 @@
     tableBodyHeight="calc(100% - 0.4rem)"
     @onEdit="handleEdit"
     @onDelete="handleDelete"
-    :permissionCodeListWithAction="permissionCodeListWithAction"
+    :tablePermissionCodeListWithAction="tablePermissionCodeListWithAction"
   />
 </template>
 
@@ -118,7 +118,7 @@ const getDataPromise = () => {
       });
   });
 };
-const permissionCodeListWithAction = computed(() => {
+const tablePermissionCodeListWithAction = computed(() => {
   return [
     {
       code: "planManagement:emergencyPlan:save",

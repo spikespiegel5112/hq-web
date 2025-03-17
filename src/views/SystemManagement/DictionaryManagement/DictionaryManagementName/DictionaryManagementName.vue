@@ -12,7 +12,7 @@
     </div>
     <BaseTable
       :tableData="state.tableData"
-      :permissionCodeListWithAction="permissionCodeListWithAction"
+      :tablePermissionCodeListWithAction="tablePermissionCodeListWithAction"
       :dataModel="pageModel"
       :pagination="pagination"
       tabTable
@@ -127,7 +127,7 @@ watch(
     state.dictionaryNameList = newValue;
   }
 );
-const permissionCodeListWithAction = computed(() => {
+const tablePermissionCodeListWithAction = computed(() => {
   return [
     {
       code: "planManagement:emergencyPlan:save",

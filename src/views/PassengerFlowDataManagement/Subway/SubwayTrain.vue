@@ -18,7 +18,7 @@
       :tableData="state.tableData"
       :dataModel="pageModel"
       :loading="global.$store.state.app.tableLoading"
-      :permissionCodeListWithAction="permissionCodeListWithAction"
+      :tablePermissionCodeListWithAction="tablePermissionCodeListWithAction"
       tabTable
       statisticTable2
       :pagination="pagination"
@@ -113,7 +113,7 @@ let queryFormData = reactive({} as any);
 const pagination = reactive({
   ...global.$store.state.app.defaultPagination,
 });
-const permissionCodeListWithAction = computed(() => {
+const tablePermissionCodeListWithAction = computed(() => {
   return [
     {
       code: "planManagement:emergencyPlan:save",

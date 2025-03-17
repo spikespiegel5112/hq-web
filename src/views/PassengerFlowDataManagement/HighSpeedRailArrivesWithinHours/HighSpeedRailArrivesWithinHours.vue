@@ -26,7 +26,7 @@
     <BaseTable
       :tableData="state.tableData"
       :processedTableData="state.processedTableData"
-      :permissionCodeListWithAction="permissionCodeListWithAction"
+      :tablePermissionCodeListWithAction="tablePermissionCodeListWithAction"
       :dataModel="pageModel"
       :pagination="pagination"
       statisticTable
@@ -175,7 +175,7 @@ watch(
   () => queryFormData,
   (newValue: any, oldValue: any) => {}
 );
-const permissionCodeListWithAction = computed(() => {
+const tablePermissionCodeListWithAction = computed(() => {
   return [
     {
       code: "planManagement:emergencyPlan:save",

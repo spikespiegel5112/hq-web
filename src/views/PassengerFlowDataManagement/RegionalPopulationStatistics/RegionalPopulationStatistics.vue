@@ -12,7 +12,7 @@
     <BaseTable
       :tableData="state.tableData"
       :processedTableData="state.processedTableData"
-      :permissionCodeListWithAction="permissionCodeListWithAction"
+      :tablePermissionCodeListWithAction="tablePermissionCodeListWithAction"
       :dataModel="pageModel"
       :pagination="pagination"
       @onEdit="handleEdit"
@@ -111,7 +111,7 @@ const pagination = reactive({
 const env = computed(() => {
   return import.meta.env;
 });
-const permissionCodeListWithAction = computed(() => {
+const tablePermissionCodeListWithAction = computed(() => {
   return [
     {
       code: "planManagement:emergencyPlan:save",
