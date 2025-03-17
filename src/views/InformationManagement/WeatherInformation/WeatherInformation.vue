@@ -1,6 +1,10 @@
 <template>
   <div class="common_table_wrapper">
-    <FilterTool       @onSearch="handleSearch"       @onReset="handleReset"       v-model="queryFormData"     ></FilterTool>
+    <FilterTool
+      @onSearch="handleSearch"
+      @onReset="handleReset"
+      v-model="queryFormData"
+    ></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
         <ExportButton
@@ -143,32 +147,20 @@ const pagination = reactive({
 const tablePermissionCodeListWithAction = computed(() => {
   return [
     {
-      code: "planManagement:emergencyPlan:save",
-      action: "edit",
+      code: "infoManagement:weatherInfo:getPage",
+      action: "getPage",
     },
     {
-      code: "planManagement:emergencyPlan:delete",
-      action: "delete",
+      code: "infoManagement:weatherInfo:detail",
+      action: "detail",
     },
     {
-      code: "planManagement:emergencyPlan:getOneById",
-      action: "review",
+      code: "infoManagement:weatherInfo:export",
+      action: "export",
     },
     {
-      code: "planManagement:emergencyPlan:importExcel",
-      action: "importExcel",
-    },
-    {
-      code: "planManagement:emergencyPlan:exportExcel",
-      action: "exportExcel",
-    },
-    {
-      code: "planManagement:emergencyPlan:getDisposal",
-      action: "eventDisposal",
-    },
-    {
-      code: "planManagement:emergencyPlan:saveDisposal",
-      action: "saveDisposal",
+      code: "infoManagement:weatherInfo:publishWarning",
+      action: "issueWarning",
     },
   ];
 });

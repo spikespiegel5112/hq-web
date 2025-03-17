@@ -171,42 +171,39 @@ const currentRoute = computed(() => {
   return global.$route;
 });
 
-watch(
-  () => queryFormData,
-  (newValue: any, oldValue: any) => {}
-);
 const tablePermissionCodeListWithAction = computed(() => {
   return [
     {
-      code: "planManagement:emergencyPlan:save",
+      code: "passengerFlow:railwayArrive:saveRailwayArrive",
       action: "edit",
     },
     {
-      code: "planManagement:emergencyPlan:delete",
+      code: "passengerFlow:railwayArrive:delete",
       action: "delete",
     },
     {
-      code: "planManagement:emergencyPlan:getOneById",
+      code: "passengerFlow:railwayArrive:importPic",
+      action: "importPic",
+    },
+    {
+      code: "passengerFlow:railwayArrive:saveTodayFlow",
+      action: "edit",
+    },
+    {
+      code: "passengerFlow:railwayArrive:review",
       action: "review",
     },
     {
-      code: "planManagement:emergencyPlan:importExcel",
-      action: "importExcel",
-    },
-    {
-      code: "planManagement:emergencyPlan:exportExcel",
+      code: "passengerFlow:railwayArrive:import",
       action: "exportExcel",
     },
     {
-      code: "planManagement:emergencyPlan:getDisposal",
-      action: "eventDisposal",
-    },
-    {
-      code: "planManagement:emergencyPlan:saveDisposal",
-      action: "saveDisposal",
+      code: "passengerFlow:railwayArrive:railwayArriveExport",
+      action: "exportExcel",
     },
   ];
 });
+
 const getData = () => {
   global.$store.commit("app/updateTableLoading", true);
   backendRailwayArriveGetRailwayArrivePagingRequest({
