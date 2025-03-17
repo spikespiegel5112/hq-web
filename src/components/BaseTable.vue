@@ -105,7 +105,7 @@
             <a-tag
               :color="
                 item.tagConfig.colorList.find(
-                  (item2) => item2.value === scope.record[item.name]
+                  (item2:any) => item2.value === scope.record[item.name]
                 )?.color
               "
             >
@@ -124,7 +124,7 @@
             <span
               :style="{
                 color: item.colorConfig.colorList.find(
-                  (item2) => item2.value === scope.record[item.name]
+                  (item2:any) => item2.value === scope.record[item.name]
                 )?.color,
               }"
             >
@@ -153,6 +153,7 @@
               />
               <a-button
                 :key="action + scope.$index"
+                :disabled="!checkOperationAuth(action)"
                 type="link"
                 @click.stop="handleAction(action, scope)"
               >
@@ -260,7 +261,7 @@ const props = defineProps({
   statisticTable: { type: Boolean, default: false },
   statisticTable2: { type: Boolean, default: false },
   statisticTable3: { type: Boolean, default: false },
-  tableBodyHeight: { type: String || null, default: null },
+  tableBodyHeight: { type: [String, null], default: null },
   pagination: {
     type: [Object, Boolean],
     default: {
@@ -271,6 +272,7 @@ const props = defineProps({
   },
 
   dialogVisible: false,
+  permissionCodeListWithAction: { type: Array, default: [] },
 });
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
@@ -532,6 +534,20 @@ const getAttachmentTypeList = (attachmentList: any) => {
   });
 
   return typeList;
+};
+
+const checkOperationAuth = (action: string) => {
+  let result = false;
+  props.permissionCodeListWithAction.forEach((item: any) => {
+    if (item.action === action) {
+      result = global.$route.meta.permissionCodeList.some(
+        (item2: string) => item2 === item.code
+      );
+    }
+  });
+
+  console.log(result);
+  return true;
 };
 
 onMounted(() => {});

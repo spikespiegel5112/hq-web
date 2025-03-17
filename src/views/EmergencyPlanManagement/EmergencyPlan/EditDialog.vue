@@ -158,7 +158,11 @@
       <a-row>
         <a-col :span="22">
           <a-button key="back" @click="handleClose">取消</a-button>
-          <a-button key="submit" type="primary" @click="handleSubmit">
+          <a-button
+            key="submit"
+            type="primary"
+            @click="handleSubmit"
+          >
             确认
           </a-button>
         </a-col>

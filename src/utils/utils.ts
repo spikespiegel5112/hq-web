@@ -1,6 +1,9 @@
 import { store } from "@/store";
 import { message } from "ant-design-vue";
 import { dictionaryManageGetDictListRequest } from "@/api/management";
+// import { getCurrentInstance, ComponentInternalInstance } from "vue";
+// const currentInstance = getCurrentInstance() as ComponentInternalInstance;
+// const global = currentInstance.appContext.config.globalProperties;
 
 const [messageApi, contextHolder] = message.useMessage();
 
@@ -319,7 +322,16 @@ const _utils = {
     const fileSufix = getFileExtension(attachmentName);
 
     const imageType = ["png", "jpg", "jpeg", "gif", "bmp"];
-    const videoType = ['mp4', 'avi', 'mov', 'wmv', 'flv', 'rmvb', '3gp', 'webm'];
+    const videoType = [
+      "mp4",
+      "avi",
+      "mov",
+      "wmv",
+      "flv",
+      "rmvb",
+      "3gp",
+      "webm",
+    ];
     const fileType = [
       "xls",
       "xlsx",
@@ -364,23 +376,6 @@ const _utils = {
           value: 2,
         },
       ];
-      // colorList = [
-      //   {
-      //     label: "绿色",
-      //     color: "chartreuse",
-      //     value: 0,
-      //   },
-      //   {
-      //     label: "黄色",
-      //     color: "yellow",
-      //     value: 1,
-      //   },
-      //   {
-      //     label: "红色",
-      //     color: "red",
-      //     value: 2,
-      //   },
-      // ];
     }
 
     const color = colorList.find((item: any) => item.value === colorValue);
@@ -402,6 +397,11 @@ const _utils = {
 
     // 将数组转换为UUID格式的字符串，并用"-"分隔各部分
     return uuid.join("");
+  },
+  $checkAuth(global: any, permissionCode: string) {
+    return global.$route.meta.permissionCodeList.some(
+      (item: string) => item === permissionCode
+    );
   },
 } as any;
 
@@ -429,6 +429,7 @@ const result = {
     app.config.globalProperties["$getColorInfoByValue"] =
       _utils["$getColorInfoByValue"];
     app.config.globalProperties["$generateUUID"] = _utils["$generateUUID"];
+    app.config.globalProperties["$checkAuth"] = _utils["$checkAuth"];
   },
 } as any;
 

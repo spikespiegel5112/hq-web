@@ -24,6 +24,9 @@
       :processedTableData="state.processedTableData"
       :dataModel="pageModel"
       :pagination="pagination"
+      :permissionCodeListWithAction="permissionCodeListWithAction"
+      editPermissionCode="planManagement:emergencyPlan:save"
+      detailPermissionCode="planManagement:emergencyPlan:save"
       @onEdit="handleEdit"
       @onReview="handleReview"
       @onChangePage="handleChangePage"
@@ -211,6 +214,39 @@ const eventList = computed(() => {
   return global.$store.state.app.currentEventTypeList.find(
     (item: any) => item.type === global.$store.state.app.emergencyPlanType
   )?.data;
+});
+
+const permissionCodeListWithAction = computed(() => {
+  return [
+    {
+      code: "planManagement:emergencyPlan:save",
+      action: "edit",
+    },
+    {
+      code: "planManagement:emergencyPlan:delete",
+      action: "delete",
+    },
+    {
+      code: "planManagement:emergencyPlan:getOneById",
+      action: "review",
+    },
+    {
+      code: "planManagement:emergencyPlan:importExcel",
+      action: "importExcel",
+    },
+    {
+      code: "planManagement:emergencyPlan:exportExcel",
+      action: "exportExcel",
+    },
+    {
+      code: "planManagement:emergencyPlan:getDisposal",
+      action: "eventDisposal",
+    },
+    {
+      code: "planManagement:emergencyPlan:saveDisposal",
+      action: "saveDisposal",
+    },
+  ];
 });
 
 const getData = () => {

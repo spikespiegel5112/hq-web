@@ -6,11 +6,6 @@ const dictionary = {
     dictionaryReady: false,
     actionDictionary: [
       {
-        label: "下载",
-        name: "download",
-        color: null,
-      },
-      {
         label: "预览",
         name: "preview",
         color: null,
@@ -35,24 +30,14 @@ const dictionary = {
         name: "edit",
         color: null,
       },
-      {
-        label: "事件处置",
-        name: "disposal",
-        color: null,
-      },
+      // {
+      //   label: "事件处置",
+      //   name: "disposal",
+      //   color: null,
+      // },
       {
         label: "删除",
         name: "delete",
-        color: "font-color-red",
-      },
-      {
-        label: "发布预警",
-        name: "issueWarning",
-        color: "font-color-red",
-      },
-      {
-        label: "事件处置",
-        name: "eventDisposal",
         color: "font-color-red",
       },
       {
@@ -71,31 +56,6 @@ const dictionary = {
         color: null,
       },
       {
-        label: "预览",
-        name: "preview",
-        color: null,
-      },
-      {
-        label: "定位",
-        name: "locate",
-        color: null,
-      },
-      {
-        label: "详情",
-        name: "review",
-        color: null,
-      },
-      {
-        label: "详情",
-        name: "detail",
-        color: null,
-      },
-      {
-        label: "编辑",
-        name: "edit",
-        color: null,
-      },
-      {
         label: "事件处置",
         name: "eventDisposal",
         color: null,
@@ -109,11 +69,6 @@ const dictionary = {
         label: "发布预警",
         name: "issueWarning",
         color: null,
-      },
-      {
-        label: "删除",
-        name: "delete",
-        color: "font-color-red",
       },
     ],
     dialogMode: [

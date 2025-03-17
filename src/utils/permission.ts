@@ -34,13 +34,6 @@ const assemblingRoutesPromise = async () => {
     children: parsedRouteDictionary,
   });
 
-  // dasdsa.forEach((item: any) => {
-  //   const excludeRouteNameList = ["Login", "Layout"];
-  //   if (!excludeRouteNameList.includes(item.name)) {
-  //     console.log(item.name);
-  //     router.removeRoute(item.name);
-  //   }
-  // });
   store.commit("user/updateUserInfoFinally", true);
 };
 
