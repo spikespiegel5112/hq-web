@@ -403,10 +403,6 @@ const actualTableData = computed(() => {
   return result;
 }) as any;
 
-const parseTableWrapperHeight = computed(() => {
-  return props.statisticTable ? "calc(100vh - 6.7rem)" : "calc(100vh - 3.7rem)";
-});
-
 watch(
   () => props.tableData,
   (newValue: any, oldValue: any) => {
@@ -547,6 +543,7 @@ const checkOperationAuth = (action: string) => {
   });
 
   console.log(result);
+  return result;
   return true;
 };
 

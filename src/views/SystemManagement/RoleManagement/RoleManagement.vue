@@ -15,6 +15,7 @@
       :permissionCodeListWithAction="permissionCodeListWithAction"
       :dataModel="pageModel"
       :pagination="pagination"
+      :permissionCodeListWithAction="permissionCodeListWithAction"
       @onEdit="handleEdit"
       @onReview="handleReview"
       @onChangePage="handleChangePage"
