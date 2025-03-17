@@ -23,6 +23,7 @@
           <a-form-item name="password" label="">
             <a-input
               v-model:value="state.formData.password"
+              type="password"
               placeholder="请输入密码"
             >
               <template #prefix>
@@ -72,13 +73,9 @@ const state = reactive({
   visible: false,
   loading: false,
   formData: {
-    deviceId: "dev_znjt_001",
-    loginType: 2,
-    password: "admin",
+    password: "string",
     seconds: 30,
-    simId: "simznjtpos",
-    userId: "shzj002",
-    username: "admin",
+    username: "user4",
   },
 });
 

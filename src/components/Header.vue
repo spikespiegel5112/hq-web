@@ -12,7 +12,7 @@
           lineHeight: '0.2rem',
         }"
       >
-        <!-- {{ permissionCodeList }} -->
+        {{ permissionCodeList }}
       </div>
       <div>
         <div class="date">

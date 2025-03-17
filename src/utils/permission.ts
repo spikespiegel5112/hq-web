@@ -13,7 +13,7 @@ const loadView = (componetPath: string) => {
   return () => import(componetPath);
 };
 
-const assemblingRoutesPromise = async () => {
+const assemblingRoutes = async () => {
   userInfoResponse = store.state.user.userInfo;
   permMenuList = userInfoResponse.permMenuList;
 
@@ -120,7 +120,7 @@ const getUserInfoPromise = () => {
         store.commit("user/updateUserInfo", userInfoResponse);
         store.commit("user/updateUserInfoFinally", true);
 
-        assemblingRoutesPromise();
+        assemblingRoutes();
         resolve(response);
       })
       .catch((error: any) => {

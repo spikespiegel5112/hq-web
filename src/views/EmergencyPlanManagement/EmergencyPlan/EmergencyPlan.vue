@@ -18,15 +18,12 @@
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
-    <!-- {{ global.$store.state.app.tableLoading }} -->
     <BaseTable
       :tableData="state.tableData"
       :processedTableData="state.processedTableData"
       :dataModel="pageModel"
       :pagination="pagination"
       :permissionCodeListWithAction="permissionCodeListWithAction"
-      editPermissionCode="planManagement:emergencyPlan:save"
-      detailPermissionCode="planManagement:emergencyPlan:save"
       @onEdit="handleEdit"
       @onReview="handleReview"
       @onChangePage="handleChangePage"

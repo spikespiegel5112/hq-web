@@ -14,6 +14,7 @@
       :tableData="state.tableData"
       :dataModel="pageModel"
       :pagination="pagination"
+      :permissionCodeListWithAction="permissionCodeListWithAction"
       @onEdit="handleEdit"
       @onReview="handleReview"
       @onChangePage="handleChangePage"
@@ -136,6 +137,28 @@ let queryFormData = reactive({} as any);
 
 const pagination = reactive({
   ...global.$store.state.app.defaultPagination,
+});
+
+const permissionCodeListWithAction = computed(() => {
+  return [
+    {
+      code: "system:sysRole:save",
+      action: "edit",
+    },
+    {
+      code: "system:sysRole:delete",
+      action: "delete",
+    },
+    {
+      code: "system:sysRole:getOneById",
+      action: "review",
+    },
+    {
+      code: "system:sysRole:allocateMenu",
+      action: "distributeAuthority",
+    },
+    
+  ];
 });
 
 const getData = () => {
