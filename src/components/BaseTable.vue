@@ -341,7 +341,7 @@ const parsedColumnWidth = (item: any) => {
           global.$store.state.dictionary.actionDictionary;
         const charLength = actionDictionary.find(
           (item2: any) => item2.name === cur
-        ).label.length;
+        )?.label.length;
         return sum + (charLength * 2 + 45);
       }, 0) +
       80 +
@@ -542,9 +542,9 @@ const checkOperationAuth = (action: string) => {
     }
   });
 
-  console.log(result);
+  result = global.$route.name === "Dashboard";
+
   return result;
-  return true;
 };
 
 onMounted(() => {});

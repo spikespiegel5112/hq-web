@@ -49,7 +49,9 @@ const initChart = () => {
   const chartDom = document.getElementById(
     "accumulatedevacuationofpassengerflowonthesameday"
   );
-  myChart = global.$echarts.init(chartDom);
+  if (chartDom) {
+    myChart = global.$echarts.init(chartDom);
+  }
 };
 
 const setOption: EChartsOption = () => {

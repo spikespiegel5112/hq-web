@@ -81,7 +81,9 @@ watch(
 let myChart: any;
 const initChart = () => {
   const chartDom = document.getElementById("queuetime");
-  myChart = global.$echarts.init(chartDom);
+  if (chartDom) {
+    myChart = global.$echarts.init(chartDom);
+  }
 };
 
 const setOption: EChartsOption = () => {

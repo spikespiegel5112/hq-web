@@ -10,6 +10,7 @@
       <CommonTitle :title="`分配权限（${rowData.roleName}）`" />
     </template>
     <template #extra>
+      <a-button style="margin-right: 8px" @click="checkAll">全选</a-button>
       <a-button style="margin-right: 8px" @click="handleClose">取消</a-button>
       <a-button type="primary" @click="handleDistributeRole">保存</a-button>
     </template>
@@ -102,6 +103,20 @@ const handleClose = () => {
   emit("onClose", false);
 };
 
+const checkAll = () => {
+  console.log(state.treeData);
+  
+  const looper = (children: any[]) => {
+    children.forEach((item: any, index: number) => {
+      state.checkedKeys.push(item.id);
+      if (item.children instanceof Array && item.children.length > 0) {
+        looper(item.children);
+      }
+    });
+  };
+  looper(state.treeData);
+};
+
 const handleOpen = () => {
   getTreeData();
 };
@@ -178,7 +193,7 @@ const handleDistributeRole = () => {
   console.log(state.targetKeys);
   console.log(state.checkedKeys);
   sysSysRoleAllocateMenuRequest({
-    menuIdList: state.checkedKeys.checked,
+    menuIdList: state.checkedKeys,
     roleId: props.rowData.id,
   })
     .then((response: any) => {

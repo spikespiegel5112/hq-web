@@ -49,8 +49,8 @@
           <a-form-item name="menuStatus" label="节点状态">
             <a-switch
               v-model:checked="state.formData.menuStatus"
-              :checkedValue="1"
-              :unCheckedValue="0"
+              :checkedValue="0"
+              :unCheckedValue="1"
               checkedChildren="正常"
               unCheckedChildren="停用"
             />

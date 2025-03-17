@@ -12,7 +12,6 @@
     </div>
     <BaseTable
       :tableData="state.tableData"
-      :permissionCodeListWithAction="permissionCodeListWithAction"
       :dataModel="pageModel"
       :pagination="pagination"
       :permissionCodeListWithAction="permissionCodeListWithAction"
@@ -139,35 +138,24 @@ let queryFormData = reactive({} as any);
 const pagination = reactive({
   ...global.$store.state.app.defaultPagination,
 });
+
 const permissionCodeListWithAction = computed(() => {
   return [
     {
-      code: "planManagement:emergencyPlan:save",
+      code: "system:sysRole:save",
       action: "edit",
     },
     {
-      code: "planManagement:emergencyPlan:delete",
+      code: "system:sysRole:delete",
       action: "delete",
     },
     {
-      code: "planManagement:emergencyPlan:getOneById",
+      code: "system:sysRole:getOneById",
       action: "review",
     },
     {
-      code: "planManagement:emergencyPlan:importExcel",
-      action: "importExcel",
-    },
-    {
-      code: "planManagement:emergencyPlan:exportExcel",
-      action: "exportExcel",
-    },
-    {
-      code: "planManagement:emergencyPlan:getDisposal",
-      action: "eventDisposal",
-    },
-    {
-      code: "planManagement:emergencyPlan:saveDisposal",
-      action: "saveDisposal",
+      code: "system:sysRole:allocateMenu",
+      action: "distributeAuthority",
     },
   ];
 });

@@ -22,6 +22,7 @@ const assemblingRoutes = async () => {
     systemRouteDictionary,
     flattenedPermissionTree
   );
+  // parsedRouteDictionary = systemRouteDictionary;
   store.commit("app/updateParsedRouteDictionary", parsedRouteDictionary);
 
   router.addRoute({

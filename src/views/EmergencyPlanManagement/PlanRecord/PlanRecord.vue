@@ -15,8 +15,8 @@
     </div>
     <BaseTable
       :tableData="state.tableData"
-      :permissionCodeListWithAction="permissionCodeListWithAction"
       :processedTableData="state.processedTableData"
+      :permissionCodeListWithAction="permissionCodeListWithAction"
       :dataModel="pageModel"
       :pagination="pagination"
       @onEdit="handleEdit"
@@ -140,7 +140,7 @@ const pageModel = ref([
     tableVisible: true,
     exportVisible: false,
     fixed: "right",
-    actions: ["review"],
+    actions: ["detail"],
   },
 ]);
 
@@ -174,36 +174,21 @@ const eventList = computed(() => {
 const permissionCodeListWithAction = computed(() => {
   return [
     {
-      code: "planManagement:emergencyPlan:save",
-      action: "edit",
+      code: "planManagement:emergencyPlan:detail",
+      action: "detail",
     },
     {
-      code: "planManagement:emergencyPlan:delete",
-      action: "delete",
-    },
-    {
-      code: "planManagement:emergencyPlan:getOneById",
-      action: "review",
-    },
-    {
-      code: "planManagement:emergencyPlan:importExcel",
-      action: "importExcel",
-    },
-    {
-      code: "planManagement:emergencyPlan:exportExcel",
+      code: "planManagement:emergencyPlan:exportRecordExcel",
       action: "exportExcel",
-    },
-    {
-      code: "planManagement:emergencyPlan:getDisposal",
-      action: "eventDisposal",
-    },
-    {
-      code: "planManagement:emergencyPlan:saveDisposal",
-      action: "saveDisposal",
     },
   ];
 });
 const getData = () => {
+  if (
+    !global.$checkAuth(global, "planManagement:emergencyPlan:getRecordPage")
+  ) {
+    return;
+  }
   global.$store.commit("app/updateTableLoading", true);
   pagination.total = undefined;
   planManagementEmergencyPlanGetRecordPageRequest({

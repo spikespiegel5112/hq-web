@@ -1,5 +1,3 @@
-import { color } from "echarts";
-
 const dictionary = {
   namespaced: true,
   state: () => ({
@@ -17,12 +15,12 @@ const dictionary = {
       },
       {
         label: "详情",
-        name: "review",
+        name: "detail",
         color: null,
       },
       {
-        label: "详情",
-        name: "detail",
+        label: "查看",
+        name: "review",
         color: null,
       },
       {
