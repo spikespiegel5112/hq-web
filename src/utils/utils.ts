@@ -399,9 +399,14 @@ const _utils = {
     return uuid.join("");
   },
   $checkAuth(global: any, permissionCode: string) {
-    return global.$route.meta.permissionCodeList.some(
+
+    if (!global.$route.meta.permissionCodeList) {
+      // debugger;
+    }
+    const result: boolean = global.$route.meta.permissionCodeList.some(
       (item: string) => item === permissionCode
     );
+    return result;
   },
 } as any;
 

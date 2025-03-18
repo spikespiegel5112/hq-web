@@ -139,7 +139,7 @@ const tablePermissionCodeListWithAction = computed(() => {
       action: "importExcel",
     },
     {
-      code: "passengerFlow:storage:exportExcel",
+      code: "passengerFlow:storage:export",
       action: "exportExcel",
     },
     {

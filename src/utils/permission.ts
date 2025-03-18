@@ -17,9 +17,11 @@ const assemblingRoutes = async () => {
     systemRouteDictionary,
     flattenedPermissionTree
   );
-  parsedRouteDictionary = systemRouteDictionary;
+  // 调试用，可以强制给项目加上所有路由
+  // parsedRouteDictionary = systemRouteDictionary;
   store.commit("app/updateParsedRouteDictionary", parsedRouteDictionary);
 
+  // 拼装路由
   router.addRoute({
     path: "/",
     name: "Layout",
@@ -34,10 +36,12 @@ const assemblingRoutes = async () => {
 };
 
 const findNodeChildrenPermissionCodeByName = (name: string) => {
-  let result: any;
+  let result: any = [];
   const looper = (children: any[]) => {
     children.forEach((item: any) => {
       if (item.permissionCode === name) {
+        // debugger;
+
         result = item.children.map((item2: any) => item2.permissionCode);
       } else {
         looper(item.children);
@@ -61,19 +65,20 @@ const parseRouteDictionary = (
     let _result = [] as any[];
     children.forEach((item: any) => {
       const currentPermissionInfo = flattenedPermissionTree.find(
-        (item2: any) => item2.permissionCode === item.name
+        (item2: any) => {
+          let result =
+            item2.permissionCode === item.name ||
+            permanentRouteName.some((item3: any) => item3 === item.name);
+          return result;
+        }
       );
-      if (
-        !!currentPermissionInfo ||
-        permanentRouteName.some((item2: any) => item2 === item.name)
-      ) {
+      if (!!currentPermissionInfo) {
         const _item: any = item;
         if (!!item.children && item.children.length > 0) {
           _item.children = looper(item.children);
         }
         if (item.name === "Layout") {
           _item.component = () => import(item.componentPath);
-          // _item.component = loadView(item.componentPath || "");
         }
         _result.push({
           ..._item,
