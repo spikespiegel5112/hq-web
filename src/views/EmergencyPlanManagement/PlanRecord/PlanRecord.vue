@@ -3,6 +3,9 @@
     <FilterTool
       @onSearch="handleSearch"
       @onReset="handleReset"
+      :disabled="
+        !global.$checkAuth(global, 'planManagement:emergencyPlan:getPage')
+      "
       v-model="queryFormData"
     ></FilterTool>
     <div class="common_tableoperation_wrapper">
@@ -194,11 +197,8 @@ const eventList = computed(() => {
   return result;
 });
 const getData = () => {
-  if (
-    !global.$checkAuth(global, "planManagement:emergencyPlan:getRecordPage")
-  ) {
+  if (!global.$checkAuth(global, "planManagement:emergencyPlan:getRecordPage"))
     return;
-  }
   global.$store.commit("app/updateTableLoading", true);
   pagination.total = undefined;
   planManagementEmergencyPlanGetRecordPageRequest({

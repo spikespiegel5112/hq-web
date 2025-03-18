@@ -42,7 +42,12 @@
             <a-button class="submitbutton" @click="handleReset">
               重置
             </a-button>
-            <a-button class="submitbutton" type="primary" @click="handleSearch">
+            <a-button
+              class="submitbutton"
+              type="primary"
+              @click="handleSearch"
+              :disabled="props.disabled"
+            >
               查询
             </a-button>
           </a-space>
@@ -73,6 +78,10 @@ const emit = defineEmits<{
   (e: "onReset", formData: object): void;
   (e: "update:modelValue", formData: object): void;
 }>();
+
+const props = defineProps({
+  disabled: { type: Boolean, required: false, default: false },
+});
 
 const formDataRef: any = ref(null);
 

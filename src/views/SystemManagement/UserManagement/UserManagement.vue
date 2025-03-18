@@ -3,6 +3,7 @@
     <FilterTool
       @onSearch="handleSearch"
       @onReset="handleReset"
+      :disabled="!global.$checkAuth(global, 'system:sysUser:getPage')"
       v-model="queryFormData"
     ></FilterTool>
     <div class="common_tableoperation_wrapper">
@@ -165,36 +166,37 @@ const permissionCodeList = computed(() => {
 const tablePermissionCodeListWithAction = computed(() => {
   return [
     {
-      code: "planManagement:emergencyPlan:save",
+      code: "system:sysUser:save",
       action: "edit",
     },
     {
-      code: "planManagement:emergencyPlan:delete",
+      code: "system:sysUser:delete",
       action: "delete",
     },
     {
-      code: "planManagement:emergencyPlan:getOneById",
+      code: "system:sysUser:getOneById",
       action: "review",
     },
     {
-      code: "planManagement:emergencyPlan:importExcel",
+      code: "system:sysUser:importExcel",
       action: "importExcel",
     },
     {
-      code: "planManagement:emergencyPlan:exportExcel",
+      code: "system:sysUser:exportExcel",
       action: "exportExcel",
     },
     {
-      code: "planManagement:emergencyPlan:getDisposal",
+      code: "system:sysUser:getDisposal",
       action: "eventDisposal",
     },
     {
-      code: "planManagement:emergencyPlan:saveDisposal",
+      code: "system:sysUser:saveDisposal",
       action: "saveDisposal",
     },
   ];
 });
 const getData = () => {
+  if (!global.$checkAuth(global, "system:sysUser:getPage")) return;
   global.$store.commit("app/updateTableLoading", true);
   pagination.total = undefined;
   sysSysUserGetPageRequest({

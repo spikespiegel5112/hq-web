@@ -3,6 +3,7 @@
     <FilterTool
       @onSearch="handleSearch"
       @onReset="handleReset"
+      :disabled="!global.$checkAuth(global, 'eventManage:suddenEvent:getPage')"
       v-model="queryFormData"
     ></FilterTool>
     <div class="common_tableoperation_wrapper">

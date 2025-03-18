@@ -3,6 +3,7 @@
     <FilterTool
       @onSearch="handleSearch"
       @onReset="handleReset"
+      :disabled="!global.$checkAuth(global, 'eventManage:suddenEvent:getRecordPage')"
       v-model="queryFormData"
     ></FilterTool>
     <div class="common_tableoperation_wrapper">
@@ -11,7 +12,7 @@
           :action="eventManageSuddenEventExportRecordRequest"
           :queryFormData="queryFormData"
           :disabled="
-            !global.$checkAuth(global, 'eventManage:suddenEvent:export')
+            !global.$checkAuth(global, 'eventManage:suddenEvent:exportRecord')
           "
         />
       </a-space>
@@ -172,6 +173,7 @@ const permissionCodeList = computed(() => {
 });
 
 const getData = () => {
+  if (!global.$checkAuth(global, "eventManage:suddenEvent:getRecordPage")) return;
   global.$store.commit("app/updateTableLoading", true);
   pagination.total = undefined;
   eventManageSuddenEventGetRecordPageRequest({

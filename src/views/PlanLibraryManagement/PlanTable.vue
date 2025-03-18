@@ -154,6 +154,7 @@ const tablePermissionCodeListWithAction = computed(() => {
   ];
 });
 const getData = () => {
+  if (!global.$checkAuth(global, "planManagement:emergencyPlan:getPage")) return;
   global.$store.commit("app/updateTableLoading", true);
   pagination.total = undefined;
   getDataPromise()

@@ -3,6 +3,7 @@
     <FilterTool
       @onSearch="handleSearch"
       @onReset="handleReset"
+      :disabled="!global.$checkAuth(global, 'system:dictionary:getPage')"
       :dictionaryNameList="props.dictionaryNameList"
     ></FilterTool>
     <div class="common_tableoperation_wrapper">
@@ -162,36 +163,37 @@ const permissionCodeList = computed(() => {
 const tablePermissionCodeListWithAction = computed(() => {
   return [
     {
-      code: "planManagement:emergencyPlan:save",
+      code: "system:dictionary:save",
       action: "edit",
     },
     {
-      code: "planManagement:emergencyPlan:delete",
+      code: "system:dictionary:delete",
       action: "delete",
     },
     {
-      code: "planManagement:emergencyPlan:getOneById",
+      code: "system:dictionary:getOneById",
       action: "review",
     },
     {
-      code: "planManagement:emergencyPlan:importExcel",
+      code: "system:dictionary:importExcel",
       action: "importExcel",
     },
     {
-      code: "planManagement:emergencyPlan:exportExcel",
+      code: "system:dictionary:exportExcel",
       action: "exportExcel",
     },
     {
-      code: "planManagement:emergencyPlan:getDisposal",
+      code: "system:dictionary:getDisposal",
       action: "eventDisposal",
     },
     {
-      code: "planManagement:emergencyPlan:saveDisposal",
+      code: "system:dictionary:saveDisposal",
       action: "saveDisposal",
     },
   ];
 });
 const getData = () => {
+  if (!global.$checkAuth(global, "system:dictionary:getPage")) return;
   global.$store.commit("app/updateTableLoading", true);
   dictionaryManageGetDictItemPagingRequest({
     ...queryFormData,

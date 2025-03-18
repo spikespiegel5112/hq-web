@@ -3,6 +3,7 @@
     <FilterTool
       @onSearch="handleSearch"
       @onReset="handleReset"
+      :disabled="!global.$checkAuth(global, 'infoManagement:complaintInfo:getPage')"
       v-model="queryFormData"
     ></FilterTool>
     <div class="common_tableoperation_wrapper">
@@ -209,6 +210,7 @@ const tablePermissionCodeListWithAction = computed(() => {
   ];
 });
 const getData = () => {
+  if (!global.$checkAuth(global, "infoManagement:complaintInfo:getPage")) return;
   global.$store.commit("app/updateTableLoading", true);
   infoManagementComplaintInfoGetPageRequest({
     ...queryFormData,

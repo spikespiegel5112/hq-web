@@ -28,9 +28,7 @@ const global = currentInstance.appContext.config.globalProperties;
 
 const formDataRef = ref();
 
-const state = reactive({
-  bannerInfo: {},
-});
+const state = reactive({});
 
 onMounted(async () => {});
 

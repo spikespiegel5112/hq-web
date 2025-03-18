@@ -3,6 +3,7 @@
     <FilterTool
       @onSearch="handleSearch"
       @onReset="handleReset"
+      :disabled="!global.$checkAuth(global, 'infoManagement:publicSentimentInfo:getPage')"
       v-model="queryFormData"
     ></FilterTool>
     <div class="common_tableoperation_wrapper">
@@ -239,6 +240,7 @@ const tablePermissionCodeListWithAction = computed(() => {
   ];
 });
 const getData = () => {
+  if (!global.$checkAuth(global, "infoManagement:publicSentimentInfo:getPage")) return;
   global.$store.commit("app/updateTableLoading", true);
   infoManagementPublicSentimentInfoGetPageRequest({
     ...queryFormData,

@@ -36,7 +36,12 @@
             <a-button class="submitbutton" @click="handleReset">
               重置
             </a-button>
-            <a-button class="submitbutton" type="primary" @click="handleSearch">
+            <a-button
+              class="submitbutton"
+              type="primary"
+              @click="handleSearch"
+              :disabled="props.disabled"
+            >
               查询
             </a-button>
           </a-space>
@@ -57,14 +62,20 @@ import {
   ComponentInternalInstance,
   ref,
   nextTick,
-  
 } from "vue";
 
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const global = currentInstance.appContext.config.globalProperties;
 import type { DefaultOptionType } from "ant-design-vue/es/select";
 
+const emit = defineEmits<{
+  (e: "onSearch", formData: object): void;
+  (e: "onReset", formData: object): void;
+  (e: "update:modelValue", formData: object): void;
+}>();
+
 const props = defineProps({
+  disabled: { type: Boolean, required: false, default: false },
   dictionaryNameList: {
     type: Array,
     required: false,
@@ -73,12 +84,6 @@ const props = defineProps({
     },
   },
 });
-
-const emit = defineEmits<{
-  (e: "onSearch", formData: object): void;
-  (e: "onReset", formData: object): void;
-  (e: "update:modelValue", formData: object): void;
-}>();
 
 const formDataRef: any = ref(null);
 

@@ -150,6 +150,7 @@ const tablePermissionCodeListWithAction = computed(() => {
   ];
 });
 const getData = () => {
+  if (!global.$checkAuth(global, "passengerFlow:areaFlow:getPage")) return;
   global.$store.commit("app/updateTableLoading", true);
   passengerFlowAreaFlowGetPageRequest({
     ...queryFormData,

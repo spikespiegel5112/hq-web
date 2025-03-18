@@ -5,6 +5,7 @@
     <FilterTool
       @onSearch="handleSearch"
       @onReset="handleReset"
+      :disabled="!global.$checkAuth(global, 'passengerFlow:eHailingParking:getPage')"
       v-model="queryFormData"
     ></FilterTool>
 
@@ -178,6 +179,7 @@ const tablePermissionCodeListWithAction = computed(() => {
   ];
 });
 const getData = () => {
+  if (!global.$checkAuth(global, "passengerFlow:eHailingParking:getPage")) return;
   queryFormData.capPlace = props.capPlace;
   global.$store.commit("app/updateTableLoading", true);
   passengerFloweEHailingParkingGetPageRequest({
