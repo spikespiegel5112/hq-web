@@ -7,7 +7,7 @@
     @afterOpenChange="handleOpen"
   >
     <template #title>
-      <CommonTitle :title="`分配权限（${rowData.roleName}）`" />
+      <CommonTitle :title="`分配权限（角色：${rowData.roleName}）`" />
     </template>
     <template #extra>
       <a-button style="margin-right: 8px" @click="checkAll">全选</a-button>
@@ -149,6 +149,7 @@ const getTreeData = () => {
           if (item.children instanceof Array && item.children.length > 0) {
             result.push({
               ...item,
+              // title: `${item.menuName}（${item.permissionCode}）`,
               title: `${item.menuName}（${item.permissionCode}）`,
               key: item.id,
               disabled: false,
