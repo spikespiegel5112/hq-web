@@ -24,6 +24,11 @@ const dictionary = {
         color: null,
       },
       {
+        label: "删除",
+        name: "delete",
+        color: null,
+      },
+      {
         label: "编辑",
         name: "edit",
         color: null,

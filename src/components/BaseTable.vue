@@ -539,13 +539,17 @@ const checkOperationAuth = (action: string) => {
       const permissionCodeList: any[] =
         global.$route.meta.permissionCodeList || [];
       result = permissionCodeList.some((item2: string) => item2 === item.code);
+      if (action === "delete") {
+      }
     }
   });
 
   if (global.$route.name === "Dashboard") {
     result = true;
   }
-  result = true;
+
+  // 调试用，强制开启所有权限
+  // result = true;
 
   return result;
 };
