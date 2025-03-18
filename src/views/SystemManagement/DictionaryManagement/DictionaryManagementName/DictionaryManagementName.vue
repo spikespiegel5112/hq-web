@@ -7,7 +7,13 @@
     ></FilterTool>
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
-        <a-button class="add" @click="handleAdd">新增</a-button>
+        <a-button
+          class="add"
+          @click="handleAdd"
+          :disabled="!global.$checkAuth(global, 'system:dictionary:save')"
+        >
+          新增
+        </a-button>
       </a-space>
     </div>
     <BaseTable
@@ -43,7 +49,6 @@ import {
   ComponentInternalInstance,
   ref,
   nextTick,
-  
 } from "vue";
 import type { DefaultOptionType } from "ant-design-vue/es/select";
 
@@ -133,31 +138,31 @@ watch(
 const tablePermissionCodeListWithAction = computed(() => {
   return [
     {
-      code: "planManagement:emergencyPlan:save",
+      code: "system:dictionary:save",
       action: "edit",
     },
     {
-      code: "planManagement:emergencyPlan:delete",
+      code: "system:dictionary:delete",
       action: "delete",
     },
     {
-      code: "planManagement:emergencyPlan:getOneById",
+      code: "system:dictionary:getOneById",
       action: "review",
     },
     {
-      code: "planManagement:emergencyPlan:importExcel",
+      code: "system:dictionary:importExcel",
       action: "importExcel",
     },
     {
-      code: "planManagement:emergencyPlan:exportExcel",
+      code: "system:dictionary:exportExcel",
       action: "exportExcel",
     },
     {
-      code: "planManagement:emergencyPlan:getDisposal",
+      code: "system:dictionary:getDisposal",
       action: "eventDisposal",
     },
     {
-      code: "planManagement:emergencyPlan:saveDisposal",
+      code: "system:dictionary:saveDisposal",
       action: "saveDisposal",
     },
   ];

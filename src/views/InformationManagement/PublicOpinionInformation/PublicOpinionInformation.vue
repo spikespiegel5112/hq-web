@@ -15,10 +15,19 @@
           :action="infoManagementPublicSentimentInfoExportExcelRequest"
           :queryFormData="queryFormData"
           :disabled="
-            !global.$checkAuth(global, 'infoManagement:publicSentimentInfo:export')
+            !global.$checkAuth(
+              global,
+              'infoManagement:publicSentimentInfo:export'
+            )
           "
         />
-        <a-button class="add" @click="handleAdd">新增</a-button>
+        <a-button
+          class="add"
+          @click="handleAdd"
+          :disabled="!global.$checkAuth(global, 'infoManagement:publicSentimentInfo:save')"
+        >
+          新增
+        </a-button>
       </a-space>
     </div>
     <BaseTable

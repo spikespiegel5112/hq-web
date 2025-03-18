@@ -18,7 +18,13 @@
             !global.$checkAuth(global, 'infoManagement:complaintInfo:export')
           "
         />
-        <a-button class="add" @click="handleAdd">新增</a-button>
+        <a-button
+          class="add"
+          @click="handleAdd"
+          :disabled="!global.$checkAuth(global, 'infoManagement:complaintInfo:save')"
+        >
+          新增
+        </a-button>
       </a-space>
     </div>
     <BaseTable

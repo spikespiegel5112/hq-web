@@ -23,7 +23,13 @@
         <a-button class="yellow" @click="handleAddSummarizedData">
           新增汇总数据
         </a-button>
-        <a-button class="add" @click="handleAdd">新增</a-button>
+        <a-button
+          class="add"
+          @click="handleAdd"
+          :disabled="!global.$checkAuth(global, 'passengerFlow:railwayArrive:save')"
+        >
+          新增
+        </a-button>
       </a-space>
     </div>
     <BaseTable
