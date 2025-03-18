@@ -85,7 +85,7 @@ const state: UnwrapRef<any> = reactive({
   targetKeys: [] as any[],
   expandedKeys: null,
   selectedKeys: null,
-  checkedKeys: [] as any,
+  checkedKeys: {},
 });
 
 watch(
