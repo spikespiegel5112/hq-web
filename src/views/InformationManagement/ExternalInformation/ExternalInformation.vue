@@ -3,7 +3,9 @@
     <FilterTool
       @onSearch="handleSearch"
       @onReset="handleReset"
-      :disabled="!global.$checkAuth(global, 'infoManagement:externalInfo:getPage')"
+      :disabled="
+        !global.$checkAuth(global, 'infoManagement:externalInfo:getPage')
+      "
       v-model="queryFormData"
     ></FilterTool>
     <div class="common_tableoperation_wrapper">
