@@ -15,11 +15,12 @@
       <a-button type="primary" @click="handleDistributeRole">保存</a-button>
     </template>
     <div class="content">
+      <!-- {{ state.checkedKeys }} -->
       <a-tree
         v-if="state.treeData.length > 0"
         class="tree"
         v-model:selectedKeys="state.selectedKeys"
-        v-model:checkedKeys="state.checkedKeys.checked"
+        v-model:checkedKeys="state.checkedKeys"
         checkable
         selectable
         checkStrictly
@@ -148,7 +149,7 @@ const getTreeData = () => {
           if (item.children instanceof Array && item.children.length > 0) {
             result.push({
               ...item,
-              title: item.menuName,
+              title: `${item.menuName}（${item.permissionCode}）`,
               key: item.id,
               disabled: false,
               children: looper(item.children),
@@ -156,7 +157,7 @@ const getTreeData = () => {
           } else {
             result.push({
               ...item,
-              title: item.menuName,
+              title: `${item.menuName}（${item.permissionCode}）`,
               key: item.id,
               disabled: false,
             });
@@ -217,6 +218,7 @@ const handleCheckNode = (checkIdList: any, checkedNode: any) => {
 
   const selectedKey = checkedNode.node.id;
   console.log(state.checkedKeys.checked);
+
   if (state.checkedKeys.checked.includes(selectedKey)) {
     let checkedIndex;
     state.checkedKeys.checked.forEach((item1: any, index2: number) => {
