@@ -93,6 +93,9 @@ let queryFormData = reactive({} as any);
 const pagination = reactive({
   ...global.$store.state.app.defaultPagination,
 });
+const permissionCodeList = computed(() => {
+  return global.$route.meta.permissionCodeList || [];
+});
 
 watch(
   () => props.planId,

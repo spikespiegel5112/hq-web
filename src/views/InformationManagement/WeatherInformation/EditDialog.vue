@@ -265,6 +265,9 @@ const columns = computed(() => {
 const pagination = reactive({
   ...global.$store.state.app.defaultPagination,
 });
+const permissionCodeList = computed(() => {
+  return global.$route.meta.permissionCodeList || [];
+});
 
 const dialogTitle: ComputedRef<string> = computed(() => {
   return global.$store.state.dictionary.dialogMode.find(

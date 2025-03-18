@@ -129,6 +129,9 @@ const state = reactive({
 const pagination = reactive({
   ...global.$store.state.app.defaultPagination,
 });
+const permissionCodeList = computed(() => {
+  return global.$route.meta.permissionCodeList || [];
+});
 
 const eventAllList = computed(() => {
   return [
