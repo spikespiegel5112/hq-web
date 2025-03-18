@@ -19,7 +19,7 @@
         v-if="state.treeData.length > 0"
         class="tree"
         v-model:selectedKeys="state.selectedKeys"
-        v-model:checkedKeys="state.checkedKeys"
+        v-model:checkedKeys="state.checkedKeys.checked"
         checkable
         selectable
         checkStrictly
@@ -85,7 +85,7 @@ const state: UnwrapRef<any> = reactive({
   targetKeys: [] as any[],
   expandedKeys: null,
   selectedKeys: null,
-  checkedKeys: null,
+  checkedKeys: [] as any,
 });
 
 watch(
@@ -104,11 +104,11 @@ const handleClose = () => {
 };
 
 const checkAll = () => {
+  state.checkedKeys.checked = [];
   console.log(state.treeData);
-  
   const looper = (children: any[]) => {
     children.forEach((item: any, index: number) => {
-      state.checkedKeys.push(item.id);
+      state.checkedKeys.checked.push(item.id);
       if (item.children instanceof Array && item.children.length > 0) {
         looper(item.children);
       }
@@ -128,7 +128,9 @@ const getRoleData = () => {
     .then((response: any) => {
       response = response.data;
       state.sysMenuList = response.sysMenuList;
-      state.checkedKeys = response.sysMenuList.map((item: any) => item.id);
+      state.checkedKeys.checked = response.sysMenuList.map(
+        (item: any) => item.id
+      );
     })
     .catch((error: any) => {
       console.log(error);
@@ -191,9 +193,9 @@ const getAllRoleData = () => {
 
 const handleDistributeRole = () => {
   console.log(state.targetKeys);
-  console.log(state.checkedKeys);
+  console.log(state.checkedKeys.checked);
   sysSysRoleAllocateMenuRequest({
-    menuIdList: state.checkedKeys,
+    menuIdList: state.checkedKeys.checked,
     roleId: props.rowData.id,
   })
     .then((response: any) => {
@@ -209,20 +211,25 @@ const handleDistributeRole = () => {
 
 const handleCheckNode = (checkIdList: any, checkedNode: any) => {
   console.log(state.selectedKeys);
+  console.log(state.checkedKeys.checked);
+
+  // const checkedKeys = state.checkedKeys.checked.checked;
+
   const selectedKey = checkedNode.node.id;
-  if (state.checkedKeys.includes(selectedKey)) {
+  console.log(state.checkedKeys.checked);
+  if (state.checkedKeys.checked.includes(selectedKey)) {
     let checkedIndex;
-    state.checkedKeys.forEach((item1: any, index2: number) => {
+    state.checkedKeys.checked.forEach((item1: any, index2: number) => {
       if (item1 === selectedKey) {
         console.log(checkedNode);
         checkedIndex = index2;
       }
     });
-    state.checkedKeys.splice(checkedIndex, 1);
+    state.checkedKeys.checked.splice(checkedIndex, 1);
   } else {
-    state.checkedKeys.push(selectedKey);
+    state.checkedKeys.checked.push(selectedKey);
   }
-  console.log(state.checkedKeys);
+  console.log(state.checkedKeys.checked);
 };
 
 onMounted(async () => {});

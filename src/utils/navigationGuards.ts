@@ -2,11 +2,6 @@ import router from "@/router";
 import { store } from "@/store";
 import { message } from "ant-design-vue";
 
-const loadView = (componetPath: string) => {
-  // 路由懒加载
-  return () => import(componetPath);
-};
-
 router.beforeEach(async (to: any, from: any, next: any) => {
   if (
     !!store.state.user.userInfo &&

@@ -9,8 +9,6 @@ import vuescroll from "vuescroll";
 
 const app = createApp(App);
 
-
-
 import { store, key } from "@/store";
 
 import dayjs from "dayjs";

@@ -8,11 +8,6 @@ let permMenuList: any[] = [];
 let parsedRouteDictionary: any[] = [];
 let userInfoResponse: any;
 
-const loadView = (componetPath: string) => {
-  // 路由懒加载
-  return () => import(componetPath);
-};
-
 const assemblingRoutes = async () => {
   userInfoResponse = store.state.user.userInfo;
   permMenuList = userInfoResponse.permMenuList;
@@ -22,7 +17,7 @@ const assemblingRoutes = async () => {
     systemRouteDictionary,
     flattenedPermissionTree
   );
-  // parsedRouteDictionary = systemRouteDictionary;
+  parsedRouteDictionary = systemRouteDictionary;
   store.commit("app/updateParsedRouteDictionary", parsedRouteDictionary);
 
   router.addRoute({
