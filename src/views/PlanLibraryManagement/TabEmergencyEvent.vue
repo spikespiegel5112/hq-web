@@ -9,7 +9,10 @@
       <a-space size="middle" wrap>
         <ImportButton
           :action="preplanPreplanImportStepRequest"
-          @success="() => getData()"
+        @success="() => getData()"
+          :disabled="
+            !global.$checkAuth(global, 'eventManage:suddenEvent:export')
+          "
         />
         <ExportButton
           :action="preplanPreplanExportStepRequest"

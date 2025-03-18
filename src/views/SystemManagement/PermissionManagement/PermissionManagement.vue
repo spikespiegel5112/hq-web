@@ -9,7 +9,10 @@
       <a-space size="middle" wrap>
         <!-- <ImportButton
           :action="preplanPreplanImportStepRequest"
-          @success="() => getData()"
+        @success="() => getData()"
+          :disabled="
+            !global.$checkAuth(global, 'eventManage:suddenEvent:export')
+          "
         /> -->
         <a-button
           class="add"
@@ -146,31 +149,31 @@ const permissionCodeList = computed(() => {
 const tablePermissionCodeListWithAction = computed(() => {
   return [
     {
-      code: "planManagement:emergencyPlan:save",
+      code: "eventManage:suddenEvent:save",
       action: "edit",
     },
     {
-      code: "planManagement:emergencyPlan:delete",
+      code: "eventManage:suddenEvent:delete",
       action: "delete",
     },
     {
-      code: "planManagement:emergencyPlan:getOneById",
+      code: "eventManage:suddenEvent:getOneById",
       action: "review",
     },
     {
-      code: "planManagement:emergencyPlan:importExcel",
+      code: "eventManage:suddenEvent:importExcel",
       action: "importExcel",
     },
     {
-      code: "planManagement:emergencyPlan:exportExcel",
+      code: "eventManage:suddenEvent:exportExcel",
       action: "exportExcel",
     },
     {
-      code: "planManagement:emergencyPlan:getDisposal",
+      code: "eventManage:suddenEvent:getDisposal",
       action: "eventDisposal",
     },
     {
-      code: "planManagement:emergencyPlan:saveDisposal",
+      code: "eventManage:suddenEvent:saveDisposal",
       action: "saveDisposal",
     },
   ];

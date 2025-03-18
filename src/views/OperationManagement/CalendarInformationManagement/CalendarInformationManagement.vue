@@ -9,7 +9,10 @@
       <a-space size="middle" wrap>
         <ImportButton
           :action="operationManagementCalendarInfoImportExcelRequest"
-          @success="() => getData()"
+        @success="() => getData()"
+          :disabled="
+            !global.$checkAuth(global, 'operationManagement:calendarInfo:export')
+          "
         />
         <ExportButton
           :action="operationManagementCalendarInfoExportExcelRequest"

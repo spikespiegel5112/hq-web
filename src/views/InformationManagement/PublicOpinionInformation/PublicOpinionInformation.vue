@@ -10,6 +10,12 @@
         <ImportButton
           :action="infoManagementPublicSentimentInfoImportExcelRequest"
           @success="() => getData()"
+          :disabled="
+            !global.$checkAuth(
+              global,
+              'infoManagement:publicSentimentInfo:import'
+            )
+          "
         />
         <ExportButton
           :action="infoManagementPublicSentimentInfoExportExcelRequest"
@@ -24,7 +30,12 @@
         <a-button
           class="add"
           @click="handleAdd"
-          :disabled="!global.$checkAuth(global, 'infoManagement:publicSentimentInfo:save')"
+          :disabled="
+            !global.$checkAuth(
+              global,
+              'infoManagement:publicSentimentInfo:save'
+            )
+          "
         >
           新增
         </a-button>

@@ -11,7 +11,10 @@
         <ImportButton
           label="导入"
           :action="backendRailwayArriveImportPicRequest"
-          @success="(response:any) => saveMulripleData(response)"
+          @success="(response:any) => saveMultipleData(response)"
+          :disabled="
+            !global.$checkAuth(global, 'passengerFlow:railwayArrive:importPic')
+          "
         />
         <ExportButton
           :action="backendRailwayArriveRailwayArriveExportRequest"
@@ -26,7 +29,9 @@
         <a-button
           class="add"
           @click="handleAdd"
-          :disabled="!global.$checkAuth(global, 'passengerFlow:railwayArrive:save')"
+          :disabled="
+            !global.$checkAuth(global, 'passengerFlow:railwayArrive:save')
+          "
         >
           新增
         </a-button>
@@ -250,7 +255,7 @@ const getStatisticData = () => {
     });
 };
 
-const saveMulripleData = (formData: any) => {
+const saveMultipleData = (formData: any) => {
   const payload = [] as any[];
   formData = formData.data;
   formData.forEach((item: any) => {

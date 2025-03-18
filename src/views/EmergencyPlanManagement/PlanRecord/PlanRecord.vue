@@ -11,7 +11,10 @@
           :action="planManagementEmergencyPlanExportRecordExcelRequest"
           :queryFormData="queryFormData"
           :disabled="
-            !global.$checkAuth(global, 'planManagement:emergencyPlan:export')
+            !global.$checkAuth(
+              global,
+              'planManagement:emergencyPlan:exportRecordExcel'
+            )
           "
         />
       </a-space>
@@ -160,21 +163,9 @@ let queryFormData = reactive({} as any);
 const pagination = reactive({
   ...global.$store.state.app.defaultPagination,
 });
+
 const permissionCodeList = computed(() => {
   return global.$route.meta.permissionCodeList || [];
-});
-
-const eventList = computed(() => {
-  let result = global.$store.state.app.currentEventTypeList.find(
-    (item: any) => item.type === global.$store.state.app.emergencyPlanType
-  )?.data;
-  result = result.map((item: any) => {
-    return {
-      ...item,
-      value: Number(item.value),
-    };
-  });
-  return result;
 });
 
 const tablePermissionCodeListWithAction = computed(() => {
@@ -188,6 +179,19 @@ const tablePermissionCodeListWithAction = computed(() => {
       action: "exportExcel",
     },
   ];
+});
+
+const eventList = computed(() => {
+  let result = global.$store.state.app.currentEventTypeList.find(
+    (item: any) => item.type === global.$store.state.app.emergencyPlanType
+  )?.data;
+  result = result.map((item: any) => {
+    return {
+      ...item,
+      value: Number(item.value),
+    };
+  });
+  return result;
 });
 const getData = () => {
   if (
