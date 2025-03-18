@@ -17,7 +17,7 @@
           :action="backendRailwayArriveRailwayArriveExportRequest"
           :queryFormData="queryFormData"
           :disabled="
-            !global.$checkAuth(global, 'eventManage:suddenEvent:export')
+            !global.$checkAuth(global, 'passengerFlow:railwayArrive:export')
           "
         />
         <a-button class="yellow" @click="handleAddSummarizedData">
@@ -196,7 +196,7 @@ const tablePermissionCodeListWithAction = computed(() => {
     },
     {
       code: "passengerFlow:railwayArrive:import",
-      action: "exportExcel",
+      action: "importExcel",
     },
     {
       code: "passengerFlow:railwayArrive:railwayArriveExport",

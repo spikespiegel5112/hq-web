@@ -7,7 +7,7 @@
           :action="passengerFlowAreaFlowExportRequest"
           :queryFormData="queryFormData"
           :disabled="
-            !global.$checkAuth(global, 'eventManage:suddenEvent:export')
+            !global.$checkAuth(global, 'passengerFlow:areaFlow:export')
           "
         />
       </a-space>

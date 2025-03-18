@@ -12,7 +12,7 @@
           :action="passengerFlowMetroPassengerFlowExportRequest"
           :queryFormData="queryFormData"
           :disabled="
-            !global.$checkAuth(global, 'eventManage:suddenEvent:export')
+            !global.$checkAuth(global, 'passengerFlow:metroPassengerFlow:export')
           "
         />
       </a-space>
