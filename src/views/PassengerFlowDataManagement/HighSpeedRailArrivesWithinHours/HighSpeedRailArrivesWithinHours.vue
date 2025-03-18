@@ -16,6 +16,9 @@
         <ExportButton
           :action="backendRailwayArriveRailwayArriveExportRequest"
           :queryFormData="queryFormData"
+          :disabled="
+            !global.$checkAuth(global, 'eventManage:suddenEvent:export')
+          "
         />
         <a-button class="yellow" @click="handleAddSummarizedData">
           新增汇总数据

@@ -14,6 +14,9 @@
         <ExportButton
           :action="infoManagementPublicSentimentInfoExportExcelRequest"
           :queryFormData="queryFormData"
+          :disabled="
+            !global.$checkAuth(global, 'infoManagement:publicSentimentInfo:export')
+          "
         />
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>

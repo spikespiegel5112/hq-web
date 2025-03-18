@@ -10,6 +10,9 @@
         <ExportButton
           :action="passengerFlowAreaFlowExportRequest"
           :queryFormData="queryFormData"
+          :disabled="
+            !global.$checkAuth(global, 'eventManage:suddenEvent:export')
+          "
         />
       </a-space>
     </div>
@@ -129,31 +132,31 @@ const env = computed(() => {
 const tablePermissionCodeListWithAction = computed(() => {
   return [
     {
-      code: "planManagement:emergencyPlan:save",
+      code: "passengerFlow:areaInOutFlow:save",
       action: "edit",
     },
     {
-      code: "planManagement:emergencyPlan:delete",
+      code: "passengerFlow:areaInOutFlow:delete",
       action: "delete",
     },
     {
-      code: "planManagement:emergencyPlan:getOneById",
+      code: "passengerFlow:areaInOutFlow:getOneById",
       action: "review",
     },
     {
-      code: "planManagement:emergencyPlan:importExcel",
+      code: "passengerFlow:areaInOutFlow:importExcel",
       action: "importExcel",
     },
     {
-      code: "planManagement:emergencyPlan:exportExcel",
+      code: "passengerFlow:areaInOutFlow:exportExcel",
       action: "exportExcel",
     },
     {
-      code: "planManagement:emergencyPlan:getDisposal",
+      code: "passengerFlow:areaInOutFlow:getDisposal",
       action: "eventDisposal",
     },
     {
-      code: "planManagement:emergencyPlan:saveDisposal",
+      code: "passengerFlow:areaInOutFlow:saveDisposal",
       action: "saveDisposal",
     },
   ];

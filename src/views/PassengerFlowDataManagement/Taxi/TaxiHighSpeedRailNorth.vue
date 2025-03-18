@@ -16,6 +16,9 @@
             ...pagination,
             pageSize: null,
           }"
+          :disabled="
+            !global.$checkAuth(global, 'eventManage:suddenEvent:export')
+          "
         />
       </a-space>
     </div>
@@ -126,31 +129,31 @@ const permissionCodeList = computed(() => {
 const tablePermissionCodeListWithAction = computed(() => {
   return [
     {
-      code: "planManagement:emergencyPlan:save",
+      code: "passengerFlow:storage:save",
       action: "edit",
     },
     {
-      code: "planManagement:emergencyPlan:delete",
+      code: "passengerFlow:storage:delete",
       action: "delete",
     },
     {
-      code: "planManagement:emergencyPlan:getOneById",
+      code: "passengerFlow:storage:getOneById",
       action: "review",
     },
     {
-      code: "planManagement:emergencyPlan:importExcel",
+      code: "passengerFlow:storage:importExcel",
       action: "importExcel",
     },
     {
-      code: "planManagement:emergencyPlan:exportExcel",
+      code: "passengerFlow:storage:exportExcel",
       action: "exportExcel",
     },
     {
-      code: "planManagement:emergencyPlan:getDisposal",
+      code: "passengerFlow:storage:getDisposal",
       action: "eventDisposal",
     },
     {
-      code: "planManagement:emergencyPlan:saveDisposal",
+      code: "passengerFlow:storage:saveDisposal",
       action: "saveDisposal",
     },
   ];

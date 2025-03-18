@@ -17,6 +17,9 @@
             ...queryFormData,
             preplanType: global.$store.state.app.emergencyPlanType,
           }"
+          :disabled="
+            !global.$checkAuth(global, 'eventManage:suddenEvent:export')
+          "
         />
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>

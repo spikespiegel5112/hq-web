@@ -14,6 +14,9 @@
         <ExportButton
           :action="operationManagementCalendarInfoExportExcelRequest"
           :queryFormData="queryFormData"
+          :disabled="
+            !global.$checkAuth(global, 'operationManagement:calendarInfo:export')
+          "
         />
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
@@ -137,31 +140,31 @@ const permissionCodeList = computed(() => {
 const tablePermissionCodeListWithAction = computed(() => {
   return [
     {
-      code: "planManagement:emergencyPlan:save",
+      code: "operationManagement:calendarInfo:save",
       action: "edit",
     },
     {
-      code: "planManagement:emergencyPlan:delete",
+      code: "operationManagement:calendarInfo:delete",
       action: "delete",
     },
     {
-      code: "planManagement:emergencyPlan:getOneById",
+      code: "operationManagement:calendarInfo:getOneById",
       action: "review",
     },
     {
-      code: "planManagement:emergencyPlan:importExcel",
+      code: "operationManagement:calendarInfo:importExcel",
       action: "importExcel",
     },
     {
-      code: "planManagement:emergencyPlan:exportExcel",
+      code: "operationManagement:calendarInfo:exportExcel",
       action: "exportExcel",
     },
     {
-      code: "planManagement:emergencyPlan:getDisposal",
+      code: "operationManagement:calendarInfo:getDisposal",
       action: "eventDisposal",
     },
     {
-      code: "planManagement:emergencyPlan:saveDisposal",
+      code: "operationManagement:calendarInfo:saveDisposal",
       action: "saveDisposal",
     },
   ];

@@ -10,10 +10,16 @@
         <ImportButton
           :action="eventManageSuddenEventImportRequest"
           @success="() => getData()"
+          :disabled="
+            !global.$checkAuth(global, 'eventManage:suddenEvent:import')
+          "
         />
         <ExportButton
           :action="eventManageSuddenEventExportRequest"
           :queryFormData="queryFormData"
+          :disabled="
+            !global.$checkAuth(global, 'eventManage:suddenEvent:export')
+          "
         />
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>

@@ -14,6 +14,9 @@
         <ExportButton
           :action="planManagementEmergencyPlanExportExcelRequest"
           :queryFormData="queryFormData"
+          :disabled="
+            !global.$checkAuth(global, 'planManagement:emergencyPlan:export')
+          "
         />
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>

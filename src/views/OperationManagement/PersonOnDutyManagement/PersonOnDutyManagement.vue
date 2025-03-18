@@ -14,6 +14,9 @@
         <ExportButton
           :action="operationManagementDutyStaffExportExcelRequest"
           :queryFormData="queryFormData"
+          :disabled="
+            !global.$checkAuth(global, 'operationManagement:dutyStaff:export')
+          "
         />
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
@@ -160,31 +163,31 @@ const permissionCodeList = computed(() => {
 const tablePermissionCodeListWithAction = computed(() => {
   return [
     {
-      code: "planManagement:emergencyPlan:save",
+      code: "operationManagement:dutyStaff:save",
       action: "edit",
     },
     {
-      code: "planManagement:emergencyPlan:delete",
+      code: "operationManagement:dutyStaff:delete",
       action: "delete",
     },
     {
-      code: "planManagement:emergencyPlan:getOneById",
+      code: "operationManagement:dutyStaff:getOneById",
       action: "review",
     },
     {
-      code: "planManagement:emergencyPlan:importExcel",
+      code: "operationManagement:dutyStaff:importExcel",
       action: "importExcel",
     },
     {
-      code: "planManagement:emergencyPlan:exportExcel",
+      code: "operationManagement:dutyStaff:exportExcel",
       action: "exportExcel",
     },
     {
-      code: "planManagement:emergencyPlan:getDisposal",
+      code: "operationManagement:dutyStaff:getDisposal",
       action: "eventDisposal",
     },
     {
-      code: "planManagement:emergencyPlan:saveDisposal",
+      code: "operationManagement:dutyStaff:saveDisposal",
       action: "saveDisposal",
     },
   ];

@@ -10,6 +10,9 @@
         <ExportButton
           :action="planManagementEmergencyPlanExportRecordExcelRequest"
           :queryFormData="queryFormData"
+          :disabled="
+            !global.$checkAuth(global, 'planManagement:emergencyPlan:export')
+          "
         />
       </a-space>
     </div>

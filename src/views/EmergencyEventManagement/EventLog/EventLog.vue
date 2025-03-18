@@ -10,6 +10,9 @@
         <ExportButton
           :action="eventManageSuddenEventExportRecordRequest"
           :queryFormData="queryFormData"
+          :disabled="
+            !global.$checkAuth(global, 'eventManage:suddenEvent:export')
+          "
         />
       </a-space>
     </div>

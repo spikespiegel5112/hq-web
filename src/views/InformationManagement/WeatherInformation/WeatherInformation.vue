@@ -10,6 +10,9 @@
         <ExportButton
           :action="infoManagementWeatherInfoExportRequest"
           :queryFormData="queryFormData"
+          :disabled="
+            !global.$checkAuth(global, 'infoManagement:weatherInfo:export')
+          "
         />
       </a-space>
     </div>

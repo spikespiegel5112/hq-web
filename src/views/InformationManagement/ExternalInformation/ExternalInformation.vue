@@ -10,12 +10,26 @@
         <ImportButton
           :action="infoManagementExternalInfoImportExcelRequest"
           @success="() => getData()"
+          :disabled="
+            !global.$checkAuth(global, 'infoManagement:externalInfo:import')
+          "
         />
         <ExportButton
           :action="infoManagementExternalInfoExportExcelRequest"
           :queryFormData="queryFormData"
+          :disabled="
+            !global.$checkAuth(global, 'infoManagement:externalInfo:export')
+          "
         />
-        <a-button class="add" @click="handleAdd">新增</a-button>
+        <a-button
+          class="add"
+          @click="handleAdd"
+          :disabled="
+            !global.$checkAuth(global, 'infoManagement:externalInfo:save')
+          "
+        >
+          新增
+        </a-button>
       </a-space>
     </div>
     <BaseTable

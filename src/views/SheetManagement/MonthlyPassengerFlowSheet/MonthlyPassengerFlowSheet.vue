@@ -8,16 +8,11 @@
     <div class="common_tableoperation_wrapper">
       <a-space size="middle" wrap>
         <a-button class="import">导入</a-button>
-        <!-- <ExportButton
-          :action="eventManageSuddenEventExportRequest"
-          :queryFormData="queryFormData"
-        /> -->
         <a-button class="add" @click="handleAdd">新增</a-button>
       </a-space>
     </div>
     <BaseTable
       :tableData="state.tableData"
-      :tablePermissionCodeListWithAction="tablePermissionCodeListWithAction"
       :dataModel="pageModel"
       :pagination="pagination"
       tabTable
@@ -130,38 +125,7 @@ const pagination = reactive({
 const permissionCodeList = computed(() => {
   return global.$route.meta.permissionCodeList || [];
 });
-const tablePermissionCodeListWithAction = computed(() => {
-  return [
-    {
-      code: "planManagement:emergencyPlan:save",
-      action: "edit",
-    },
-    {
-      code: "planManagement:emergencyPlan:delete",
-      action: "delete",
-    },
-    {
-      code: "planManagement:emergencyPlan:getOneById",
-      action: "review",
-    },
-    {
-      code: "planManagement:emergencyPlan:importExcel",
-      action: "importExcel",
-    },
-    {
-      code: "planManagement:emergencyPlan:exportExcel",
-      action: "exportExcel",
-    },
-    {
-      code: "planManagement:emergencyPlan:getDisposal",
-      action: "eventDisposal",
-    },
-    {
-      code: "planManagement:emergencyPlan:saveDisposal",
-      action: "saveDisposal",
-    },
-  ];
-});
+
 const getData = () => {
   global.$store.commit("app/updateTableLoading", true);
   const result = [] as any[];

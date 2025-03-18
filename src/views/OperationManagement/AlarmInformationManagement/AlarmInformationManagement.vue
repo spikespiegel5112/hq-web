@@ -10,6 +10,9 @@
         <ExportButton
           :action="operationManagementAlarmInfoExportExcelRequest"
           :queryFormData="queryFormData"
+          :disabled="
+            !global.$checkAuth(global, 'operationManagement:alarmInfo:export')
+          "
         />
       </a-space>
     </div>
@@ -166,31 +169,31 @@ const eventAllList = computed(() => {
 const tablePermissionCodeListWithAction = computed(() => {
   return [
     {
-      code: "planManagement:emergencyPlan:save",
+      code: "operationManagement:alarmInfo:save",
       action: "edit",
     },
     {
-      code: "planManagement:emergencyPlan:delete",
+      code: "operationManagement:alarmInfo:delete",
       action: "delete",
     },
     {
-      code: "planManagement:emergencyPlan:getOneById",
+      code: "operationManagement:alarmInfo:getOneById",
       action: "review",
     },
     {
-      code: "planManagement:emergencyPlan:importExcel",
+      code: "operationManagement:alarmInfo:importExcel",
       action: "importExcel",
     },
     {
-      code: "planManagement:emergencyPlan:exportExcel",
+      code: "operationManagement:alarmInfo:exportExcel",
       action: "exportExcel",
     },
     {
-      code: "planManagement:emergencyPlan:getDisposal",
+      code: "operationManagement:alarmInfo:getDisposal",
       action: "eventDisposal",
     },
     {
-      code: "planManagement:emergencyPlan:saveDisposal",
+      code: "operationManagement:alarmInfo:saveDisposal",
       action: "saveDisposal",
     },
   ];
