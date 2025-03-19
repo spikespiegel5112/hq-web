@@ -1,3 +1,7 @@
+### 关于字典表获取
+
+- 思路：在Layout组件中先调用global.$getAllDictionary()方法，缓存所有字典表数据，之后才会开启layout的routerView显示业务内容。业务内容中调用global.$getDictionary()方法从缓存中获取字典表数据。
+
 ### 关于环境变量
 
 - 管理端和大屏都带有.env.development，.env.test.env.production三个文件，分别对应开发、测试、生产环境的环境变量配置
