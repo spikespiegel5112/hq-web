@@ -6,6 +6,8 @@ import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import ViteComponents from "unplugin-vue-components/vite";
 import legacy from "@vitejs/plugin-legacy";
+import topLevelAwait from "vite-plugin-top-level-await";
+// import topLevelAwait from "vite-plugin-top-level-await";
 // 使用你所使用的UI组件库的 resolver
 import {
   ElementPlusResolver,
@@ -20,6 +22,11 @@ const pathSrc = path.resolve(__dirname, "src");
 export default defineConfig({
   base: "./",
   plugins: [
+    topLevelAwait({
+      // 可选配置项
+      promiseExportName: "__tla",
+      promiseImportName: (i) => `__tla_${i}`,
+    }),
     vue({
       script: {
         defineModel: true,
@@ -43,7 +50,7 @@ export default defineConfig({
       dts: "src/components.d.ts",
     }),
     // legacy({
-    //   targets: ["ie >= 11"],
+    //   targets: ["ie >= 11", "chrome >= 130"],
     //   additionalLegacyPolyfills: ["regenerator-runtime/runtime"], // 可选
     //   // 下面是其他选项
     //   polyfills: ["es.promise", "es.symbol"], // 指定 polyfills
