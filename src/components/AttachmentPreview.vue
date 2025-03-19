@@ -124,9 +124,10 @@ watch(
   () => props.attachmentList,
   async (newValue: any, oldValue: any) => {
     if (!!swiperInstance) {
-      swiperInstance.destroy();
+      // swiperInstance.destroy();
       swiperInstance = undefined;
     }
+
     await nextTick();
     state.filePathList = newValue.map((item: any) => getImgUrl(item));
     initSwiper();
@@ -257,7 +258,7 @@ onBeforeUnmount(() => {});
   width: 100%;
   height: 600px;
   text-align: center;
-  .swiper-pagination{
+  .swiper-pagination {
     bottom: 1rem;
   }
   .swiper-wrapper {
