@@ -8,7 +8,6 @@
     tableBodyHeight="calc(100% - 0.4rem)"
     @onEdit="handleEdit"
     @onDelete="handleDelete"
-    :tablePermissionCodeListWithAction="tablePermissionCodeListWithAction"
   />
 </template>
 
@@ -40,6 +39,8 @@ const emit = defineEmits<{
 
 const props = defineProps({
   planId: { type: Number, required: true, default: null },
+  editable: { type: Boolean, required: false, default: true },
+  deleteable: { type: Boolean, required: false, default: true },
 });
 
 const pageModel = ref([
@@ -124,37 +125,18 @@ const getDataPromise = () => {
 const tablePermissionCodeListWithAction = computed(() => {
   return [
     {
-      code: "planManagement:emergencyPlan:save",
+      code: "preplan:preplan:saveWithPreplanStep",
       action: "edit",
     },
     {
-      code: "planManagement:emergencyPlan:delete",
+      code: "preplan:preplan:delete",
       action: "delete",
-    },
-    {
-      code: "planManagement:emergencyPlan:getOneById",
-      action: "review",
-    },
-    {
-      code: "planManagement:emergencyPlan:importExcel",
-      action: "importExcel",
-    },
-    {
-      code: "planManagement:emergencyPlan:exportExcel",
-      action: "exportExcel",
-    },
-    {
-      code: "planManagement:emergencyPlan:getDisposal",
-      action: "eventDisposal",
-    },
-    {
-      code: "planManagement:emergencyPlan:saveDisposal",
-      action: "saveDisposal",
     },
   ];
 });
 const getData = () => {
-  if (!global.$checkAuth(global, "planManagement:emergencyPlan:getPage")) return;
+  if (!global.$checkAuth(global, "planManagement:emergencyPlan:getPage"))
+    return;
   global.$store.commit("app/updateTableLoading", true);
   pagination.total = undefined;
   getDataPromise()

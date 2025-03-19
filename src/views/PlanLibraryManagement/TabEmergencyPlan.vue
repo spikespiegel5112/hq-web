@@ -11,9 +11,7 @@
         <ImportButton
           :action="preplanPreplanImportStepRequest"
           @success="() => getData()"
-          :disabled="
-            !global.$checkAuth(global, 'eventManage:suddenEvent:export')
-          "
+          :disabled="!global.$checkAuth(global, 'preplan:preplan:importStep')"
         />
         <ExportButton
           :action="preplanPreplanExportStepRequest"
@@ -21,14 +19,14 @@
             ...queryFormData,
             preplanType: global.$store.state.app.emergencyPlanType,
           }"
-          :disabled="
-            !global.$checkAuth(global, 'eventManage:suddenEvent:export')
-          "
+          :disabled="!global.$checkAuth(global, 'preplan:preplan:exportStep')"
         />
         <a-button
           class="add"
           @click="handleAdd"
-          :disabled="!global.$checkAuth(global, 'eventManage:suddenEvent:save')"
+          :disabled="
+            !global.$checkAuth(global, 'preplan:preplan:saveWithPreplanStep')
+          "
         >
           新增
         </a-button>
@@ -91,6 +89,7 @@
             <a-button
               :key="action"
               type="link"
+              :disabled="!checkActionAuth(action)"
               @click.stop="handleAction(action, record)"
             >
               {{
@@ -100,6 +99,7 @@
           </span>
         </template>
       </template>
+
       <template #expandedRowRender="{ record, index, indent, expanded }">
         <PlanTable
           :planId="record.id"
@@ -330,6 +330,15 @@ const handleAction = (action: any, record: any) => {
         },
       });
       break;
+  }
+};
+
+const checkActionAuth = (action: string) => {
+  if (action === "delete") {
+    return global.$checkAuth(global, "preplan:preplan:delete");
+  }
+  if (action === "edit") {
+    return global.$checkAuth(global, "preplan:preplan:saveWithPreplanStep");
   }
 };
 

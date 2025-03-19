@@ -6,14 +6,6 @@
       <span class="text">虹桥枢纽运行管理一体化平台</span>
     </div>
     <div class="right">
-      <div
-        :style="{
-          width: '7rem',
-          lineHeight: '0.2rem',
-        }"
-      >
-        {{ permissionCodeList }}
-      </div>
       <div>
         <div class="date">
           <span>
