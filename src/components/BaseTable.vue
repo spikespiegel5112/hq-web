@@ -536,8 +536,6 @@ const checkOperationAuth = (action: string) => {
       const permissionCodeList: any[] =
         global.$route.meta.permissionCodeList || [];
       result = permissionCodeList.some((item2: string) => item2 === item.code);
-      if (action === "delete") {
-      }
     }
   });
 
